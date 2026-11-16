@@ -1,0 +1,13 @@
+# Read-only reference clone (never committed)
+reference/
+
+# Dependencies and scratch output
+node_modules/
+tmp/
+
+# Exported user backups
+polish-levels-map-*.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
