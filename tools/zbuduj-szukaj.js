@@ -11,7 +11,7 @@
  *
  * Rekord: { id, group, title, headings[], summary, text (bez Markdownu, maks. 4000 znaków),
  *           level, category, route }
- * Wyjście: dane/szukaj-indeks.js (ELM.SEARCH_INDEX), ładowany na żądanie przy pierwszym
+ * Wyjście: dane/szukaj-indeks.js (LM.SEARCH_INDEX), ładowany na żądanie przy pierwszym
  * otwarciu wyszukiwarki. Plik .js zamiast .json, bo fetch() nie działa przy file://.
  * Gdy indeks przekroczy ~1 MB, tekst jest skracany do nagłówków i pierwszych akapitów.
  *
@@ -167,15 +167,15 @@ if (fs.existsSync(regFile)) readJson(regFile).exams.forEach(function (exam) {
 add({ id: "fiszki", group: "exercises", title: "Fiszki i błędy", summary: "Jedna kolejka powtórek: fiszki z talii, Moje błędy i słabe punkty z ćwiczeń, w rosnących odstępach.", text: "fiszki flashcards powtórki active recall talie dziennik błędów słabe punkty", category: "Fiszki", route: "#/powtorki" });
 add({ id: "fiszki:bledy", group: "exercises", title: "Moje błędy (fiszki)", summary: "Talia fiszek z wpisów Dziennika błędów.", text: "fiszki moje błędy dziennik", category: "Fiszki", route: "#/powtorki/talie/talia/u-moje-bledy" });
 add({ id: "fiszki:slowa", group: "exercises", title: "Moje słowa", summary: "Słowa i wyrażenia zaznaczone w tekstach, ze zdaniem i znaczeniem.", text: "moje słowa słowniczek osobisty zapisane słówka fiszki zaznaczenie", category: "Fiszki", route: "#/powtorki/moje-slowa" });
-// Pisanie: wzorcowe wypracowania z komentarzami (zadania z modelNotes w trening/pisanie.json)
+// Pisanie: wzorcowe wypracowania z komentarzami (zadania z modelNotes w trening/writing.json)
 add({ id: "pisanie", group: "exercises", title: "Wzorcowe wypracowania", summary: "Teksty modelowe z komentarzami na marginesie: realizacja polecenia, łączniki, rejestr, zakres i uwagi.", text: "pisanie wzorce wypracowania komentarze rozprawka essay email list writing model", category: "Pisanie", route: "#/pisanie" });
 (function () {
   const regFile = path.join(ROOT, "dane", "egzaminy-manifest.json");
   const exams = fs.existsSync(regFile) ? readJson(regFile).exams : [];
   const label = {};
   exams.forEach(function (e) { label[e.id] = e.label; });
-  fs.readdirSync(N).filter(function (d) { return fs.existsSync(path.join(N, d, "trening", "pisanie.json")); }).forEach(function (d) {
-    const j = readJson(path.join(N, d, "trening", "pisanie.json"));
+  fs.readdirSync(N).filter(function (d) { return fs.existsSync(path.join(N, d, "trening", "writing.json")); }).forEach(function (d) {
+    const j = readJson(path.join(N, d, "trening", "writing.json"));
     (j.tasks || []).forEach(function (t) {
       if (!t.model || !t.modelNotes) return;
       add({ id: "wzorzec:" + d + ":" + t.id, group: "exercises", title: "Wzorzec: " + (t.title || t.id), summary: (t.modelNotes.summary || [])[0] || "", text: "wzorcowe wypracowanie komentarze " + (label[d] || d) + " " + t.genre, category: "Pisanie", route: "#/pisanie/wzorce/" + d + "/" + t.id });
@@ -244,7 +244,7 @@ if (json.length > SIZE_LIMIT) {
   json = JSON.stringify({ version: 1, records: records });
 }
 fs.writeFileSync(path.join(ROOT, "dane", "szukaj-indeks.js"),
-  "/* Indeks wyszukiwarki — GENEROWANY przez tools/zbuduj-szukaj.js, nie edytuj ręcznie. */\nwindow.ELM = window.ELM || {};\nELM.SEARCH_INDEX = " + json + ";\n", "utf8");
+  "/* Indeks wyszukiwarki — GENEROWANY przez tools/zbuduj-szukaj.js, nie edytuj ręcznie. */\nwindow.LM = window.LM || {};\nLM.SEARCH_INDEX = " + json + ";\n", "utf8");
 const groups = {};
 records.forEach(function (r) { groups[r.group] = (groups[r.group] || 0) + 1; });
 console.log("Wyszukiwarka: rekordy " + records.length + " (" + Object.keys(groups).map(function (g) { return g + " " + groups[g]; }).join(", ") + "), rozmiar " + Math.round(json.length / 1024) + " KB");

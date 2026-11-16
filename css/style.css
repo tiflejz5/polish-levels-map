@@ -1928,7 +1928,7 @@ textarea.field { overflow: auto; }
 [data-tooltip][data-tooltip-align="end"]:hover::after,
 [data-tooltip][data-tooltip-align="end"]:focus-visible::after { transform: none; }
 
-/* Pierścień postępu (ELM.ui.progressRing) */
+/* Pierścień postępu (LM.ui.progressRing) */
 .ring { position: relative; display: inline-grid; place-items: center; width: var(--ring-size); height: var(--ring-size); flex-shrink: 0; }
 .ring svg { display: block; }
 .ring-track { stroke: var(--lvl-soft, var(--surface-3)); }
@@ -1964,7 +1964,7 @@ textarea.field { overflow: auto; }
    Poniżej 768 px: szuflada (body.nav-open, przycisk „Menu”). */
 :root { --rail-w: 72px; --panel-w: 288px; --sb-pad: 12px; --sb-icon: 48px; }
 
-/* Logo (js/ui.js: ELM.logo) */
+/* Logo (js/ui.js: LM.logo) */
 .brand { color: var(--ink); text-decoration: none; }
 .logo { display: inline-flex; align-items: center; gap: 10px; }
 .logo-mark { flex-shrink: 0; transition: transform var(--dur-slow) var(--ease-out); }
@@ -3441,7 +3441,7 @@ a.notes-item-title { color: var(--accent); text-decoration: underline; text-unde
 [data-section="certyfikat-b2"] .c1-ex.card { border-top-color: var(--accent-bg); }
 [data-section="certyfikat-b2"] .c1-ex-instr { border-left-color: var(--exam-mark); }
 
-/* ===================== FISZKI (js/fiszki.js, spec 10) ===================== */
+/* ===================== FISZKI (js/cards.js, spec 10) ===================== */
 /* Elementy ukrywane atrybutem hidden (przycisk przy zaznaczeniu, pola formularza) nie mogą wracać przez display */
 .fiszki-view [hidden] { display: none; }
 .btn-large { min-height: 52px; padding: 12px 24px; font-size: var(--fs-md); }
@@ -3559,7 +3559,7 @@ a.notes-item-title { color: var(--accent); text-decoration: underline; text-unde
   .fc-deck-list { grid-template-columns: 1fr; }
 }
 
-/* Fiszki: przeglądanie talii, formularz karty, import (js/fiszki-browse.js) */
+/* Fiszki: przeglądanie talii, formularz karty, import (js/cards-browse.js) */
 .fc-filters { margin-top: 16px; }
 .fc-card-list { display: grid; gap: 8px; margin: 8px 0 24px; padding: 0; list-style: none; }
 .fc-row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 8px 16px; padding: 12px 16px; margin: 0; }

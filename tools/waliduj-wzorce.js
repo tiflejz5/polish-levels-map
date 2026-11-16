@@ -2,7 +2,7 @@
  * waliduj-wzorce.js — sprawdza komentarze do wzorcowych wypracowań (paczka v6, spec 17, sekcje 1 i 4;
  * te same reguły co część „wzorce” w docs/rozbudowa-v6/scripts/validate_v6.py).
  *
- * Dla każdego zadania z polem `model` w niezbednik/<egzamin>/trening/pisanie.json:
+ * Dla każdego zadania z polem `model` w niezbednik/<egzamin>/trening/writing.json:
  *   - jest `modelNotes` z 3–5 zdaniami `summary` i listą `annotations`,
  *   - liczba komentarzy mieści się w zakresie egzaminu (E8 i MP 6–9, MR i B2 8–12, C1 10–14),
  *   - `anchor`: dokładny fragment modelu, 3–15 słów, występujący w nim dokładnie raz; kotwice się nie nakładają,
@@ -62,7 +62,7 @@ function checkNotes(notes, model, rubric, where, exam) {
 
 let withModel = 0;
 Object.keys(RANGE).forEach(function (exam) {
-  const file = path.join(ROOT, exam, "trening", "pisanie.json");
+  const file = path.join(ROOT, exam, "trening", "writing.json");
   if (!fs.existsSync(file)) return;
   const data = JSON.parse(fs.readFileSync(file, "utf8"));
   const rubric = (data.rubric || []).map(function (r) { return r.id; });
@@ -71,7 +71,7 @@ Object.keys(RANGE).forEach(function (exam) {
   (data.tasks || []).forEach(function (t) {
     if (!t.model) return;
     models++;
-    const where = "niezbednik/" + exam + "/trening/pisanie.json [" + t.id + "]";
+    const where = "niezbednik/" + exam + "/trening/writing.json [" + t.id + "]";
     if (exam === "certyfikat-c1") {
       const n = String(t.model).trim().split(/\s+/).length;
       if (n < 220 || n > 260) errors.push(where + ": wzorzec C1 ma " + n + " słów (220–260)");
@@ -80,7 +80,7 @@ Object.keys(RANGE).forEach(function (exam) {
     withModel++;
     checkNotes(t.modelNotes, String(t.model), ids, where, exam);
   });
-  if (exam === "certyfikat-c1" && REQUIRE_ALL && models < 5) errors.push("niezbednik/certyfikat-c1/trening/pisanie.json: C1 ma " + models + " wzorców, wymagane min. 5");
+  if (exam === "certyfikat-c1" && REQUIRE_ALL && models < 5) errors.push("niezbednik/certyfikat-c1/trening/writing.json: C1 ma " + models + " wzorców, wymagane min. 5");
 });
 
 warnings.forEach(function (w) { console.log("Ostrzeżenie: " + w); });

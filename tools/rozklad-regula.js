@@ -42,6 +42,7 @@ function check(set) {
 }
 
 function walk(dir, out) {
+  if (!fs.existsSync(dir)) return out; // no exam data in this repo yet
   fs.readdirSync(dir).forEach(function (name) {
     const p = path.join(dir, name);
     if (fs.statSync(p).isDirectory()) walk(p, out);
