@@ -80,7 +80,7 @@ window.LM = window.LM || {};
 
   /**
    * Stan potrzebny do myExams z surowych danych: input = { registry, examsRecord: { exams: {id: {examDate}}, my },
-   * c1: { examDate, best }, isSetDone(setId) }. Egzamin „existing” (C1) bierze datę i wyniki z elm_c1_v1.
+   * c1: { examDate, best }, isSetDone(setId) }. Egzamin „existing” (C1) bierze datę i wyniki z LM.c1 (usuwane w etapie 1B).
    * Zwraca { dates, doneSets, totalSets, my }.
    */
   function examMyState(input) {

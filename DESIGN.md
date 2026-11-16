@@ -193,7 +193,7 @@ Pliki: `index.html` (znaczniki), `js/sidebar.js` (zachowanie), `js/render.js` (n
 - Fokus z klawiatury (`:focus-visible`) rozwija panel, a jego utrata zwija (o ile panel nie jest przypięty). Esc zwija i fokus nie rozwija go ponownie, dopóki nie opuści panelu.
 - Tablet z dotykiem: przycisk rozwijania (`aria-expanded`, „Rozwiń panel” / „Zwiń panel”), tapnięcie poza panelem zamyka. Po przejściu na inną stronę rozwinięty panel się zwija.
 - Pinezka ma `aria-pressed`, ikonę `pin-off` → `pin` i etykietę „Przypnij panel” / „Odepnij panel”.
-- Stan przypięcia jest zapisany w nowym kluczu `elm_sidebar_v1` = `{ version: 1, pinned }` (try/catch). Jest globalny dla urządzenia, nie należy do profilu ani do eksportu. Odczytuje go już skrypt w `<head>`, więc treść nie przeskakuje przy starcie.
+- Stan przypięcia jest zapisany w nowym kluczu `plm.sidebar` = `{ version: 1, pinned }` (try/catch). Jest globalny dla urządzenia, nie należy do profilu ani do eksportu. Odczytuje go już skrypt w `<head>`, więc treść nie przeskakuje przy starcie.
 
 **Dostępność:**
 - Etykiety w wąskim pasku są ukryte przez `opacity` (zostają w DOM), więc czytnik ekranu zawsze zna nazwę pozycji.
@@ -262,7 +262,7 @@ Plik: `js/celebrate.js`.
   - poziom 25 / 50 / 75 / 100% (wszystkie kategorie);
   - seria 3 / 7 / 14 / 30 dni;
   - pierwsza sesja powtórek, ukończony test poziomu.
-- **Każdy kamień milowy pokazujemy raz na profil.** Zapis w `elm_celebrated_v1` = `{ version: 1, profiles: { id: { ids } } }`, objęty eksportem, importem, resetem i usuwaniem profilu.
+- **Każdy kamień milowy pokazujemy raz na profil.** Zapis w `plm.celebrated` = `{ version: 1, profiles: { id: { ids } } }`, objęty eksportem, importem, resetem i usuwaniem profilu.
 - **Profil z istniejącym postępem** przy pierwszym uruchomieniu (start aplikacji, zmiana profilu) dostaje zapis już osiągniętych kamieni bez pokazywania.
 - **Forma:** karta „toast” na dole ekranu:
   - ikona w kolorze kontekstu (poziom albo akcent), tytuł fontem display i jedno zdanie;
@@ -321,7 +321,7 @@ Pominięte. Aplikacja nie jest w React, a brief dopuszczał ten krok tylko dla R
   **Jak dodać nowy callout:**
   1. Dopisz wpis do `CALLOUT_RULES` w `js/callouts.js`: `{ match: /^początek nagłówka/i, type: "nazwa", icon: "ikona-lucide", label: "…" }`.
   2. Dodaj w `css/style.css` (sekcja „TREŚCI PODSTRON”) reguły `.callout-nazwa` i `.callout-nazwa .callout-icon`, używając tylko tokenów.
-  3. Jeśli ikony nie ma w `assets/icons.js`, dopisz ją do listy w `tools/zbuduj-zasoby.js` i uruchom `npm run zasoby`.
+  3. Jeśli ikony nie ma w `assets/icons.js`, dopisz ją do listy w `tools/assets.js` i uruchom `npm run assets`.
   4. Nowe pary kolorów dopisz do `tools/contrast.js`.
 - **Tabele.**
   - Ramka `.md-table` z zaokrągleniem `--radius` i zebrą (`--surface-2` zmieszany z `--surface`).
@@ -459,11 +459,11 @@ Pominięte. Aplikacja nie jest w React, a brief dopuszczał ten krok tylko dla R
 
 ### 3.13a „Moje egzaminy” i okładki (paczka v7, etap 2)
 
-- **Moje egzaminy** (`LM.examLogic.myExams`, czysta funkcja z testami): egzamin jest mój, gdy ma ustawioną datę albo ukończony zestaw i nie został odpięty ręcznie; ręczne przypięcie działa też bez daty i zestawów. Override w `elm_exams_v1 … profiles[id].my = { "<id>": "pinned" | "hidden" }` (dotyczy też C1, którego data i wyniki zostają w `elm_c1_v1`). Kolejność: najbliższa data, potem minione terminy, na końcu egzaminy bez daty.
+- **Moje egzaminy** (`LM.examLogic.myExams`, czysta funkcja z testami): egzamin jest mój, gdy ma ustawioną datę albo ukończony zestaw i nie został odpięty ręcznie; ręczne przypięcie działa też bez daty i zestawów. Override w `plm.exams … profiles[id].my = { "<id>": "pinned" | "hidden" }` (dotyczy też C1). Kolejność: najbliższa data, potem minione terminy, na końcu egzaminy bez daty.
 - **Gdzie widać:** strona główna (sekcja „Twoje egzaminy”, kafle mini albo jedna linijka podpowiedzi), Dziś (maks. 2 kafle mini), podpis w panelu (odliczanie tylko przy moich), przycisk „Przypnij do Dziś” / „Odepnij…” na stronie startowej egzaminu. Kafel C1 z głównej i Dziś usunięty.
 - **Karta daty** `LM.examDate.card`: duża liczba dni (Fraunces) albo tekst stanu, pole daty, zapis „czwartek, 6 maja 2027”, akcje `.btn-link` „Wstaw termin główny” (E8, MP, MR) i „Usuń datę”; B2 i C1: „Termin zależy od centrum egzaminacyjnego.”. Poniżej 640 px jedna kolumna.
 - **Okładki** (`LM.examCover`): pełna (strona startowa: pasek 10 px w `accent2`, kod Fraunces 56–88 px, nazwa, `subtitle` z `dane/egzaminy-manifest.json`), kompaktowa (podstrony: pasek 6 px, kod 28 px) i mini (kafel: pasek 8 px, kod 32 px, odliczanie, „zestawy 4/12”). Mini poza sekcją egzaminu bierze kolory z `--exam-accent` (jasny) i `--exam-accent-2` (ciemny); `tools/contrast.js` sprawdza te pary.
-- Rejestr (`dane/egzaminy-rejestr.js`) ma dla każdego egzaminu `setIds` (postęp bez wczytywania danych egzaminu).
+- Rejestr (`data/exams-registry.js`) ma dla każdego egzaminu `setIds` (postęp bez wczytywania danych egzaminu).
 
 ### 3.14 Komponenty paczki v6 (rozbudowa v6, etapy 1–11)
 
@@ -514,12 +514,12 @@ Wszystkie na istniejących tokenach (bez nowych kolorów), z parami sprawdzanymi
 
 - **Proste rzeczy tylko w CSS.** Hover, focus, pojawianie się i przejścia kolorów robi CSS. Animujemy `opacity` i `transform`. Wyjątek to krótkie przejście kolorów przy zmianie motywu (klasa `html.theme-anim`).
 - **Czasy.** `--dur-fast` dla mikrointerakcji, `--dur-base` dla wejść i menu, `--dur-slow` dla pasków i pierścieni. Nic dłuższego niż 400 ms poza celebracjami (etap 3).
-- **GSAP.** Plik `assets/vendor/gsap.min.js` (npm `gsap`, darmowy ze wszystkimi wtyczkami) skopiowany przez `npm run zasoby`.
+- **GSAP.** Plik `assets/vendor/gsap.min.js` (npm `gsap`, darmowy ze wszystkimi wtyczkami) skopiowany przez `npm run assets`.
   - Ładujemy go **tylko na żądanie**: `LM.loadGsap().then(gsap => …)` wstrzykuje `<script>`. Działa także przy `file://`, gdzie dynamiczny `import()` modułów jest zablokowany.
   - Każda animacja przez `gsap.matchMedia()` z gałęzią `(prefers-reduced-motion: reduce)` bez ruchu.
   - Przy opuszczeniu widoku: `mm.revert()` / `ctx.revert()`. Aplikacja nie używa Reacta, więc zamiast `useGSAP` sprzątamy przy zmianie trasy.
   - Wszystkie animacje GSAP przechodzą przez `js/motion.js`: `LM.motion.run(plugins, setup)` ładuje GSAP i wtyczki, wywołuje `setup(gsap, reduce)` w `gsap.matchMedia()` i sprząta (`mm.revert()`) przy następnej animacji i przy zmianie strony (`app.onRoute`). Gdy GSAP się nie wczyta albo ruch jest ograniczony, widok od razu pokazuje stan końcowy.
-  - Używane wtyczki: DrawSVG i MotionPath (tylko szlak na „Dziś”). Pliki `assets/vendor/*.min.js` kopiuje `npm run zasoby`.
+  - Używane wtyczki: DrawSVG i MotionPath (tylko szlak na „Dziś”). Pliki `assets/vendor/*.min.js` kopiuje `npm run assets`.
   - Gdzie ładowany: „Dziś”, ekran wyniku testu, celebracje i oś czasu w Laboratorium czasów. Pozostałe ekrany GSAP nie ładują (animacje zadań są w CSS). Etap 4 nie dodał animacji GSAP (callouty, arkusz i tryb skupienia to CSS).
   - Szlak liczy długość do stacji jednym `getTotalLength()` na ścieżce przyciętej do kolejnych odcinków. Nie próbkujemy `getPointAtLength()`, bo przy CPU 4× kosztowało to ok. 650 ms na render.
 - **Bez wygładzania przewijania.** Nie używamy Lenis ani podobnych bibliotek. Przewijanie jest natywne (zagnieżdżone panele, pola tekstowe, iPad).
@@ -556,12 +556,12 @@ Wszystkie na istniejących tokenach (bez nowych kolorów), z parami sprawdzanymi
 
 | Biblioteka | Wersja | Licencja | Jak trafia do strony |
 |---|---|---|---|
-| `@fontsource-variable/fraunces` | 5.3 | SIL OFL 1.1 | `npm run zasoby` → `assets/fonts/fraunces-latin*.woff2` (osie wght + opsz) |
-| `@fontsource-variable/inter` | 5.3 | SIL OFL 1.1 | `npm run zasoby` → `assets/fonts/inter-latin*.woff2` (oś wght) |
-| `lucide-static` | 1.59 | ISC | `npm run zasoby` → `assets/icons.js` (tylko używane ikony, lista w `tools/zbuduj-zasoby.js`) |
-| `gsap` | 3.15 | GreenSock „no charge” (standardowa licencja, od 3.13 bezpłatna także z wtyczkami) | `npm run zasoby` → `assets/vendor/gsap.min.js`, `DrawSVGPlugin.min.js`, `MotionPathPlugin.min.js` (ładowane na żądanie) |
+| `@fontsource-variable/fraunces` | 5.3 | SIL OFL 1.1 | `npm run assets` → `assets/fonts/fraunces-latin*.woff2` (osie wght + opsz) |
+| `@fontsource-variable/inter` | 5.3 | SIL OFL 1.1 | `npm run assets` → `assets/fonts/inter-latin*.woff2` (oś wght) |
+| `lucide-static` | 1.59 | ISC | `npm run assets` → `assets/icons.js` (tylko używane ikony, lista w `tools/assets.js`) |
+| `gsap` | 3.15 | GreenSock „no charge” (standardowa licencja, od 3.13 bezpłatna także z wtyczkami) | `npm run assets` → `assets/vendor/gsap.min.js`, `DrawSVGPlugin.min.js`, `MotionPathPlugin.min.js` (ładowane na żądanie) |
 
-- **Dlaczego kopiujemy do `assets/`.** Strona działa bez kroku budowania, z dysku (`file://`) i na GitHub Pages. `node_modules/` jest w `.gitignore`, a skopiowane pliki są w repozytorium. Po `npm install` lub aktualizacji paczek uruchom `npm run zasoby`.
+- **Dlaczego kopiujemy do `assets/`.** Strona działa bez kroku budowania, z dysku (`file://`) i na GitHub Pages. `node_modules/` jest w `.gitignore`, a skopiowane pliki są w repozytorium. Po `npm install` lub aktualizacji paczek uruchom `npm run assets`.
 - **Brak zewnętrznych CDN** i fontów Google.
 
 ## 8. Kontrola jakości (każdy etap)
@@ -669,15 +669,15 @@ Ograniczenie: audyt automatyczny nie zastępuje testu z czytnikiem ekranu (NVDA 
   - Ikony Lucide zamiast znaków tekstowych.
   - Logo (kompas ze szlakiem) i favicony.
   - Komponenty bazowe: karta, przyciski, „Umiem”, chip, podpowiedź, pasek i pierścień postępu, focus, zaznaczenie, pasek przewijania, tło warstwicowe.
-  - `tools/contrast.js` (152 pary), `tools/zbuduj-zasoby.js`.
+  - `tools/contrast.js` (152 pary), `tools/assets.js`.
   - Wszystkie rozmiary fontów, promienie i czasy animacji na tokenach.
 - **Etap 2 (lewy panel).**
-  - Wąski pasek 72 px z pierścieniami krain, rozwijanie nad treścią, pinezka (`elm_sidebar_v1`), szuflada poniżej 768 px.
+  - Wąski pasek 72 px z pierścieniami krain, rozwijanie nad treścią, pinezka (`plm.sidebar`), szuflada poniżej 768 px.
   - Wspólne liczby postępu (cały poziom w panelu i na „Dziś”, „w tej kategorii” na stronie poziomu).
   - Górny pasek ujednolicony.
 - **Etap 3.**
   - „Dziś” jako kokpit bento ze szlakiem A1 → C2 i animacjami GSAP (`js/motion.js`).
-  - Celebracje kamieni milowych (`js/celebrate.js`, `elm_celebrated_v1`).
+  - Celebracje kamieni milowych (`js/celebrate.js`, `plm.celebrated`).
   - Nagłówki i karty stron poziomów z akcentem krainy.
   - Test z kropkami i wyraźnymi stanami, dziennik z paskami kategorii.
   - Układ ekranów bez zmian.
@@ -698,7 +698,7 @@ Ograniczenie: audyt automatyczny nie zastępuje testu z czytnikiem ekranu (NVDA 
   - Ramki „Na egzaminie …” przed „Życie i egzamin” (`examBoxAnchorIndex` + test). Bez zmian kluczy `localStorage`.
 
 - **Paczka v7, etap „egzaminy” (B1–B3).**
-  - „Moje egzaminy”: `myExams` + pole `my` w `elm_exams_v1`; sekcja na stronie głównej, kafle na Dziś, przypinanie, wskaźnik w panelu tylko dla moich.
+  - „Moje egzaminy”: `myExams` + pole `my` w `plm.exams`; sekcja na stronie głównej, kafle na Dziś, przypinanie, wskaźnik w panelu tylko dla moich.
   - Jedna karta daty (`LM.examDate.card`) dla C1 i egzaminów z rejestru, polski zapis daty, „Wstaw termin główny”, „Usuń datę”.
   - Okładki egzaminów (pełna, kompaktowa, mini), pole `subtitle` w manifeście, nowe pary w `tools/contrast.js`.
 

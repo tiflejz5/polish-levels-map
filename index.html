@@ -8,22 +8,22 @@
   <meta name="theme-color" content="#faf6ee">
   <title>English Levels Map (A1–C2)</title>
   <!-- Ustawia motyw i stan lewego panelu ZANIM strona się narysuje.
-       elm_theme_v1: "auto" (jak w systemie), "light" albo "dark".
-       elm_sidebar_v1: { version: 1, pinned: true|false } (js/sidebar.js). -->
+       plm.theme: "auto" (jak w systemie), "light" albo "dark".
+       plm.sidebar: { version: 1, pinned: true|false } (js/sidebar.js). Runs before js/config.js, so the keys are literal. -->
   <script>
     (function () {
       var pref = "auto";
-      try { pref = localStorage.getItem("elm_theme_v1") || "auto"; } catch (e) {}
+      try { pref = localStorage.getItem("plm.theme") || "auto"; } catch (e) {}
       var dark = pref === "dark" || (pref !== "light" && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
       var root = document.documentElement;
       root.setAttribute("data-theme", dark ? "dark" : "light");
       root.setAttribute("data-theme-pref", pref);
       var meta = document.querySelector('meta[name="theme-color"]');
       if (meta) meta.setAttribute("content", dark ? "#0e1526" : "#faf6ee");
-      // Lewy panel przypięty? (elm_sidebar_v1, globalnie dla urządzenia) — przed narysowaniem,
+      // Lewy panel przypięty? (plm.sidebar, globalnie dla urządzenia) — przed narysowaniem,
       // żeby treść nie przeskakiwała przy starcie
       var pinned = false;
-      try { var sb = JSON.parse(localStorage.getItem("elm_sidebar_v1") || "null"); pinned = !!(sb && sb.version === 1 && sb.pinned === true); } catch (e) {}
+      try { var sb = JSON.parse(localStorage.getItem("plm.sidebar") || "null"); pinned = !!(sb && sb.version === 1 && sb.pinned === true); } catch (e) {}
       root.setAttribute("data-sidebar", pinned ? "pinned" : "rail");
     })();
   </script>
@@ -155,7 +155,7 @@
   <!-- Czysta logika dziennika podejść i statystyk (przed profile-data.js, które z niej korzysta) -->
   <script defer src="js/learning-stats.js?v=1"></script>
   <script defer src="js/profile-data.js?v=1"></script>
-  <!-- Fiszki: harmonogram i czysta logika (testy: node tools/tests.js), zapis elm.<profil>.fiszki -->
+  <!-- Fiszki: harmonogram i czysta logika (testy: node tools/tests.js), zapis plm.cards.<profil> -->
   <script defer src="js/cards-schedule.js?v=1"></script>
   <script defer src="js/cards-logic.js?v=1"></script>
   <script defer src="js/cards-store.js?v=1"></script>

@@ -69,7 +69,7 @@ async function main() {
     await ctx.addInitScript(function (profile) {
       if (localStorage.getItem("e2e_seeded")) return;
       localStorage.setItem("e2e_seeded", "1");
-      if (profile) localStorage.setItem("elm_profiles_v1", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "Test Claude", progress: {} }] }));
+      if (profile) localStorage.setItem("plm.profiles", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "Test Claude", progress: {} }] }));
     }, !!withProfile);
     const page = await ctx.newPage();
     page.errs = [];
@@ -112,14 +112,14 @@ async function main() {
     await s.page.waitForSelector("dialog[open]");
     await s.page.click("button:has-text('Nie teraz')");
     ok(!(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; })), "zaznaczone mimo anulowania");
-    ok(await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("elm_profiles_v1")).profiles.length; }) === 0, "powstał profil mimo anulowania");
+    ok(await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles.length; }) === 0, "powstał profil mimo anulowania");
     await s.page.click("label.umiem input", { force: true });
     await s.page.fill("#guest-name", "Ola");
     await s.page.keyboard.press("Enter");
     await s.page.waitForTimeout(700);
     ok(await s.page.evaluate(function () { return location.hash; }) === "#/a1/czasy-present-simple", "zmieniony adres");
     ok(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; }), "„Umiem” niezaznaczone po utworzeniu profilu");
-    ok(await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("elm_profiles_v1")).profiles[0].progress).length; }) === 1, "postęp niezapisany");
+    ok(await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress).length; }) === 1, "postęp niezapisany");
     await s.ctx.close();
   });
 
@@ -217,10 +217,10 @@ async function main() {
     await s.page.waitForSelector(".sz-result");
     ok(/Przystanek zaliczony/.test(await viewText(s.page)), "brak zaliczenia");
     ok(await s.page.locator("button:has-text('Zaznacz „Umiem”')").count() === 1, "brak propozycji „Umiem”");
-    const progress = await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("elm_profiles_v1")).profiles[0].progress).length; });
+    const progress = await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress).length; });
     ok(progress === 0, "„Umiem” zaznaczone automatycznie");
-    const st = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("elm.p_e2e.szlak")); });
-    ok(st.version === 1 && st.stops["a1-01"] && st.stops["a1-01"].best === 4, "zapis w elm.<id>.szlak");
+    const st = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.trail.p_e2e")); });
+    ok(st.version === 1 && st.stops["a1-01"] && st.stops["a1-01"].best === 4, "zapis w plm.trail.<id>");
     await s.ctx.close();
   });
   await test("P2: po teście poziomu C1 Dziś i Szlak wskazują pierwszy przystanek C1, wcześniejsze krainy są „pominięte”", async function () {
@@ -258,7 +258,7 @@ async function main() {
     ok(d[0] <= d[1], "poziomy scroll " + d.join(">"));
     await s.ctx.close();
     const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
-    await ctx.addInitScript(function () { localStorage.setItem("elm_profiles_v1", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "T", progress: {} }] })); });
+    await ctx.addInitScript(function () { localStorage.setItem("plm.profiles", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "T", progress: {} }] })); });
     const page = await ctx.newPage();
     await page.goto(URL + "#/szlak"); await page.waitForTimeout(1500);
     ok(await page.evaluate(function () { return getComputedStyle(document.querySelector(".sz-node.is-current .sz-circle")).animationName; }) === "none", "animacja przy reduced-motion");
@@ -271,7 +271,7 @@ async function main() {
     const exported = await s.page.evaluate(function () { return LM.trailStore.exportData(); });
     ok(exported.p_e2e && exported.p_e2e.stops["a1-01"].best === 4, "eksport szlaku");
     const res = await s.page.evaluate(function () {
-      try { const parsed = LM.trailStore.parseImport(undefined); LM.trailStore.applyImport(parsed, ["p_e2e"]); return { parsed: parsed, kept: !!localStorage.getItem("elm.p_e2e.szlak") }; } catch (e) { return { error: e.message }; }
+      try { const parsed = LM.trailStore.parseImport(undefined); LM.trailStore.applyImport(parsed, ["p_e2e"]); return { parsed: parsed, kept: !!localStorage.getItem("plm.trail.p_e2e") }; } catch (e) { return { error: e.message }; }
     });
     ok(!res.error && res.parsed === null && res.kept, "stary plik: " + JSON.stringify(res));
     await s.ctx.close();

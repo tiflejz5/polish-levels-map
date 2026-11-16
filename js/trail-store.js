@@ -1,13 +1,12 @@
 /*
  * trail-store.js — stan Szlaku w localStorage (spec v7 13, sekcja 3).
  *
- *   Klucz per profil: elm.<profileId>.szlak
+ *   Klucz per profil: plm.trail.<profileId> (rejestr kluczy: js/profile-data.js)
  *   { version: 1, start: { level, source: "test"|"manual"|"default", at } | null,
  *     stops: { <idPrzystanku>: { done, via: "quiz"|"umiem"|"skip"|"set", best?, at } },
  *     reviews: { <idPowtórki>: { best, of, at } } }
  *
- * Nowy klucz: istniejące klucze (elm_profiles_v1, elm_leveltest_v1, elm.<id>.fiszki…) bez zmian. Eksport / import / reset
- * i usuwanie profilu działają jak w js/cards-store.js (część „szlak” kopii; stary plik jej nie ma → dane zostają).
+ * Eksport / import / reset i usuwanie profilu działają jak w js/cards-store.js (część „trail” kopii).
  * Walidacja: LM.trailLogic.sanitizeState. Bez profilu: stan tymczasowy, niezapisywany.
  */
 window.LM = window.LM || {};
@@ -15,13 +14,15 @@ window.LM = window.LM || {};
 (function (LM) {
   "use strict";
 
-  const PREFIX = "elm.";
-  const SUFFIX = ".szlak";
+  const PREFIX = LM.APP.storagePrefix + "trail.";
+  const BACKUP = ".corrupt-backup";
   const memory = {}; // { profileId: stan }
 
   function L() { return LM.trailLogic; }
   function app() { return LM.app; }
-  function keyOf(pid) { return PREFIX + pid + SUFFIX; }
+  function keyOf(pid) { return PREFIX + pid; }
+  /** Profile id of a stored key, or null (other keys and backups). */
+  function idOfKey(k) { return k && k.indexOf(PREFIX) === 0 && k.slice(-BACKUP.length) !== BACKUP && k.length > PREFIX.length ? k.slice(PREFIX.length) : null; }
   function activeId() { const p = app() && app().getActiveProfile(); return p ? p.id : null; }
   function stamp() { return new Date().toISOString(); }
 
@@ -33,7 +34,7 @@ window.LM = window.LM || {};
     let data = null;
     if (raw) {
       try { data = L().sanitizeState(JSON.parse(raw)); } catch (e) {
-        try { window.localStorage.setItem(keyOf(pid) + "_corrupt_backup", raw); } catch (e2) { /* trudno */ }
+        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* trudno */ }
         data = null;
       }
     }
@@ -109,7 +110,8 @@ window.LM = window.LM || {};
     try {
       for (let i = 0; i < window.localStorage.length; i++) {
         const k = window.localStorage.key(i);
-        if (k && k.indexOf(PREFIX) === 0 && k.slice(-SUFFIX.length) === SUFFIX) out.push(k.slice(PREFIX.length, -SUFFIX.length));
+        const pid = idOfKey(k);
+        if (pid) out.push(pid);
       }
     } catch (e) { /* brak dostępu */ }
     Object.keys(memory).forEach(function (pid) { if (out.indexOf(pid) === -1) out.push(pid); });
@@ -118,7 +120,7 @@ window.LM = window.LM || {};
 
   function removeProfile(pid) {
     delete memory[pid];
-    try { window.localStorage.removeItem(keyOf(pid)); } catch (e) { /* brak dostępu */ }
+    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* brak dostępu */ }
   }
 
   /** Część eksportu: { <profileId>: stan } (tylko profile z danymi). */
@@ -128,10 +130,9 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Część importu: brak (stary plik) → null; zły format → wyjątek z opisem. */
+  /** Część importu: zły format → wyjątek z opisem (cały import odrzucony). */
   function parseImport(raw) {
-    if (raw === undefined || raw === null) return null;
-    if (typeof raw !== "object" || Array.isArray(raw)) throw new Error("Część „szlak” pliku ma nieprawidłowy format.");
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("The \"trail\" part of the file has a wrong format.");
     const out = {};
     Object.keys(raw).slice(0, 500).forEach(function (pid) {
       if (typeof pid !== "string" || pid.length > 80) return;
@@ -140,12 +141,10 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Zapis importu: część obecna w pliku zastępuje dane Szlaku; profile spoza listy są usuwane. */
+  /** Zapis importu: część z pliku zastępuje dane Szlaku; profile spoza listy są usuwane. */
   function applyImport(parsed, profileIds) {
-    if (parsed) {
-      storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
-      Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid); });
-    }
+    storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
+    Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid); });
     if (profileIds) storedIds().forEach(function (pid) { if (profileIds.indexOf(pid) === -1) removeProfile(pid); });
   }
 

@@ -1,29 +1,30 @@
 /*
  * cards-store.js — dane fiszek w localStorage (spec 10, sekcja 4).
  *
- *   Klucz per profil: elm.<profileId>.fiszki
+ *   Klucz per profil: plm.cards.<profileId> (rejestr kluczy: js/profile-data.js)
  *   { version: 1, cards: { <id>: stan }, userDecks: [...], userCards: [...], settings: {...}, daily: { <dzień>: {...} } }
  *
  * Stan jest zapisywany tylko dla kart, które użytkownik ruszył (reszta = nowe). Zapis po każdej
  * zmianie, w try/catch; przy błędzie (np. brak miejsca) komunikat i praca dalej w pamięci.
- * Uszkodzony zapis jest odkładany jako elm.<id>.fiszki_corrupt_backup i zaczynamy od pustego.
- * Dane trafiają do eksportu (data.fiszki: { <profileId>: stan }), importu i resetu; stary plik
- * eksportu (bez data.fiszki) nie zmienia fiszek. Walidacja: LM.cardsLogic.sanitizeState.
+ * Uszkodzony zapis jest odkładany jako plm.cards.<id>.corrupt-backup i zaczynamy od pustego.
+ * Dane trafiają do eksportu (data.cards: { <profileId>: stan }), importu, resetu i usuwania profilu
+ * (rejestr kluczy). Walidacja: LM.cardsLogic.sanitizeState.
  */
 window.LM = window.LM || {};
 
 (function (LM) {
   "use strict";
 
-  const PREFIX = "elm.";
-  const SUFFIX = ".fiszki";
-  const C1_DECK = "certyfikat-c1";
+  const PREFIX = LM.APP.storagePrefix + "cards.";
+  const BACKUP = ".corrupt-backup";
   const memory = {}; // { profileId: stan }
   let saveFailed = false;
 
   function L() { return LM.cardsLogic; }
   function app() { return LM.app; }
-  function keyOf(pid) { return PREFIX + pid + SUFFIX; }
+  function keyOf(pid) { return PREFIX + pid; }
+  /** Profile id of a stored key, or null (other keys and backups). */
+  function idOfKey(k) { return k && k.indexOf(PREFIX) === 0 && k.slice(-BACKUP.length) !== BACKUP && k.length > PREFIX.length ? k.slice(PREFIX.length) : null; }
   function activeId() { const p = app() && app().getActiveProfile(); return p ? p.id : null; }
 
   function load(pid) {
@@ -34,22 +35,11 @@ window.LM = window.LM || {};
     let data = null;
     if (raw) {
       try { data = L().sanitizeState(JSON.parse(raw)); } catch (e) {
-        try { window.localStorage.setItem(keyOf(pid) + "_corrupt_backup", raw); } catch (e2) { /* trudno */ }
+        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* trudno */ }
         data = null;
       }
     }
-    // Paczka C1 v6 (spec 12, sekcja 3): talia „Certyfikat C1” włącza się raz w istniejącym profilu. Znacznik c1DeckV6 pamięta,
-    // że profil już ją „dostał”, więc wyłączona przez użytkownika nie wraca. Nowy profil dostaje sam znacznik (bez włączania).
-    const fresh = !data;
     memory[pid] = data || L().emptyState();
-    const set = memory[pid].settings;
-    if (set.c1DeckV6 !== true) {
-      set.c1DeckV6 = true;
-      if (!fresh) {
-        if (set.enabledDecks.indexOf(C1_DECK) === -1) set.enabledDecks.push(C1_DECK);
-        try { window.localStorage.setItem(keyOf(pid), JSON.stringify(memory[pid])); } catch (e3) { /* zapisze się przy następnej zmianie */ }
-      }
-    }
     return memory[pid];
   }
 
@@ -92,7 +82,8 @@ window.LM = window.LM || {};
     try {
       for (let i = 0; i < window.localStorage.length; i++) {
         const k = window.localStorage.key(i);
-        if (k && k.indexOf(PREFIX) === 0 && k.slice(-SUFFIX.length) === SUFFIX) out.push(k.slice(PREFIX.length, -SUFFIX.length));
+        const pid = idOfKey(k);
+        if (pid) out.push(pid);
       }
     } catch (e) { /* brak dostępu */ }
     Object.keys(memory).forEach(function (pid) { if (out.indexOf(pid) === -1) out.push(pid); });
@@ -101,7 +92,7 @@ window.LM = window.LM || {};
 
   function removeProfile(pid) {
     delete memory[pid];
-    try { window.localStorage.removeItem(keyOf(pid)); } catch (e) { /* brak dostępu */ }
+    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* brak dostępu */ }
   }
 
   /** Część eksportu: { <profileId>: stan } (tylko profile z danymi). */
@@ -111,10 +102,9 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Część importu: brak (stary plik) → null; zły format → wyjątek z opisem. */
+  /** Część importu: zły format → wyjątek z opisem (cały import odrzucony). */
   function parseImport(raw) {
-    if (raw === undefined || raw === null) return null;
-    if (typeof raw !== "object" || Array.isArray(raw)) throw new Error("Część „fiszki” pliku ma nieprawidłowy format.");
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("The \"cards\" part of the file has a wrong format.");
     const out = {};
     Object.keys(raw).slice(0, 500).forEach(function (pid) {
       if (typeof pid !== "string" || pid.length > 80) return;
@@ -123,29 +113,19 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Zapis importu: część obecna w pliku zastępuje fiszki; profile spoza listy są usuwane. */
+  /** Zapis importu: część z pliku zastępuje fiszki; profile spoza listy są usuwane. */
   function applyImport(parsed, profileIds) {
-    if (parsed) {
-      storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
-      Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid, true); });
-    }
+    storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
+    Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid, true); });
     if (profileIds) storedIds().forEach(function (pid) { if (profileIds.indexOf(pid) === -1) removeProfile(pid); });
   }
 
   function clearAll() { storedIds().forEach(removeProfile); }
 
-  /** Po imporcie starego pliku (bez części „fiszki”) Dziennik mógł się zmienić: migracja do kart „Moje błędy” ma wrócić (idempotentna). */
-  function clearMigrationFlags() {
-    storedIds().forEach(function (pid) {
-      const d = load(pid);
-      if (d.settings.migratedJournal) { d.settings.migratedJournal = false; save(pid); }
-    });
-  }
-
   // Druga karta przeglądarki zapisała fiszki: przejmujemy nowsze oceny, żeby następny zapis stąd ich nie cofnął
   window.addEventListener("storage", function (e) {
-    if (!e.key || e.key.indexOf(PREFIX) !== 0 || e.key.slice(-SUFFIX.length) !== SUFFIX) return;
-    const pid = e.key.slice(PREFIX.length, -SUFFIX.length);
+    const pid = idOfKey(e.key);
+    if (!pid) return;
     if (memory[pid] && mergeStored(pid) && app() && app().refreshLearning) app().refreshLearning();
   });
 
@@ -153,6 +133,6 @@ window.LM = window.LM || {};
     mergeStored: mergeStored,
     keyOf: keyOf, data: data, load: load, save: save,
     exportData: exportData, parseImport: parseImport, applyImport: applyImport,
-    removeProfile: removeProfile, clearAll: clearAll, clearMigrationFlags: clearMigrationFlags
+    removeProfile: removeProfile, clearAll: clearAll
   };
 })(window.LM);

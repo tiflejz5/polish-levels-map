@@ -8,10 +8,10 @@
  *   "open-cloze"            — Part 2: jedno słowo (skrót = dwa słowa), 1 pkt
  *   "multiple-choice-cloze" — Part 1: wybór A/B/C/D, 1 pkt
  *
- * Najlepszy wynik zestawu zapisuje LM.c1.store (localStorage, klucz elm_c1_v1).
+ * Najlepszy wynik zestawu zapisuje LM.c1.store (w pamięci karty, etap 1A).
  * Ten sam komponent rysuje zestawy w formacie C1 w innych egzaminach (np. Matura
  * podstawowa, spec 06 sekcja 3): LM.c1Exercises.renderWith(view, ctx) — ctx podaje
- * dane zestawu, nawigację i zapis wyniku (dla egzaminów z rejestru: elm_exercises_v1).
+ * dane zestawu, nawigację i zapis wyniku (dla egzaminów z rejestru: plm.exercises).
  * Przy błędnej odpowiedzi przycisk „Dodaj do dziennika błędów” otwiera
  * wstępnie wypełniony formularz (js/mistakes.js) — nic nie zapisuje się
  * bez zatwierdzenia.

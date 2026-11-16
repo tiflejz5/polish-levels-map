@@ -11,8 +11,8 @@
  *
  * Indeks: dane/szukaj-indeks.js (tools/zbuduj-szukaj.js) ładowany przy pierwszym otwarciu.
  * Notatki i Dziennik błędów aktywnego profilu dokładamy w przeglądarce (są prywatne).
- * Ostatnie wyszukiwania: elm_search_recent_v1 { version: 1, items: [...] } — na urządzeniu,
- * poza eksportem (jak elm_sidebar_v1), czyszczone przez „Resetuj dane”.
+ * Ostatnie wyszukiwania: plm.search-recent { version: 1, items: [...] } — na urządzeniu,
+ * poza eksportem (jak plm.sidebar), czyszczone przez „Resetuj dane” (rejestr kluczy: js/profile-data.js).
  * Wszystkie teksty trafiają do strony przez textContent (bez innerHTML).
  */
 window.LM = window.LM || {};
@@ -22,7 +22,7 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
-  const RECENT_KEY = "elm_search_recent_v1";
+  const RECENT_KEY = LM.APP.storagePrefix + "search-recent";
   const GROUPS = ["pages", "exams", "exercises", "lab", "notes", "journal"];
   const GROUP_LABEL = { pages: "Strony", exams: "Egzaminy", exercises: "Ćwiczenia", lab: "Laboratorium czasów", notes: "Moje notatki", journal: "Mój dziennik błędów" };
   const SHORTCUTS = [
