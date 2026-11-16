@@ -334,7 +334,7 @@ In **this repo** (snapshot without content): `node tools/testy.js` runs 31 tests
 | Testy końcowe poziomów | 16 | final-logic | partly | 4 categories → syllabus categories (E10, stage 4); reads real English pools (`:693-745`) → fixture |
 | Dziennik podejść i statystyki | 9 | learning-stats | ✓ | |
 | Wyszukiwarka | 5 | search-logic | ✓ → Polish fixtures | stage 3 |
-| Egzaminy: strefy licznika | 2 | exam-logic | ✗ | E8 word zones → exam config fixture (1B) |
+| Egzaminy: strefy licznika | 2 | exam-logic `writingZone` | ✓ | generic zone logic; matura thresholds move to the exam-demo fixture (1B) |
 | Fiszki: harmonogram (vectors) | 11 | cards-schedule | ✓ | `dane/fiszki/scheduler-vectors.json` copied |
 | Fiszki: ocena, cloze, kolejka, TSV/CSV, stan | 14 | cards-logic | ✓ → Polish fixtures for check/cloze | stage 3 |
 | Talia Certyfikat C1 | 1 | cards (C1) | ✗ | dropped with C1 |
@@ -354,7 +354,7 @@ In **this repo** (snapshot without content): `node tools/testy.js` runs 31 tests
 | Rozkład liter A–D | 1 | tools/rozklad-regula | ✓ | |
 | Karty „Moje błędy” | 11 | cards-logic, mistake-task | partly | `journalCardsV2` parts are legacy; C1 refs `c1:<set>:<n>` dropped |
 | Fiszki: harmonogram i zapis | 6 | cards-logic | ✓ | |
-| **Total** | **193** | | ≈ 160 survive (some with new fixtures), ≈ 30 are deleted as legacy / C1 / E8 | exact list in the stage 1A and 1B summaries |
+| **Total** | **193** | | ≈ 175 survive (some with new fixtures), ≈ 18 are deleted as legacy / C1 (REVIEW_STEPS 7, journal migration 9, C1 deck 1, plus legacy parts of other groups) | exact list in the stage 1A and 1B summaries |
 
 ## 9. Plan vs. code: disagreements and gaps
 
