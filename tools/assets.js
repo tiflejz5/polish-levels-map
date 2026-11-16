@@ -1,9 +1,9 @@
 /*
- * zbuduj-zasoby.js — kopiuje zasoby z paczek npm do folderu assets/,
+ * assets.js — copies assets from npm packages into assets/,
  * żeby strona działała BEZ node_modules (GitHub Pages, otwieranie z dysku).
  *
  * Użycie (z folderu projektu, po `npm install`):
- *   npm run zasoby        (albo: node tools/zbuduj-zasoby.js)
+ *   npm run assets        (or: node tools/assets.js)
  *
  * Co trafia do assets/:
  *   fonts/   — Fraunces (display, osie wght + opsz) i Inter (tekst, oś wght),

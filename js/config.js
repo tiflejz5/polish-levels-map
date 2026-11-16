@@ -7,6 +7,9 @@
  */
 window.LM = window.LM || {};
 
+// Version stamp: written by tools/build.js from package.json "lmVersion" (never by hand); LM.loadModule adds it as ?v=
+LM.VERSION = 1;
+
 LM.APP = {
   id: "pl",
   language: "Polish", nativeName: "polski",

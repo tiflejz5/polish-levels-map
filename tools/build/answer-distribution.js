@@ -1,20 +1,19 @@
 /*
- * rozklad-regula.js — reguła rozkładu poprawnych liter w zestawach „wybierz A, B, C lub D”
- * (gaps[].options = { A, B, C, D }, gaps[].answer = litera): żadna litera nie jest poprawna w więcej niż 50% luk
- * zestawu i żadna nie jest poprawna więcej niż 2 razy z rzędu. Zestawy z jedną–dwiema lukami są pomijane
- * (reguła nie ma wtedy sensu).
+ * build/answer-distribution.js — rule for "choose A, B, C or D" sets (gaps[].options = { A, B, C, D },
+ * gaps[].answer = letter): no letter is correct in more than 50% of the gaps of a set and none is correct
+ * more than 2 times in a row. Sets with one or two gaps are skipped (the rule makes no sense there).
+ * (Ported from rozklad-regula.js; messages are translated in stage 2.)
  *
- * Użycie: require("./rozklad-regula").check(zestaw) → opis błędu albo null;
- *         checkAll() → lista błędów dla wszystkich niezbednik/<egzamin>/cwiczenia/*.json.
- * Wywołują ją tools/waliduj-c1-uoe.js (npm run validate) i tools/zbuduj-egzaminy.js (npm run build): błąd przerywa.
- * Naprawa: node tools/rozklad-odpowiedzi.js.
+ * Use: require("./answer-distribution").check(set) → error text or null;
+ *      checkAll() → errors for every content/exams/<exam>/sets/*.json (none until stage E).
+ * Called by build/exams.js (npm run build) and tools/validate.js: an error stops them.
  */
 "use strict";
 
 const fs = require("fs");
 const path = require("path");
 
-const ROOT = path.join(__dirname, "..", "niezbednik");
+const ROOT = path.join(__dirname, "..", "..", "content", "exams");
 const MAX_SHARE = 0.5;
 const MAX_RUN = 2;
 
@@ -46,12 +45,12 @@ function walk(dir, out) {
   fs.readdirSync(dir).forEach(function (name) {
     const p = path.join(dir, name);
     if (fs.statSync(p).isDirectory()) walk(p, out);
-    else if (/\.json$/.test(name) && path.basename(path.dirname(p)) === "cwiczenia") out.push(p);
+    else if (/\.json$/.test(name) && path.basename(path.dirname(p)) === "sets") out.push(p);
   });
   return out;
 }
 
-/** Błędy wszystkich zestawów z literowymi opcjami w folderach cwiczenia egzaminów (niezbednik). → [{ file, id, error }] */
+/** Errors of every lettered set in content/exams/<exam>/sets/*.json. → [{ file, id, error }] */
 function checkAll() {
   const errors = [];
   walk(ROOT, []).sort().forEach(function (file) {
