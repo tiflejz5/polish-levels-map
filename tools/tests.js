@@ -2355,5 +2355,25 @@ console.log("\nFiszki: harmonogram i zapis (poprawka fix/fiszki-harmonogram)");
   });
 })();
 
+console.log("\nConfig and language stub (spec 02 §3, spec 05 §1)");
+require(path.join(__dirname, "..", "js", "config.js"));
+require(path.join(__dirname, "..", "js", "lang.js"));
+test("LM.APP: storage prefix plm., target language pl, export name", function () {
+  assert.strictEqual(global.LM.APP.storagePrefix, "plm.");
+  assert.strictEqual(global.LM.APP.targetLang, "pl");
+  assert.strictEqual(global.LM.APP.exportName, "polish-levels-map");
+  assert.strictEqual(global.LM.APP.chars.length, 9);
+});
+test("LM.lang stub: full interface; stripMarks and fold keep the length", function () {
+  const LG = global.LM.lang;
+  ["stripMarks", "fold", "normalizeAnswer", "normalizeSentence", "variants", "countWords", "isTarget"].forEach(function (k) { assert.strictEqual(typeof LG[k], "function", k); });
+  assert.ok(Array.isArray(LG.abbreviations) && Array.isArray(LG.functionWords) && typeof LG.wordPattern === "string");
+  const s = "Zażółć gęślą jaźń. ŁÓDŹ";
+  assert.strictEqual(LG.stripMarks(s), "Zazolc gesla jazn. LODZ");
+  assert.strictEqual(LG.fold(s).length, s.length);
+  assert.deepStrictEqual(LG.variants("kawę"), ["kawę"]);
+  assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę");
+});
+
 console.log("\nWynik: " + passed + " ok, " + failures.length + " błędów");
 if (failures.length) process.exit(1);
