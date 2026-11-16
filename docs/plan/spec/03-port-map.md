@@ -78,6 +78,8 @@ Legend: **K** keep (rename, `ELM`→`LM`, strings to English), **A** adapt (real
 10. Typography in strings: Polish quotes „…” → English “…”; date formats `dd.mm.yyyy` → `Nov 12, 2026`.
 11. Exam codes hard-coded in chips and in "Życie i egzamin" (E8, MP, MR, B2, C1) → from registry.
 12. Level-test and final-test proportional draw uses the four original category ids.
+13. Hard-coded `lang` attributes: 53 × `lang: "en"` mark target-language text and 8 × `lang: "pl"` mark UI or explanation text. Here target and UI languages swap: the first become `LM.APP.targetLang`, the second are removed (inventory §3.8).
+14. Flashcards have a second answer checker (`fiszki-logic.js` `normalize` / `levenshtein` / `checkAnswer`); it is replaced by `LM.exLogic.match` like the exercise checker.
 
 **Trap specific to this project:** the reference contains a lot of Polish text that is UI (must go) and the new app needs Polish text as *content* (must stay, in `content/` and `LM.lang` only). `check:lang` (spec 04 §4) separates them by location, not by language detection.
 

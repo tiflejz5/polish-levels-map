@@ -375,6 +375,8 @@ In **this repo** (snapshot without content): `node tools/testy.js` runs 31 tests
 
 ## 10. Questions for the owner
 
+**Answered 16 Nov 2026:** the owner accepted stage 0 with "OK", which accepts the recommendations below: (1) yes, `npm run assets`; (2) accept wrong Polish plural forms between 1B and 2, no temporary helper; (3) `#/practice/mixes`; (4) hide trainer and model-answer entries while their data is empty. Item 13 was added to spec 03 §3.
+
 1. §9.5: keep the asset-copy tool as `npm run assets`? (recommended: yes)
 2. §9.6: temporary `LM.plural3` between stages 1B and 2, or accept wrong Polish plural forms in the still-Polish UI for one stage? (recommended: accept; it is invisible in English later and costs nothing)
 3. §9.8: `#/practice/mixes` for the mixed-set list?
