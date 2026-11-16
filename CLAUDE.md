@@ -2,7 +2,7 @@
 
 A static web app for learning **Polish** (A1–C2), explained in **English**. Standalone project in its own repository.
 
-The app starts as a copy of the finished engine of `spanish-levels-map` (reference clone in `reference/spanish-levels-map/`, tag `engine-v1`, read-only, git-ignored). After the import the two projects are independent: nothing is shared or synced. Learner: an English-speaking adult. The owner is a native speaker of Polish.
+The app is ported from the original `english-levels-map` (Polish UI, teaches English; reference clone in `reference/english-levels-map/`, commit `275be9f`, read-only, git-ignored). After the port the projects are independent: nothing is shared or synced. Learner: an English-speaking adult. The owner is a native speaker of Polish.
 The plan lives in `docs/plan/`. **Read `docs/plan/00-READ-ME.md` before any work.** Specs win over habits from the reference repo.
 
 ## Hard rules (every session)

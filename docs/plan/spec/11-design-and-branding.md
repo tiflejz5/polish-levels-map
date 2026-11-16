@@ -1,6 +1,6 @@
 # Spec 11 — Design and branding
 
-`DESIGN.md` stays the design system (direction "travel map with editorial typography", tokens, components, motion, accessibility). It arrives in English with the imported engine; stage 3 updates it for the Case Lab and this spec.
+`DESIGN.md` stays the design system (direction "travel map with editorial typography", tokens, components, motion, accessibility). It arrives in Polish with the ported code; stage 2 translates it, stage 6 rewrites the lab section, stage 7 updates it for this spec.
 ## 1. Name and marks
 
 App title **Polish Levels Map** · sidebar tagline "Your map of Polish, A1–C2" · `<title>` "Polish Levels Map (A1–C2)" · export file `polish-levels-map-YYYY-MM-DD.json`.

@@ -14,9 +14,9 @@ Levels with categories and an "I know this" checklist · topic pages · level su
 
 ## 3. Decisions (made; do not reopen without the owner)
 
-**D1. A standalone app in its own repository.** It starts as a copy of the Spanish app's engine at tag `engine-v1` and from then on is independent: no shared code, no sync. The original English app and the Spanish app are not touched.
+**D1. A standalone app in its own repository.** It is ported from the original `english-levels-map` (commit `275be9f`) and from then on is independent: no shared code, no sync. The original English app and the Spanish app are not touched. (The plan first assumed a copy of the Spanish app's engine at tag `engine-v1`; that tag does not exist, so the owner chose the direct port on 16 Nov 2026.)
 
-**D2. Copy, do not rewrite.** Everything language-neutral is taken as is. Only the language layer, the lab, the branding and the content are new.
+**D2. Copy, do not rewrite.** Everything language-neutral is taken as is, renamed to English and given an English UI. The language layer, the generic engine changes of spec 06, the lab, the branding and the content are new.
 
 **D3. Fresh start for data.** Storage prefix `plm.`, schema version 1 everywhere, no legacy migration code.
 
