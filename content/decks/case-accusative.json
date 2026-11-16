@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "id": "case-accusative",
+  "title": "Accusative in sentences",
+  "description": "Sample of 6 cards. The full deck has 30 cards. Put the phrase in brackets into the accusative.",
+  "level": "A1-A2",
+  "cards": [
+    { "id": "case-accusative-001", "type": "cloze", "text": "Rano piję {{kawę}} (kawa) z mlekiem.", "hint": "coffee", "en": "In the morning I drink coffee with milk.", "level": "A1", "tags": ["accusative", "feminine"] },
+    { "id": "case-accusative-002", "type": "cloze", "text": "Mam {{starszego brata}} (starszy brat).", "hint": "an older brother", "en": "I have an older brother.", "level": "A1", "tags": ["accusative", "masculine-animate"] },
+    { "id": "case-accusative-003", "type": "cloze", "text": "Kupuję {{nowy komputer}} (nowy komputer).", "hint": "a new computer", "en": "I'm buying a new computer.", "note": "A masculine thing: no change.", "level": "A1", "tags": ["accusative", "masculine-inanimate"] },
+    { "id": "case-accusative-004", "type": "cloze", "text": "Bardzo lubię {{polską kuchnię}} (polska kuchnia).", "hint": "Polish food", "en": "I really like Polish food.", "level": "A1", "tags": ["accusative", "feminine"] },
+    { "id": "case-accusative-005", "type": "cloze", "text": "Znasz {{mojego tatę}} (mój tata)?", "hint": "my dad", "en": "Do you know my dad?", "note": "Tata ends in -a, so the noun takes -ę, but the adjective stays masculine: mojego.", "level": "A1", "tags": ["accusative", "masculine-a"] },
+    { "id": "case-accusative-006", "type": "cloze", "text": "Poproszę {{małe piwo}} (małe piwo).", "hint": "a small beer", "en": "A small beer, please.", "note": "Neuter: no change.", "level": "A1", "tags": ["accusative", "neuter"] }
+  ]
+}

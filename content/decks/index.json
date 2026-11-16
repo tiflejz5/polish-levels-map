@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "decks": [
+    {
+      "id": "case-accusative",
+      "title": "Accusative in sentences",
+      "description": "Sample of 6 cards. The full deck has 30 cards. Put the phrase in brackets into the accusative.",
+      "level": "A1-A2",
+      "file": "case-accusative.json",
+      "count": 6
+    }
+  ]
+}
