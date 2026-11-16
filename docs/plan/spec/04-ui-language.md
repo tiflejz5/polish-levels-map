@@ -2,7 +2,7 @@
 
 ## 1. Mechanism
 
-The imported engine is already English. This spec is the reference for any new UI text (Case Lab, settings, help texts) so that it matches the rest.
+The original UI is Polish, with about 1,500 string literals. In this app every user-visible string is **English, written directly in the code** (labels, buttons, `aria-label`, `title`, toasts, dialogs, empty states, document titles, export texts, print headers). There is no translation layer: one app, one UI language. Stage 2 translates the ported code; later stages follow this spec for new text (Case Lab, settings, help texts).
 
 Helpers in `js/utils.js`:
 
@@ -101,5 +101,9 @@ Exercise type names: `multiple-choice` Multiple choice · `reorder` Put in order
 
 ## 4. How it is done
 
-1. New texts follow sections 2 and 3.
-2. `tools/check-lang.js` in this repo fails when code outside `js/lang.js` and `js/config.js` contains Polish diacritics or Polish locale codes (they belong to the language layer), and when anything outside `content/` contains leftovers of the Spanish app (spec 03 §3).
+1. Order: shared pieces first (`utils`, `ui`, `dialogs`, `profiles`, `data-menu`, `sidebar`, `render`, `app`), then feature groups, one commit per group.
+2. For each file: translate strings with the glossary, translate comments, rename Polish identifiers that are part of a public name (`LM.niezbednik` → `LM.handbook`).
+3. Do not change behaviour in this stage. Polish three-form UI plurals become `LM.plural`. Polish typography becomes English typography.
+4. After each group: `npm test`, open the affected views in both themes at 390 px and 1280 px, check for clipped or wrapped buttons.
+5. `tools/check-lang.js` (`npm run check:lang`) fails when code (`js/`, `css/`, `index.html`, `tools/`) **outside `js/lang.js` and `js/config.js`** contains: Polish diacritics `ąćęłńóśźż` (any case), Polish quotes `„ ”`, a word from a stop list of frequent Polish UI words (Dodaj, Zapisz, Anuluj, Usuń, Dalej, Wróć, Wynik, Poziom, Zadanie, Pokaż, Ukryj, Umiem, Dziś, Szlak, Fiszki, Zestaw, Błąd, Powtórka, Egzamin), the locale codes `pl-PL` / `en-GB` / `en-US` in speech code, or legacy names (`ELM`, `elm_`, `niezbednik`, `szlak`, `fiszki`). Whitelist file for false positives. Polish content lives in `content/` and `LM.lang`, never in UI code. Until stage 2 is done the check is expected to fail; stage summaries say so.
+6. Final pass: list all string literals shown to the user (`tools/extract-strings.js`), read the list once for consistency with the glossary (one term per concept), fix.

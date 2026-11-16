@@ -2,7 +2,7 @@
 
 Goal: a standalone app that teaches **Polish** A1–C2 with explanations in English, built on the idea and code of `english-levels-map` (Polish UI, teaches English).
 
-Reference: `spanish-levels-map` at tag `engine-v1` (the engine after its stage 7). **This plan can start only when that tag exists.** The Spanish engine is already English, language-neutral outside `js/lang.js` / `js/config.js`, and has every engine change of spec 06 except the Polish parts.
+Reference: `english-levels-map` at commit `275be9f` (11 Nov 2026): Polish UI, teaches English, about 60 JS files. The app is ported from it directly (the planned shortcut through `spanish-levels-map@engine-v1` is not available). Stages 0–7 turn it into an English-UI engine with a Polish language layer and the Case Lab; content stages follow unchanged.
 
 ## Contents
 
@@ -11,7 +11,7 @@ Reference: `spanish-levels-map` at tag `engine-v1` (the engine after its stage 7
 PROMPTS.md                     prompts for Claude Code, stage by stage
 spec/01-product-and-decisions.md   what we build, for whom, decisions already made
 spec/02-architecture.md        repo layout, config, build, storage, routes
-spec/03-import-map.md          what is copied from spanish-levels-map and what is replaced
+spec/03-port-map.md            file-by-file map: english-levels-map → this app
 spec/04-ui-language.md         English UI: style, glossary Polish → English
 spec/05-language-layer.md      LM.lang and LM.speech: answers, accents, speech, search, markup
 spec/06-engine-changes.md      new and changed features (E1–E12)
@@ -41,10 +41,14 @@ The hard rules are in `/CLAUDE.md`. They apply to every stage. In addition:
 
 | # | Stage | Prompt | Spec |
 |---|---|---|---|
-| 0 | Import the engine from `spanish-levels-map@engine-v1`, rename, new storage prefix, Polish syllabus, import inventory | 0 | 02, 03 |
-| 1 | Polish language layer: `lang.js`, speech, character bar, validator heuristics, tests | 1 | 05, 06 (E3–E5, E11) |
-| 2 | Case Lab | 2 | 09, 08 |
-| 3 | Branding, docs, QA | 3 | 11, 13 |
+| 0 | Bootstrap: reference clone, code snapshot, port inventory | 0 | 02, 03 |
+| 1 | Skeleton: `LM` namespace, English file names, layout, build, storage `plm.`; then checklist = topics, English routes, level status, trail from syllabus, legacy removal | 1A, 1B | 02, 03, 06 (E1, E2, E8, E9) |
+| 2 | English UI | 2 | 04 |
+| 3 | Polish language layer: answers and diacritics, character bar, speech, search, `lang` markup | 3 | 05, 06 (E3–E5) |
+| 4 | Exercises: engine check with Polish data, `paradigm` type, validators | 4 | 06 (E6, E10, E11), 07 |
+| 5 | Learning loop: flashcards, reviews, My words, mistakes, tests, Today, Stats | 5 | 06 (E12), 13 |
+| 6 | Case Lab | 6 | 06 (E7), 08, 09 |
+| 7 | Branding, docs, QA | 7 | 11, 13 |
 | C | **Content** (repeat per level, by units) | C | 07, 08, 10 |
 | X | **Level extras** (repeat per level) | X | 07, 08, 10 |
 | L | Beta launch | L | 13 |

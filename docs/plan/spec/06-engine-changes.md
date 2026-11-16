@@ -1,6 +1,6 @@
 # Spec 06 — Engine changes (E1–E12)
 
-The imported engine already has E1–E6 and E8–E12. They are listed so the behaviour is documented in this repo; the Polish work is marked **(new here)**.
+None of these exist in the original app; all are built in the engine stages 1–7 (stage per change in `00-READ-ME.md`). Items marked **(Polish)** are specific to this app.
 
 ## E1. Level status: "available" or "soon"
 
@@ -35,7 +35,7 @@ Spec 05 §2: hints `accents` / `ending` / `typo`; preference "Accept answers wit
 
 ## E7. Case Lab
 
-**(new here)** The Case Lab replaces the tense lab: spec 09.
+**(Polish)** The Case Lab replaces the tense lab: spec 09.
 
 ## E8. Exams module: generic only
 
@@ -54,7 +54,7 @@ Placement: skills `grammar`, `vocabulary`, `reading` (`cases` and `verbs` count 
 All rules of `docs/plan/scripts/validate_plan.py`, plus:
 
 1. Accepted sentence starts with a subject pronoun and the variant without it is missing → warning.
-2. **(new here)** Accepted answer has a 1st or 2nd person past or conditional form (endings *-łem / -łam, -łeś / -łaś, -łbym / -łabym*), the other gender is missing and the prompt has no gender note → warning.
+2. **(Polish)** Accepted answer has a 1st or 2nd person past or conditional form (endings *-łem / -łam, -łeś / -łaś, -łbym / -łabym*), the other gender is missing and the prompt has no gender note → warning.
 3. Characters outside the Polish alphabet + ASCII in target-language fields → error (catches wrong-language letters and broken encoding). A Polish text field longer than 80 characters with no diacritics at all → warning (probably stripped).4. Multiple choice: exactly one correct option, no duplicates after normalisation, `explanation` required, `optionNotes` length = options length.
 
 ## E12. Report a mistake + footer

@@ -11,7 +11,7 @@
 | Input | keyboard only, touch, character bar, `Alt` + letter |
 | Speech | with a Polish voice; without one |
 | Accessibility | `lang` attributes on Polish text; names match visible text; focus visible; targets ≥ 44 px; `prefers-reduced-motion`; heading order |
-| Storage | new profile; guest mode; export → reset → import round trip; a file from another app refused; data of the owner's other apps on the same origin (`elm_*`, `slm.*`) untouched and ignored; storage blocked (private mode) shows the warning and works until the tab closes |
+| Storage | new profile; guest mode; export → reset → import round trip; a file from another app refused; data of the owner's other apps on the same origin (`elm_*` keys of english-levels-map, and any other prefix such as `slm.`) untouched and ignored; storage blocked (private mode) shows the warning and works until the tab closes |
 | Flows | first run → placement → trail → stop → quiz → checkpoint; level page → topic → set → mistakes logged → review session; final test pass and fail; My words from a selection; notes; search; print topic and cheat sheet |
 | Levels "soon" | E1 behaviour in sidebar, level page, trail, Today, search, placement result |
 | Performance | first view under 1 s on a warm cache; lab under 500 ms; no data file over 400 kB loaded at start |

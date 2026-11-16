@@ -4,7 +4,7 @@ Paczka dla Claude Code (Opus 5.5) do zbudowania **osobnej aplikacji** do nauki p
 
 **Dla kogo:** dla osoby anglojęzycznej uczącej się polskiego. Objaśnienia porównują polski z angielskim (sekcja „Common mistakes for English speakers”).
 
-**Ważne:** ta aplikacja startuje z kopii gotowego silnika aplikacji hiszpańskiej (tag `engine-v1` w repozytorium `spanish-levels-map`). To jednorazowa kopia: potem projekty są całkiem niezależne. Dzięki temu silnik to 4 sesje zamiast 9. Jeśli chcesz zrobić polską aplikację wcześniej niż hiszpańską, napisz, a przygotuję wariant portu prosto z oryginału.
+**Ważne:** ta aplikacja powstaje przez port prosto z oryginału `english-levels-map` (commit `275be9f`), bo silnik hiszpański (`spanish-levels-map@engine-v1`) jeszcze nie istnieje. To jednorazowa kopia: potem projekty są całkiem niezależne. Silnik to 9 sesji (etapy 0–7), treści bez zmian według promptów C, X, L, E.
 
 ## Co jest w paczce
 
@@ -46,13 +46,13 @@ Dalej zawsze tak samo: prompt → Opus pracuje i się zatrzymuje → oglądasz �
 
 | Faza | Prompty | Sesje (orientacyjnie) |
 |---|---|---|
-| Silnik | 0, 1, 2, 3 | 4 |
+| Silnik | 0, 1A, 1B, 2, 3, 4, 5, 6, 7 | 9 |
 | A1 | C (2–3 razy), X | 3–4 |
 | Publikacja | L | 1 |
 | Każdy kolejny poziom | C + X | 3–4 |
 | Egzamin | E1, E2 | 2 |
 
-Do działającej aplikacji z całym A1: około 8–9 sesji (po zakończeniu silnika hiszpańskiego).
+Do działającej aplikacji z całym A1: około 13–14 sesji.
 
 ## Na co uważać
 

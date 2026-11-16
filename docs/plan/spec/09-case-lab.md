@@ -1,6 +1,6 @@
 # Spec 09 — Case Lab
 
-Route `#/lab`, title "Case Lab", data in `content/lab/`. It replaces the Tense & Mood Lab of the imported engine. Reused from it: card page layout, decision-tree view, compare view, listen buttons, search entries, notes button, the timeline drawing function. New: `js/lab-cases.js`.
+Route `#/lab`, title "Case Lab", data in `content/lab/`. It replaces the tense lab of the original app (`tense-lab.js`). Reused from it: card page layout, decision-tree view, compare view, listen buttons, search entries, notes button, the timeline drawing function. New: `js/lab-cases.js`.
 
 ## 1. Data
 
@@ -25,7 +25,7 @@ Route `#/lab`, title "Case Lab", data in `content/lab/`. It replaces the Tense &
 
 `models.json` — 14 model phrases (adjective + noun) with all 14 forms each: *nowy student, dobry lekarz, mały kot, stary dom, nowy pokój, dobra kawa, nowa lekcja, mała ulica, długa noc, małe okno, dobre piwo, nowe mieszkanie, trudne imię, małe muzeum*.
 
-`trees.json` — decision trees in the imported format: "Pick the case" (preposition? → which → motion or location; no preposition → subject / after *być* / object / negated object / recipient / tool / addressing someone) · "Imperfective or perfective?" · "*w* or *na*?" · "*iść*, *jechać* or a prefixed verb?".
+`trees.json` — decision trees in the reference format: "Pick the case" (preposition? → which → motion or location; no preposition → subject / after *być* / object / negated object / recipient / tool / addressing someone) · "Imperfective or perfective?" · "*w* or *na*?" · "*iść*, *jechać* or a prefixed verb?".
 
 `aspect.json` — five forms (present, past imperfective, past perfective, future imperfective, future perfective) with timeline scenes, one example pair each.
 
