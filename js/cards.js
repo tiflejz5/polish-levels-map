@@ -59,7 +59,7 @@ window.LM = window.LM || {};
   function loadDecks() {
     return Promise.all(index().map(function (d) {
       if (loaded(d.id)) return null;
-      return LM.loadScript(d.file).catch(function () { return null; });
+      return LM.loadModule(d.file).catch(function () { return null; });
     }));
   }
 

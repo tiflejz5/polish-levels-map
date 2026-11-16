@@ -52,9 +52,10 @@ window.LM = window.LM || {};
   function isForm(t) { return t.aspect === "form" || (t.group === "future" && !/^future-/.test(t.id)); }
 
   function load() {
-    if (LM.LAB) return Promise.resolve(LM.LAB);
-    const src = LM.exercises ? LM.exercises.asset("dane/lab-dane.js") : "dane/lab-dane.js";
-    return LM.loadScript(src).then(function () { return LM.LAB; }, function (e) { console.warn(e.message + " — uruchom: npm run build"); return null; });
+    // Stage 1A: data/lab.js holds Case Lab data (spec 09), which this tense view cannot draw; stage 6 replaces the view
+    const usable = function () { return LM.LAB && Array.isArray(LM.LAB.tenses) ? LM.LAB : null; };
+    if (LM.LAB) return Promise.resolve(usable());
+    return LM.loadModule("data/lab.js").then(usable, function (e) { console.warn(e.message + " — uruchom: npm run build"); return null; });
   }
 
   // =====================================================================
@@ -565,7 +566,7 @@ window.LM = window.LM || {};
   // =====================================================================
 
   /**
-   * Szkielet widoku do czasu wczytania danych (dane/lab-dane.js): układ siatki Mapy czasów jest znany z góry
+   * Szkielet widoku do czasu wczytania danych (data/lab.js): układ siatki Mapy czasów jest znany z góry
    * (kolumny i aspekty), więc wiersze i kolumny rysują się od razu, a kafelki są pustymi placeholderami.
    * Dla pozostałych zakładek: trzy paski. Czytnik ekranu dostaje jeden komunikat „Wczytuję…”.
    */
@@ -618,16 +619,16 @@ window.LM = window.LM || {};
     view.replaceChildren();
     document.title = "Laboratorium czasów · English Levels Map";
     header(route.tab, route).forEach(function (n) { view.appendChild(n); });
-    if (!LM.LAB) {
+    if (!LM.LAB || !Array.isArray(LM.LAB.tenses)) {
       view.appendChild(skeleton(route.tab)); // szkielet układu zamiast samego napisu (spec v7 14, P4)
       load().then(function (data) {
         if (!data) {
           const sk = view.querySelector(".lab-skeleton");
           if (sk) sk.remove();
-          view.appendChild(el("p", { class: "tool-note", text: "Nie udało się wczytać danych Laboratorium (dane/lab-dane.js)." }));
+          view.appendChild(el("p", { class: "tool-note", text: "Nie udało się wczytać danych Laboratorium (data/lab.js)." }));
           return;
         }
-        if (parseRoute(location.hash)) render(parseRoute(location.hash));
+        if (parseRoute(location.hash) && LM.LAB.tenses) render(parseRoute(location.hash));
       });
       return;
     }

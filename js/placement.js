@@ -135,7 +135,7 @@ window.LM = window.LM || {};
     view.appendChild(el("section", { class: "card lt-card" }, [
       count
         ? el("p", { text: "Możesz zaznaczyć „Nie wiem” – to lepsze niż zgadywanie. Po każdej odpowiedzi zobaczysz krótkie wyjaśnienie." })
-        : el("p", { text: "Brak pytań testu (niezbednik/test-poziomu-dane.js). Uruchom: node tools/zbuduj-niezbednik.js" }),
+        : el("p", { text: "Brak pytań testu (data/placement.js). Uruchom: npm run build" }),
       el("p", { class: "tool-note", text: DISCLAIMER }),
       el("div", { class: "tool-actions" }, [
         count ? el("button", { type: "button", class: "btn btn-primary", onclick: function () { start(); render(); focusLater(".lt-option"); } }, last ? "Zrób test ponownie" : "Rozpocznij test") : null,
@@ -345,7 +345,7 @@ window.LM = window.LM || {};
       // 60 pytań ładuje się dopiero po wejściu na #/test-poziomu
       view.className = "view tool-view lt-view";
       view.replaceChildren(el("p", { class: "tool-note", role: "status", text: "Wczytuję pytania…" }));
-      LM.loadModule("niezbednik/test-poziomu-dane.js").then(function () {
+      LM.loadModule("data/placement.js").then(function () {
         if (LM.state.view === "leveltest") render();
       }, function (err) { console.warn(err.message + " — uruchom: npm run build"); LM.PLACEMENT = { version: 1, questions: [] }; if (LM.state.view === "leveltest") render(); });
       return;

@@ -128,7 +128,7 @@ window.LM = window.LM || {};
   function loadQuizzes(level) {
     const lvl = String(level).toLowerCase();
     if (LM.QUIZZES && Object.keys(LM.QUIZZES).some(function (k) { return k.indexOf("szlak-" + lvl + "-") === 0; })) return Promise.resolve();
-    return LM.loadModule("szlak/quizy-" + lvl + ".js").catch(function () { /* poziom bez quizów */ });
+    return LM.loadModule("data/quizzes-" + lvl + ".js").catch(function () { /* poziom bez quizów */ });
   }
 
   /** Zadania quizu w formacie silnika (temat, poziom i zestaw potrzebne do dziennika podejść i statystyk). */

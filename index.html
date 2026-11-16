@@ -136,10 +136,9 @@
   <script defer src="js/toc.js?v=1"></script>
   <script defer src="js/shortcuts.js?v=1"></script>
   <script defer src="js/handbook.js?v=1"></script>
-  <!-- Podstrony niezbędnika (generowane: node tools/zbuduj-niezbednik.js) -->
-  <script defer src="niezbednik/niezbednik-dane.js?v=1"></script>
-  <!-- Zakładka „Certyfikat C1” (dane generowane tym samym skryptem) -->
-  <script defer src="niezbednik/certyfikat-c1-dane.js?v=1"></script>
+  <!-- Generated data loaded at start (npm run build): syllabus and level status, topic pages -->
+  <script defer src="data/syllabus.js?v=1"></script>
+  <script defer src="data/pages.js?v=1"></script>
   <script defer src="js/c1-core.js?v=1"></script>
   <script defer src="js/c1-exercises.js?v=1"></script>
   <!-- Wspólny silnik trenera pisania (C1, Egzamin ósmoklasisty) -->
@@ -148,7 +147,7 @@
   <!-- Trener Speaking egzaminów z rejestru (B2 First): timery, samoocena, historia sesji -->
   <script defer src="js/c1-speaking.js?v=1"></script>
   <!-- Egzaminy z rejestru: rejestr (mały, przy starcie), logika i moduł; treści egzaminu ładowane na żądanie -->
-  <script defer src="dane/egzaminy-rejestr.js?v=1"></script>
+  <script defer src="data/exams-registry.js?v=1"></script>
   <script defer src="js/exam-logic.js?v=1"></script>
   <script defer src="js/exam-core.js?v=1"></script>
   <script defer src="js/exam-ui.js?v=1"></script>
@@ -162,9 +161,9 @@
   <script defer src="js/cards-store.js?v=1"></script>
   <script defer src="js/trail-logic.js?v=1"></script>
   <script defer src="js/trail-store.js?v=1"></script>
-  <script defer src="szlak/szlak-dane.js?v=1"></script>
+  <script defer src="data/trail.js?v=1"></script>
   <!-- Indeks talii (mały; same talie ładowane na żądanie z dane/fiszki/talie/) i zakładka /fiszki -->
-  <script defer src="dane/fiszki/fiszki-indeks.js?v=1"></script>
+  <script defer src="data/decks-index.js?v=1"></script>
   <script defer src="js/cards.js?v=1"></script>
   <script defer src="js/cards-browse.js?v=1"></script>
   <script defer src="js/words.js?v=1"></script>

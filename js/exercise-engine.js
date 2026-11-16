@@ -59,19 +59,10 @@ window.LM = window.LM || {};
   // DANE (ładowane na żądanie)
   // =====================================================================
 
-  /** Numer wersji z adresu tego skryptu (?v=…), żeby dane nie brały się ze starej pamięci podręcznej. */
-  const VERSION = (function () {
-    const s = document.querySelector('script[src*="js/exercise-engine.js"]');
-    const m = s && /[?&]v=(\d+)/.exec(s.getAttribute("src"));
-    return m ? m[1] : "1";
-  })();
-
-  function asset(src) { return src + "?v=" + VERSION; }
-
   /** Indeks ćwiczeń (Promise). Brak pliku → pusty indeks, aplikacja działa dalej. */
   function loadIndex() {
     if (LM.SETS_INDEX) return Promise.resolve(LM.SETS_INDEX);
-    return LM.loadScript(asset("cwiczenia/cwiczenia-indeks.js")).then(function () {
+    return LM.loadModule("data/sets-index.js").then(function () {
       return LM.SETS_INDEX || emptyIndex();
     }, function (e) {
       console.warn(e.message + " — uruchom: npm run build");
@@ -88,7 +79,7 @@ window.LM = window.LM || {};
         const meta = index.sets[id];
         if (!meta) { console.warn("Ćwiczenia: brak zestawu " + id); return null; }
         if (LM.SETS && LM.SETS[id]) return LM.SETS[id];
-        return LM.loadScript(asset(meta.file)).then(function () {
+        return LM.loadModule(meta.file).then(function () {
           return (LM.SETS && LM.SETS[id]) || null;
         }, function (e) { console.warn(e.message); return null; });
       }));
@@ -1773,7 +1764,6 @@ window.LM = window.LM || {};
 
   LM.exercises = {
     BASE: BASE,
-    asset: asset,
     TYPE_SHORT: TYPE_SHORT,
     TYPE_LABEL: TYPE_LABEL,
     playablePool: playablePool,

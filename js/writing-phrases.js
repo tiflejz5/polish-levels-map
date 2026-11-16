@@ -40,8 +40,7 @@ window.LM = window.LM || {};
   function load() {
     if (LM.PHRASES) return Promise.resolve(LM.PHRASES);
     if (loading) return loading;
-    const src = "dane/pisanie/zwroty-dane.js";
-    loading = LM.loadScript(LM.exercises && LM.exercises.asset ? LM.exercises.asset(src) : src).then(function () { return LM.PHRASES || null; }, function (err) {
+    loading = LM.loadModule("data/phrases.js").then(function () { return LM.PHRASES || null; }, function (err) {
       console.warn((err && err.message) + " — uruchom: npm run build");
       loading = null;
       return null;

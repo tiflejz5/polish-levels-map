@@ -317,11 +317,13 @@ window.LM = window.LM || {};
     return loading[src];
   }
 
-  /** Moduł JS (albo plik danych) ładowany na żądanie, z tym samym ?v=… co skrypty startowe (index.html). Zwraca Promise. */
+  /**
+   * A JS module or data file loaded on demand (js/…, data/…), with the same ?v=N as the start-up scripts:
+   * LM.VERSION, stamped by tools/build.js. Plain <script>, so it works from file:// and over http. Returns a Promise;
+   * a second call for the same file returns the same Promise.
+   */
   function loadModule(file) {
-    const tag = document.querySelector('script[src*="js/ui.js"]');
-    const m = tag && /[?&]v=([\w.-]+)/.exec(tag.getAttribute("src") || "");
-    return loadScript(file + (m ? "?v=" + m[1] : ""));
+    return loadScript(file + (LM.VERSION ? "?v=" + LM.VERSION : ""));
   }
 
   /**
