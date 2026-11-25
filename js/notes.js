@@ -3,7 +3,7 @@
  *
  *   LM.notes.button(key, { title, route })   przycisk „Notatki” (z kropką, gdy notatka istnieje);
  *                                              panel otwiera się dopiero po kliknięciu
- *   #/notatki                                 „Moje notatki”: lista, szukanie, usuwanie
+ *   #/notes                                 „Moje notatki”: lista, szukanie, usuwanie
  *
  * Klucze stron: id punktu niezbędnika („a2-czasy-past-simple”), „c1:<strona>”,
  * „lab:<czas>”, „set:<zestaw>”. Dane: LM.profileData (plm.notes, per profil):
@@ -19,7 +19,7 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
-  const HASH = "#/notatki";
+  const HASH = "#/notes";
   const DEBOUNCE = 500;
 
   function pd() { return LM.profileData; }
@@ -142,7 +142,7 @@ window.LM = window.LM || {};
 
   const filter = { query: "" };
 
-  function parseRoute(hash) { return /^#\/notatki\/?$/.test(hash || "") ? { kind: "notes" } : null; }
+  function parseRoute(hash) { return /^#\/notes\/?$/.test(hash || "") ? { kind: "notes" } : null; }
 
   function fmtDate(iso) {
     const d = new Date(iso);

@@ -75,10 +75,10 @@ async function main() {
     const page = await ctx.newPage();
     const errors = [];
     page.on("pageerror", function (e) { errors.push(e.message); });
-    await page.goto(url + "#/" + level + "/sciaga");
-    await page.waitForFunction("window.LM && LM.state && LM.state.content && LM.print && LM.handbook", null, { timeout: 15000 });
+    await page.goto(url + "#/" + level + "/cheatsheet");
+    await page.waitForFunction("window.LM && LM.state && LM.state.ready && LM.print && LM.handbook", null, { timeout: 15000 });
     await page.evaluate("LM.app.addProfile && !LM.app.getActiveProfile() && LM.app.addProfile('PDF')");
-    await page.goto(url + "#/" + level + "/sciaga");
+    await page.goto(url + "#/" + level + "/cheatsheet");
     await page.waitForSelector(".sciaga.md", { timeout: 15000 });
     await page.evaluate("document.fonts && document.fonts.ready");
     await page.evaluate("LM.print.before()");

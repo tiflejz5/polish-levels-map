@@ -75,7 +75,7 @@ window.LM = window.LM || {};
     if (document.querySelector(".ex-view .ex-card")) return "zadania";
     if (document.querySelector(".fc-session")) return "powtorki";
     const v = LM.state && LM.state.view;
-    if (v === "c1" || v === "exam") return "c1";
+    if (v === "exam") return "c1";
     if (v === "page") return "strona";
     return "ogolne";
   }

@@ -1,19 +1,14 @@
 /*
- * app.js — start aplikacji, stan, zdarzenia i automatyczny zapis.
+ * app.js — start-up, state, routing and saving.
  *
- * LM.state przechowuje wszystko, co aplikacja wie w danej chwili:
- *   content  — treści listy (tylko w pamięci; od etapu 1B lista pochodzi z LM.SYLLABUS)
- *   profiles — profile z osobnym postępem (zapisywane w plm.profiles)
- *   progress — postęp AKTYWNEGO profilu (odnośnik do profiles…progress)
- *   ui       — wybrany poziom / kategoria (plm.ui)
- *   view     — co jest wyświetlane: "home" (strona główna, adres #/),
- *              "level" (lista poziomu, #/a1) albo "page" (podstrona, #/a1/…)
- *   route    — otwarta podstrona niezbędnika ({ file }) albo null
- *   c1Route  — widok zakładki „Certyfikat C1” (view "c1"), patrz js/c1-core.js
- *   toolRoute — widoki nauki: "today" (#/dzis, js/today.js),
- *              "leveltest" (#/test-poziomu, js/placement.js),
- *              "powtorki" (#/powtorki, js/review.js: Fiszki i błędy, zakładka „Na dziś”)
- *              "journal" (#/powtorki/moje-bledy, js/mistakes.js)
+ * LM.state holds what the app knows right now:
+ *   profiles  — profiles with their own progress (saved in plm.profiles)
+ *   progress  — progress of the ACTIVE profile ({ <topic id>: true }, a reference into profiles…progress)
+ *   ui        — the selected level (plm.ui)
+ *   view      — what is on screen (the table in applyRoute)
+ *   route     — the open topic page or cheat sheet ({ level, topicId } | { level, cheatsheet }) or null
+ *   toolRoute — the parsed route of the other views
+ * Levels, units, categories and topics come only from LM.syllabus (spec 06 E2); nothing of the content is stored.
  */
 window.LM = window.LM || {};
 
@@ -24,19 +19,15 @@ window.LM = window.LM || {};
   const el = U.el;
 
   const state = LM.state = {
-    content: null,
     profiles: null,
     progress: {},
-    ui: { levelId: "A1", categoryId: null },
+    ui: { levelId: "A1" },
     storageOk: true,
     view: "home",
     route: null,
-    c1Route: null,
     toolRoute: null,
-    listScroll: 0 // pozycja przewinięcia listy, przywracana po powrocie z podstrony
+    listScroll: 0 // scroll position of the level page, restored when coming back from a topic page
   };
-
-  let saveTimer = null;
 
   // =====================================================================
   // START
@@ -48,15 +39,15 @@ window.LM = window.LM || {};
       state.storageOk = LM.store.isStorageAvailable();
 
       if (!state.storageOk) {
-        // Bez localStorage aplikacja działa, ale tylko do zamknięcia karty
-        state.content = LM.createDefaultData();
+        // Without localStorage the app works, but only until the tab is closed
         state.profiles = LM.createEmptyProfiles();
         syncProgress();
-        addBanner("error", "Pamięć przeglądarki (localStorage) jest niedostępna, więc zmiany NIE będą zapisywane. " +
-          "Sprawdź ustawienia przeglądarki (np. tryb prywatny, blokada plików cookie). Możesz zaimportować kopię i korzystać ze strony do zamknięcia karty.",
-          { label: "Importuj kopię…", onClick: function () { LM.dataMenu.importAll(); } });
+        addBanner("error", "Browser storage (localStorage) is not available, so changes will NOT be saved. " +
+          "Check your browser settings (private mode, blocked cookies). You can import a backup and use the app until you close the tab.",
+          { label: "Import a backup…", onClick: function () { LM.dataMenu.importAll(); } });
         fixUi();
         applyRoute();
+        state.ready = true;
         renderAll();
         return;
       }
@@ -65,7 +56,6 @@ window.LM = window.LM || {};
       state.profiles = prof.data;
       syncProgress();
       state.ui = LM.store.loadUI();
-      state.content = LM.store.loadContent().data;
       if (prof.status === "corrupt") {
         // Nothing is written until the learner chooses (the broken value stays in plm.profiles)
         showCorruptScreen(prof);
@@ -77,6 +67,7 @@ window.LM = window.LM || {};
       if (LM.celebrate) LM.celebrate.baseline();
       applyRoute();
       syncSection();
+      state.ready = true;
       renderAll();
     } catch (err) {
       showFatal(err);
@@ -85,11 +76,8 @@ window.LM = window.LM || {};
 
   function bindStaticEvents() {
     LM.profiles.bindEvents();
-    // Zapisz zaległe zmiany przy zamykaniu / chowaniu karty
-    window.addEventListener("beforeunload", flushSave);
-    // Podstrony niezbędnika: adresy #/a1/… (zmiana adresu = zmiana widoku)
     window.addEventListener("hashchange", onRoute);
-    // Menu boczne jako szuflada na telefonie
+    // Sidebar as a drawer on phones
     document.getElementById("menu-btn").addEventListener("click", function () { setNavOpen(!document.body.classList.contains("nav-open")); });
     document.getElementById("nav-overlay").addEventListener("click", function () { setNavOpen(false); });
     document.addEventListener("keydown", function (e) {
@@ -98,79 +86,34 @@ window.LM = window.LM || {};
         document.getElementById("menu-btn").focus();
       }
     });
-    document.addEventListener("visibilitychange", function () {
-      if (document.visibilityState === "hidden") flushSave();
-    });
   }
 
-  /** Wartość ui.categoryId dla filtra „Wszystkie” (lista poziomu bez wyboru jednej kategorii). */
-  const ALL_CATEGORIES = "all";
-
-  /** Pilnuje, żeby wybrany poziom i kategoria istniały. */
+  /** Keeps the selected level valid. */
   function fixUi() {
-    const ui = state.ui;
-    if (LM.LEVEL_IDS.indexOf(ui.levelId) === -1) ui.levelId = LM.LEVEL_IDS[0];
-    const cats = state.content.categories;
-    if (ui.categoryId !== ALL_CATEGORIES && !cats.some(function (c) { return c.id === ui.categoryId; })) {
-      ui.categoryId = cats.length ? cats[0].id : null;
-    }
+    if (LM.LEVEL_IDS.indexOf(state.ui.levelId) === -1) state.ui.levelId = LM.LEVEL_IDS[0];
   }
 
   // =====================================================================
-  // DOSTĘP DO DANYCH
+  // PROGRESS FROM THE SYLLABUS
   // =====================================================================
 
-  function getLevel(levelId) {
-    return state.content.levels.find(function (l) { return l.id === levelId; });
-  }
+  /** "I know this" of a level: ticked topics / all topics of the level. */
+  function getLevelStats(levelId) { return LM.syllabus.stats(state.progress, levelId); }
 
-  function getActiveLevel() {
-    return getLevel(state.ui.levelId) || state.content.levels[0];
-  }
-
-  function getActiveCategory() {
-    return state.content.categories.find(function (c) { return c.id === state.ui.categoryId; }) || null;
-  }
-
-  /** Zestaw treści dla pary poziom + kategoria (tworzony, jeśli go brakuje). */
-  function getBucket(levelId, catId) {
-    const level = getLevel(levelId);
-    if (!level.content[catId]) level.content[catId] = { essentials: [], topics: [] };
-    return level.content[catId];
-  }
-
-  /** Statystyki „umiem” — liczone tylko z niepustych punktów essentials. */
-  function getStats(levelId, catId) {
-    if (!catId) return { done: 0, total: 0, percent: 0 };
-    const items = getBucket(levelId, catId).essentials.filter(function (e) { return !U.isBlank(e.text); });
-    const done = items.filter(function (e) { return state.progress[e.id] === true; }).length;
-    const total = items.length;
-    return { done: done, total: total, percent: total ? Math.round((done / total) * 100) : 0 };
-  }
-
-  /** Postęp całego poziomu: suma wszystkich kategorii (lewy panel, strona „Dziś”). */
-  function getLevelStats(levelId) {
-    let done = 0, total = 0;
-    state.content.categories.forEach(function (cat) {
-      const s = getStats(levelId, cat.id);
-      done += s.done;
-      total += s.total;
-    });
-    return { done: done, total: total, percent: total ? Math.round((done / total) * 100) : 0 };
-  }
+  /** Ticked topics of a profile (available levels only). */
+  function countDone(progress) { return LM.syllabus.countDone(progress); }
 
   // =====================================================================
-  // NAWIGACJA
+  // NAVIGATION
   // =====================================================================
 
-  /** Adres listy poziomu, np. "#/a1". */
+  /** Address of a level page, e.g. "#/a1". */
   function levelHash(levelId) {
     return "#/" + String(levelId).toLowerCase();
   }
 
-  /** Przejście do listy poziomu (sidebar). Zmienia adres na #/a1 itd. */
+  /** Go to a level page (sidebar). */
   function selectLevel(levelId) {
-    flushSave();
     state.ui.levelId = levelId;
     saveUI();
     state.listScroll = 0;
@@ -179,141 +122,95 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // ADRESY (routing przez #)
-  //   ""  lub "#/"        → strona główna
-  //   "#/a1" … "#/c2"     → lista poziomu
-  //   "#/a1/<podstrona>"  → podstrona punktu (niezbędnik)
-  //   "#/dzis"            → strona „Dziś”
-  //   "#/test-poziomu"    → szybki test poziomu
-  //   "#/powtorki[/na-dzis]" → Fiszki i błędy, zakładka „Na dziś” (js/review.js)
-  //   "#/powtorki/talie[/…]" → zakładka „Talie” (js/cards.js); "#/powtorki/moje-slowa" → „Moje słowa”
-  //   "#/powtorki/moje-bledy" → zakładka „Moje błędy” (js/mistakes.js)
-  //   "#/powtorki/sesja[?tylko=bledy|slabe|talie|talia:<id>]" → sesja powtórek (js/cards.js)
-  //   "#/cwiczenia/zestaw|mix/<id>", "#/cwiczenia/sesja" → sesja zadań (js/exercise-engine.js)
-  //   "#/laboratorium-czasow[/…]" → Laboratorium czasów (js/lab.js)
-  //   "#/statystyki"      → Statystyki (js/stats-page.js)
-  //   "#/notatki"         → Moje notatki (js/notes.js)
-  //   "#/pisanie[/…]"     → Pisanie: wzorce z komentarzami (js/writing.js)
-  //   "#/<egzamin>[/…]"   → egzamin z rejestru dane/egzaminy-manifest.json (js/exam-core.js)
+  // ROUTES (spec 02 §6; no legacy redirects)
+  //   "" or "#/"            home                 "#/a1" … "#/c2"          level page
+  //   "#/a1/<category>-<slug>" topic page        "#/a1/test", "#/a1/cheatsheet"
+  //   every other route belongs to one module's parseRoute (table below); anything else is "Page not found"
   // =====================================================================
 
-  /** Odczytuje adres i ustawia state.view, state.route i wybrany poziom. */
+  /** [view name, module name on LM] — the first module whose parseRoute(hash) returns a route wins. */
+  const VIEWS = [
+    ["placement", "placement"], ["today", "today"], ["review", "review"], ["mistakes", "mistakes"],
+    ["practice", "exercises"], ["lab", "lab"], ["stats", "statsPage"], ["notes", "notes"], ["cards", "cards"],
+    ["trail", "trail"], ["writing", "writing"], ["exam", "exams"]
+  ];
+
+  /** Reads the address and sets state.view, state.route, state.toolRoute and the selected level. */
   function applyRoute() {
-    let hash = location.hash || "";
-    const level = /^#\/([abcABC][12])\/?$/.exec(hash);
-    const c1 = LM.c1 ? LM.c1.parseRoute(hash) : null;
-    const exam = LM.exams ? LM.exams.parseRoute(hash) : null;
-    const powtorki = LM.review ? LM.review.parseRoute(hash) : null;
-    const journal = LM.mistakes ? LM.mistakes.parseRoute(hash) : null;
-    const today = LM.today ? LM.today.parseRoute(hash) : null;
-    const levelTest = LM.placement ? LM.placement.parseRoute(hash) : null;
-    const exercises = LM.exercises ? LM.exercises.parseRoute(hash) : null;
-    const lab = LM.lab ? LM.lab.parseRoute(hash) : null;
-    const statsRoute = LM.statsPage ? LM.statsPage.parseRoute(hash) : null;
-    const notesRoute = LM.notes ? LM.notes.parseRoute(hash) : null;
-    const fiszkiRoute = LM.cards ? LM.cards.parseRoute(hash) : null;
-    const pisanieRoute = LM.writing ? LM.writing.parseRoute(hash) : null;
-    const szlakRoute = LM.trail ? LM.trail.parseRoute(hash) : null;
+    const hash = location.hash || "";
     state.route = null;
-    state.c1Route = null;
     state.toolRoute = null;
 
-    if (!hash || hash === "#" || hash === "#/") {
-      state.view = "home";
-    } else if (levelTest) {
-      state.view = "leveltest";
-      state.toolRoute = levelTest;
-    } else if (today) {
-      state.view = "today";
-      state.toolRoute = today;
-    } else if (powtorki) {
-      state.view = "powtorki"; // „Fiszki i błędy”, zakładka „Na dziś” (js/review.js)
-      state.toolRoute = powtorki;
-    } else if (journal) {
-      state.view = "journal";
-      state.toolRoute = journal;
-    } else if (exercises) {
-      state.view = "exercises";
-      state.toolRoute = exercises;
-    } else if (lab) {
-      state.view = "lab";
-      state.toolRoute = lab;
-    } else if (statsRoute) {
-      state.view = "stats";
-      state.toolRoute = statsRoute;
-    } else if (notesRoute) {
-      state.view = "notes";
-      state.toolRoute = notesRoute;
-    } else if (fiszkiRoute) {
-      state.view = "fiszki";
-      state.toolRoute = fiszkiRoute;
-    } else if (szlakRoute) {
-      state.view = "szlak"; // Szlak nauki A1 → C2 (js/trail.js)
-      state.toolRoute = szlakRoute;
-    } else if (pisanieRoute) {
-      state.view = "pisanie"; // wzorcowe wypracowania z komentarzami (js/writing.js)
-      state.toolRoute = pisanieRoute;
-    } else if (c1) {
-      state.view = "c1"; // zakładka „Certyfikat C1”
-      state.c1Route = c1;
-    } else if (exam) {
-      state.view = "exam"; // pozostałe egzaminy z rejestru (js/exam-core.js)
-      state.toolRoute = exam;
-    } else if (level) {
-      state.view = "level";
-      state.ui.levelId = level[1].toUpperCase();
-    } else {
-      state.route = LM.handbook.parseRoute(hash);
-      state.view = state.route ? "page" : "home";
-      if (state.route) {
-        const found = LM.handbook.findItem(state.route.file);
-        if (found && LM.LEVEL_IDS.indexOf(found.level) !== -1) state.ui.levelId = found.level;
+    if (!hash || hash === "#" || hash === "#/") { state.view = "home"; return; }
+    for (let i = 0; i < VIEWS.length; i++) {
+      const mod = LM[VIEWS[i][1]];
+      const r = mod && mod.parseRoute ? mod.parseRoute(hash) : null;
+      if (r) {
+        state.view = VIEWS[i][0];
+        state.toolRoute = r;
+        if (r.kind === "final" && r.id) state.ui.levelId = r.id;
+        return;
       }
     }
+    const level = /^#\/([abc][12])\/?$/.exec(hash);
+    if (level) {
+      state.view = "level";
+      state.ui.levelId = level[1].toUpperCase();
+      return;
+    }
+    const page = LM.handbook.parseRoute(hash);
+    if (page) {
+      state.view = "page";
+      state.route = page;
+      state.ui.levelId = page.level;
+      return;
+    }
+    state.view = "notfound";
   }
 
-  /** Zakres wizualny sekcji: html[data-section="certyfikat"] w zakładce C1 (tokeny w css/style.css). */
+  /** Visual scope of a section: html[data-section="<exam id>"] inside an exam (tokens in css/style.css). */
   function syncSection() {
-    document.documentElement.setAttribute("data-section", state.view === "c1" ? "certyfikat" : state.view === "exam" ? state.toolRoute.examId : "app");
+    document.documentElement.setAttribute("data-section", state.view === "exam" ? state.toolRoute.examId : "app");
   }
 
-  /** Reakcja na zmianę adresu (linki, „Wróć”, logo, przycisk Wstecz). */
+  /** Reaction to an address change (links, Back, logo, browser back button). */
   function onRoute() {
-    if (!state.content) return;
-    flushSave();
+    if (!state.ready) return;
     const previous = state.view;
     const previousHash = state.lastHash;
     if (previous === "level") state.listScroll = U.getScroll();
     setNavOpen(false);
     if (LM.sidebar) LM.sidebar.afterNavigate();
-    if (LM.motion) LM.motion.cleanup(); // animacje poprzedniej strony (GSAP) sprzątamy
+    if (LM.motion) LM.motion.cleanup(); // animations of the previous page (GSAP)
     applyRoute();
     syncSection();
-    document.documentElement.classList.remove("focus-mode"); // tryb skupienia trenera kończy się przy zmianie strony
+    document.documentElement.classList.remove("focus-mode"); // the trainer's focus mode ends on page change
     state.lastHash = location.hash;
-    if (state.view === "journal" && previousHash !== location.hash) LM.mistakes.onEnter(state.toolRoute);
-    if (state.view === "leveltest" && previousHash !== location.hash) LM.placement.onEnter();
-    if (state.view === "exercises" && previousHash !== location.hash) LM.exercises.onEnter(state.toolRoute);
+    if (previousHash !== location.hash) {
+      if (state.view === "mistakes" && LM.mistakes.onEnter) LM.mistakes.onEnter(state.toolRoute);
+      if (state.view === "placement") LM.placement.onEnter();
+      if (state.view === "practice") LM.exercises.onEnter(state.toolRoute);
+    }
     saveUI();
-    if (state.view !== "page") document.title = "English Levels Map (A1–C2)";
+    if (state.view !== "page") document.title = LM.APP.appTitle;
     if (state.view === "level" && previous === "page") {
-      renderAll({ scrollTop: state.listScroll }); // powrót z podstrony: to samo miejsce listy
+      renderAll({ scrollTop: state.listScroll }); // back from a topic page: the same place in the list
     } else {
       renderAll({ resetScroll: true });
     }
     playViewEnter();
   }
 
-  /** Krótka animacja wejścia treści po zmianie strony (CSS: .view-enter). */
+  /** Short enter animation of the content after a page change (CSS: .view-enter). */
   function playViewEnter() {
     const view = document.getElementById("view");
     if (!view) return;
     view.classList.remove("view-enter");
-    void view.offsetWidth; // wymusza ponowne uruchomienie animacji
+    void view.offsetWidth; // restarts the animation
     view.classList.add("view-enter");
   }
 
-  /** Otwiera/zamyka menu boczne jako szufladę (tylko wąski ekran). */
+  /** Opens / closes the sidebar as a drawer (narrow screens only). */
   function setNavOpen(open) {
     document.body.classList.toggle("nav-open", open);
     document.getElementById("nav-overlay").hidden = !open;
@@ -324,27 +221,17 @@ window.LM = window.LM || {};
     }
   }
 
-  /** Powrót z podstrony do listy (poziom + kategoria punktu). */
+  /** Back from a topic page to its level page (with the list's scroll position). */
   function goToList(target) {
     if (target.levelId) state.ui.levelId = target.levelId;
-    if (target.categoryId && state.ui.categoryId !== ALL_CATEGORIES && state.content.categories.some(function (c) { return c.id === target.categoryId; })) {
-      state.ui.categoryId = target.categoryId;
-    }
     saveUI();
     const hash = levelHash(state.ui.levelId);
     if (location.hash === hash) onRoute();
     else location.hash = hash;
   }
 
-  function selectCategory(catId) {
-    flushSave();
-    state.ui.categoryId = catId;
-    saveUI();
-    renderAll();
-  }
-
   // =====================================================================
-  // RYSOWANIE
+  // DRAWING
   // =====================================================================
 
   function renderAll(opts) {
@@ -353,94 +240,58 @@ window.LM = window.LM || {};
     LM.render.renderMain(opts);
   }
 
-  function renderMainOnly(opts) {
-    LM.render.renderMain(opts);
-  }
-
-  /** Odświeża plakietki nauki w lewym panelu (np. liczbę powtórek na dziś). */
+  /** Refreshes the learning badges in the sidebar (e.g. the number of reviews due today). */
   function refreshLearning() {
     LM.render.renderToolsNav();
   }
 
-  /** Odświeża liczniki i paski postępu bez przerysowania treści (fokus zostaje). */
+  /** Refreshes counters and progress bars without redrawing the content (focus stays). */
   function refreshProgress() {
     LM.render.renderSidebar();
     LM.render.updateEssentialsProgress();
   }
 
   // =====================================================================
-  // ZAPIS
+  // SAVING
   // =====================================================================
 
-  /** Natychmiastowy zapis treści. */
-  function saveContentNow() {
-    clearTimeout(saveTimer);
-    saveTimer = null;
-    if (!state.content) return;
-    if (!state.storageOk) return; // komunikat o braku pamięci jest już na banerze
-    const res = LM.store.saveContent(state.content);
-    if (!res.ok) reportSaveError("Nie zapisano treści! " + res.error);
-  }
-
-  /** Zapisuje zaległe zmiany, jeśli czekają w kolejce. */
-  function flushSave() {
-    if (saveTimer) saveContentNow();
-  }
-
-  /** Zapisuje profile (razem z postępem każdego z nich). */
+  /** Saves the profiles (with the progress of each). */
   function saveProgressNow() {
     if (!state.storageOk) return;
     const res = LM.store.saveProfiles(state.profiles);
-    if (!res.ok) reportSaveError("Nie zapisano postępu! " + res.error);
+    if (!res.ok) reportSaveError("Progress was not saved. " + res.error);
   }
 
   function saveUI() {
     if (state.storageOk) LM.store.saveUI(state.ui);
   }
 
-  /** Błąd zapisu: pokazujemy baner (tylko raz dla tego samego komunikatu). */
+  /** Save error: a banner (once for the same message). */
   let lastSaveError = "";
   function reportSaveError(text) {
     if (text === lastSaveError) return;
     lastSaveError = text;
-    addBanner("error", text + " Zrób eksport danych, żeby nie stracić zmian.");
+    addBanner("error", text + " Export your data so you do not lose your changes.");
   }
 
   // =====================================================================
-  // POSTĘP UCZNIA
+  // LEARNER PROGRESS
   // =====================================================================
 
-  function setProgress(essentialId, checked) {
-    if (!getActiveProfile()) return; // bez profilu nie ma gdzie zapisać postępu
-    if (checked) state.progress[essentialId] = true;
-    else delete state.progress[essentialId];
+  /** "I know this" for one topic of the active profile. */
+  function setProgress(topicId, checked) {
+    if (!getActiveProfile()) return; // without a profile there is nowhere to save
+    if (checked) state.progress[topicId] = true;
+    else delete state.progress[topicId];
     saveProgressNow();
-    LM.markActivity(); // zmiana „Umiem” = dzień nauki
-    if (LM.celebrate) LM.celebrate.check(); // kamienie milowe „Umiem” i poziomów
+    LM.markActivity(); // a tick counts as a learning day
+    if (LM.celebrate) LM.celebrate.check(); // milestones of ticks and levels
     refreshProgress();
   }
 
   // =====================================================================
-  // PODMIANA DANYCH (import / reset)
+  // PROFILES
   // =====================================================================
-
-  function replaceContent(data) {
-    clearTimeout(saveTimer);
-    saveTimer = null;
-    state.content = data;
-    fixUi();
-    saveContentNow();
-    saveUI();
-    renderAll({ resetScroll: true });
-  }
-
-  /** Zastępuje postęp AKTYWNEGO profilu. */
-  function replaceProgress(progress) {
-    const active = getActiveProfile();
-    if (!active) return;
-    active.progress = progress;
-    profilesChanged();
-  }
 
   /**
    * Replaces all profiles (import / reset / corrupt-data screen). parsed — every section of an imported backup
@@ -452,11 +303,7 @@ window.LM = window.LM || {};
     profilesChanged();
   }
 
-  // =====================================================================
-  // PROFILE
-  // =====================================================================
-
-  /** Aktywny profil albo null, gdy nie ma żadnego profilu. */
+  /** The active profile, or null when there is none. */
   function getActiveProfile() {
     const p = state.profiles;
     if (!p || !p.profiles.length) return null;
@@ -468,22 +315,22 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Tryb gościa (spec v7 14, P1): wykonuje akcję zapisującą. Z profilem od razu; bez profilu pokazuje okno
-   * „Utwórz profil…” i wykonuje akcję po jego utworzeniu (strona zostaje ta sama). reason — dopisek w oknie.
+   * Guest mode: runs a saving action. With a profile at once; without one it shows "Create a profile…" and runs
+   * the action after the profile is created (the page stays the same). reason — a note in the dialog.
    */
   function withProfile(reason, fn) {
     if (getActiveProfile()) { fn(); return; }
     LM.profiles.requireProfile({ reason: reason }).then(function (ok) { if (ok) fn(); });
   }
 
-  /** Ustawia state.progress na postęp aktywnego profilu (bez profilu: pusty). */
+  /** Points state.progress at the active profile's progress (no profile: empty). */
   function syncProgress() {
     const active = getActiveProfile();
     state.profiles.activeId = active ? active.id : null;
     state.progress = active ? active.progress : {};
   }
 
-  /** Dodaje profil o podanej nazwie i ustawia go jako aktywny. */
+  /** Adds a profile with this name and makes it active. */
   function addProfile(name) {
     const profile = { id: U.uid("p"), name: String(name).trim(), progress: {} };
     state.profiles.profiles.push(profile);
@@ -497,33 +344,19 @@ window.LM = window.LM || {};
     profilesChanged();
   }
 
-  /** Po każdej zmianie profili: przelicz, zapisz, przerysuj. */
+  /** After every profile change: recount, save, redraw. */
   function profilesChanged() {
     syncProgress();
     saveProgressNow();
     if (LM.celebrate) LM.celebrate.baseline();
-    if (state.content) renderAll();
-  }
-
-  /** Liczba zaznaczonych „Umiem” w profilu (tylko istniejące, niepuste punkty). */
-  function countDone(progress) {
-    if (!state.content) return 0;
-    let n = 0;
-    state.content.levels.forEach(function (level) {
-      Object.keys(level.content).forEach(function (catId) {
-        level.content[catId].essentials.forEach(function (e) {
-          if (progress[e.id] === true && !U.isBlank(e.text)) n++;
-        });
-      });
-    });
-    return n;
+    if (state.ready) renderAll();
   }
 
   // =====================================================================
-  // KOMUNIKATY I EKRANY BŁĘDÓW
+  // MESSAGES AND ERROR SCREENS
   // =====================================================================
 
-  /** Baner nad treścią. type: "info" | "warning" | "error". */
+  /** Banner above the content. type: "info" | "warning" | "error". */
   function addBanner(type, text, action) {
     const banner = el("div", { class: "banner is-" + type, role: type === "error" ? "alert" : "status" }, [
       el("span", { class: "banner-text", text: text }),
@@ -531,8 +364,8 @@ window.LM = window.LM || {};
       el("button", {
         type: "button",
         class: "icon-btn",
-        "aria-label": "Zamknij komunikat",
-        "data-tooltip": "Zamknij komunikat",
+        "aria-label": "Close message",
+        "data-tooltip": "Close message",
         "data-tooltip-align": "end",
         onclick: function () { banner.remove(); }
       }, LM.icon("x", { size: 18 }))
@@ -589,43 +422,35 @@ window.LM = window.LM || {};
     ]));
   }
 
-  /** Ostatnia deska ratunku przy nieoczekiwanym błędzie. */
+  /** Last resort on an unexpected error. */
   function showFatal(err) {
     console.error(err);
     const view = document.getElementById("view");
     if (!view) return;
     view.replaceChildren(el("div", { class: "error-screen" }, [
-      el("h1", { text: "Coś poszło nie tak" }),
-      el("p", { text: "Aplikacja napotkała nieoczekiwany błąd. Spróbuj odświeżyć stronę. Jeśli problem wraca, zaimportuj kopię zapasową w menu „Dane”." }),
+      el("h1", { text: "Something went wrong" }),
+      el("p", { text: "The app hit an unexpected error. Try reloading the page. If it keeps happening, import a backup from the Data menu." }),
       el("div", { class: "error-details", text: String(err && err.stack || err) }),
       el("div", { class: "error-actions" }, [
-        el("button", { type: "button", class: "btn btn-primary", onclick: function () { location.reload(); } }, "Odśwież stronę"),
-        el("button", { type: "button", class: "btn btn-secondary", onclick: function () { LM.dataMenu.importAll(); } }, "Importuj dane…")
+        el("button", { type: "button", class: "btn btn-primary", onclick: function () { location.reload(); } }, "Reload the page"),
+        el("button", { type: "button", class: "btn btn-secondary", onclick: function () { LM.dataMenu.importAll(); } }, "Import data…")
       ])
     ]));
   }
 
   LM.app = {
     init: init,
-    getActiveLevel: getActiveLevel,
-    getActiveCategory: getActiveCategory,
-    getBucket: getBucket,
-    getStats: getStats,
     getLevelStats: getLevelStats,
+    countDone: countDone,
     selectLevel: selectLevel,
     levelHash: levelHash,
     goToList: goToList,
-    selectCategory: selectCategory,
-    ALL_CATEGORIES: ALL_CATEGORIES,
     refreshProgress: refreshProgress,
     refreshLearning: refreshLearning,
     reportSaveError: reportSaveError,
-    saveContentNow: saveContentNow,
     saveProgressNow: saveProgressNow,
     saveUI: saveUI,
     setProgress: setProgress,
-    replaceContent: replaceContent,
-    replaceProgress: replaceProgress,
     replaceProfiles: replaceProfiles,
     getActiveProfile: getActiveProfile,
     hasProfiles: hasProfiles,
@@ -633,11 +458,10 @@ window.LM = window.LM || {};
     renderAll: renderAll,
     addProfile: addProfile,
     selectProfile: selectProfile,
-    profilesChanged: profilesChanged,
-    countDone: countDone
+    profilesChanged: profilesChanged
   };
 
-  // Start po wczytaniu strony
+  // Start once the page has loaded
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
 })(window.LM);

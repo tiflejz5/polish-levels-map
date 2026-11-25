@@ -1,5 +1,5 @@
 /*
- * writing-phrases.js — bank zwrotów do pisania (paczka v6, spec 17, sekcja 2): #/pisanie/zwroty[/<grupa>].
+ * writing-phrases.js — bank zwrotów do pisania (paczka v6, spec 17, sekcja 2): #/writing/phrases[/<grupa>].
  *
  * Dane: LM.PHRASES z dane/pisanie/zwroty-dane.js (generowany z dane/pisanie/zwroty.json przez tools/zbuduj-zwroty.js,
  * ładowany dopiero po wejściu do banku). Zwroty są pogrupowane według funkcji (opinia, kontrargument, …).
@@ -20,7 +20,7 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
-  const HASH = "#/pisanie/zwroty";
+  const HASH = "#/writing/phrases";
 
   const LEVELS = ["B1", "B2", "C1"];
   const REGISTERS = { formal: "Formalny", neutral: "Neutralny", informal: "Nieformalny" };

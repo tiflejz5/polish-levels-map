@@ -2,12 +2,11 @@
  * store.js — profiles, UI state and the backup file envelope (spec 02 §5).
  *
  *   plm.profiles  { version: 1, activeId | null, profiles: [{ id, name, progress: { <topic id>: true } }] }
- *   plm.ui        { levelId, categoryId } — convenience only, errors are ignored
+ *   plm.ui        { levelId } — convenience only, errors are ignored
  * Keys come from LM.APP.storagePrefix; the full key list is the registry in js/profile-data.js.
  * All schemas are version 1. There are no migrations: data of the original app (elm_* keys) is never read.
  *
- * Content (the checklist) is NOT stored any more (spec 01 D8): it comes from data/. Until stage 1B removes
- * the old content store, loadContent() returns the built-in list and saveContent() keeps nothing.
+ * Content (the checklist) is never stored (spec 01 D8): the topics come from the syllabus in data/.
  *
  * Backup file: { app: LM.APP.exportName, kind: "backup", version: 1, exportedAt, data: { profiles, learning, cards, trail } },
  * file name <exportName>-YYYY-MM-DD.json. Import refuses a file of another app with a clear message.
@@ -67,10 +66,10 @@ window.LM = window.LM || {};
     }
   }
 
-  // ---------- Content (memory only until stage 1B) ----------
-
-  function loadContent() { return { status: "new", data: LM.createDefaultData() }; }
-  function saveContent() { return { ok: true }; }
+  /** A NEW, empty profile list (no profiles in code: every learner creates their own). */
+  LM.createEmptyProfiles = function () {
+    return { version: VERSION, activeId: null, profiles: [] };
+  };
 
   // ---------- Profiles (each profile has its own progress) ----------
 
@@ -143,14 +142,11 @@ window.LM = window.LM || {};
   // ---------- UI state (convenience only) ----------
 
   function loadUI() {
-    const fallback = { levelId: LM.LEVEL_IDS[0], categoryId: null };
+    const fallback = { levelId: LM.LEVEL_IDS[0] };
     try {
       const ui = JSON.parse(readRaw(UI_KEY) || "null");
       if (!U.isPlainObject(ui)) return fallback;
-      return {
-        levelId: typeof ui.levelId === "string" ? ui.levelId : fallback.levelId,
-        categoryId: typeof ui.categoryId === "string" ? ui.categoryId : null
-      };
+      return { levelId: typeof ui.levelId === "string" ? ui.levelId : fallback.levelId };
     } catch (e) {
       return fallback;
     }
@@ -204,8 +200,6 @@ window.LM = window.LM || {};
     VERSION: VERSION,
     BACKUP_VERSION: BACKUP_VERSION,
     isStorageAvailable: isStorageAvailable,
-    loadContent: loadContent,
-    saveContent: saveContent,
     normalizeProfiles: normalizeProfiles,
     loadProfiles: loadProfiles,
     saveProfiles: saveProfiles,

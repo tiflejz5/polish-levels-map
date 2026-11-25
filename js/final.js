@@ -41,7 +41,7 @@ window.LM = window.LM || {};
     return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
   }
 
-  function categories() { return (LM.PAGES && LM.PAGES.index.categories) || {}; }
+  function categories() { return LM.syllabus.categories(); }
   function categoryLabel(key) { return categories()[key] || key; }
   function categoryOf(item) { return item.category || "gramatyka"; }
 
@@ -110,8 +110,16 @@ window.LM = window.LM || {};
   function backTo(level) { return { href: levelHash(level), label: "Wróć do poziomu " + level }; }
 
   function renderStart(view, level) {
-    document.title = "Test końcowy " + level + " · English Levels Map";
+    document.title = "Test końcowy " + level + " · " + LM.APP.appTitle;
     view.className = "view tool-view ex-view lf-view lvl-" + level;
+    if (!LM.syllabus.isAvailable(level)) { // a "soon" level has no final test yet (spec 06 E1)
+      view.appendChild(el("section", { class: "card page-pending", "aria-labelledby": "lf-soon-title" }, [
+        el("h1", { class: "page-pending-title", id: "lf-soon-title", text: "Final test " + level }),
+        el("p", { class: "page-pending-lead", text: level + " is on its way. Its final test comes with its topics." }),
+        el("p", null, el("a", { class: "btn btn-secondary", href: levelHash(level) }, LM.ui.withIcon("chevron-left", "See the planned topics")))
+      ]));
+      return;
+    }
     const info = pd().finalResult(level);
     const msg = el("p", { class: "tool-note lf-msg", role: "status", "aria-live": "polite" });
     const startBtn = el("button", { type: "button", class: "btn btn-primary", "data-fk": "start", onclick: function () { begin(level, startBtn, msg); } },
@@ -217,7 +225,7 @@ window.LM = window.LM || {};
     const actions = el("div", { class: "tool-actions" }, [
       el("button", { type: "button", class: "btn " + (passed ? "btn-secondary" : "btn-primary"), "data-fk": "again", onclick: function () { start(level, set); } }, LM.ui.withIcon("rotate-ccw", "Zrób test jeszcze raz")),
       el("a", { class: "btn btn-secondary", href: levelHash(level) }, "Wróć do poziomu " + level),
-      passed ? el("a", { class: "btn btn-link", href: "#/dzis" }, LM.ui.withIcon("arrow-right", "Zobacz Szlak")) : null
+      passed ? el("a", { class: "btn btn-link", href: "#/today" }, LM.ui.withIcon("arrow-right", "Zobacz Szlak")) : null
     ]);
 
     view.appendChild(el("section", { class: "card ex-result lf-result " + (passed ? "is-passed" : "is-failed"), "aria-live": "polite" }, [
@@ -261,9 +269,9 @@ window.LM = window.LM || {};
       sets.replaceChildren(el("span", { class: "review-label", text: "Zestawy do tych tematów: " }));
       found.slice(0, 4).forEach(function (id, k) {
         if (k) sets.appendChild(document.createTextNode(", "));
-        sets.appendChild(el("a", { href: "#/cwiczenia/zestaw/" + id, text: index.sets[id].title }));
+        sets.appendChild(el("a", { href: "#/practice/set/" + id, text: index.sets[id].title }));
       });
-      actions.insertBefore(el("a", { class: "btn btn-secondary", href: "#/cwiczenia/zestaw/" + found[0] }, "Zestawy do tych tematów"), actions.children[1]);
+      actions.insertBefore(el("a", { class: "btn btn-secondary", href: "#/practice/set/" + found[0] }, "Zestawy do tych tematów"), actions.children[1]);
     });
 
     view.appendChild(el("section", { class: "card ex-review" }, [
@@ -310,14 +318,14 @@ window.LM = window.LM || {};
   function readyLevel(stats) {
     if (!LM.app.getActiveProfile()) return null;
     const passed = pd().passedLevels();
-    return stats.find(function (x) { return x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; }) || null;
+    return stats.find(function (x) { return !x.soon && x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; }) || null;
   }
 
 
   function todayTip(stats) {
     if (!LM.app.getActiveProfile()) return null;
     const passed = pd().passedLevels();
-    const s = stats.find(function (x) { return x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; });
+    const s = stats.find(function (x) { return !x.soon && x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; });
     if (!s) return null;
     return el("section", { class: "card bento-tile bento-tip lf-tip", "aria-label": "Test końcowy " + s.id }, [
       el("div", { class: "today-tip-body" }, [

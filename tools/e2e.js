@@ -1,11 +1,15 @@
 /*
- * e2e.js — testy przeglądarkowe poprawek przed startem (spec v7 14, P1, P3, P4, P5, P6).
+ * e2e.js — browser smoke tests (stage 1B: syllabus checklist, routes, level status, trail, exams fixture).
  *
- *   node tools/e2e.js            (albo: npm run e2e)
+ *   node tools/e2e.js            (or: npm run e2e)
  *
- * Wymaga pakietu playwright-core (np. `npm i --no-save playwright-core`) i przeglądarki Chromium / Chrome / Edge.
- * Ścieżkę przeglądarki można podać w CHROME_PATH. Bez pakietu albo przeglądarki skrypt kończy się komunikatem
- * i kodem 0 (nie blokuje `npm run build`, którego nie dotyczy). Serwer statyczny (bez zależności) startuje sam.
+ * Needs the playwright-core package (e.g. `npm i --no-save playwright-core`) and Chromium / Chrome / Edge.
+ * CHROME_PATH may point at the browser. Without the package or a browser the script ends with a message and
+ * exit code 0. A dependency-free static server starts by itself.
+ *
+ * The exam module is tested with tools/fixtures/exam-demo: the fixture is built into a temporary folder with
+ * the real build modules and served in place of data/exams-registry.js, data/exam-*.js, data/sets-index.js and
+ * data/sets/exam-demo-*.js (page.route). The real registry stays empty.
  */
 "use strict";
 
@@ -39,15 +43,25 @@ let pw = null;
 try { pw = require("playwright-core"); } catch (e) { try { pw = require("playwright"); } catch (e2) { pw = null; } }
 const exe = findBrowser();
 if (!pw || !exe) {
-  console.log("E2E: pomijam (" + (!pw ? "brak pakietu playwright-core" : "brak przeglądarki, ustaw CHROME_PATH") + ").");
+  console.log("E2E: skipped (" + (!pw ? "no playwright-core package" : "no browser, set CHROME_PATH") + ").");
   process.exit(0);
 }
+
+// ---------- the exam fixture, built into a temporary data folder ----------
+const C = require("./build/common");
+const FIXTURE_DATA = fs.mkdtempSync(path.join(os.tmpdir(), "plm-e2e-"));
+C.useExamsDir(path.join(__dirname, "fixtures", "exam-demo"));
+C.useDataDir(FIXTURE_DATA);
+require("./build/exams")();
+require("./build/exercises")();
+C.useExamsDir(null);
+C.useDataDir(null);
 
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".woff2": "font/woff2", ".md": "text/markdown" };
 const server = http.createServer(function (req, res) {
   const rel = decodeURIComponent(req.url.split("?")[0]).replace(/^\/+/, "") || "index.html";
   const file = path.join(ROOT, rel);
-  if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end("nie ma"); return; }
+  if (!file.startsWith(ROOT) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) { res.writeHead(404); res.end("not found"); return; }
   res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream" });
   fs.createReadStream(file).pipe(res);
 });
@@ -55,7 +69,7 @@ const server = http.createServer(function (req, res) {
 let passed = 0;
 const failures = [];
 async function test(name, fn) {
-  try { await fn(); passed++; console.log("  ok  " + name); } catch (e) { failures.push(name); console.log("  BŁĄD " + name + "\n       " + e.message); }
+  try { await fn(); passed++; console.log("  ok  " + name); } catch (e) { failures.push(name); console.log("  FAIL " + name + "\n       " + e.message); }
 }
 function ok(cond, msg) { if (!cond) throw new Error(msg); }
 
@@ -64,13 +78,22 @@ async function main() {
   const URL = "http://127.0.0.1:" + server.address().port + "/";
   const browser = await pw.chromium.launch({ executablePath: exe, headless: true });
 
-  async function session(w, h, withProfile) {
-    const ctx = await browser.newContext({ viewport: { width: w || 1280, height: h || 800 } });
+  async function session(w, h, withProfile, opts) {
+    opts = opts || {};
+    const ctx = await browser.newContext({ viewport: { width: w || 1280, height: h || 800 }, reducedMotion: opts.reducedMotion || "no-preference" });
     await ctx.addInitScript(function (profile) {
       if (localStorage.getItem("e2e_seeded")) return;
       localStorage.setItem("e2e_seeded", "1");
-      if (profile) localStorage.setItem("plm.profiles", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "Test Claude", progress: {} }] }));
+      if (profile) localStorage.setItem("plm.profiles", JSON.stringify({ version: 1, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "Test Claude", progress: {} }] }));
     }, !!withProfile);
+    if (opts.examFixture) {
+      await ctx.route(/\/data\/(exams-registry|exam-[a-z0-9-]+|sets-index|sets\/exam-demo-[a-z0-9-]+)\.js(\?.*)?$/, function (route) {
+        const rel = new globalThis.URL(route.request().url()).pathname.replace(/^\/data\//, "");
+        const file = path.join(FIXTURE_DATA, rel);
+        if (!fs.existsSync(file)) return route.continue();
+        route.fulfill({ status: 200, contentType: "text/javascript", body: fs.readFileSync(file, "utf8") });
+      });
+    }
     const page = await ctx.newPage();
     page.errs = [];
     page.on("pageerror", function (e) { page.errs.push(e.message); });
@@ -79,134 +102,118 @@ async function main() {
   async function visit(page, hash, wait) { await page.goto(URL + hash); await page.reload(); await page.waitForTimeout(wait || 900); }
   const viewText = function (page) { return page.innerText("#view").then(function (t) { return t.replace(/\s+/g, " ").trim(); }); };
 
-  console.log("\nP1 tryb gościa");
-  await test("treści publiczne bez profilu nie są puste i nie pokazują karty powitalnej", async function () {
+  console.log("\nRoutes (spec 02 §6)");
+  await test("every route renders something, without a profile too; personal pages show the welcome card", async function () {
     const s = await session();
-    for (const r of ["#/", "#/a1", "#/a1/czasy-present-simple", "#/laboratorium-czasow", "#/cwiczenia", "#/pisanie", "#/certyfikat-c1", "#/egzamin-osmoklasisty", "#/a1/sciaga", "#/nieznana"]) {
-      await visit(s.page, r);
-      const t = await viewText(s.page);
-      ok(t.length > 40, r + ": pusty ekran");
-      ok(!/Ta strona potrzebuje profilu/.test(t), r + ": karta powitalna na stronie publicznej");
+    const routes = ["#/", "#/a1", "#/b1", "#/a1/cases-accusative", "#/a1/verbs-byc", "#/a1/test", "#/a1/cheatsheet", "#/practice", "#/practice/set/a1-cases-accusative-1",
+      "#/lab", "#/writing", "#/writing/phrases", "#/trail", "#/today", "#/review", "#/review/decks", "#/review/mistakes", "#/review/words", "#/stats", "#/notes", "#/placement"];
+    for (const r of routes) {
+      await visit(s.page, r, 600);
+      ok((await viewText(s.page)).length > 30, r + ": empty screen");
     }
-    ok(!s.page.errs.length, "błędy JS: " + s.page.errs[0]);
+    for (const r of ["#/today", "#/review", "#/stats", "#/notes"]) {
+      await visit(s.page, r, 600);
+      ok(/Ta strona potrzebuje profilu/.test(await viewText(s.page)), r + ": no welcome card");
+    }
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });
-  await test("strony osobiste bez profilu: karta z dodaniem profilu, po dodaniu ten sam adres", async function () {
+  await test("unknown and old routes: \"Page not found\" with a link home, no redirect", async function () {
     const s = await session();
-    for (const r of ["#/dzis", "#/powtorki", "#/statystyki", "#/notatki"]) {
-      await visit(s.page, r);
-      ok(/Ta strona potrzebuje profilu/.test(await viewText(s.page)), r + ": brak karty powitalnej");
+    for (const r of ["#/nope", "#/a1/no-such-topic", "#/dzis", "#/powtorki", "#/cwiczenia", "#/szlak", "#/certyfikat-c1", "#/egzamin-osmoklasisty", "#/exams/nope", "#/a1/sciaga"]) {
+      await visit(s.page, r, 500);
+      ok(/Page not found/.test(await viewText(s.page)), r + ": no \"Page not found\"");
+      ok(await s.page.evaluate(function () { return location.hash; }) === r, r + ": address changed");
+      ok(await s.page.locator('#view a[href="#/"]').count() === 1, r + ": no link home");
     }
-    await visit(s.page, "#/statystyki");
-    await s.page.fill("#welcome-name", "Ola");
-    await s.page.click("button:has-text('Dodaj profil')");
-    await s.page.waitForTimeout(900);
-    ok(await s.page.evaluate(function () { return location.hash; }) === "#/statystyki", "hash zmieniony po dodaniu profilu");
-    ok(!/Ta strona potrzebuje profilu/.test(await viewText(s.page)), "karta powitalna po utworzeniu profilu");
     await s.ctx.close();
   });
-  await test("„Umiem” bez profilu: okno, po utworzeniu profilu zaznaczone, ta sama strona; „Nie teraz” nic nie zmienia", async function () {
+
+  console.log("\nChecklist = syllabus topics (E2) and level status (E1)");
+  await test("A1: 25 topics from the syllabus, grouped by category, each a link with \"I know this\"", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/a1");
+    ok(await s.page.locator(".essentials .ess-item").count() === 25, "rows: " + await s.page.locator(".essentials .ess-item").count());
+    ok(await s.page.locator(".essentials .ess-item input[type=checkbox]").count() === 25, "checkboxes");
+    const groups = await s.page.locator(".ess-group-title").allInnerTexts();
+    ok(groups.length >= 4 && groups.indexOf("Cases") !== -1, "groups: " + groups.join(", "));
+    ok(await s.page.locator('.ess-item[data-topic="a1-cases-accusative"] a[href="#/a1/cases-accusative"]').count() === 1, "topic link");
+    ok(await s.page.locator(".ess-item.is-pending").count() === 24, "\"Being written\" rows");
+    await s.page.click('.ess-item[data-topic="a1-cases-accusative"] label.umiem input', { force: true });
+    await s.page.waitForTimeout(300);
+    const progress = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress; });
+    ok(progress["a1-cases-accusative"] === true && Object.keys(progress).length === 1, "progress: " + JSON.stringify(progress));
+    ok(/1 \/ 25/.test(await s.page.innerText("#level-list")), "sidebar count");
+    await s.ctx.close();
+  });
+  await test("\"soon\" level: planned topics without links or checkboxes, no test or cheat sheet card, \"soon\" in the sidebar", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/b1");
+    const t = await viewText(s.page);
+    ok(/B1 is on its way\. The topics below are what it will cover\./.test(t), "lead");
+    ok(await s.page.locator(".essentials .ess-item.is-planned").count() > 10, "planned topics");
+    ok(await s.page.locator(".essentials a, .essentials input").count() === 0, "links or checkboxes on a soon level");
+    ok(await s.page.locator(".lf-level-card, .sciaga-card").count() === 0, "final test / cheat sheet card");
+    ok(/soon/.test(await s.page.innerText('#level-list a[href="#/b1"]')), "sidebar label");
+    await visit(s.page, "#/b1/test");
+    ok(/B1 is on its way/.test(await viewText(s.page)), "final test of a soon level");
+    await s.ctx.close();
+  });
+  await test("topic page: the example page renders; a topic without a page says \"This topic is being written\"", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/a1/cases-accusative");
+    ok(await s.page.locator("article.md h1").innerText() === "Accusative: the direct object", "title");
+    ok(await s.page.locator(".sz-bar").count() === 1, "trail bar");
+    await visit(s.page, "#/a1/verbs-byc");
+    ok(/This topic is being written\./.test(await viewText(s.page)), "pending page");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("\"I know this\" without a profile: dialog; \"Nie teraz\" changes nothing; a new profile gets the tick on the same page", async function () {
     const s = await session();
-    await visit(s.page, "#/a1/czasy-present-simple");
+    await visit(s.page, "#/a1/cases-accusative");
     await s.page.click("label.umiem input", { force: true });
     await s.page.waitForSelector("dialog[open]");
     await s.page.click("button:has-text('Nie teraz')");
-    ok(!(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; })), "zaznaczone mimo anulowania");
-    ok(await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles.length; }) === 0, "powstał profil mimo anulowania");
+    ok(!(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; })), "ticked after cancel");
     await s.page.click("label.umiem input", { force: true });
     await s.page.fill("#guest-name", "Ola");
     await s.page.keyboard.press("Enter");
     await s.page.waitForTimeout(700);
-    ok(await s.page.evaluate(function () { return location.hash; }) === "#/a1/czasy-present-simple", "zmieniony adres");
-    ok(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; }), "„Umiem” niezaznaczone po utworzeniu profilu");
-    ok(await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress).length; }) === 1, "postęp niezapisany");
+    ok(await s.page.evaluate(function () { return location.hash; }) === "#/a1/cases-accusative", "address changed");
+    ok(await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress["a1-cases-accusative"] === true; }), "tick not saved");
     await s.ctx.close();
   });
 
-  console.log("\nP3 nowe i do powtórki");
-  await test("świeży profil: plakietka bez liczby „do powtórki”, karta mówi o nowych", async function () {
-    const s = await session(1280, 800, true);
-    await visit(s.page, "#/dzis", 1500);
-    const label = await s.page.evaluate(function () { const a = document.querySelector('a[href="#/powtorki"]'); return a ? (a.getAttribute("aria-label") || a.innerText) : ""; });
-    ok(!/\d+ do powtórki/.test(label), "plakietka: " + label);
-    ok(/nowe na dziś/.test(await viewText(s.page)), "karta Dziś nie mówi o nowych");
-    await s.ctx.close();
-  });
-
-  console.log("\nP4 Laboratorium czasów");
-  await test("szkielet siatki do czasu wczytania danych, potem kafelki; ponowne wejście bez szkieletu", async function () {
-    const s = await session(1280, 800, true);
-    await s.page.route("**/dane/lab-dane.js*", async function (route) { await new Promise(function (r) { setTimeout(r, 3000); }); route.continue(); });
-    await visit(s.page, "#/dzis");
-    await s.page.evaluate(function () { document.querySelector('#tools-nav a[href="#/laboratorium-czasow"]').click(); });
-    await s.page.waitForTimeout(500);
-    ok(await s.page.locator(".lab-tile.is-skeleton").count() >= 12, "brak szkieletu kafelków");
-    await s.page.waitForSelector(".lab-tile:not(.is-skeleton)", { timeout: 12000 });
-    ok(await s.page.locator(".is-skeleton").count() === 0, "szkielet zostaje po wczytaniu");
-    const t0 = Date.now();
-    await s.page.evaluate(function () { document.querySelector('#tools-nav a[href="#/dzis"]').click(); });
-    await s.page.waitForTimeout(500);
-    await s.page.evaluate(function () { document.querySelector('#tools-nav a[href="#/laboratorium-czasow"]').click(); });
-    await s.page.waitForSelector(".lab-tile:not(.is-skeleton)", { timeout: 1500 });
-    ok(Date.now() - t0 < 2500, "ponowne wejście wolne");
-    await s.ctx.close();
-  });
-
-  console.log("\nP5 telefon");
-  await test("brak poziomego przewijania 320/360/375 px, przycisk profilu = awatar 44 px z pełną nazwą w aria-label", async function () {
-    const s = await session(375, 812, true);
-    const bad = [];
-    for (const w of [320, 360, 375]) {
-      await s.page.setViewportSize({ width: w, height: 812 });
-      for (const r of ["#/", "#/dzis", "#/a1", "#/a1/czasy-present-simple", "#/powtorki", "#/cwiczenia", "#/laboratorium-czasow", "#/statystyki", "#/certyfikat-c1", "#/egzamin-osmoklasisty"]) {
-        await s.page.goto(URL + r); await s.page.waitForTimeout(450);
-        const d = await s.page.evaluate(function () { return [document.documentElement.scrollWidth, document.documentElement.clientWidth]; });
-        if (d[0] > d[1]) bad.push(r + " @" + w + " (" + d[0] + ">" + d[1] + ")");
-      }
-    }
-    ok(!bad.length, "poziomy scroll: " + bad.join("; "));
-    const b = await s.page.evaluate(function () { const e = document.getElementById("profile-btn"); const r = e.getBoundingClientRect(); return { w: Math.round(r.width), label: e.getAttribute("aria-label") }; });
-    ok(b.w <= 48 && /Test Claude/.test(b.label || ""), "przycisk profilu: " + JSON.stringify(b));
-    await s.ctx.close();
-  });
-
-  console.log("\nP6 drobne");
-  await test("strona główna bez przypiętych egzaminów: kafelki E8, MP, MR, B2, C1", async function () {
+  console.log("\nTrail generated from the syllabus (E9)");
+  await test("trail: A1 has 25 stops + 5 checkpoints; five soon lands dimmed; one current stop; sheet opens and closes", async function () {
     const s = await session(1280, 900, true);
-    await visit(s.page, "#/");
-    const codes = await s.page.locator(".home-exams [data-exam-cover]").evaluateAll(function (n) { return n.map(function (x) { return x.getAttribute("data-exam-cover"); }); });
-    ok(codes.length === 5, "kafelki: " + codes.join(","));
-    await s.ctx.close();
-  });
-
-  console.log("\nSzlak (spec v7 13) i P2 punkt startu");
-  await test("Szlak: 6 krain, odcinki, 142 węzły w <ol>, bieżący przystanek wyróżniony; Enter otwiera arkusz, Esc zamyka i oddaje fokus", async function () {
-    const s = await session(1280, 900, true);
-    await visit(s.page, "#/szlak", 1800);
-    ok(await s.page.locator(".sz-level").count() === 6, "krainy: " + await s.page.locator(".sz-level").count());
-    ok(await s.page.locator(".sz-node").count() === 142, "węzły: " + await s.page.locator(".sz-node").count());
-    ok(await s.page.locator("ol.sz-stops").count() >= 22, "lista ol");
-    ok(await s.page.locator(".sz-node.is-current").count() === 1, "jeden bieżący przystanek");
-    ok(/bieżący/.test(await s.page.locator(".sz-node.is-current button").getAttribute("aria-label")), "stan nie tylko kolorem");
+    await visit(s.page, "#/trail", 1500);
+    ok(await s.page.locator(".sz-level").count() === 6, "lands");
+    ok(await s.page.locator(".sz-level.is-soon").count() === 5, "soon lands");
+    ok(/Coming soon/.test(await s.page.innerText(".sz-level.is-soon")), "\"Coming soon\"");
+    ok(await s.page.locator(".sz-node").count() === 30, "nodes: " + await s.page.locator(".sz-node").count());
+    ok(await s.page.locator(".sz-node.is-review").count() === 5, "checkpoints");
+    ok(await s.page.locator(".sz-node.is-current").count() === 1, "one current stop");
+    ok((await s.page.locator(".sz-node.is-current").getAttribute("data-stop")) === "a1-grammar-alphabet-pronunciation", "first topic is current");
     await s.page.focus(".sz-node.is-current button");
     await s.page.keyboard.press("Enter");
     await s.page.waitForSelector("dialog[open]");
     await s.page.keyboard.press("Escape");
     await s.page.waitForTimeout(300);
-    ok(await s.page.evaluate(function () { return !!document.activeElement.closest(".sz-node.is-current"); }), "fokus nie wrócił na węzeł");
-    ok(!s.page.errs.length, "błędy JS: " + s.page.errs[0]);
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });
-  await test("quiz ≥ 3/4 zalicza przystanek i proponuje „Umiem”, ale go nie zaznacza", async function () {
+  await test("stop quiz ≥ 3/4 passes the stop and offers \"I know this\" without ticking it", async function () {
     const s = await session(1280, 900, true);
-    await visit(s.page, "#/szlak", 1800);
-    await s.page.click(".sz-node.is-current button");
-    await s.page.click("button:has-text('Quiz (4 pytania)')");
+    await visit(s.page, "#/trail", 1500);
+    await s.page.evaluate(function () { LM.trail.openSheet("a1-cases-accusative", { force: true }); });
+    await s.page.click("dialog[open] button:has-text('Quiz (4 pytania)')");
     for (let i = 0; i < 4; i++) {
       await s.page.waitForSelector(".ex-card .ex-option");
       const idx = await s.page.evaluate(function () {
         const it = LM.exercises.currentItem();
-        const opts = [].slice.call(document.querySelectorAll(".ex-card .ex-option")).map(function (b) { return b.innerText.replace(/\s+/g, " ").trim().replace(/^\d /, ""); });
+        const opts = [].slice.call(document.querySelectorAll(".ex-card .ex-option-text")).map(function (b) { return b.innerText.trim(); });
         return opts.indexOf(it.options[it.correct].trim());
       });
       await s.page.locator(".ex-card .ex-option").nth(idx).click();
@@ -215,71 +222,79 @@ async function main() {
       await s.page.waitForTimeout(200);
     }
     await s.page.waitForSelector(".sz-result");
-    ok(/Przystanek zaliczony/.test(await viewText(s.page)), "brak zaliczenia");
-    ok(await s.page.locator("button:has-text('Zaznacz „Umiem”')").count() === 1, "brak propozycji „Umiem”");
+    ok(/Przystanek zaliczony/.test(await viewText(s.page)), "not passed");
+    ok(await s.page.locator("button:has-text('Zaznacz „Umiem”')").count() === 1, "no \"I know this\" offer");
     const progress = await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress).length; });
-    ok(progress === 0, "„Umiem” zaznaczone automatycznie");
+    ok(progress === 0, "ticked automatically");
     const st = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.trail.p_e2e")); });
-    ok(st.version === 1 && st.stops["a1-01"] && st.stops["a1-01"].best === 4, "zapis w plm.trail.<id>");
+    ok(st.version === 1 && st.stops["a1-cases-accusative"] && st.stops["a1-cases-accusative"].best === 4, "saved in plm.trail.<id>");
     await s.ctx.close();
   });
-  await test("P2: po teście poziomu C1 Dziś i Szlak wskazują pierwszy przystanek C1, wcześniejsze krainy są „pominięte”", async function () {
+  await test("Today for a new profile: A1 is \"here\", the other lands are soon, map progress counts A1 only", async function () {
     const s = await session(1280, 900, true);
-    await visit(s.page, "#/dzis", 1200);
-    await s.page.evaluate(function () { LM.profileData.saveTest({ date: LM.learn.today(), level: "C1", answers: [{ id: "x", level: "C1", chosen: 0, correct: true }] }); });
-    await visit(s.page, "#/dzis", 1500);
-    const t = await viewText(s.page);
-    ok(/kraina C1/.test(t), "Dziś nie pokazuje krainy C1: " + t.slice(0, 120));
-    ok(/Następny przystanek w Górach/.test(t), "Następny przystanek nie z C1");
-    ok(await s.page.locator(".trail-station.is-skipped").count() === 4, "pominięte stacje na mapie");
-    await visit(s.page, "#/szlak", 1500);
-    ok((await s.page.locator(".sz-node.is-current").getAttribute("data-stop")).indexOf("c1-") === 0, "bieżący przystanek spoza C1");
-    ok(await s.page.locator("details.sz-level.is-skipped").count() === 4, "krainy pominięte testem");
+    await visit(s.page, "#/today", 1500);
+    ok(await s.page.locator(".trail-station.is-current.lvl-A1").count() === 1, "current station");
+    ok(await s.page.locator(".trail-station.is-soon").count() === 5, "soon stations");
+    ok(await s.page.locator(".map-seg").count() === 1, "map segments: " + await s.page.locator(".map-seg").count());
     await s.ctx.close();
   });
-  await test("pominięcie nie zalicza i nie jest bieżące; „Mimo to otwórz” przy dalszej krainie", async function () {
+
+  console.log("\nExams (E8)");
+  await test("empty registry: the sidebar group \"Exams\" is hidden and the home page has no exams section", async function () {
     const s = await session(1280, 900, true);
-    await visit(s.page, "#/szlak", 1800);
-    await s.page.click(".sz-node.is-current button");
-    await s.page.click("button:has-text('Pomiń ten przystanek')");
-    await s.page.waitForTimeout(500);
-    ok((await s.page.locator(".sz-node.is-current").getAttribute("data-stop")) === "a1-02", "bieżący po pominięciu");
-    ok(await s.page.locator('.sz-node[data-stop="a1-01"]').getAttribute("class").then(function (c) { return /is-skipped/.test(c) && !/is-done/.test(c); }), "pominięty traktowany jak zaliczony");
-    await s.page.click('.sz-node[data-stop="a2-01"] button');
-    ok(/Zalecamy najpierw skończyć Polanę/.test(await s.page.innerText("dialog[open]")), "brak zalecenia");
-    await s.page.click("button:has-text('Mimo to otwórz')");
-    ok(/Czego się tu uczysz/i.test(await s.page.innerText("dialog[open]")), "arkusz nie otworzył treści");
+    await visit(s.page, "#/");
+    ok(await s.page.evaluate(function () { return document.getElementById("exams-nav").hidden && document.getElementById("exams-more-nav").hidden; }), "group visible");
+    ok(await s.page.locator(".home-exams").count() === 0, "home exams section");
     await s.ctx.close();
   });
-  await test("Szlak 320 px bez poziomego przewijania; prefers-reduced-motion wyłącza pulsowanie", async function () {
-    const s = await session(320, 740, true);
-    await visit(s.page, "#/szlak", 1500);
-    const d = await s.page.evaluate(function () { return [document.documentElement.scrollWidth, document.documentElement.clientWidth]; });
-    ok(d[0] <= d[1], "poziomy scroll " + d.join(">"));
+  await test("fixture exam: sidebar tile, overview with date card and sources note, page, practice list, writing trainer, soon exam", async function () {
+    const s = await session(1280, 900, true, { examFixture: true });
+    await visit(s.page, "#/exams/exam-demo", 1500);
+    ok(!(await s.page.evaluate(function () { return document.getElementById("exams-nav").hidden; })), "group hidden");
+    ok(await s.page.locator('#exams-nav a.exam-chip[href="#/exams/exam-demo"]').count() === 1, "sidebar tile");
+    let t = await viewText(s.page);
+    ok(/Demo exam: overview/.test(t) && /Exam information checked on November 2026/.test(t), "overview: " + t.slice(0, 160));
+    ok(await s.page.locator('[id="exam-date-exam-demo"]').count() === 1, "date card");
+    await visit(s.page, "#/exams/exam-demo/writing-part", 1200);
+    ok(/Demo exam: writing part/.test(await viewText(s.page)), "page");
+    await visit(s.page, "#/exams/exam-demo/practice", 1500);
+    ok(/Short texts|Demo exam: short texts/.test(await viewText(s.page)) && await s.page.locator(".ex-set-card").count() === 1, "set card");
+    await visit(s.page, "#/exams/exam-demo/writing/demo-email", 1500);
+    ok(/Fixture email|Write an email/.test(await viewText(s.page)), "writing task");
+    await visit(s.page, "#/exams/exam-soon", 1000);
+    ok(/Work in progress/.test(await viewText(s.page)), "soon exam");
+    await visit(s.page, "#/exams/nope", 800);
+    ok(/Page not found/.test(await viewText(s.page)), "unknown exam");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
-    const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, reducedMotion: "reduce" });
-    await ctx.addInitScript(function () { localStorage.setItem("plm.profiles", JSON.stringify({ version: 2, activeId: "p_e2e", profiles: [{ id: "p_e2e", name: "T", progress: {} }] })); });
-    const page = await ctx.newPage();
-    await page.goto(URL + "#/szlak"); await page.waitForTimeout(1500);
-    ok(await page.evaluate(function () { return getComputedStyle(document.querySelector(".sz-node.is-current .sz-circle")).animationName; }) === "none", "animacja przy reduced-motion");
-    await ctx.close();
   });
-  await test("stary eksport (bez części „szlak”) importuje się bez błędów i nie kasuje Szlaku; nowy eksport zawiera część „szlak”", async function () {
-    const s = await session(1280, 900, true);
-    await visit(s.page, "#/szlak", 1500);
-    await s.page.evaluate(function () { LM.trailStore.recordQuiz("a1-01", 4); });
-    const exported = await s.page.evaluate(function () { return LM.trailStore.exportData(); });
-    ok(exported.p_e2e && exported.p_e2e.stops["a1-01"].best === 4, "eksport szlaku");
-    const res = await s.page.evaluate(function () {
-      try { const parsed = LM.trailStore.parseImport(undefined); LM.trailStore.applyImport(parsed, ["p_e2e"]); return { parsed: parsed, kept: !!localStorage.getItem("plm.trail.p_e2e") }; } catch (e) { return { error: e.message }; }
-    });
-    ok(!res.error && res.parsed === null && res.kept, "stary plik: " + JSON.stringify(res));
+
+  console.log("\nPhones");
+  await test("no horizontal scroll at 320, 360 and 375 px", async function () {
+    const s = await session(375, 812, true);
+    const bad = [];
+    for (const w of [320, 360, 375]) {
+      await s.page.setViewportSize({ width: w, height: 812 });
+      for (const r of ["#/", "#/today", "#/a1", "#/b1", "#/a1/cases-accusative", "#/trail", "#/review", "#/practice", "#/nope"]) {
+        await s.page.goto(URL + r); await s.page.waitForTimeout(450);
+        const d = await s.page.evaluate(function () { return [document.documentElement.scrollWidth, document.documentElement.clientWidth]; });
+        if (d[0] > d[1]) bad.push(r + " @" + w + " (" + d[0] + ">" + d[1] + ")");
+      }
+    }
+    ok(!bad.length, "horizontal scroll: " + bad.join("; "));
+    await s.ctx.close();
+  });
+  await test("prefers-reduced-motion: the current trail stop does not pulse", async function () {
+    const s = await session(1280, 800, true, { reducedMotion: "reduce" });
+    await visit(s.page, "#/trail", 1500);
+    ok(await s.page.evaluate(function () { return getComputedStyle(document.querySelector(".sz-node.is-current .sz-circle")).animationName; }) === "none", "animation with reduced motion");
     await s.ctx.close();
   });
 
   await browser.close();
   server.close();
-  console.log("\nE2E: " + passed + " ok, " + failures.length + " błędów");
+  fs.rmSync(FIXTURE_DATA, { recursive: true, force: true });
+  console.log("\nE2E: " + passed + " ok, " + failures.length + " failed");
   if (failures.length) process.exit(1);
 }
 

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "exams": [
+    {
+      "id": "exam-demo",
+      "code": "DEMO",
+      "label": "Demo exam",
+      "level": "B1",
+      "status": "active",
+      "order": 1,
+      "accent": "#2f6f8f",
+      "accent2": "#7cc4e4",
+      "subtitle": "Test fixture of the exams module",
+      "description": "A made-up exam that keeps the generic exam code under test. Not real content.",
+      "checkedOn": "November 2026",
+      "sources": [{ "label": "example.org", "url": "https://example.org/" }],
+      "decks": []
+    },
+    {
+      "id": "exam-soon",
+      "code": "SOON",
+      "label": "Demo exam in progress",
+      "level": "B2",
+      "status": "soon",
+      "order": 2,
+      "description": "A made-up exam with status soon."
+    }
+  ]
+}

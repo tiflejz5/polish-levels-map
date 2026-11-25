@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "id": "exam-demo-reading-1",
+  "level": "B1",
+  "title": "Demo exam: short texts",
+  "intro": "Two items of a test fixture.",
+  "items": [
+    {
+      "id": "exam-demo-reading-1-01",
+      "type": "multiple-choice",
+      "prompt": "Fixture item: pick the second option.",
+      "options": ["first", "second", "third"],
+      "correct": 1,
+      "explanation": "The fixture asks for the second option."
+    },
+    {
+      "id": "exam-demo-reading-1-02",
+      "type": "multiple-choice",
+      "prompt": "Fixture item: pick the first option.",
+      "options": ["first", "second", "third"],
+      "correct": 0,
+      "explanation": "The fixture asks for the first option."
+    }
+  ]
+}

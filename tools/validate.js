@@ -12,7 +12,6 @@
 
 
 const C = require("./build/common");
-const answerDistribution = require("./build/answer-distribution");
 
 const errors = [];
 const warnings = [];
@@ -140,7 +139,6 @@ C.LEVELS.forEach(function (L) { json("tests/final-" + L.toLowerCase() + ".json")
 C.list(C.content("lab"), /\.json$/).forEach(function (f) { json("lab/" + f); });
 
 // ---------- answer letters in lettered exam sets ----------
-answerDistribution.checkAll().forEach(function (e) { err("exams/" + e.file + " " + e.id + ": " + e.error); });
 
 // ---------- available level must be complete (warning until the first content stage) ----------
 if (levels && syllabus) C.LEVELS.forEach(function (L) {

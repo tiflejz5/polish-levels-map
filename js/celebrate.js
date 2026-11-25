@@ -38,9 +38,8 @@ window.LM = window.LM || {};
   function pd() { return LM.profileData; }
 
   function levelName(id) {
-    const level = LM.state.content.levels.find(function (l) { return l.id === id; });
-    const m = level && /^\*\*(.+?)\*\*\s*$/.exec(String(level.description || "").split("\n")[0]);
-    return m ? m[1] : "";
+    const level = LM.syllabus.level(id);
+    return level ? level.land : "";
   }
 
   // ---------- Teksty (krótko, konkretnie, bez przesady) ----------
@@ -85,10 +84,10 @@ window.LM = window.LM || {};
   /** Kamienie wynikające ze stanu (bez zdarzeń). */
   function fromState() {
     const ids = [];
-    if (!LM.state.content || !LM.app.getActiveProfile()) return ids;
+    if (!LM.app.getActiveProfile()) return ids;
     const total = LM.app.countDone(LM.state.progress);
     TOTALS.forEach(function (n) { if (total >= n) ids.push(n === 1 ? "first-umiem" : "total-" + n); });
-    LM.LEVEL_IDS.forEach(function (lvl) {
+    LM.syllabus.availableLevelIds().forEach(function (lvl) {
       const s = LM.app.getLevelStats(lvl);
       LEVEL_STEPS.forEach(function (step) { if (s.total && s.percent >= step) ids.push("lvl-" + lvl.toLowerCase() + "-" + step); });
     });
@@ -215,7 +214,7 @@ window.LM = window.LM || {};
    * dostaje zapis tego, co już osiągnął (bez pokazywania). Nowy profil — pusty zbiór.
    */
   function baseline() {
-    if (!LM.app || !LM.app.getActiveProfile() || !pd() || !LM.state.content) return;
+    if (!LM.app || !LM.app.getActiveProfile() || !pd() || !LM.state.ready) return;
     if (pd().celebrated() === null) pd().addCelebrated(fromState());
   }
 

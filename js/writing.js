@@ -1,12 +1,11 @@
 /*
  * writing.js — sekcja „Pisanie” (paczka v6, spec 17, sekcja 1): wzorcowe wypracowania z komentarzami.
  *
- *   #/pisanie                              lista wzorców pogrupowana po egzaminie i gatunku
- *   #/pisanie/wzorce/<egzamin>/<id>        wzorzec z komentarzami (widok: js/writing-model.js)
+ *   #/writing                              lista wzorców pogrupowana po egzaminie i gatunku
+ *   #/writing/models/<egzamin>/<id>        wzorzec z komentarzami (widok: js/writing-model.js)
  *
- * Dane: zadania z polem modelNotes w niezbednik/<egzamin>/trening/writing.json (LM.EXAMS[id].trainers
- * dla egzaminów z rejestru, LM.C1.trainers dla Certyfikatu C1). Tekstów `model` nie zmieniamy — komentarze
- * wskazują dokładne fragmenty (kotwice).
+ * Data: tasks with modelNotes in content/exams/<exam>/training/writing.json (the exam's writing trainer,
+ * LM.exams.trainerData). The `model` texts are not changed; the notes point at exact fragments (anchors).
  *
  *   LM.writing.parseRoute(hash), render(), examList() → Promise z [{ exam, T, tasks }]
  *   LM.writing.hrefModel(examId, taskId), LM.writing.pageSection(examId) — sekcja z linkami na stronach „Writing”
@@ -18,7 +17,7 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
-  const HASH = "#/pisanie";
+  const HASH = "#/writing";
 
   const GENRES = { essay: "Rozprawka / essay", email: "E-mail", letter: "List", blog: "Wpis na blogu", forum: "Wpis na forum",
     article: "Artykuł", review: "Recenzja", report: "Raport", proposal: "Propozycja", story: "Opowiadanie" };
@@ -34,16 +33,13 @@ window.LM = window.LM || {};
   const TYPE_ORDER = ["punkty", "lacznik", "rejestr", "struktura", "zakres", "uwaga"];
 
   function reg() { return LM.EXAM_REGISTRY || { exams: [] }; }
-  function plural(n, one, few, many) { return LM.c1 ? LM.c1.plural(n, one, few, many) : many; }
+  function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
   function genreLabel(g) { return GENRES[g] || g; }
-  function hrefModel(examId, taskId) { return HASH + "/wzorce/" + examId + "/" + taskId; }
+  function hrefModel(examId, taskId) { return HASH + "/models/" + examId + "/" + taskId; }
 
-  /** Liczba słów wzorca tak, jak liczy trener danego egzaminu (E8 i matury: bez podanego początku). */
+  /** Words of a model answer, counted as the writing trainer counts them (without the given opening). */
   function wordCount(examId, task) {
-    const text = String(task.model || "");
-    if (!/^certyfikat-/.test(examId) && LM.examLogic && LM.examLogic.countWordsE8) return LM.examLogic.countWordsE8(text, task.opening);
-    const t = text.trim();
-    return t ? t.split(/\s+/).length : 0;
+    return LM.examLogic.countWritingWords(String(task.model || ""), task.opening, LM.lang && LM.lang.countWords);
   }
 
   // =====================================================================
@@ -57,9 +53,7 @@ window.LM = window.LM || {};
     if (cache) return Promise.resolve(cache);
     const list = reg().exams.filter(function (e) { return e.status === "active"; });
     return Promise.all(list.map(function (e) {
-      const load = e.existing
-        ? Promise.resolve(LM.C1 && LM.C1.trainers && LM.C1.trainers["trening-pisanie"])
-        : (LM.exams ? LM.exams.load(e).then(function (d) { return d && d.trainers && d.trainers["trening-pisanie"]; }) : Promise.resolve(null));
+      const load = LM.exams ? LM.exams.load(e).then(function (d) { return d ? LM.exams.trainerData(e, "writing") : null; }) : Promise.resolve(null);
       return load.then(function (T) {
         const tasks = T && T.tasks ? T.tasks.filter(function (t) { return t.model && t.modelNotes; }) : [];
         return tasks.length ? { exam: e, T: T, tasks: tasks } : null;
@@ -72,7 +66,7 @@ window.LM = window.LM || {};
 
   /** Chip egzaminu: skrót + pełna nazwa dla czytników; kolor z rejestru jako dodatek. */
   function examChip(e) {
-    const accent = e.accent || "var(--c1-gold)";
+    const accent = e.accent || "var(--accent)";
     return el("span", { class: "chip wz-exam", style: "--exam: " + accent }, [
       el("span", { "aria-hidden": "true", text: e.code }),
       el("span", { class: "visually-hidden", text: e.label })
@@ -84,12 +78,13 @@ window.LM = window.LM || {};
   // =====================================================================
 
   function parseRoute(hash) {
-    const m = /^#\/pisanie(?:\/(.*))?$/.exec(hash || "");
+    const m = /^#\/writing(?:\/(.*))?$/.exec(hash || "");
     if (!m) return null;
     const p = (m[1] || "").replace(/\/+$/, "").split("/").filter(Boolean).map(function (x) { try { return decodeURIComponent(x); } catch (e) { return x; } });
-    if (p[0] === "wzorce" && p[1] && p[2]) return { kind: "model", exam: p[1], task: p[2] };
-    if (p[0] === "zwroty") return { kind: "phrases", group: p[1] || "" };
-    return { kind: "list" };
+    if (!p.length) return { kind: "list" };
+    if (p[0] === "models" && p[1] && p[2] && !p[3]) return { kind: "model", exam: p[1], task: p[2] };
+    if (p[0] === "phrases" && p.length <= 2) return { kind: "phrases", group: p[1] || "" };
+    return null;
   }
 
   // =====================================================================
@@ -119,7 +114,7 @@ window.LM = window.LM || {};
   function renderList(view) {
     view.appendChild(head("Pisanie – wzorcowe wypracowania", "Teksty modelowe z komentarzami na marginesie: co realizuje polecenie, jak działają łączniki i rejestr, co podnosi zakres językowy i co można zrobić lepiej."));
     view.appendChild(el("p", { class: "card wz-phrases-link" }, [
-      el("a", { href: HASH + "/zwroty", class: "wz-card-title", text: "Bank zwrotów do pisania" }),
+      el("a", { href: HASH + "/phrases", class: "wz-card-title", text: "Bank zwrotów do pisania" }),
       el("span", { class: "tool-note", text: " – zwroty według funkcji (opinia, kontrargument, prośby…), z filtrem poziomu, rejestru i gatunku." })
     ]));
     const body = el("div", { class: "wz-list", "aria-live": "polite" }, el("p", { class: "tool-note", role: "status", text: "Wczytuję wzorce…" }));
@@ -185,7 +180,7 @@ window.LM = window.LM || {};
       if (LM[lazy[0]]) { draw(); return; }
       view.appendChild(el("p", { class: "tool-note", role: "status", text: "Wczytuję…" }));
       LM.loadModule(lazy[1]).then(function () {
-        if (view.isConnected && LM.state.view === "pisanie" && !view.querySelector(".tool-head")) { view.replaceChildren(); draw(); }
+        if (view.isConnected && LM.state.view === "writing" && !view.querySelector(".tool-head")) { view.replaceChildren(); draw(); }
       }, function (err) { console.warn(err.message); view.replaceChildren(el("p", { class: "tool-note", text: "Nie udało się wczytać widoku. Odśwież stronę." })); });
       return;
     }

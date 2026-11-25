@@ -249,9 +249,9 @@ window.LM = window.LM || {};
       parts.push(el("div", { class: "menu-sep", role: "separator" }));
       parts.push(el("p", { class: "menu-title", text: "Moje" }));
       [
-        ["#/statystyki", "chart-column", "Statystyki"],
-        ["#/notatki", "notebook", "Moje notatki"],
-        ["#/test-poziomu", "target", "Test poziomu"]
+        ["#/stats", "chart-column", "Statystyki"],
+        ["#/notes", "notebook", "Moje notatki"],
+        ["#/placement", "target", "Test poziomu"]
       ].forEach(function (it) {
         parts.push(el("a", {
           class: "menu-action", href: it[0], "data-menu-item": "",

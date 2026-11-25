@@ -17,7 +17,7 @@
  *   listTitle, listLead(T)  nagłówek i wstęp listy zadań
  *   chips(task, T)          etykiety zadania (Part, gatunek, zakres słów)
  *   genrePage(task)         { href, label } strony o gatunku albo null
- *   timerKey(task)          klucz timera (LM.c1.timer — wspólny dla trenerów)
+ *   timerKey(task)          key of the timer (LM.timer, js/timer.js)
  *   timerNote               opcjonalna wskazówka przy timerze
  *   examExtras              true → egzaminy z rejestru: podany początek, podpunkty do odhaczenia,
  *                           samoocena wg kryteriów (rubric), wzorcowa odpowiedź obok tekstu
@@ -25,7 +25,7 @@
  *   lowScope                co się ocenia poniżej warnBelow (mianownik), np. „treść”, „realizacja zadania”
  *   lowNote(n, T)           opcjonalnie: własna uwaga w samoocenie poniżej warnBelow (zamiast lowScope)
  *   partGroups(T)           opcjonalnie: [{ label, tasks }] — lista zadań w grupach (B2: Part 1 / Part 2)
- *   modelHref(task)         opcjonalnie: adres wzorca z komentarzami (#/pisanie/wzorce/…) — link w zadaniu z modelNotes
+ *   modelHref(task)         opcjonalnie: adres wzorca z komentarzami (#/writing/models/…) — link w zadaniu z modelNotes
  *   examId                  id egzaminu z rejestru (albo "certyfikat-c1") — poziom zwrotów w panelu „Zwroty” (spec 17, 2.4)
  *   choices()               opcjonalnie: obiekt { grupa: idZadania } — wybór jednego z dwóch zadań
  *                           (zadania z choiceGroup, opis grupy w T.choiceGroups; spec 06, 4.1)
@@ -243,7 +243,7 @@ window.LM = window.LM || {};
       const phrasesBtn = task.genre ? el("button", { type: "button", class: "btn btn-secondary btn-small zw-open", "aria-expanded": "false", "aria-controls": "zw-panel",
         onclick: function () { togglePhrases(); } }, LM.ui.withIcon("notebook-text", "Zwroty")) : null;
       view.appendChild(el("div", { class: "c1-writing-bar" }, [
-        LM.c1.timer({ key: cfg.timerKey(task), seconds: T.timeMinutes * 60, label: "Czas", exam: true }),
+        LM.timer({ key: cfg.timerKey(task), seconds: T.timeMinutes * 60, label: "Czas", exam: true }),
         counter,
         phrasesBtn
       ]));
@@ -303,7 +303,7 @@ window.LM = window.LM || {};
               el("button", { type: "button", class: "btn btn-link btn-small", "aria-label": "Zamknij panel zwrotów", onclick: closePhrases }, LM.ui.withIcon("x", "Zamknij"))
             ]),
             body,
-            el("p", { class: "tool-note zw-panel-foot" }, el("a", { href: LM.writing.HASH + "/zwroty", text: "Cały bank zwrotów" }))
+            el("p", { class: "tool-note zw-panel-foot" }, el("a", { href: LM.writing.HASH + "/phrases", text: "Cały bank zwrotów" }))
           ]);
           view.appendChild(panel);
           LM.loadModule("js/writing-phrases.js").then(function () { return LM.writingPhrases.load(); }).then(function () { fillPhrases(body); }, function () {

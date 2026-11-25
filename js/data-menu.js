@@ -89,7 +89,6 @@ window.LM = window.LM || {};
       if (!ok) return;
       LM.profileData.resetAll(); // every key of the registry except theme and sidebar (js/profile-data.js)
       app().replaceProfiles(LM.createEmptyProfiles());
-      app().replaceContent(LM.createDefaultData());
     });
   }
 
