@@ -466,6 +466,7 @@ window.LM = window.LM || {};
               tr.classList.add("has-listen");
               listenTexts.set(tr, { text: said });
               const cell = Array.prototype.find.call(tr.cells, function (td) { return td.getAttribute("lang") === LM.APP.targetLang; });
+              cell.classList.add("listen-cell");
               cell.appendChild(listenButton(tr, "Listen to example " + (r + 1)));
             }
             return tr;

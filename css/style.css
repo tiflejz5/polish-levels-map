@@ -3905,7 +3905,8 @@ a.pw-row-label:hover { text-decoration: underline; }
 .listen-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; margin-top: -10px; margin-bottom: -10px; padding: 0; margin-left: var(--space-2); border-radius: 50%; color: var(--accent); vertical-align: middle; }
 .listen-btn:hover { background: var(--accent-soft); }
 html:not([data-voice="ready"]) .listen-btn { display: none; }
-.md tr.has-listen td[lang] { white-space: normal; }
+.md td.listen-cell { position: relative; padding-right: 52px; }
+.md td.listen-cell > .listen-btn { position: absolute; top: 50%; right: 4px; margin: 0; transform: translateY(-50%); }
 .md blockquote.has-listen { position: relative; padding-right: 48px; }
 .md blockquote.has-listen > .listen-btn { position: absolute; top: var(--space-1); right: var(--space-1); margin: 0; }
 .md-gloss { color: var(--ink-muted); }
