@@ -2429,6 +2429,27 @@ test("extract-strings: literals without comments and regexes; code-like strings 
   assert.strictEqual(ES.looksLikeUi("plm.prefs"), false);
 });
 
+console.log("\nCallouts keyed on the English headings of spec 07 §1–2");
+test("callouts: topic and summary headings map to callout types; other headings get none", function () {
+  require(path.join(__dirname, "..", "js", "callouts.js"));
+  const C = global.LM.callouts;
+  const type = function (h) { const r = C.ruleFor(h); return r ? r.type : null; };
+  assert.strictEqual(type(global.LM.APP.mistakesHeading), "trap");
+  assert.strictEqual(type("Common mistakes for English speakers"), "trap");
+  assert.strictEqual(type("The most common trap"), "trap");
+  assert.strictEqual(type("Watch out"), "trap");
+  assert.strictEqual(type("Real life vs exam"), "real-exam");
+  assert.strictEqual(type("Key ideas"), "key");
+  assert.strictEqual(type("What you can do at this level"), "key");
+  assert.strictEqual(type("What next"), "next");
+  assert.strictEqual(type("Examples"), "examples");
+  assert.strictEqual(type("Key phrases"), "examples");
+  assert.strictEqual(type("Word partners"), "examples");
+  ["How it works", "When to use it", "Practice", "Answers", "Good to know", "Dialogue", "Words", "Culture note"].forEach(function (h) {
+    assert.strictEqual(type(h), null, h);
+  });
+});
+
 console.log("\nSyllabus: the only list of levels, units, categories and topics (spec 06 E1, E2)");
 (function () {
   const fs = require("fs");
