@@ -2404,6 +2404,31 @@ test("LM.fmt numbers and percents in en-US", function () {
   assert.strictEqual(F.percent(undefined), "");
 });
 
+console.log("\nLanguage check of the code (spec 04 §4)");
+test("check-lang: diacritics, Polish opening quote, stop words, locales, legacy names; English quotes pass; allow list", function () {
+  const CL = require(path.join(__dirname, "check-lang.js"));
+  const rules = function (line) { return CL.checkText("js/x.js", line, []).map(function (f) { return f.rule; }); };
+  assert.deepStrictEqual(rules("const a = \"Dzień dobry\";"), ["diacritics"]);
+  assert.deepStrictEqual(rules("const a = \"„Hi”\";"), ["quote"]);
+  assert.deepStrictEqual(rules("label: \"Dalej\""), ["stop-word"]);
+  assert.deepStrictEqual(rules("u.lang = \"en-GB\";"), ["locale"]);
+  assert.deepStrictEqual(rules("ELM.x(); elm_theme"), ["legacy-name"]);
+  assert.deepStrictEqual(rules("text: “Next”, \"Continue the trail\", helmet, element, dalejx"), []);
+  const allow = [{ file: "js/x.js", contains: "Dalej", reason: "test", used: 0 }];
+  assert.deepStrictEqual(CL.checkText("js/x.js", "Dalej", allow), []);
+  assert.strictEqual(allow[0].used, 1);
+  assert.strictEqual(CL.checkText("js/y.js", "Dalej", allow).length, 1, "allow entries are per file");
+});
+test("extract-strings: literals without comments and regexes; code-like strings dropped", function () {
+  const ES = require(path.join(__dirname, "extract-strings.js"));
+  const src = "// \"comment\"\nconst r = /\"x\"/g; el(\"button\", { class: \"btn btn-primary\", text: \"Start review\" }, `Stop ${n} of 26`);";
+  const ui = ES.jsLiterals(src).filter(function (x) { return ES.looksLikeUi(x.text); }).map(function (x) { return x.text; });
+  assert.deepStrictEqual(ui, ["Start review", "Stop {…} of 26"]);
+  assert.strictEqual(ES.looksLikeUi("Next"), true);
+  assert.strictEqual(ES.looksLikeUi("#/today"), false);
+  assert.strictEqual(ES.looksLikeUi("plm.prefs"), false);
+});
+
 console.log("\nSyllabus: the only list of levels, units, categories and topics (spec 06 E1, E2)");
 (function () {
   const fs = require("fs");
