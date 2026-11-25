@@ -9,6 +9,17 @@ Plan prac wizualnych:
 3. **Strona „Dziś”, poziomy i celebracje** — zrobione (sekcje 3.2–3.5).
 4. **Treści podstron, Certyfikat C1 i kontrola jakości** — zrobione (sekcje 2.9, 3.7, 3.8, 9).
 
+> **Stage 1B (Polish Levels Map) — what no longer applies below.** The C1 module and the per-exam themes are gone:
+> sections 2.9 and 3.8, the `--c1-*` tokens, `[data-section="certyfikat" | "egzamin-osmoklasisty" | "matura-…" | "certyfikat-b2"]`,
+> the C1 chip in the sidebar and the "Na egzaminie C1" callout no longer exist; exams use one generic look with the registry's
+> `accent` / `accent2` as `--exam-accent` / `--exam-accent-2`. Routes are the English ones of spec 02 §6 (`#/review`, `#/practice`, …).
+> The level page has no category filter: topics are grouped by syllabus category, each row shows the topic, its Polish example
+> (`.ess-example`) and, when the page is missing, a dashed "Being written" label (`.ess-pending`). A "soon" level shows
+> `.ess-item.is-planned` rows, a "Coming soon" chip in the header, "soon" in the sidebar (`.sb-item.is-soon`), a dimmed land on the
+> trail (`.sz-level.is-soon`) and on Today (`.trail-station.is-soon`). New: "Page not found" (`.notfound`), the pending topic page
+> (`.page-pending`) and the home level list (`.home-levels`) used while `content/home.md` does not exist. The file is translated in
+> stage 2 and pruned in stage 7.
+
 ---
 
 ## 1. Kierunek: „Mapa podróży” z typografią redakcyjną
