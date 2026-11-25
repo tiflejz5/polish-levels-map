@@ -1242,7 +1242,7 @@ console.log("\nTrail: logic (spec v7 13)");
     known.e_a1_g05 = true;
     assert.strictEqual(SL.statusOf(stopOf("a1-02"), st, env).status, "open", "only some topics");
     known.e_a1_g06 = true;
-    assert.deepStrictEqual(SL.statusOf(stopOf("a1-02"), st, env), { status: "done", via: "umiem" }); // stored value
+    assert.deepStrictEqual(SL.statusOf(stopOf("a1-02"), st, env), { status: "done", via: "umiem" }); // pl-fixture: stored value
     known.e_a1_g06 = false;
     assert.strictEqual(SL.statusOf(stopOf("a1-02"), st, env).status, "open", "unticking undoes the pass");
   });
@@ -1262,9 +1262,9 @@ console.log("\nTrail: logic (spec v7 13)");
   });
   test("trail stopStatus: a checkpoint is done after an attempt, the result does not block", function () {
     const st = SL.emptyState();
-    assert.strictEqual(SL.statusOf(stopOf("a1-u1-powtorka"), st, env).status, "open");
-    st.reviews["a1-u1-powtorka"] = { best: 1, of: 6, at: "2026-11-12" };
-    assert.strictEqual(SL.statusOf(stopOf("a1-u1-powtorka"), st, env).status, "done");
+    assert.strictEqual(SL.statusOf(stopOf("a1-u1-checkpoint"), st, env).status, "open");
+    st.reviews["a1-u1-checkpoint"] = { best: 1, of: 6, at: "2026-11-12" };
+    assert.strictEqual(SL.statusOf(stopOf("a1-u1-checkpoint"), st, env).status, "done");
   });
   test("trail buildTrail: the current stop from the starting point, lands before the start “skipped”", function () {
     reset();
@@ -1282,7 +1282,7 @@ console.log("\nTrail: logic (spec v7 13)");
     assert.strictEqual(byId("a1-01").status, "done", "done before the start stays done");
     assert.strictEqual(byId("a2-01").status, "skipped");
     assert.strictEqual(byId("c1-02").status, "open");
-    assert.strictEqual(byId("a1-u1-powtorka").status, "skipped");
+    assert.strictEqual(byId("a1-u1-checkpoint").status, "skipped");
     known.e_c1_g01 = true;
     assert.strictEqual(SL.buildTrail(data, st, env).current.id, "c1-02");
     known.e_c1_f01 = true;
@@ -1305,7 +1305,7 @@ console.log("\nTrail: logic (spec v7 13)");
     const rng = (function () { let x = 7; return function () { x = (x * 16807) % 2147483647; return x / 2147483647; }; })();
     const mk = function (p, n) { return Array.from({ length: n }, function (_, i) { return { id: p + i }; }); };
     const stops = { "a1-01": stopOf("a1-01"), "a1-02": stopOf("a1-02"), "a1-03": stopOf("a1-03") };
-    const rev = stopOf("a1-u1-powtorka");
+    const rev = stopOf("a1-u1-checkpoint");
     const quiz = { "a1-01": mk("q1-", 4), "a1-02": mk("q2-", 4), "a1-03": [] };
     let r = SL.pickReview(rev, { stops: stops, quizItems: function (id) { return quiz[id]; }, setItems: function () { return []; }, finalItems: function () { return []; } }, rng);
     assert.strictEqual(r.source, "quiz");
@@ -1338,14 +1338,14 @@ console.log("\nTrail: logic (spec v7 13)");
       version: 1,
       start: { level: "Z9", source: "test" },
       stops: { "a1-05": { done: true, via: "quiz", best: 4, at: "2026-11-12T10:00:00Z" }, "BAD ID": { via: "quiz" }, "a1-06": { via: "magic" }, "a1-07": { done: true, via: "skip", best: 99 }, "a1-08": "x" },
-      reviews: { "a1-u1-powtorka": { best: 5, of: 6, at: "2026-11-12" }, "a1-u2-powtorka": { best: 9, of: 6 }, "a1-u3-powtorka": {} }
+      reviews: { "a1-u1-checkpoint": { best: 5, of: 6, at: "2026-11-12" }, "a1-u2-checkpoint": { best: 9, of: 6 }, "a1-u3-checkpoint": {} }
     });
     assert.strictEqual(s.start, null, "unknown start level");
     assert.deepStrictEqual(Object.keys(s.stops).sort(), ["a1-05", "a1-07"]);
     assert.strictEqual(s.stops["a1-05"].best, 4);
     assert.strictEqual(s.stops["a1-07"].done, false, "skip is never “done”");
     assert.strictEqual(s.stops["a1-07"].best, undefined, "best out of range is rejected");
-    assert.deepStrictEqual(Object.keys(s.reviews), ["a1-u1-powtorka"]);
+    assert.deepStrictEqual(Object.keys(s.reviews), ["a1-u1-checkpoint"]);
     assert.deepStrictEqual(SL.sanitizeState(JSON.parse(JSON.stringify(s))), s, "export → import unchanged");
     assert.strictEqual(SL.quizAverage(s), 100);
     assert.strictEqual(SL.quizAverage(SL.emptyState()), null);
@@ -1427,15 +1427,15 @@ console.log("\nTrail: the plm.trail.<id> store, export, import, reset (spec v7 1
     assert.strictEqual(SS.skipStop("a1-01"), false, "a stop passed by a quiz cannot be skipped");
     assert.strictEqual(SS.skipStop("a1-02"), true);
     assert.strictEqual(SS.unskipStop("a1-02"), true);
-    SS.recordReview("a1-u1-powtorka", 5, 6);
-    assert.strictEqual(SS.recordReview("a1-u1-powtorka", 3, 6).best, 5);
+    SS.recordReview("a1-u1-checkpoint", 5, 6);
+    assert.strictEqual(SS.recordReview("a1-u1-checkpoint", 3, 6).best, 5);
     assert.strictEqual(SS.setStart("C1", "test"), true);
     assert.strictEqual(SS.setStart("B1", "manual"), true);
     assert.strictEqual(SS.setStart("C2", "test"), false, "a manual start is not overwritten by a test");
     assert.strictEqual(SS.setStart("C2", "test", true), true, "the “Start the trail at X” button forces the start");
     const raw = JSON.parse(global.localStorage.getItem(key("pa")));
     assert.strictEqual(raw.version, 1);
-    assert.deepStrictEqual([raw.start.level, raw.stops["a1-01"].best, raw.reviews["a1-u1-powtorka"].of], ["C2", 4, 6]);
+    assert.deepStrictEqual([raw.start.level, raw.stops["a1-01"].best, raw.reviews["a1-u1-checkpoint"].of], ["C2", 4, 6]);
     assert.strictEqual(raw.stops["a1-02"], undefined);
     assert.strictEqual(SS.setStart("Z9", "manual"), false);
     activeProfile = "p1";
@@ -1491,10 +1491,10 @@ test("plm.phrases: the key in KEYS, the star toggles per profile and is saved in
   assert.strictEqual(PD.KEYS.phrases, "plm.phrases");
   freshPD();
   assert.deepStrictEqual(PD.starredPhrases(), []);
-  assert.strictEqual(PD.togglePhraseStar("opinia-05"), true);
+  assert.strictEqual(PD.togglePhraseStar("opinion-05"), true);
   assert.strictEqual(PD.togglePhraseStar("counterargument-01"), true);
   assert.deepStrictEqual(PD.starredPhrases(), ["opinion-05", "counterargument-01"]);
-  assert.strictEqual(PD.togglePhraseStar("opinia-05"), false);
+  assert.strictEqual(PD.togglePhraseStar("opinion-05"), false);
   assert.deepStrictEqual(PD.starredPhrases(), ["counterargument-01"]);
   assert.strictEqual(PD.togglePhraseStar("Bad ID!"), false); // an invalid id is rejected
   assert.deepStrictEqual(JSON.parse(global.localStorage.getItem("plm.phrases")).profiles.p1.starred, ["counterargument-01"]);
@@ -1524,11 +1524,11 @@ console.log("\nSpeaking trainer: seen in plm.speaking (pack v6, spec 18)");
 test("plm.speaking: an old record without seen works, seen is optional, tolerant and in export/import/reset", function () {
   freshPD();
   // an old record (sessions only) normalizes as before, without the seen field
-  const old = PD.parseImport({ speaking: { version: 1, profiles: { p1: { sessions: [{ day: "2026-01-02", exam: "certyfikat-b2", part: 1, scores: { gv: 4 } }] } } } });
-  assert.deepStrictEqual(old.speaking.profiles.p1, { sessions: [{ day: "2026-01-02", exam: "certyfikat-b2", part: 1, scores: { gv: 4 } }] });
+  const old = PD.parseImport({ speaking: { version: 1, profiles: { p1: { sessions: [{ day: "2026-01-02", exam: "exam-b2", part: 1, scores: { gv: 4 } }] } } } });
+  assert.deepStrictEqual(old.speaking.profiles.p1, { sessions: [{ day: "2026-01-02", exam: "exam-b2", part: 1, scores: { gv: 4 } }] });
   PD.applyImport(old, ["p1"]);
-  assert.deepStrictEqual(PD.speakingSeen("certyfikat-b2:1"), []);
-  assert.strictEqual(PD.markSpeakingSeen("certyfikat-b2:1", "p1-dom"), true);
+  assert.deepStrictEqual(PD.speakingSeen("exam-b2:1"), []);
+  assert.strictEqual(PD.markSpeakingSeen("exam-b2:1", "p1-home"), true);
   assert.strictEqual(PD.markSpeakingSeen("exam-b2:1", "p1-home"), true); // no duplicates
   assert.strictEqual(PD.markSpeakingSeen("exam-b2:1", "p1-work"), true);
   assert.strictEqual(PD.markSpeakingSeen("bad key", "x"), false);
@@ -1545,9 +1545,9 @@ test("plm.speaking: an old record without seen works, seen is optional, tolerant
   assert.strictEqual(full.full, true);
   assert.strictEqual(PD.addSpeakingSession({ exam: "matura-podstawowa", part: 2, scores: { zakres: 3 } }).full, undefined);
   // clearing the cycle
-  assert.strictEqual(PD.markSpeakingSeen("certyfikat-b2:1", null), true);
-  assert.deepStrictEqual(PD.speakingSeen("certyfikat-b2:1"), []);
-  PD.markSpeakingSeen("certyfikat-b2:2", "p2-x");
+  assert.strictEqual(PD.markSpeakingSeen("exam-b2:1", null), true);
+  assert.deepStrictEqual(PD.speakingSeen("exam-b2:1"), []);
+  PD.markSpeakingSeen("exam-b2:2", "p2-x");
   PD.clearAll();
   assert.strictEqual(global.localStorage.getItem("plm.speaking"), null);
 });
@@ -1643,29 +1643,29 @@ test("makeWordCard: cloze from the sentence; no occurrence → basic; no sentenc
   assert.deepStrictEqual([bad.card.source, bad.card.addedAt], [{ title: "T" }, undefined]);
 });
 test("sanitizeState: new card fields (word, source, addedAt, examples) on saving and import, the system deck “words”, an old file without the fields", function () {
-  const s = FL.sanitizeState({ version: 1, cards: {}, userDecks: [{ id: "u-moje-slowa", title: "Moje słowa", system: "words" }, { id: "u-moje-bledy", title: "Moje błędy", system: "mistakes" }, { id: "u-x", title: "X", system: "inne" }], userCards: [
-    { id: "u-w1", deck: "u-moje-slowa", type: "cloze", text: "Most people {{commute}} to work.", hint: "dojeżdżać", word: "commute".padEnd(80, "x"), source: { route: "#/b1/slownictwo", title: "T".repeat(200) }, addedAt: "2026-11-03", examples: ["a", "  b  ", "", 7, "c", "d", "e".repeat(300)] },
-    { id: "u-w2", deck: "u-moje-slowa", type: "basic", front: "x", back: "y", word: 5, source: { route: "http://zła.pl", title: "" }, addedAt: "2026-13-40", examples: "nie tablica" },
-    { id: "u-w3", deck: "u-x", type: "basic", front: "stara", back: "karta" }
+  const s = FL.sanitizeState({ version: 1, cards: {}, userDecks: [{ id: "u-moje-slowa", title: "My words", system: "words" }, { id: "u-moje-bledy", title: "My mistakes", system: "mistakes" }, { id: "u-x", title: "X", system: "other" }], userCards: [
+    { id: "u-w1", deck: "u-moje-slowa", type: "cloze", text: "Most people {{commute}} to work.", hint: "travel to work", word: "commute".padEnd(80, "x"), source: { route: "#/b1/vocabulary", title: "T".repeat(200) }, addedAt: "2026-11-03", examples: ["a", "  b  ", "", 7, "c", "d", "e".repeat(300)] },
+    { id: "u-w2", deck: "u-moje-slowa", type: "basic", front: "x", back: "y", word: 5, source: { route: "http://bad.example", title: "" }, addedAt: "2026-13-40", examples: "not a list" },
+    { id: "u-w3", deck: "u-x", type: "basic", front: "old", back: "card" }
   ], settings: {}, daily: {} });
   assert.deepStrictEqual(s.userDecks.map(function (d) { return d.system || null; }), ["words", "mistakes", null]);
   const [w1, w2, w3] = s.userCards;
   assert.strictEqual(w1.word.length, 60);
-  assert.deepStrictEqual([w1.source.route, w1.source.title.length, w1.addedAt], ["#/b1/slownictwo", 120, "2026-11-03"]);
-  assert.deepStrictEqual(w1.examples, ["a", "b", "c"]); // maks. 3, puste i nietekstowe odrzucone
+  assert.deepStrictEqual([w1.source.route, w1.source.title.length, w1.addedAt], ["#/b1/vocabulary", 120, "2026-11-03"]);
+  assert.deepStrictEqual(w1.examples, ["a", "b", "c"]); // max. 3, empty and non-text ones rejected
   assert.deepStrictEqual([w2.word, w2.source, w2.addedAt, w2.examples], [undefined, undefined, undefined, undefined]);
-  assert.deepStrictEqual(Object.keys(w3).sort(), ["back", "deck", "front", "id", "tags", "type"]); // stara karta bez nowych pól
+  assert.deepStrictEqual(Object.keys(w3).sort(), ["back", "deck", "front", "id", "tags", "type"]); // an old card without the new fields
   assert.strictEqual(FL.sanitizeWordFields({ examples: ["e".repeat(300)] }).examples[0].length, 220);
-  // zapis → odczyt → te same pola (round-trip przez JSON)
+  // save → read → the same fields (round trip through JSON)
   assert.deepStrictEqual(FL.sanitizeState(JSON.parse(JSON.stringify(s))).userCards[0], w1);
 });
-test("exportWordsCsv: słowo; znaczenie; zdanie; źródło, cudzysłowy i średniki w polach", function () {
+test("exportWordsCsv: word; meaning; sentence; source, quotes and semicolons in fields", function () {
   const csv = FL.exportWordsCsv([
-    { type: "cloze", text: "Most people {{commute}} to work; by train.", hint: "dojeżdżać", word: "commute", source: { route: "#/b1/slownictwo", title: "Słownictwo B1" } },
+    { type: "cloze", text: "Most people {{commute}} to work; by train.", hint: "travel to work", word: "commute", source: { route: "#/b1/vocabulary", title: "Vocabulary B1" } },
     { type: "basic", front: "ephemeral", back: "He said \"hi\"." }
   ]).split("\n");
   assert.strictEqual(csv[0], "word;meaning;sentence;source");
-  assert.strictEqual(csv[1], 'commute;dojeżdżać;"Most people commute to work; by train.";Słownictwo B1 (#/b1/slownictwo)');
+  assert.strictEqual(csv[1], 'commute;travel to work;"Most people commute to work; by train.";Vocabulary B1 (#/b1/vocabulary)');
   assert.strictEqual(csv[2], 'ephemeral;;"He said ""hi"".";');
 });
 
@@ -1691,7 +1691,7 @@ test("countWritingWords: the language counter, without the given opening when it
   assert.strictEqual(EL.countWritingWords("Dear Anna, thanks for the letter.", "", count), 6);
   assert.strictEqual(EL.countWritingWords("Dear Anna, thanks for the letter.", "Dear Anna,", count), 4);
   assert.strictEqual(EL.countWritingWords("  ", "", count), 0);
-  assert.strictEqual(EL.countWritingWords("Cześć :) ---", ""), 1, "default count skips tokens without letters or digits");
+  assert.strictEqual(EL.countWritingWords("Cześć :) ---", ""), 1, "default count skips tokens without letters or digits"); // pl-fixture
 });
 
 test("myExams: date, finished set, unpinned, pinned, date in the past (all exams alike, no special C1 store)", function () {
@@ -1705,16 +1705,16 @@ test("myExams: date, finished set, unpinned, pinned, date in the past (all exams
   ] };
   const today = "2026-10-30";
   function run(input) { return EL.myExams(EL.examMyState(Object.assign({ registry: registry, examsRecord: { exams: {} }, isSetDone: function () { return false; } }, input)), registry, today); }
-  assert.deepStrictEqual(run({}), [], "bez danych nic nie jest moje");
+  assert.deepStrictEqual(run({}), [], "without data nothing is mine");
   // data
   assert.deepStrictEqual(run({ examsRecord: { exams: { mp: { examDate: "2027-05-06" } } } }), [{ id: "mp", reason: "date", days: 188 }]);
-  // zestaw
+  // a set
   assert.deepStrictEqual(run({ isSetDone: function (id) { return id === "e8-2"; } }), [{ id: "e8", reason: "sets", days: null }]);
-  // odpięty ręcznie (data i zestaw nie wystarczą)
+  // unpinned by hand (a date and a set are not enough)
   assert.deepStrictEqual(run({ examsRecord: { exams: { mp: { examDate: "2027-05-06" } }, my: { mp: "hidden" } } }), []);
-  // przypięty bez daty i zestawów; egzamin „soon” nigdy
+  // pinned without a date and sets; a “soon” exam never
   assert.deepStrictEqual(run({ examsRecord: { exams: {}, my: { mr: "pinned", soon: "pinned" } } }), [{ id: "mr", reason: "pinned", days: null }]);
-  // data w przeszłości: nadal moje, po przyszłych, przed egzaminami bez daty
+  // a date in the past: still mine, after the future ones, before exams without a date
   const mixed = run({
     examsRecord: { exams: { e8: { examDate: "2026-10-27" }, mp: { examDate: "2027-05-06" }, c1: { examDate: "2027-01-10" } }, my: { mr: "pinned" } }
   });
@@ -1733,7 +1733,7 @@ test("formatDateLong and daysBetween", function () {
   assert.strictEqual(EL.daysBetween("2026-10-29", "2026-10-30"), -1);
 });
 
-test("navSplit: tylko moje + reszta w „+N”, bieżący egzamin zostaje, brak moich = wszystkie", function () {
+test("navSplit: only mine + the rest in “+N”, the current exam stays, none of mine = all", function () {
   const EL = global.LM.examLogic;
   const reg = { exams: [{ id: "e8" }, { id: "mp" }, { id: "mr" }, { id: "b2" }, { id: "c1" }] };
   assert.deepStrictEqual(EL.navSplit(reg, ["c1", "mp"]), { shown: ["c1", "mp"], hidden: ["e8", "mr", "b2"] });
@@ -1743,7 +1743,7 @@ test("navSplit: tylko moje + reszta w „+N”, bieżący egzamin zostaje, brak 
   assert.strictEqual(EL.navSplit(reg, ["x"]).hidden.length, 5);
 });
 
-console.log("\nPowtórki v8: kolejka Fiszki i błędy (spec 20, R2)");
+console.log("\nReviews v8: the Flashcards and mistakes queue (spec 20, R2)");
 require(path.join(__dirname, "..", "js", "review-queue.js"));
 (function () {
   const R = global.LM.reviewQueue;
@@ -1754,12 +1754,12 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
   const at = function (d, h, m) { return new Date(2026, 10, d, h, m || 0, 0).getTime(); };
   const rev = function (due, interval) { return Object.assign(HM.newCard(), { state: "review", interval: interval || 3, due: due, reps: 2 }); };
 
-  // talie: d1 (4 karty), d2 (3 karty), „Moje błędy” (3 karty użytkownika)
+  // decks: d1 (4 cards), d2 (3 cards), “My mistakes” (3 user cards)
   function makeCtx(over) {
     const st = FLg.sanitizeState(FLg.emptyState());
     st.settings.enabledDecks = ["d1", "d2"];
     const userCards = ["u-mb-1", "u-mb-2", "u-mb-3"].map(function (id) { return { id: id, deck: "u-moje-bledy", type: "basic", front: "a", back: "b", tags: [] }; });
-    st.userDecks.push({ id: "u-moje-bledy", title: "Moje błędy", system: "mistakes" });
+    st.userDecks.push({ id: "u-moje-bledy", title: "My mistakes", system: "mistakes" });
     st.userCards = userCards;
     const decks = [{ id: "d1", count: 4 }, { id: "d2", count: 3 }, { id: "u-moje-bledy", count: 3 }];
     const cards = { d1: [1, 2, 3, 4].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-moje-bledy": userCards };
@@ -1772,39 +1772,39 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
   }
   const ids = function (q) { return q.map(function (x) { return x.id; }); };
 
-  test("kolejka: pusto, gdy nie ma kart do zrobienia (limit nowych 0)", function () {
+  test("queue: empty when there are no cards to do (new limit 0)", function () {
     const ctx = makeCtx();
     ctx.state.settings.newPerDay = 0;
     assert.deepStrictEqual(R.queueFrom(ctx, NOW), []);
     const zero = R.summaryFrom(ctx, NOW);
     assert.deepStrictEqual([zero.card, zero.mistake, zero.exercise, zero.total, zero.due.total, zero.fresh.total], [0, 0, 0, 0, 0, 0]);
   });
-  test("kolejka: zaległe najstarsze pierwsze, nowe na końcu, rodzaje: karta / błąd / zadanie", function () {
+  test("queue: overdue oldest first, new last, kinds: card / mistake / item", function () {
     const ctx = makeCtx({ weak: [{ id: "a1-x-1", topic: "t1" }] });
     ctx.state.settings.newPerDay = 2;
-    ctx.state.cards["d1-001"] = rev(at(9, 5));            // zaległa o dzień
+    ctx.state.cards["d1-001"] = rev(at(9, 5));            // a day overdue
     ctx.state.cards["u-mb-1"] = rev(at(5, 5));            // najstarsza
-    ctx.state.cards["ex:a1-x-2"] = rev(at(8, 5));         // zadanie
-    ctx.state.cards["d2-001"] = rev(at(10, 5));           // dziś rano
-    ctx.state.cards["d2-002"] = rev(at(12, 5));           // pojutrze: poza dniem
+    ctx.state.cards["ex:a1-x-2"] = rev(at(8, 5));         // an item
+    ctx.state.cards["d2-001"] = rev(at(10, 5));           // this morning
+    ctx.state.cards["d2-002"] = rev(at(12, 5));           // the day after tomorrow: outside the day
     const q = R.queueFrom(ctx, NOW);
-    assert.strictEqual(q[0].id, "u-mb-1", "najstarsza zaległa pierwsza");
+    assert.strictEqual(q[0].id, "u-mb-1", "the oldest overdue first");
     assert.strictEqual(ids(q).indexOf("d2-002"), -1);
     assert.deepStrictEqual(q.slice(0, 4).map(function (x) { return x.kind; }).sort(), ["card", "card", "exercise", "mistake"]);
-    assert.ok(q.slice(4).every(function (x) { return x.due === 0; }), "nowe na końcu");
-    assert.strictEqual(q.length, 6, "4 zaległe + 2 nowe (limit)");
+    assert.ok(q.slice(4).every(function (x) { return x.due === 0; }), "new last");
+    assert.strictEqual(q.length, 6, "4 overdue + 2 new (limit)");
   });
-  test("kolejka: przeplatanie — najwyżej 2 tego samego rodzaju i nie ten sam temat z rzędu", function () {
+  test("queue: interleaving — at most 2 of the same kind and not the same topic in a row", function () {
     const items = [];
     for (let i = 0; i < 4; i++) items.push({ kind: "card", id: "c" + i, due: i, topic: "d1" });
     for (let i = 0; i < 3; i++) items.push({ kind: "mistake", id: "m" + i, due: 10 + i, topic: "u-moje-bledy" });
     items.push({ kind: "exercise", id: "e0", due: 20, topic: "t1" }, { kind: "card", id: "c9", due: 21, topic: "d2" });
     const out = R.interleave(items);
     assert.strictEqual(out.length, items.length);
-    for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "temat z rzędu na " + i);
-    for (let i = 2; i < out.length; i++) assert.ok(!(out[i].kind === out[i - 1].kind && out[i].kind === out[i - 2].kind), "trzeci rodzaj z rzędu na " + i);
+    for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "same topic in a row at " + i);
+    for (let i = 2; i < out.length; i++) assert.ok(!(out[i].kind === out[i - 1].kind && out[i].kind === out[i - 2].kind), "third of a kind in a row at " + i);
   });
-  test("kolejka: limit powtórek na dzień wspólny dla kart, błędów i zadań (najstarsze zostają)", function () {
+  test("queue: the daily review limit is shared by cards, mistakes and items (the oldest stay)", function () {
     const ctx = makeCtx();
     ctx.state.settings.reviewsPerDay = 3;
     ctx.state.settings.newPerDay = 0;
@@ -1818,28 +1818,28 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
     ctx.state.daily["2026-11-10"] = { new: 0, reviews: 2, again: 0, good: 0, answers: 2, minutes: 0 };
     assert.strictEqual(R.queueFrom(ctx, NOW).length, 1);
   });
-  test("kolejka: limit nowych 10 dziennie, w tym najwyżej 3 nowe zadania ze słabych punktów", function () {
+  test("queue: new limit 10 a day, of which at most 3 new weak-spot items", function () {
     const weak = [1, 2, 3, 4, 5].map(function (i) { return { id: "w-" + i, topic: "t" + i }; });
     const ctx = makeCtx({ weak: weak });
     let q = R.queueFrom(ctx, NOW);
     assert.strictEqual(q.filter(function (x) { return x.kind === "exercise"; }).length, 3);
-    assert.strictEqual(q.length, 10, "10 nowych: 7 kart i 3 zadania");
+    assert.strictEqual(q.length, 10, "10 new: 7 cards and 3 items");
     assert.strictEqual(q[q.length - 1].kind === "exercise" || q[q.length - 2].kind === "exercise", true);
     ctx.state.daily["2026-11-10"] = { new: 2, reviews: 0, again: 0, good: 0, answers: 2, minutes: 0, exNew: 2 };
     q = R.queueFrom(ctx, NOW);
-    assert.strictEqual(q.filter(function (x) { return x.kind === "exercise"; }).length, 1, "zostało 3 − 2 = 1");
-    assert.strictEqual(q.length, 8, "limit nowych 10 − 2 zrobione");
+    assert.strictEqual(q.filter(function (x) { return x.kind === "exercise"; }).length, 1, "3 − 2 = 1 left");
+    assert.strictEqual(q.length, 8, "new limit 10 − 2 done");
   });
-  test("kolejka: granica dnia 04:00 — karta z terminem po północy, ale przed 04:00, należy do dzisiejszego dnia nauki", function () {
+  test("queue: the 04:00 day boundary — a card due after midnight but before 04:00 belongs to today's learning day", function () {
     const ctx = makeCtx();
     ctx.state.settings.newPerDay = 0;
-    ctx.state.cards["d1-001"] = rev(at(11, 2, 0));   // jutro 02:00
-    ctx.state.cards["d1-002"] = rev(at(11, 5, 0));   // jutro 05:00
+    ctx.state.cards["d1-001"] = rev(at(11, 2, 0));   // tomorrow 02:00
+    ctx.state.cards["d1-002"] = rev(at(11, 5, 0));   // tomorrow 05:00
     assert.deepStrictEqual(ids(R.queueFrom(ctx, at(10, 23, 0))), ["d1-001"]);
-    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(11, 1, 0))), ["d1-001"], "01:00 to jeszcze dzień nauki 10.11");
-    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(11, 6, 0))).sort(), ["d1-001", "d1-002"], "po 04:00 oba są na dziś (koniec dnia nauki 12.11 04:00)");
+    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(11, 1, 0))), ["d1-001"], "01:00 is still the learning day of Nov 10");
+    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(11, 6, 0))).sort(), ["d1-001", "d1-002"], "after 04:00 both are for today (the learning day ends Nov 12 04:00)");
   });
-  test("kolejka: wyłączona talia pomijana, „Moje błędy” zawsze w kolejce, zawieszone i odłożone pomijane", function () {
+  test("queue: a turned-off deck is skipped, “My mistakes” is always in the queue, suspended and buried are skipped", function () {
     const ctx = makeCtx();
     ctx.state.settings.newPerDay = 0;
     ctx.state.settings.enabledDecks = ["d1"];
@@ -1849,7 +1849,7 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
     ctx.state.cards["d1-002"] = Object.assign(rev(at(9, 5)), { buriedUntil: NOW + 3600000 });
     assert.deepStrictEqual(ids(R.queueFrom(ctx, NOW)), ["u-mb-2"]);
   });
-  test("count / breakdown (summaryFrom) zgadzają się z długością i rodzajami kolejki", function () {
+  test("count / breakdown (summaryFrom) match the length and kinds of the queue", function () {
     const ctx = makeCtx({ weak: [{ id: "w1", topic: "t1" }, { id: "w2", topic: "t2" }] });
     ctx.state.settings.newPerDay = 5;
     ctx.state.cards["d1-001"] = rev(at(9, 5));
@@ -1860,48 +1860,48 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
     assert.strictEqual(s.total, q.length);
     ["card", "mistake", "exercise"].forEach(function (k) { assert.strictEqual(s[k], q.filter(function (x) { return x.kind === k; }).length, k); });
   });
-  test("P3: nowe karty nie są „do powtórki” — świeży profil: 0 do powtórki, 10 nowych; zaległe osobno", function () {
+  test("P3: new cards are not “to review” — a fresh profile: 0 to review, 10 new; overdue separately", function () {
     const ctx = makeCtx();
     ctx.state.settings.newPerDay = 10;
     const fresh = R.summaryFrom(ctx, NOW);
-    assert.deepStrictEqual([fresh.due.total, fresh.fresh.total, fresh.total], [0, 10, 10], "świeży profil");
-    ctx.state.cards["d1-001"] = rev(at(9, 5));                                                    // review, termin wczoraj
-    ctx.state.cards["d2-001"] = Object.assign(HM.newCard(), { state: "learning", due: NOW - 1000 }); // w nauce, termin minął
-    ctx.state.cards["u-mb-1"] = rev(at(8, 5));                                                    // zaległy błąd
-    ctx.state.cards["d1-002"] = rev(at(20, 5), 8);                                                // review za 10 dni: ani zaległa, ani nowa
+    assert.deepStrictEqual([fresh.due.total, fresh.fresh.total, fresh.total], [0, 10, 10], "fresh profile");
+    ctx.state.cards["d1-001"] = rev(at(9, 5));                                                    // review, due yesterday
+    ctx.state.cards["d2-001"] = Object.assign(HM.newCard(), { state: "learning", due: NOW - 1000 }); // learning, due date passed
+    ctx.state.cards["u-mb-1"] = rev(at(8, 5));                                                    // overdue mistake
+    ctx.state.cards["d1-002"] = rev(at(20, 5), 8);                                                // review in 10 days: neither overdue nor new
     const s = R.summaryFrom(ctx, NOW);
     assert.deepStrictEqual([s.due.card, s.due.mistake, s.due.exercise, s.due.total], [2, 1, 0, 3]);
-    assert.strictEqual(s.fresh.total, 6, "nowe: 10 kart w taliach minus 4 z zapisanym stanem");
-    assert.strictEqual(s.total, s.due.total + s.fresh.total, "total = cała kolejka dnia");
+    assert.strictEqual(s.fresh.total, 6, "new: 10 cards in the decks minus 4 with a saved state");
+    assert.strictEqual(s.total, s.due.total + s.fresh.total, "total = the whole day queue");
     assert.strictEqual(R.queueFrom(ctx, NOW).length, s.total);
     ctx.state.settings.newPerDay = 0;
     assert.deepStrictEqual([R.summaryFrom(ctx, NOW).due.total, R.summaryFrom(ctx, NOW).fresh.total], [3, 0]);
   });
-  test("P3 regresja: karta oceniona „Dobrze” z interwałem 8 d nie wraca do kolejki przez 7 dni (granica dnia 04:00)", function () {
+  test("P3 regression: a card rated “Good” with an 8 d interval does not come back to the queue for 7 days (04:00 day boundary)", function () {
     const ctx = makeCtx();
     ctx.state.settings.newPerDay = 0;
     const base = Object.assign(HM.newCard(), { state: "review", interval: 3, due: NOW, reps: 3 });
     const pv = HM.preview(base, NOW).good;
-    assert.strictEqual(pv.card.interval, 8, "podgląd: Dobrze = 8 d");
-    const rated = HM.schedule(base, "good", NOW, null, { fuzz: true, random: function () { return 0; } }); // także z rozproszeniem
+    assert.strictEqual(pv.card.interval, 8, "preview: Good = 8 d");
+    const rated = HM.schedule(base, "good", NOW, null, { fuzz: true, random: function () { return 0; } }); // also with the spread
     assert.strictEqual(rated.interval, 8);
     ctx.state.cards["d1-001"] = rated;
     for (let day = 0; day <= 7; day++) {
       [at(10 + day, 5), at(10 + day, 12), at(10 + day, 23, 59)].forEach(function (t) {
         if (t < NOW) return;
-        assert.deepStrictEqual(ids(R.queueFrom(ctx, t)), [], "dzień +" + day + " (" + new Date(t).toISOString() + "): karta nie powinna wracać");
+        assert.deepStrictEqual(ids(R.queueFrom(ctx, t)), [], "day +" + day + " (" + new Date(t).toISOString() + "): the card should not come back");
         assert.strictEqual(R.summaryFrom(ctx, t).due.total, 0);
       });
     }
-    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(18, 10))), ["d1-001"], "w 8. dniu wraca");
+    assert.deepStrictEqual(ids(R.queueFrom(ctx, at(18, 10))), ["d1-001"], "it comes back on day 8");
   });
-  test("estimateMinutes: karta 0,3, błąd 0,5, zadanie 0,7 min (zaokrąglone, min. 1 gdy coś jest)", function () {
+  test("estimateMinutes: card 0.3, mistake 0.5, item 0.7 min (rounded, min. 1 when there is something)", function () {
     assert.strictEqual(R.estimateMinutes({ card: 10, mistake: 0, exercise: 0 }), 3);
     assert.strictEqual(R.estimateMinutes({ card: 11, mistake: 4, exercise: 3 }), 7);
     assert.strictEqual(R.estimateMinutes({ card: 1, mistake: 0, exercise: 0 }), 1);
     assert.strictEqual(R.estimateMinutes({ card: 0, mistake: 0, exercise: 0 }), 0);
   });
-  test("weakTasks: błędne zadania z słabych tematów bez poprawnej odpowiedzi w 14 dni; dyktanda pomijane bez głosu", function () {
+  test("weakTasks: wrong items from weak topics without a correct answer in 14 days; dictations skipped without a voice", function () {
     const row = function (id, topic, ok, day, type) { return { itemId: id, topic: topic, correct: ok, day: day, type: type || "gap-fill" }; };
     const items = [];
     for (let i = 0; i < 6; i++) items.push(row("t-" + i, "slaby", false, "2026-11-0" + (i % 5 + 1)));
@@ -1913,13 +1913,13 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
     const all = R.weakTasks(rec, "2026-11-10");
     assert.ok(all.every(function (w) { return w.topic === "slaby"; }));
     assert.ok(all.some(function (w) { return w.id === "dyk"; }));
-    assert.ok(!all.some(function (w) { return w.id === "solved"; }), "rozwiązane poprawnie w 14 dniach");
+    assert.ok(!all.some(function (w) { return w.id === "solved"; }), "answered correctly in 14 days");
     assert.ok(!R.weakTasks(rec, "2026-11-10", { noVoice: true }).some(function (w) { return w.id === "dyk"; }));
     assert.deepStrictEqual(R.weakTasks({ items: [], aggregates: {} }, "2026-11-10"), []);
   });
 })();
 
-console.log("\nDziś v8: przebyta mapa i najbliższe terminy powtórek (spec 20, D)");
+console.log("\nToday v8: map covered and the nearest review dates (spec 20, D)");
 (function () {
   const L2 = global.LM.learn;
   const R = global.LM.reviewQueue;
@@ -1927,21 +1927,21 @@ console.log("\nDziś v8: przebyta mapa i najbliższe terminy powtórek (spec 20,
   const HM = global.LM.cardsSchedule;
   const lv = function (arr) { return arr.map(function (p, i) { return { id: ["A1", "A2", "B1", "B2", "C1", "C2"][i], percent: p }; }); };
 
-  test("mapProgress: średnia procentów 6 poziomów (zaokrąglona) i odcinki paska", function () {
+  test("mapProgress: the average of the 6 levels' percentages (rounded) and the bar parts", function () {
     const m = L2.mapProgress(lv([100, 100, 46, 0, 0, 0]));
     assert.strictEqual(m.percent, 41);
     assert.deepStrictEqual(m.segments.map(function (s) { return s.percent; }), [100, 100, 46, 0, 0, 0]);
     assert.strictEqual(m.segments.length, 6);
     assert.strictEqual(m.segments[2].id, "B1");
   });
-  test("mapProgress: nowy profil 0%, cała mapa 100%, zaokrąglenie", function () {
+  test("mapProgress: a new profile 0%, the whole map 100%, rounding", function () {
     assert.strictEqual(L2.mapProgress(lv([0, 0, 0, 0, 0, 0])).percent, 0);
     assert.strictEqual(L2.mapProgress(lv([100, 100, 100, 100, 100, 100])).percent, 100);
     assert.strictEqual(L2.mapProgress(lv([1, 0, 0, 0, 0, 0])).percent, 0, "1/6 = 0,17 → 0");
     assert.strictEqual(L2.mapProgress(lv([50, 0, 0, 0, 0, 0])).percent, 8, "50/6 = 8,3 → 8");
     assert.strictEqual(L2.mapProgress(lv([100, 0, 0, 0, 0, 0])).percent, 17, "100/6 = 16,7 → 17");
   });
-  test("mapProgress: wartości spoza zakresu przycięte, pusta lista i NaN to 0", function () {
+  test("mapProgress: out-of-range values clamped, an empty list and NaN are 0", function () {
     const m = L2.mapProgress(lv([150, -20, NaN, 0, 0, 0]));
     assert.deepStrictEqual(m.segments.map(function (s) { return s.percent; }), [100, 0, 0, 0, 0, 0]);
     assert.strictEqual(m.percent, 17);
@@ -1949,18 +1949,18 @@ console.log("\nDziś v8: przebyta mapa i najbliższe terminy powtórek (spec 20,
     assert.strictEqual(L2.mapProgress(undefined).percent, 0);
   });
 
-  test("upcomingFrom: najbliższy termin i liczba pozycji na jutro (granica dnia 04:00)", function () {
+  test("upcomingFrom: the nearest due date and the number of items for tomorrow (04:00 day boundary)", function () {
     const NOW = new Date(2026, 10, 10, 12, 0, 0).getTime();
     const at = function (d, h) { return new Date(2026, 10, d, h, 0, 0).getTime(); };
     const st = FLg.sanitizeState(FLg.emptyState());
     st.settings.enabledDecks = ["d1"];
     const rev = function (due) { return Object.assign(HM.newCard(), { state: "review", interval: 3, due: due, reps: 2 }); };
-    st.cards["d1-001"] = rev(at(11, 9));          // jutro
-    st.cards["d1-002"] = rev(at(11, 20));         // jutro
-    st.cards["ex:a-1"] = rev(at(11, 6));          // jutro (zadanie)
+    st.cards["d1-001"] = rev(at(11, 9));          // tomorrow
+    st.cards["d1-002"] = rev(at(11, 20));         // tomorrow
+    st.cards["ex:a-1"] = rev(at(11, 6));          // tomorrow (an item)
     st.cards["d1-003"] = rev(at(13, 9));          // za 3 dni
-    st.cards["d2-001"] = rev(at(11, 9));          // wyłączona talia: pomijana
-    st.cards["d1-004"] = rev(at(10, 9));          // dziś rano (już minęło): nie jest „następne”
+    st.cards["d2-001"] = rev(at(11, 9));          // a turned-off deck: skipped
+    st.cards["d1-004"] = rev(at(10, 9));          // this morning (already passed): not “next”
     const ctx = { state: st, decks: [{ id: "d1", count: 4 }, { id: "d2", count: 1 }], deckOf: function (id) { return id.replace(/-\d{3}$/, ""); } };
     const u = R.upcomingFrom(ctx, NOW);
     assert.strictEqual(u.next, at(11, 6));
@@ -1969,8 +1969,8 @@ console.log("\nDziś v8: przebyta mapa i najbliższe terminy powtórek (spec 20,
   });
 })();
 
-console.log("\nTreści v8: sąsiedzi tematu (S2)");
-test("topicNeighbors: poprzedni i następny w kolejności poziomu, brzegi i nieznany temat", function () {
+console.log("\nContent v8: topic neighbours (S2)");
+test("topicNeighbors: previous and next in the level order, edges and an unknown topic", function () {
   const ids = ["a", "b", "c"];
   assert.deepStrictEqual(global.LM.learn.topicNeighbors(ids, "b"), { prev: "a", next: "c" });
   assert.deepStrictEqual(global.LM.learn.topicNeighbors(ids, "a"), { prev: null, next: "b" });
@@ -1980,21 +1980,21 @@ test("topicNeighbors: poprzedni i następny w kolejności poziomu, brzegi i niez
   assert.deepStrictEqual(global.LM.learn.topicNeighbors(undefined, "a"), { prev: null, next: null });
 });
 
-console.log("\nTreści v8: etykieta zestawu na liście poziomu (S4)");
-test("bestSetLabel: najlepszy zestaw tematu, próg 80% (kropka), brak wyników = null", function () {
+console.log("\nContent v8: the set label in the level list (S4)");
+test("bestSetLabel: the topic's best set, the 80% threshold (dot), no results = null", function () {
   const f = global.LM.exLogic.bestSetLabel;
   assert.deepStrictEqual(f([{ score: 8, total: 10 }]), { score: 8, total: 10, high: true, text: "set 8/10" });
   assert.strictEqual(f([{ score: 7, total: 10 }]).high, false);
-  assert.strictEqual(f([{ score: 7, total: 10 }, { score: 5, total: 5 }]).text, "set 5/5", "wyższy procent wygrywa");
-  assert.strictEqual(f([{ score: 5, total: 5 }, { score: 10, total: 10 }]).text, "set 10/10", "remis: więcej punktów");
+  assert.strictEqual(f([{ score: 7, total: 10 }, { score: 5, total: 5 }]).text, "set 5/5", "the higher percentage wins");
+  assert.strictEqual(f([{ score: 5, total: 5 }, { score: 10, total: 10 }]).text, "set 10/10", "tie: more points");
   assert.strictEqual(f([null, undefined, { score: 3, total: 0 }]), null);
   assert.strictEqual(f([]), null);
   assert.strictEqual(f(undefined), null);
   assert.strictEqual(f([{ score: 0, total: 6 }]).text, "set 0/6");
 });
 
-console.log("\nTreści v8: odsłuch zdania klawiszem S (S5)");
-test("speechText: luka jako pauza przed sprawdzeniem, odpowiedź po sprawdzeniu (wybór, uzupełnianie, transformacja)", function () {
+console.log("\nContent v8: listening to the sentence with the S key (S5)");
+test("speechText: a gap as a pause before checking, the answer after checking (choice, gap filling, transformation)", function () {
   const f = global.LM.exLogic.speechText;
   const mc = { type: "multiple-choice", prompt: "My brother ___ football every Saturday.", options: ["play", "plays", "playing"], correct: 1 };
   assert.strictEqual(f(mc, false), "My brother … football every Saturday.");
@@ -2006,9 +2006,9 @@ test("speechText: luka jako pauza przed sprawdzeniem, odpowiedź po sprawdzeniu 
   assert.strictEqual(f(tr, false), "I wish I … more time.");
   assert.strictEqual(f(tr, true), "I wish I had more time.");
   const sa = { type: "short-answer", prompt: "A: Where is Tom?\nB: He ___ at home.", accepted: ["is"] };
-  assert.strictEqual(f(sa, false), "Where is Tom? He … at home.", "etykiety mówców nie są czytane");
+  assert.strictEqual(f(sa, false), "Where is Tom? He … at home.", "speaker labels are not read");
 });
-test("speechText: układanie i tłumaczenie dopiero po sprawdzeniu, dopasowanie i dyktando bez zdania, błąd w zdaniu: całe zdanie", function () {
+test("speechText: put in order and translate only after checking, match pairs and dictation without a sentence, find the mistake: the whole sentence", function () {
   const f = global.LM.exLogic.speechText;
   assert.strictEqual(f({ type: "reorder", answers: ["She likes tea."] }, false), "");
   assert.strictEqual(f({ type: "reorder", answers: ["She likes tea."] }, true), "She likes tea.");
@@ -2018,40 +2018,40 @@ test("speechText: układanie i tłumaczenie dopiero po sprawdzeniu, dopasowanie 
   assert.strictEqual(f({ type: "match", pairs: [["a", "b"]] }, true), "");
   assert.strictEqual(f({ type: "dictation", text: "x" }, false), "");
   assert.strictEqual(f(null, false), "");
-  assert.strictEqual(f({ type: "multiple-choice", prompt: "Which is correct?", options: ["a", "b"], correct: 0 }, false), "Which is correct?", "pytanie bez luki jest czytane w całości");
+  assert.strictEqual(f({ type: "multiple-choice", prompt: "Which is correct?", options: ["a", "b"], correct: 0 }, false), "Which is correct?", "a question without a gap is read in full");
 });
 
-console.log("\nKontrola v8: przeplatanie kolejki (poprawki po recenzji)");
-test("interleave: gdy rodzaju nie da się rozdzielić, nadal nie dwa razy ten sam temat z rzędu", function () {
+console.log("\nCheck v8: queue interleaving (fixes after the review)");
+test("interleave: when the kinds cannot be separated, still not the same topic twice in a row", function () {
   const R = global.LM.reviewQueue;
   const items = [];
   for (let i = 0; i < 6; i++) items.push({ kind: "card", id: "a" + i, due: i, topic: "d1" });
   for (let i = 0; i < 6; i++) items.push({ kind: "card", id: "b" + i, due: 10 + i, topic: "d2" });
   const out = R.interleave(items);
   assert.strictEqual(out.length, 12);
-  for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "temat z rzędu na " + i);
+  for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "same topic in a row at " + i);
 });
-test("queueFrom: cztery zaległe błędy z rzędu rozdzielone nowymi kartami i zadaniami (≤ 2 tego samego rodzaju)", function () {
+test("queueFrom: four overdue mistakes in a row separated by new cards and items (≤ 2 of the same kind)", function () {
   const R = global.LM.reviewQueue, FLg = global.LM.cardsLogic, HM = global.LM.cardsSchedule;
   const NOW = new Date(2026, 10, 10, 12, 0, 0).getTime();
   const st = FLg.sanitizeState(FLg.emptyState());
   st.settings.enabledDecks = ["d1", "d2"];
   const mist = [1, 2, 3, 4].map(function (i) { return { id: "u-mb-" + i, deck: "u-moje-bledy", type: "basic", front: "a", back: "b", tags: [] }; });
-  st.userDecks.push({ id: "u-moje-bledy", title: "Moje błędy", system: "mistakes" });
+  st.userDecks.push({ id: "u-moje-bledy", title: "My mistakes", system: "mistakes" });
   st.userCards = mist;
   mist.forEach(function (m, i) { st.cards[m.id] = Object.assign(HM.newCard(), { state: "review", interval: 3, due: new Date(2026, 10, 5 + i, 5).getTime(), reps: 2 }); });
   const cards = { d1: [1, 2, 3, 4, 5].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3, 4, 5].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-moje-bledy": mist };
   const ctx = { state: st, decks: [{ id: "d1", count: 5 }, { id: "d2", count: 5 }, { id: "u-moje-bledy", count: 4 }], weak: [],
     cardsOf: function (id) { return cards[id] || []; }, deckOf: function (id) { return /^u-mb/.test(id) ? "u-moje-bledy" : id.replace(/-\d{3}$/, ""); } };
   const q = R.queueFrom(ctx, NOW);
-  assert.strictEqual(q.length, 14, "4 zaległe + 10 nowych");
-  for (let i = 2; i < q.length; i++) assert.ok(!(q[i].kind === q[i - 1].kind && q[i].kind === q[i - 2].kind && q[i].kind === "mistake"), "trzeci błąd z rzędu na " + i);
-  for (let i = 1; i < q.length; i++) assert.notStrictEqual(q[i].topic, q[i - 1].topic, "temat z rzędu na " + i);
-  assert.strictEqual(q[0].id, "u-mb-1", "najstarsza zaległa nadal pierwsza");
+  assert.strictEqual(q.length, 14, "4 overdue + 10 new");
+  for (let i = 2; i < q.length; i++) assert.ok(!(q[i].kind === q[i - 1].kind && q[i].kind === q[i - 2].kind && q[i].kind === "mistake"), "third mistake in a row at " + i);
+  for (let i = 1; i < q.length; i++) assert.notStrictEqual(q[i].topic, q[i - 1].topic, "same topic in a row at " + i);
+  assert.strictEqual(q[0].id, "u-mb-1", "the oldest overdue still first");
   assert.strictEqual(R.summaryFrom(ctx, NOW).total, q.length);
 });
 
-test("interleave: losowe listy — gdy rozdzielenie tematów jest możliwe (żaden temat > połowy), nigdy ten sam temat z rzędu", function () {
+test("interleave: random lists — when separating topics is possible (no topic > half), never the same topic in a row", function () {
   const R = global.LM.reviewQueue;
   let seed = 12345;
   const rnd = function () { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
@@ -2065,31 +2065,31 @@ test("interleave: losowe listy — gdy rozdzielenie tematów jest możliwe (żad
     const out = R.interleave(items);
     assert.strictEqual(out.length, n);
     if (!feasible) continue;
-    for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "próba " + trial + ", pozycja " + i);
+    for (let i = 1; i < out.length; i++) assert.notStrictEqual(out[i].topic, out[i - 1].topic, "trial " + trial + ", position " + i);
   }
 });
 
-console.log("\nKarty „Moje błędy”: pełny kontekst i podpowiedź zadania (poprawka po v8)");
+console.log("\n“My mistakes” cards: the full context and the item's hint (fix after v8)");
 require(path.join(__dirname, "..", "js", "mistake-task.js"));
 (function () {
   const FLg = global.LM.cardsLogic, MT = global.LM.mistakeTask, HM = global.LM.cardsSchedule;
   const NOW = new Date(2026, 10, 10, 12, 0, 0).getTime();
-  const entry = function (id, over) { return Object.assign({ id: id, createdAt: "2026-11-01", context: "", myAnswer: "x", correct: "", rule: "reguła", source: "", category: "Use of English", itemId: "", ref: "", review: { stage: 1, due: "2026-11-12", mastered: false } }, over || {}); };
-  const wf = entry("err-wf", { ref: "c1:uoe-p3-1:2", context: "Many teachers also welcome the _____ in time spent marking homework.\nSłowo bazowe: REDUCE", correct: "reduction" });
+  const entry = function (id, over) { return Object.assign({ id: id, createdAt: "2026-11-01", context: "", myAnswer: "x", correct: "", rule: "rule", source: "", category: "Use of English", itemId: "", ref: "", review: { stage: 1, due: "2026-11-12", mastered: false } }, over || {}); };
+  const wf = entry("err-wf", { ref: "c1:uoe-p3-1:2", context: "Many teachers also welcome the _____ in time spent marking homework.\nBase word: REDUCE", correct: "reduction" });
   const abcd = entry("err-abcd", { ref: "c1:uoe-p1-4:1", context: "Few people would have predicted that vinyl records would _____ a comeback.\nA – make, B – take, C – pull, D – reach", correct: "A – make" });
   const tr = entry("err-tr", { ref: "ex:a2-transf-1-03", context: "Wish for more time\nWISH\nI wish I ___ more time.", correct: "I wish I had more time." });
-  const bracket = entry("err-br", { ref: "ex:a1-czasy-present-simple-1-05", context: "She ___ (go) to school every day.", correct: "goes" });
-  const manual = entry("err-man", { context: "Jak powiedzieć: dawno temu?\nPodpowiedź: ago", correct: "a long time ago" });
+  const bracket = entry("err-br", { ref: "ex:a1-verbs-present-1-05", context: "She ___ (go) to school every day.", correct: "goes" });
+  const manual = entry("err-man", { context: "How do you say: long ago?\nHint: ago", correct: "a long time ago" });
 
-  test("journalCard: słowotwórstwo — przód ma słowo bazowe obok luki (cały kontekst, luka w swojej linii)", function () {
+  test("journalCard: word formation — the front has the base word next to the gap (the whole context, the gap in its own line)", function () {
     const c = FLg.journalCard(wf);
     assert.strictEqual(c.type, "cloze");
     assert.ok(/Many teachers also welcome the \{\{reduction\}\} in time/.test(c.text));
-    assert.ok(/\nSłowo bazowe: REDUCE$/.test(c.text), "słowo bazowe w osobnej linii: " + JSON.stringify(c.text));
+    assert.ok(/\nBase word: REDUCE$/.test(c.text), "the base word in its own line: " + JSON.stringify(c.text));
     const p = FLg.parseCloze(c.text);
-    assert.ok(p.ok && p.answers[0] === "reduction" && /Słowo bazowe: REDUCE/.test(p.after));
+    assert.ok(p.ok && p.answers[0] === "reduction" && /Base word: REDUCE/.test(p.after));
   });
-  test("journalCard: wybór A–D — opcje na przodzie, odpowiedź akceptowana jako „A – make”, „make” i „A”", function () {
+  test("journalCard: choice A–D — the options on the front, the answer accepted as “A – make”, “make” and “A”", function () {
     const c = FLg.journalCard(abcd);
     assert.strictEqual(c.type, "cloze");
     assert.ok(/A – make, B – take, C – pull, D – reach/.test(c.text));
@@ -2097,66 +2097,66 @@ require(path.join(__dirname, "..", "js", "mistake-task.js"));
     assert.deepStrictEqual(p.answers, ["A – make", "make", "A"]);
     assert.ok(/^Few people would have predicted that vinyl records would \{\{/.test(c.text));
   });
-  test("journalCard: transformacja — słowo kluczowe na przodzie, odpowiedź to sama luka (bez powtórzonej części zdania)", function () {
+  test("journalCard: transformation — the key word on the front, the answer is the gap only (no repeated part of the sentence)", function () {
     const c = FLg.journalCard(tr);
     assert.strictEqual(c.type, "cloze");
     assert.ok(/^Wish for more time\nWISH\nI wish I \{\{had\}\} more time\.$/.test(c.text), JSON.stringify(c.text));
   });
-  test("journalCard: czasownik w nawiasie zostaje w linii z luką", function () {
+  test("journalCard: the verb in brackets stays in the line with the gap", function () {
     const c = FLg.journalCard(bracket);
     assert.strictEqual(c.text, "She {{goes}} (go) to school every day.");
   });
-  test("journalCard: wpis ręczny bez ref i bez luki — zwykła karta z całym kontekstem (podział na linie), tył = poprawna odpowiedź", function () {
+  test("journalCard: a manual entry without ref and without a gap — a basic card with the whole context (split into lines), back = the correct answer", function () {
     const c = FLg.journalCard(manual);
     assert.strictEqual(c.type, "basic");
-    assert.strictEqual(c.front, "Jak powiedzieć: dawno temu?\nPodpowiedź: ago");
+    assert.strictEqual(c.front, "How do you say: long ago?\nHint: ago");
     assert.strictEqual(c.back, "a long time ago");
-    assert.strictEqual(c.note, "reguła");
+    assert.strictEqual(c.note, "rule");
   });
 
   test("mistakeTask.parseRef / viewFor: entry with an ex: ref → task view; no ref, unknown or old exam ref → card", function () {
-    assert.deepStrictEqual(MT.parseRef("ex:a1-czasy-present-simple-1-05"), { kind: "ex", itemId: "a1-czasy-present-simple-1-05" });
+    assert.deepStrictEqual(MT.parseRef("ex:a1-verbs-present-1-05"), { kind: "ex", itemId: "a1-verbs-present-1-05" });
     assert.strictEqual(MT.parseRef("c1:uoe-p1-4:3"), null, "lettered exam refs were removed with the C1 module (E8)");
     assert.strictEqual(MT.parseRef("journal:err-1"), null);
     assert.strictEqual(MT.parseRef(""), null);
     assert.strictEqual(MT.viewFor(wf), "card");
     assert.strictEqual(MT.viewFor(tr), "task");
     assert.strictEqual(MT.viewFor(manual), "card");
-    assert.strictEqual(MT.viewFor(entry("x", { ref: "coś-ręcznego" })), "card");
+    assert.strictEqual(MT.viewFor(entry("x", { ref: "something-manual" })), "card");
     assert.strictEqual(MT.viewFor(null), "card");
   });
 })();
 
-console.log("\nFiszki: harmonogram i zapis (poprawka fix/fiszki-harmonogram)");
+console.log("\nFlashcards: schedule and saving (fix of the schedule)");
 (function () {
   const FLg = global.LM.cardsLogic, HM = global.LM.cardsSchedule;
   const DAYMS = 86400000;
   const NOW = new Date(2026, 10, 10, 18, 0, 0).getTime();
   const rev = function (iv, due, reps) { return Object.assign(HM.newCard(), { state: "review", interval: iv, due: due, reps: reps == null ? 3 : reps }); };
 
-  test("rozproszenie: interwały < 20 d zapisują się dokładnie tak, jak w podglądzie („Dobrze: 8 d” = 8 d, „Łatwe: 4 d” = 4 d)", function () {
+  test("spread: intervals < 20 d are saved exactly as in the preview (“Good: 8 d” = 8 d, “Easy: 4 d” = 4 d)", function () {
     for (let iv = 1; iv <= 9; iv++) {
       ["hard", "good", "easy"].forEach(function (g) {
         const base = rev(iv, NOW, 3);
         const pv = HM.preview(base, NOW)[g];
-        if (pv.card.interval >= 20) return; // od 20 d rozrzut ±5% jest zamierzony (osobny test)
+        if (pv.card.interval >= 20) return; // from 20 d the ±5% spread is intended (a separate test)
         [0, 0.25, 0.5, 0.75, 1].forEach(function (r) {
           const real = HM.schedule(base, g, NOW, null, { fuzz: true, random: function () { return r; } });
-          assert.strictEqual(real.due, pv.card.due, "iv " + iv + " " + g + " losowość " + r + ": " + real.interval + " d zamiast " + pv.card.interval + " d");
+          assert.strictEqual(real.due, pv.card.due, "iv " + iv + " " + g + " random " + r + ": " + real.interval + " d instead of " + pv.card.interval + " d");
         });
       });
     }
     const graduating = HM.schedule(Object.assign(HM.newCard(), { state: "new" }), "easy", NOW, null, { fuzz: true, random: function () { return 0; } });
-    assert.strictEqual(graduating.interval, 4, "nowa karta + Łatwe = 4 d, nie 3 d");
+    assert.strictEqual(graduating.interval, 4, "new card + Easy = 4 d, not 3 d");
   });
-  test("rozproszenie: od 20 d nadal ±5% (20 d → 19–21 d), losowość z zewnątrz", function () {
-    const base = rev(8, NOW, 3); // Dobrze: 20 d
+  test("spread: from 20 d still ±5% (20 d → 19–21 d), randomness from outside", function () {
+    const base = rev(8, NOW, 3); // Good: 20 d
     const lo = HM.schedule(base, "good", NOW, null, { fuzz: true, random: function () { return 0; } }).interval;
     const hi = HM.schedule(base, "good", NOW, null, { fuzz: true, random: function () { return 1; } }).interval;
     assert.strictEqual(HM.schedule(base, "good", NOW).interval, 20);
     assert.deepStrictEqual([lo, hi], [19, 21]);
   });
-  test("kilka dni nauki: Dobrze ×4 i Łatwe ×4 zwiększają interwał z każdą oceną (stan przeżywa zapis i odczyt)", function () {
+  test("several learning days: Good ×4 and Easy ×4 raise the interval with every rating (the state survives save and read)", function () {
     let t = NOW, st = {};
     const seq = [];
     ["good", "good", "good", "good", "good", "good"].forEach(function (g) {
@@ -2169,53 +2169,53 @@ console.log("\nFiszki: harmonogram i zapis (poprawka fix/fiszki-harmonogram)");
     let e = FLg.sanitizeState({ version: 1, cards: { "k-002": HM.schedule(HM.newCard(), "easy", NOW) } }).cards["k-002"];
     const ivs = [e.interval];
     for (let i = 0; i < 3; i++) { e = HM.schedule(e, "easy", e.due); ivs.push(e.interval); }
-    assert.ok(ivs[1] > ivs[0] && ivs[2] > ivs[1] && ivs[3] > ivs[2], "Łatwe zwiększa interwał za każdym razem: " + ivs.join(","));
+    assert.ok(ivs[1] > ivs[0] && ivs[2] > ivs[1] && ivs[3] > ivs[2], "Easy raises the interval every time: " + ivs.join(","));
   });
 
-  test("zapis z dwóch kart przeglądarki: nieaktualna karta nie cofa ocen (mergeStates)", function () {
-    const stored = FLg.sanitizeState(FLg.emptyState());     // zapis po ocenie w karcie A
+  test("saving from two browser tabs: a stale tab does not undo ratings (mergeStates)", function () {
+    const stored = FLg.sanitizeState(FLg.emptyState());     // the record after a rating in tab A
     stored.cards["kolokacje-001"] = rev(8, NOW + 8 * DAYMS, 2);
     stored.daily["2026-11-10"] = { new: 1, reviews: 3, again: 0, good: 3, answers: 4, minutes: 2 };
-    const stale = FLg.sanitizeState(FLg.emptyState());      // pamięć karty B sprzed oceny (karta jeszcze nowa)
+    const stale = FLg.sanitizeState(FLg.emptyState());      // memory of tab B before the rating (the card still new)
     stale.daily["2026-11-10"] = { new: 0, reviews: 1, again: 1, good: 0, answers: 1, minutes: 0 };
     assert.strictEqual(FLg.mergeStates(stale, stored), true);
-    assert.strictEqual(stale.cards["kolokacje-001"].interval, 8, "ocena z karty A przejęta");
-    assert.strictEqual(stale.daily["2026-11-10"].reviews, 3, "dzienny licznik: maksimum");
+    assert.strictEqual(stale.cards["kolokacje-001"].interval, 8, "the rating from tab A taken over");
+    assert.strictEqual(stale.daily["2026-11-10"].reviews, 3, "daily counter: the maximum");
     assert.strictEqual(stale.daily["2026-11-10"].again, 1);
-    // pamięć nowsza niż zapis: zostaje
+    // memory newer than the record: it stays
     const fresh = FLg.sanitizeState(FLg.emptyState());
     fresh.cards["kolokacje-001"] = rev(20, NOW + 20 * DAYMS, 5);
     fresh.daily["2026-11-10"] = Object.assign({}, stored.daily["2026-11-10"]);
     assert.strictEqual(FLg.mergeStates(fresh, stored), false);
     assert.strictEqual(fresh.cards["kolokacje-001"].interval, 20);
-    // karta bez powtórek (np. zawieszona nowa) w zapisie nie jest „nowsza” od braku stanu
+    // a card without reviews (e.g. a suspended new one) in the record is not “newer” than no state
     const s2 = FLg.sanitizeState(FLg.emptyState()); s2.cards["kolokacje-009"] = Object.assign(HM.newCard(), { suspended: true });
     const m2 = FLg.sanitizeState(FLg.emptyState());
     assert.strictEqual(FLg.mergeStates(m2, s2), false);
     assert.strictEqual(m2.cards["kolokacje-009"], undefined);
   });
-  test("deckStats: „na dziś” i „na później” (po granicy dnia nauki 04:00)", function () {
+  test("deckStats: “due today” and “later” (after the 04:00 learning-day boundary)", function () {
     const cards = ["a", "b", "c", "d", "e"].map(function (x) { return { id: x }; });
     const state = {
-      a: rev(3, NOW - 3600000),                                  // na dziś (zaległa)
-      b: rev(8, NOW + 8 * DAYMS),                                // na później
-      c: rev(1, new Date(2026, 10, 11, 2, 0, 0).getTime()),      // jutro 02:00 = jeszcze dzisiejszy dzień nauki
-      d: rev(1, new Date(2026, 10, 11, 9, 0, 0).getTime())       // jutro 09:00 = na później
+      a: rev(3, NOW - 3600000),                                  // due today (overdue)
+      b: rev(8, NOW + 8 * DAYMS),                                // later
+      c: rev(1, new Date(2026, 10, 11, 2, 0, 0).getTime()),      // tomorrow 02:00 = still today's learning day
+      d: rev(1, new Date(2026, 10, 11, 9, 0, 0).getTime())       // tomorrow 09:00 = later
     };
     const s = FLg.deckStats(cards, state, NOW);
     assert.strictEqual(s.due, 2);
     assert.strictEqual(s.later, 2);
     assert.strictEqual(s.new, 1);
   });
-  test("„Dodaj kolejne nowe karty” (extraNew) nie dotyka kart w powtórkach: kolejka nie zawiera nie-zaległych, stan bez zmian", function () {
+  test("“Add more new cards” (extraNew) does not touch cards in review: the queue has no cards that are not due, the state is unchanged", function () {
     const cards = [1, 2, 3, 4, 5, 6, 7].map(function (i) { return { id: "k-00" + i, deck: "k" }; });
     const state = { "k-001": rev(8, NOW + 8 * DAYMS), "k-002": rev(3, NOW + 2 * DAYMS) };
     const before = JSON.stringify(state);
     const q = FLg.buildQueue({ cards: cards, state: state, now: NOW, settings: { newPerDay: 2, reviewsPerDay: 100 }, today: { new: 2 }, extraNew: 5 });
-    assert.deepStrictEqual(q.review, [], "karty z terminem po dzisiejszym dniu nie wracają");
+    assert.deepStrictEqual(q.review, [], "cards due after today's learning day do not come back");
     assert.strictEqual(q.fresh.length, 5, "tylko nowe: 5 dodatkowych");
     assert.ok(q.fresh.every(function (id) { return !state[id]; }));
-    assert.strictEqual(JSON.stringify(state), before, "buildQueue niczego nie zmienia");
+    assert.strictEqual(JSON.stringify(state), before, "buildQueue changes nothing");
   });
 })();
 
@@ -2246,10 +2246,10 @@ console.log("\nStorage key registry (spec 02 §5)");
     assert.ok(found.length >= 15, "scan found too few keys: " + found.length);
     found.forEach(function (f) { assert.ok(regKeys.indexOf(f.key) !== -1, path.basename(f.file) + ": " + f.key + " is not in the registry"); });
   });
-  test("registry: no code uses keys of the original app (elm_*, elm.<id>.*) or a key outside plm.", function () {
+  test("registry: no code uses keys of the original app (elm_*, elm.<id>.*) or a key outside plm.", function () { // pl-fixture: names the old keys
     files.forEach(function (file) {
       const src = code(file);
-      assert.ok(!/["']elm[._][^"']*["']/.test(src), path.basename(file) + " uses an elm key");
+      assert.ok(!/["']elm[._][^"']*["']/.test(src), path.basename(file) + " uses an elm key"); // pl-fixture
       assert.ok(!/localStorage\.(?:get|set|remove)Item\(\s*["'](?!plm\.)/.test(src), path.basename(file) + " uses a literal key without the plm. prefix");
     });
     REG.forEach(function (r) { assert.strictEqual(r.key.indexOf("plm."), 0, r.id); });
@@ -2354,11 +2354,11 @@ test("LM.lang stub: full interface; stripMarks and fold keep the length", functi
   const LG = global.LM.lang;
   ["stripMarks", "fold", "normalizeAnswer", "normalizeSentence", "variants", "countWords", "isTarget"].forEach(function (k) { assert.strictEqual(typeof LG[k], "function", k); });
   assert.ok(Array.isArray(LG.abbreviations) && Array.isArray(LG.functionWords) && typeof LG.wordPattern === "string");
-  const s = "Zażółć gęślą jaźń. ŁÓDŹ";
+  const s = "Zażółć gęślą jaźń. ŁÓDŹ"; // pl-fixture
   assert.strictEqual(LG.stripMarks(s), "Zazolc gesla jazn. LODZ");
   assert.strictEqual(LG.fold(s).length, s.length);
-  assert.deepStrictEqual(LG.variants("kawę"), ["kawę"]);
-  assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę");
+  assert.deepStrictEqual(LG.variants("kawę"), ["kawę"]); // pl-fixture
+  assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę"); // pl-fixture
 });
 
 console.log("\nEnglish UI helpers: LM.plural and LM.fmt (spec 04 §1)");
@@ -2376,7 +2376,7 @@ test("LM.plural: two English forms, only exactly 1 is singular, number formatted
   assert.strictEqual(global.LM.pluralWord(1, "mistake", "mistakes"), "mistake");
   assert.strictEqual(global.LM.pluralWord(3, "mistake", "mistakes"), "mistakes");
 });
-test("LM.fmt dates in en-US; YYYY-MM-DD read as a local day", function () {
+test("LM.fmt dates in US English; YYYY-MM-DD read as a local day", function () {
   const F = global.LM.fmt;
   assert.strictEqual(F.date("2026-11-12"), "Nov 12, 2026");
   assert.strictEqual(F.date("2026-01-01"), "Jan 1, 2026", "no time-zone shift to Dec 31");
@@ -2391,7 +2391,7 @@ test("LM.fmt dates in en-US; YYYY-MM-DD read as a local day", function () {
   assert.match(F.dateTime(d), /^Nov 12, 2026, 3:05\s?PM$/u);
   ["", "tomorrow", null, undefined].forEach(function (v) { assert.strictEqual(F.date(v), "", String(v)); });
 });
-test("LM.fmt numbers and percents in en-US", function () {
+test("LM.fmt numbers and percents in US English", function () {
   const F = global.LM.fmt;
   assert.strictEqual(F.number(0), "0");
   assert.strictEqual(F.number(1234), "1,234");
@@ -2408,16 +2408,16 @@ console.log("\nLanguage check of the code (spec 04 §4)");
 test("check-lang: diacritics, Polish opening quote, stop words, locales, legacy names; English quotes pass; allow list", function () {
   const CL = require(path.join(__dirname, "check-lang.js"));
   const rules = function (line) { return CL.checkText("js/x.js", line, []).map(function (f) { return f.rule; }); };
-  assert.deepStrictEqual(rules("const a = \"Dzień dobry\";"), ["diacritics"]);
-  assert.deepStrictEqual(rules("const a = \"„Hi”\";"), ["quote"]);
-  assert.deepStrictEqual(rules("label: \"Dalej\""), ["stop-word"]);
-  assert.deepStrictEqual(rules("u.lang = \"en-GB\";"), ["locale"]);
-  assert.deepStrictEqual(rules("ELM.x(); elm_theme"), ["legacy-name"]);
+  assert.deepStrictEqual(rules("const a = \"Dzień dobry\";"), ["diacritics"]); // pl-fixture
+  assert.deepStrictEqual(rules("const a = \"„Hi”\";"), ["quote"]); // pl-fixture
+  assert.deepStrictEqual(rules("label: \"Dalej\""), ["stop-word"]); // pl-fixture
+  assert.deepStrictEqual(rules("u.lang = \"en-GB\";"), ["locale"]); // pl-fixture
+  assert.deepStrictEqual(rules("ELM.x(); elm_theme"), ["legacy-name"]); // pl-fixture
   assert.deepStrictEqual(rules("text: “Next”, \"Continue the trail\", helmet, element, dalejx"), []);
-  const allow = [{ file: "js/x.js", contains: "Dalej", reason: "test", used: 0 }];
-  assert.deepStrictEqual(CL.checkText("js/x.js", "Dalej", allow), []);
+  const allow = [{ file: "js/x.js", contains: "Dalej", reason: "test", used: 0 }]; // pl-fixture
+  assert.deepStrictEqual(CL.checkText("js/x.js", "Dalej", allow), []); // pl-fixture
   assert.strictEqual(allow[0].used, 1);
-  assert.strictEqual(CL.checkText("js/y.js", "Dalej", allow).length, 1, "allow entries are per file");
+  assert.strictEqual(CL.checkText("js/y.js", "Dalej", allow).length, 1, "allow entries are per file"); // pl-fixture
 });
 test("extract-strings: literals without comments and regexes; code-like strings dropped", function () {
   const ES = require(path.join(__dirname, "extract-strings.js"));
@@ -2548,7 +2548,7 @@ console.log("\nExams: generic module with the fixture exam (spec 06 E8, tools/fi
       assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo/speaking"), { examId: "exam-demo", kind: "speaking" });
       assert.deepStrictEqual(X.parseRoute("#/exams/exam-soon/anything"), { examId: "exam-soon", kind: "soon" });
       assert.strictEqual(X.parseRoute("#/exams/no-such-exam"), null);
-      assert.strictEqual(X.parseRoute("#/egzamin-osmoklasisty"), null);
+      assert.strictEqual(X.parseRoute("#/egzamin-osmoklasisty"), null); // pl-fixture: a route of the original app
       assert.strictEqual(X.parseRoute("#/certyfikat-c1/cwiczenia"), null);
       assert.strictEqual(X.href(R.exams[0]), "#/exams/exam-demo");
     });
@@ -2576,5 +2576,5 @@ console.log("\nExams: generic module with the fixture exam (spec 06 E8, tools/fi
   }
 })();
 
-console.log("\nWynik: " + passed + " ok, " + failures.length + " błędów");
+console.log("\nResult: " + passed + " ok, " + failures.length + " failed");
 if (failures.length) process.exit(1);

@@ -33,5 +33,10 @@
     "file": "js/trail-store.js",
     "contains": "\"umiem\"",
     "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "tools/tests.js",
+    "contains": "// pl-fixture",
+    "reason": "target-language (Polish) test data, or fixtures of the language check itself; marked line by line"
   }
 ]
