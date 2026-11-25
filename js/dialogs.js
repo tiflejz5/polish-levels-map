@@ -119,7 +119,7 @@ window.LM = window.LM || {};
       ]
     });
 
-    // Enter zatwierdza
+    // Enter confirms
     input.addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
         e.preventDefault();

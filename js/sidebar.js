@@ -48,7 +48,7 @@ window.LM = window.LM || {};
   function isOpen() { return pinned || expanded; }
 
   function setExpanded(value) {
-    if (narrow.matches) value = false; // na telefonie panel to szuflada (body.nav-open)
+    if (narrow.matches) value = false; // on a phone the sidebar is a drawer (body.nav-open)
     expanded = !!value;
     clearTimeout(openTimer);
     clearTimeout(closeTimer);
@@ -78,7 +78,7 @@ window.LM = window.LM || {};
     setExpanded(!pinned && hovering && finePointer.matches);
   }
 
-  // ---------- Zdarzenia ----------
+  // ---------- Events ----------
 
   function onEnter() {
     hovering = true;

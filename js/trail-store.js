@@ -34,7 +34,7 @@ window.LM = window.LM || {};
     let data = null;
     if (raw) {
       try { data = L().sanitizeState(JSON.parse(raw)); } catch (e) {
-        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* trudno */ }
+        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* never mind */ }
         data = null;
       }
     }
@@ -55,7 +55,7 @@ window.LM = window.LM || {};
   /** State of the active profile (without a profile — temporary). */
   function data() { return load(activeId()); }
 
-  // ---------- zmiany stanu ----------
+  // ---------- state changes ----------
 
   /** Starting point. source: “test” (placement test result), “manual” (by hand), “default”. A manual choice is not overwritten by a test. */
   function setStart(level, source, force) {
@@ -82,7 +82,7 @@ window.LM = window.LM || {};
     if (!activeId()) return false;
     const d = data();
     const cur = d.stops[stopId];
-    if (cur && cur.via === "quiz" && cur.best >= L().PASS_QUIZ) return false; // zaliczony quizem zostaje zaliczony
+    if (cur && cur.via === "quiz" && cur.best >= L().PASS_QUIZ) return false; // a stop passed by a quiz stays passed
     d.stops[stopId] = { done: false, via: "skip", at: stamp() };
     return save();
   }
@@ -103,7 +103,7 @@ window.LM = window.LM || {};
     return d.reviews[id];
   }
 
-  // ---------- profile, eksport, import, reset ----------
+  // ---------- profiles, export, import, reset ----------
 
   function storedIds() {
     const out = [];

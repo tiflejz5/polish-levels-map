@@ -41,7 +41,7 @@ window.LM = window.LM || {};
   const hoverQuery = window.matchMedia ? window.matchMedia("(hover: hover) and (pointer: fine)") : { matches: false };
 
   // =====================================================================
-  // NAZWY PROFILI
+  // PROFILE NAMES
   // =====================================================================
 
   /** Checks a name: spaces trimmed, max. 30 characters, no duplicates. */
@@ -321,7 +321,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // OTWIERANIE / ZAMYKANIE
+  // OPENING / CLOSING
   // =====================================================================
 
   function focusInMenu(selector) {
@@ -353,7 +353,7 @@ window.LM = window.LM || {};
   function onButtonClick(e) {
     if (isOpen && openedBy === "hover") { openedBy = "click"; return; } // pin a menu that was opened by hover
     if (isOpen) { close(true); return; }
-    openMenu("click", e.detail === 0); // z klawiatury (Enter/Spacja) fokus od razu do menu
+    openMenu("click", e.detail === 0); // from the keyboard (Enter/Space) the focus goes into the menu at once
   }
 
   function onPointerEnter() {

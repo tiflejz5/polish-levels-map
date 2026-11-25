@@ -1,7 +1,7 @@
 /*
  * celebrate.js — celebrations ONLY at milestones (DESIGN.md, section 3.3).
  *
- * Kamienie milowe (id):
+ * Milestones (id):
  *   first-umiem, total-10/25/50/100      — number of “I know this” marks in total (the stored ids keep their old names)
  *   lvl-a1-25 … lvl-c2-100               — level progress 25/50/75/100% (all categories)
  *   lvl-a1-passed … lvl-c2-passed        — level final test passed (js/final.js, state from plm.finals)

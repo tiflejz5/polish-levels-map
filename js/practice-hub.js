@@ -65,7 +65,7 @@ window.LM = window.LM || {};
     Object.keys(index.topics).forEach(function (t) {
       const meta = topicMeta(t);
       const level = meta ? meta.level : "A1";
-      const cat = meta ? meta.category : "inne";
+      const cat = meta ? meta.category : "other";
       index.topics[t].forEach(function (id) {
         const set = index.sets[id];
         if (!set) return;
@@ -103,7 +103,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // SEKCJA 2: ZESTAWY MIESZANE + GENERATOR
+  // SECTION 2: MIXED SETS + GENERATOR
   // =====================================================================
 
   function mixCard(m, index) {
@@ -117,7 +117,7 @@ window.LM = window.LM || {};
       el("p", { class: "ex-set-meta", text: m.description }),
       el("p", { class: "ex-set-meta", text: LM.plural(m.count || 10, "item", "items") + " · " + types + " · " + LM.plural(topics.length, "topic", "topics") + (withSets < m.topics.length ? " (with items: " + withSets + ")" : "") }),
       el("p", { class: "ex-set-score" + (score ? "" : " is-empty") }, score
-        ? [el("span", null, ["Najlepszy: ", el("strong", { class: "num", text: score.best.score + "/" + score.best.total })]), el("span", null, ["Ostatni: ", el("span", { class: "num", text: score.last.score + "/" + score.last.total })])]
+        ? [el("span", null, ["Best: ", el("strong", { class: "num", text: score.best.score + "/" + score.best.total })]), el("span", null, ["Last: ", el("span", { class: "num", text: score.last.score + "/" + score.last.total })])]
         : "Not done yet"),
       el("a", { class: "btn btn-primary btn-small", href: ex().BASE + "/mix/" + m.id, "aria-label": "Start: " + m.title }, LM.ui.withIcon("play", "Start"))
     ]);
@@ -279,7 +279,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // RYSOWANIE
+  // DRAWING
   // =====================================================================
 
   function render(route) {

@@ -46,7 +46,7 @@ window.LM = window.LM || {};
 
   function testLevel() { const t = hasProfile() && pd() ? pd().lastTest() : null; return t && t.level ? t.level : null; }
 
-  /** Punkt startu aktywnego profilu: { level, source, at }. */
+  /** The active profile's starting point: { level, source, at }. */
   function startInfo() {
     const s = SL().effectiveStart(ST().data(), testLevel());
     if (LM.syllabus.isAvailable(s.level)) return s;
@@ -255,7 +255,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // ARKUSZ PRZYSTANKU
+  // STOP SHEET
   // =====================================================================
 
   let sheet = null;
@@ -337,7 +337,7 @@ window.LM = window.LM || {};
       ]));
     })));
 
-    // krok 1 i 2
+    // steps 1 and 2
     parts.push(el("ol", { class: "sz-steps" }, [
       el("li", null, [el("strong", { text: "Read" }), el("a", { class: "btn btn-secondary btn-small", href: pageHref(n.stop), onclick: closeSheet }, LM.ui.withIcon("file-text", "Open the topic page"))]),
       el("li", null, [el("strong", { text: "Check yourself" }), el("span", { class: "sz-step-actions" }, [
@@ -382,7 +382,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // PUNKT STARTU
+  // STARTING POINT
   // =====================================================================
 
   function startDialog() {

@@ -95,7 +95,7 @@ window.LM = window.LM || {};
   function percentOf(r) { return r.total ? Math.round(r.score / r.total * 100) : 0; }
 
   // =====================================================================
-  // EKRAN STARTOWY
+  // START SCREEN
   // =====================================================================
 
   function backTo(level) { return { href: levelHash(level), label: "Back to level " + level }; }
@@ -272,7 +272,7 @@ window.LM = window.LM || {};
         return el("li", null, [
           el("p", { class: "ex-wrong-q" }, [el("span", { class: "chip", text: api.typeShort[p.item.type] }), p.res && p.res.max > 1 ? el("span", { class: "chip", text: p.res.points + "/" + p.res.max + " pkt" }) : null, " ", api.itemSummary(p.item)]),
           el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: mine || "(none)" })]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Poprawnie: " }), el("strong", { text: api.modelAnswer(p.item) })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: api.modelAnswer(p.item) })]),
           p.item.explanation ? el("p", { class: "ex-wrong-expl", text: p.item.explanation }) : null,
           p.item.trap ? el("p", { class: "ex-wrong-trap" }, [el("strong", { text: "Trap: " }), p.item.trap]) : null
         ]);

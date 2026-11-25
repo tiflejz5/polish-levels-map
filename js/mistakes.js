@@ -23,7 +23,7 @@ window.LM = window.LM || {};
   const filters = { status: "due", category: "", query: "", auto: false };
 
   // =====================================================================
-  // ADRESY
+  // ROUTES
   // =====================================================================
 
   function parseRoute(hash) {
@@ -58,7 +58,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // FORMULARZ (dodawanie i edycja)
+  // FORM (add and edit)
   // =====================================================================
 
   let formCounter = 0;
@@ -72,7 +72,7 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Okno formularza wpisu. opts:
+   * The entry form dialog. opts:
    *   entry   — the entry being edited (or none = new)
    *   prefill — starting values of a new entry (e.g. from an exercise); nothing
    *             is saved without selecting “Save”

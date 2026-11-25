@@ -62,7 +62,7 @@ window.LM = window.LM || {};
       avoidIds: last && Array.isArray(last.answers) ? last.answers.map(function (a) { return a.id; }) : [],
       levelIndex: learn().LEVELS.indexOf(learn().START_LEVEL),
       used: new Set(),
-      asked: [],      // { q, levelIndex (docelowy), chosen, correct }
+      asked: [],      // { q, levelIndex (target), chosen, correct }
       current: null,
       answered: false,
       finished: false,
@@ -116,7 +116,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // EKRANY
+  // SCREENS
   // =====================================================================
 
   const DISCLAIMER = "This is an approximate result. It is not an official test or certificate.";
@@ -246,7 +246,7 @@ window.LM = window.LM || {};
     const startAt = soon ? (avail.filter(function (l) { return LM.LEVEL_IDS.indexOf(l) < LM.LEVEL_IDS.indexOf(level); }).pop() || avail[0] || level) : level;
     view.appendChild(el("section", { class: "card lt-card lt-result lvl-" + level, "aria-live": "polite" }, [
       el("p", { class: "lt-result-label", text: "Estimated level:" }),
-      el("p", { class: "lt-result-level" }, [el("strong", { class: "lt-result-code", text: level }), el("span", { class: "lt-result-note", text: "orientacyjnie" })]),
+      el("p", { class: "lt-result-level" }, [el("strong", { class: "lt-result-code", text: level }), el("span", { class: "lt-result-note", text: "approximate" })]),
       desc ? el("p", { class: "tool-lead" }, U.formatText(desc)) : null,
       soon ? el("p", { class: "callout lt-soon", role: "note", text: level + " is coming soon: its topics are being written. Until then you can revise " + startAt + " or look at what " + level + " will cover." }) : null,
       skillBreakdown(saved.answers),
@@ -272,7 +272,7 @@ window.LM = window.LM || {};
         return el("li", null, [
           x.q.passage ? el("details", { class: "lt-wrong-passage" }, [el("summary", null, "Text for the question"), el("p", { lang: "en", text: x.q.passage })]) : null,
           el("p", { class: "lt-wrong-q" }, [el("span", { class: "c1-chip", text: x.q.level }), " ", x.q.question]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Poprawnie: " }), el("strong", { text: x.q.options[x.q.correct] })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: x.q.options[x.q.correct] })]),
           x.a.chosen >= 0 ? el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: x.q.options[x.a.chosen] || "" })]) : el("p", { class: "tool-note", text: "You chose “I don't know”." }),
           link ? el("p", null, ["To review: ", link]) : null
         ]);

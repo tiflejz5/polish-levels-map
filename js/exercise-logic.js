@@ -94,7 +94,7 @@ window.LM = window.LM || {};
     if (tokens.length < 2) return tokens;
     let out = shuffle(tokens, rng);
     for (let tries = 0; tries < 20 && isAccepted(item, out.map(function (t) { return t.text; })); tries++) out = shuffle(tokens, rng);
-    if (isAccepted(item, out.map(function (t) { return t.text; }))) out.push(out.shift()); // ostatnia deska ratunku
+    if (isAccepted(item, out.map(function (t) { return t.text; }))) out.push(out.shift()); // last resort
     return out;
   }
 

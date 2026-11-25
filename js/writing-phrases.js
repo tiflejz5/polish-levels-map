@@ -11,7 +11,7 @@
  *   - actions: Copy, “Add to My words” (a basic card in the “My words” deck), a star (favorites per profile, plm.phrases).
  *
  *   LM.writingPhrases.render(view, route)   LM.writingPhrases.load() → Promise z { groups }
- *   LM.writingPhrases.forTrainer(genre, examId) → [{ group, phrases }] do panelu w trenerze pisania
+ *   LM.writingPhrases.forTrainer(genre, examId) → [{ group, phrases }] for the panel in the writing trainer
  */
 window.LM = window.LM || {};
 
@@ -80,7 +80,7 @@ window.LM = window.LM || {};
 
   function starred() { return pd() ? pd().starredPhrases() : []; }
 
-  // ---------- akcje ----------
+  // ---------- actions ----------
 
   function say(text) { LM.ui.toast({ text: text, icon: "check" }); }
 
@@ -96,7 +96,7 @@ window.LM = window.LM || {};
       tmp.remove();
       say(ok ? "Copied: " + text : "Could not copy – select the text and use Ctrl+C");
     }
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say("Skopiowano: " + text); }, fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { say("Copied: " + text); }, fallback);
     else fallback();
   }
 
@@ -121,7 +121,7 @@ window.LM = window.LM || {};
     const nav = el("nav", { class: "zw-nav", "aria-label": "Phrase groups" });
     const groupsBox = el("div", { class: "zw-groups" });
 
-    // filtry
+    // filters
     const levelSel = select("zw-level", "Level", [["all", "All"]].concat(LEVELS.map(function (l) { return [l, l]; })), state.level, function (v) { state.level = v; upTo.disabled = v === "all"; paint(); });
     const upTo = el("input", { type: "checkbox", id: "zw-upto", checked: state.upTo, disabled: state.level === "all", onchange: function () { state.upTo = upTo.checked; paint(); } });
     const regSel = select("zw-reg", "Register", [["all", "All"]].concat(Object.keys(REGISTERS).map(function (k) { return [k, REGISTERS[k]]; })), state.register, function (v) { state.register = v; paint(); });

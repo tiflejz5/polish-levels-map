@@ -159,7 +159,7 @@ window.LM = window.LM || {};
     ]));
     view.appendChild(layout);
 
-    // ----- przypisy do druku
+    // ----- footnotes for print
     view.appendChild(el("section", { class: "wz-footnotes", "aria-hidden": "true" }, [
       el("h2", { text: "Comments" }),
       el("ol", null, anns.map(function (a) { return el("li", { value: String(a.n) }, [el("strong", { text: typeOf(a).label + ": " }), a.note]); }))

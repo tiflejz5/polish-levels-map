@@ -161,7 +161,7 @@
      * at the same distance first in the direction the test is moving
      * (preferUp = true after a correct answer → up, otherwise → down).
      * random() → [0, 1). Returns a question or null when there are no questions left.
-     * opts (opcjonalnie, spec v6 13 sekcja 1.3):
+     * opts (optional, spec v6 13 section 1.3):
      *   avoidIds   — ids from the previous attempt (Set or array): skipped if the level's pool allows it,
      *   skillCounts — { grammar: n, vocabulary: n, reading: n } in this attempt: picks the skill
      *                 that came up least often (tie → random), then a random question of that skill.

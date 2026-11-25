@@ -2,7 +2,7 @@
  * search-logic.js — the search engine without DOM (spec 04, A.2; tests in tools/tests.js).
  *
  *   fold(str)               lower case without diacritics (á→a; special letters from LM.lang.foldChars), the same length as the input
- *   tokenize(str)           wyrazy po fold()
+ *   tokenize(str)           words after fold()
  *   prepare(records)        index: records + token sets of the fields
  *   search(index, query)    { groups: [{ group, results: [{ record, score, anchor }] }], total }
  *   snippet(text, query)    a fragment with highlights: [{ text, hit }] (text split, no HTML)

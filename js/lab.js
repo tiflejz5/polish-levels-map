@@ -39,7 +39,7 @@ window.LM = window.LM || {};
 
   // Tab state (in the tab's memory)
   let lastTense = "present-simple";
-  const sceneOf = {};           // wybrana scena na karcie czasu: { idCzasu: idSceny }
+  const sceneOf = {};           // the chosen scene on an item card: { itemId: sceneId }
   let pathStack = [];           // “Pick”: [{ node, option }]
 
   /** Replaces a node's children (null and false are skipped — replaceChildren would turn them into the text “null”). */
@@ -59,7 +59,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // ADRESY
+  // ROUTES
   // =====================================================================
 
   function parseRoute(hash) {
@@ -561,7 +561,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // RYSOWANIE
+  // DRAWING
   // =====================================================================
 
   /**

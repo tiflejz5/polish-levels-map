@@ -22,14 +22,14 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // IKONY (Lucide, obrys 1.75 px, kolor z currentColor)
+  // ICONS (Lucide, 1.75 px stroke, colour from currentColor)
   // =====================================================================
 
   /**
    * Icon as an <svg> element. opts:
    *   size  — size in px (default 20)
    *   label — text for screen readers (without it the icon is aria-hidden)
-   *   class — dodatkowa klasa
+   *   class — an extra class
    */
   function icon(name, opts) {
     opts = opts || {};
@@ -157,7 +157,7 @@ window.LM = window.LM || {};
   function breadcrumbs(items) {
     const nav = document.createElement("nav");
     nav.className = "breadcrumbs";
-    nav.setAttribute("aria-label", "Okruszki");
+    nav.setAttribute("aria-label", "Breadcrumbs");
     const ol = document.createElement("ol");
     const parentIndex = items.length > 1 ? items.length - 2 : 0;
     items.forEach(function (it, i) {

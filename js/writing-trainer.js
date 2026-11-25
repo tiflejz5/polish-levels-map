@@ -185,7 +185,7 @@ window.LM = window.LM || {};
       view.appendChild(el("h1", { class: "c1-title", text: task.title }));
       view.appendChild(el("p", { class: "c1-chips" }, cfg.chips(task, T, false).map(function (c) { return el("span", { class: "c1-chip", text: c }); })));
 
-      // Polecenie — akapity zachowane (white-space: pre-wrap)
+      // The task — paragraphs kept (white-space: pre-wrap)
       view.appendChild(el("section", { class: "card c1-prompt", "aria-label": "Task" }, el("p", { class: "c1-prompt-text", text: task.prompt })));
 
       // Choice group: another task chosen → no editor; nothing chosen → the choice happens with the first saved text
@@ -403,7 +403,7 @@ window.LM = window.LM || {};
       return el("div", { class: "c1-check-group wt-rubric" }, [
         el("h3", { class: "c1-check-title", text: "Self-assessment by criteria" }),
         el("div", { class: "wt-rub-rows" }, rows),
-        el("p", { class: "wt-rub-total" }, ["Razem: ", total]),
+        el("p", { class: "wt-rub-total" }, ["Total: ", total]),
         el("ul", { class: "wt-rub-notes" }, notes.map(function (t) { return el("li", { text: t }); }))
       ]);
     }

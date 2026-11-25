@@ -142,7 +142,7 @@ window.LM = window.LM || {};
           ]),
           el("div", { class: "fc-row-meta" }, [
             el("span", { class: "fc-status is-" + sts.id }, [LM.icon(sts.icon, { size: 14 }), " " + sts.label]),
-            el("span", { class: "tool-note", text: x && x.state !== "new" ? "Termin: " + F().fmtWhen(Math.max(x.due, x.buriedUntil || 0)) : "Termin: —" })
+            el("span", { class: "tool-note", text: x && x.state !== "new" ? "Due: " + F().fmtWhen(Math.max(x.due, x.buriedUntil || 0)) : "Due: —" })
           ]),
           el("div", { class: "fc-row-actions" }, [
             el("button", { type: "button", class: "btn btn-link btn-small", "aria-label": (x && x.suspended ? "Restore card: " : "Suspend card: ") + L().frontText(c),

@@ -516,7 +516,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // STAN (localStorage, eksport / import)
+  // STATE (localStorage, export / import)
   // =====================================================================
 
   function emptyState() {

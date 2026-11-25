@@ -115,7 +115,7 @@ window.LM = window.LM || {};
   function scoreText(s) { return s.score + "/" + s.total; }
 
   // =====================================================================
-  // ADRESY I SESJA
+  // ROUTES AND SESSION
   // =====================================================================
 
   function parseRoute(hash) {
@@ -283,7 +283,7 @@ window.LM = window.LM || {};
     else if (item.type === "match") context = (item.prompt || "Match pairs") + "\n" + item.pairs.map(function (x) { return x[0]; }).join(" / ") + "\n" + item.pairs.map(function (x) { return x[1]; }).join(" / ");
     else if (item.type === "transformation") context = item.source + "\n" + String(item.keyword).toUpperCase() + "\n" + [item.before, "___", item.after].filter(Boolean).join(" ");
     else if (item.type === "translate") context = "Translate: " + item.source;
-    else if (item.type === "dictation") context = "Dyktando: " + item.text;
+    else if (item.type === "dictation") context = "Dictation: " + item.text;
     else context = (item.context ? item.context + "\n" : "") + item.prompt;
     const rule = (item.explanation || "") + (item.trap ? " Trap: " + item.trap : "");
     // Match pairs: only the wrong pairs in the log (mine and the correct ones)
@@ -778,7 +778,7 @@ window.LM = window.LM || {};
       return el("span", { class: "ex-gap-result" }, [
         input,
         el("span", { class: "ex-gap-mark " + (r.correct ? "is-ok" : "is-bad"), "aria-hidden": "true" }, LM.icon(r.correct ? "check" : "x", { size: 16 })),
-        r.correct ? null : el("span", { class: "ex-gap-model" }, [el("span", { class: "visually-hidden", text: "poprawnie: " }), gap.accepted[0]])
+        r.correct ? null : el("span", { class: "ex-gap-model" }, [el("span", { class: "visually-hidden", text: "correct: " }), gap.accepted[0]])
       ]);
     });
     return [
@@ -1037,7 +1037,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // INFORMACJA ZWROTNA
+  // FEEDBACK
   // =====================================================================
 
   /** The model answer as text. */
@@ -1162,7 +1162,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // EKRANY
+  // SCREENS
   // =====================================================================
 
   function head(title, lead) {
@@ -1324,7 +1324,7 @@ window.LM = window.LM || {};
         return el("li", null, [
           el("p", { class: "ex-wrong-q" }, [el("span", { class: "chip", text: TYPE_SHORT[p.item.type] }), p.res && p.res.max > 1 ? el("span", { class: "chip", text: p.res.points + "/" + p.res.max + " points" }) : null, " ", itemSummary(p.item)]),
           el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: mine || "(none)" })]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Poprawnie: " }), el("strong", { text: modelAnswer(p.item) })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: modelAnswer(p.item) })]),
           p.item.explanation ? el("p", { class: "ex-wrong-expl", text: p.item.explanation }) : null,
           p.item.trap ? el("p", { class: "ex-wrong-trap" }, [el("strong", { text: "Trap: " }), p.item.trap]) : null
         ]);
@@ -1418,7 +1418,7 @@ window.LM = window.LM || {};
     if (!rows.length) return null;
     const best = rows[0], worst = rows[rows.length - 1];
     return el("div", { class: "ex-breakdown" }, [
-      el("p", null, [el("span", { class: "review-label", text: "Najlepiej: " }), el("strong", { text: best.name }), " (" + best.ok + "/" + best.n + ")"]),
+      el("p", null, [el("span", { class: "review-label", text: "Best: " }), el("strong", { text: best.name }), " (" + best.ok + "/" + best.n + ")"]),
       worst !== best && worst.r < 1 ? el("p", null, [el("span", { class: "review-label", text: "To review: " }),
         worst.href ? el("a", { href: worst.href }, worst.name) : el("strong", { text: worst.name }), " (" + worst.ok + "/" + worst.n + ")"]) : null,
       el("ul", { class: "ex-breakdown-list" }, rows.map(function (r) {
@@ -1689,7 +1689,7 @@ window.LM = window.LM || {};
       let i = -1;
       if (/^[1-9]$/.test(e.key)) i = Number(e.key) - 1;
       else if (opts.every(function (o) { return /^[A-H]$/.test(String(o.text).trim()); })) i = opts.findIndex(function (o) { return String(o.text).trim() === e.key.toUpperCase(); }); // the options are letters only (reading parts): a letter = the option with that text
-      else i = e.key.toLowerCase().charCodeAt(0) - 97; // A–D = pierwsza do czwartej opcja
+      else i = e.key.toLowerCase().charCodeAt(0) - 97; // A–D = the first to the fourth option
       if (i >= 0 && i < opts.length) { e.preventDefault(); p.st.chosen = i; repaint(i === 0 ? "first" : "opt-" + i); }
     } else if (p.item.type === "reorder" && e.key === "Backspace" && p.st.line.length) {
       e.preventDefault();
@@ -1711,7 +1711,7 @@ window.LM = window.LM || {};
       el("h3", { class: "ex-set-title", text: meta.title }),
       el("p", { class: "ex-set-meta", text: LM.plural(meta.count, "item", "items") + points + " · " + typesText(meta.types) }),
       el("p", { class: "ex-set-score" + (score ? "" : " is-empty") }, score
-        ? [el("span", null, ["Najlepszy: ", el("strong", { class: "num", text: scoreText(score.best) })]), el("span", null, ["Ostatni: ", el("span", { class: "num", text: scoreText(score.last) })])]
+        ? [el("span", null, ["Best: ", el("strong", { class: "num", text: scoreText(score.best) })]), el("span", null, ["Last: ", el("span", { class: "num", text: scoreText(score.last) })])]
         : "Not done yet"),
       el("a", { class: "btn btn-primary btn-small", href: BASE + "/set/" + meta.id, "aria-label": (score ? "Start again: " : "Start: ") + meta.title }, LM.ui.withIcon("play", score ? "Start again" : "Start"))
     ]);

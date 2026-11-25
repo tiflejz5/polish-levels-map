@@ -1,6 +1,6 @@
 /*
  * recorder.js — shared voice recording in the speaking trainers (pack v6, spec 18, section 2.1):
- * C1 (js/c1-speaking.js), B2, matura ustna i trening E8 (js/speaking-trainer.js).
+ * Used by the speaking trainer of exams from the registry (js/speaking-trainer.js).
  *
  *   LM.recorder.create({ exam, card, hint? }) → { node, attach(timer), isRecording(), count(), destroy() }
  *
@@ -117,7 +117,7 @@ window.LM = window.LM || {};
         recorder.addEventListener("dataavailable", function (e) { if (e.data && e.data.size) chunks.push(e.data); });
         recorder.addEventListener("stop", finish);
         recorder.start();
-        status.textContent = "Nagrywanie.";
+        status.textContent = "Recording.";
         indicator.hidden = false;
         const time = indicator.querySelector(".rec-time");
         time.textContent = "Recording 0:00";

@@ -7,7 +7,7 @@
  *     card   { state: new|learning|review|relearning, step, ease, interval (d), pendingInterval (d),
  *              lapses, reps, due (ms) }
  *     grade  "again" | "hard" | "good" | "easy" or 1–4
- *     now    znacznik czasu w ms
+ *     now    timestamp in ms
  *     opts   { fuzz: true, random: () => [0, 1) } — ±5% spread of new intervals ≥ 3 d
  *            (off by default; the randomness is injected from outside)
  *   newCard(config?)                       a card in the “new” state

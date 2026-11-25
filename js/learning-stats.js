@@ -143,7 +143,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // WAGI LOSOWANIA
+  // DRAWING WEIGHTS
   // =====================================================================
 
   /** Mixed generator (spec 02, B.3 point 5): accuracy < 60% → 2, never seen → 1.5, the rest → 1. */

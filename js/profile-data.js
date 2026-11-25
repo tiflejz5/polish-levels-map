@@ -162,7 +162,7 @@ window.LM = window.LM || {};
     let data = null;
     try { data = raw ? normalizeStore(kind, JSON.parse(raw)) : null; } catch (e) {
       // Damaged record: keep a copy aside and start from empty
-      try { window.localStorage.setItem(KEYS[kind] + BACKUP, raw); } catch (e2) { /* trudno */ }
+      try { window.localStorage.setItem(KEYS[kind] + BACKUP, raw); } catch (e2) { /* never mind */ }
       data = null;
     }
     memory[kind] = data || { version: VERSION, profiles: {} };
@@ -207,7 +207,7 @@ window.LM = window.LM || {};
     return { last: null };
   }
 
-  // ---------- Walidacja (zapis i import) ----------
+  // ---------- Validation (saving and import) ----------
 
   function text(value, max) {
     if (typeof value !== "string") return "";
@@ -681,7 +681,7 @@ window.LM = window.LM || {};
     return r ? { passedAt: r.passedAt, best: Object.assign({}, r.best), last: Object.assign({}, r.last) } : null;
   }
 
-  /** Zaliczone poziomy aktywnego profilu: { "A1": "RRRR-MM-DD", … }. */
+  /** Passed levels of the active profile: { "A1": "YYYY-MM-DD", … }. */
   function passedLevels() {
     const pid = activeId();
     const rec = pid ? load("levelTests").profiles[pid] : null;
@@ -1016,7 +1016,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // PROFILE, EKSPORT, IMPORT, RESET
+  // PROFILES, EXPORT, IMPORT, RESET
   // =====================================================================
 
   /** Deletes the learning data of a deleted profile. */
@@ -1066,7 +1066,7 @@ window.LM = window.LM || {};
     prune(profileIds);
   }
 
-  /** Statystyka do okna potwierdzenia importu. */
+  /** Numbers for the import confirmation dialog. */
   function summarizeImport(parsed) {
     if (!parsed || !parsed.journal) return null;
     let n = 0;

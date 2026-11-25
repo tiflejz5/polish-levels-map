@@ -277,7 +277,7 @@ window.LM = window.LM || {};
         el("span", { class: "fc-legend is-due", text: "Due today: " + stats.due }),
         el("span", { class: "fc-legend is-later", text: "Later: " + stats.later }),
         el("span", { class: "fc-legend is-mastered", text: "Opanowane: " + stats.mastered }),
-        stats.suspended ? el("span", { class: "fc-legend", text: "Zawieszone: " + stats.suspended }) : null
+        stats.suspended ? el("span", { class: "fc-legend", text: "Suspended: " + stats.suspended }) : null
       ])
     ]);
   }
@@ -670,7 +670,7 @@ window.LM = window.LM || {};
           "aria-label": g.label + " – next review " + when + (isSug ? " (suggested rating)" : ""),
           onclick: function () { grade(g.id); }
         }, [el("span", { class: "fc-grade-label", text: g.label }), el("span", { class: "fc-grade-when", text: when }),
-          el("span", { class: "fc-grade-key", "aria-hidden": "true", text: g.key }), isSug ? el("span", { class: "fc-grade-sug", "aria-hidden": "true", text: "sugerowana" }) : null]);
+          el("span", { class: "fc-grade-key", "aria-hidden": "true", text: g.key }), isSug ? el("span", { class: "fc-grade-sug", "aria-hidden": "true", text: "suggested" }) : null]);
       })));
     } else if (!typedMode) {
       root.appendChild(el("div", { class: "fc-reveal-row" }, el("button", { type: "button", class: "btn btn-primary btn-large fc-reveal", onclick: reveal }, "Show answer")));
@@ -820,7 +820,7 @@ window.LM = window.LM || {};
   document.addEventListener("keydown", onKey);
 
   // =====================================================================
-  // TRASY I RYSOWANIE
+  // ROUTES AND DRAWING
   // =====================================================================
 
   function parseRoute(hash) {
@@ -872,7 +872,7 @@ window.LM = window.LM || {};
   window.addEventListener("hashchange", function () { if (!parseRoute(location.hash)) lastRoute = null; });
 
   // =====================================================================
-  // INTEGRACJE (spec 10, 5.4–5.5)
+  // INTEGRATIONS (spec 10, 5.4–5.5)
   // =====================================================================
 
   function journalSource(e) { return L().journalSource(e); }

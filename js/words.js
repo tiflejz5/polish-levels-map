@@ -87,7 +87,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // TALIA I DUPLIKATY
+  // DECK AND DUPLICATES
   // =====================================================================
 
   /** Cards of the “My words” deck. */
@@ -116,7 +116,7 @@ window.LM = window.LM || {};
   function say(text, extra) { LM.ui.toast(Object.assign({ text: text, icon: "layers" }, extra || {})); }
 
   // =====================================================================
-  // DODAWANIE
+  // ADDING
   // =====================================================================
 
   function refreshOpenView() { if (LM.state && LM.state.view === "cards" && LM.cards.render) LM.cards.render(); }
@@ -213,7 +213,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // MENU PRZY ZAZNACZENIU
+  // SELECTION MENU
   // =====================================================================
 
   let menu = null, timer = null;
@@ -243,7 +243,7 @@ window.LM = window.LM || {};
       el("button", { type: "button", class: "btn btn-secondary btn-small", title: "Shortcut: Ctrl+Shift+F", onclick: openForm }, "Make a flashcard…")
     ].filter(Boolean));
     menu.hidden = false;
-    // Nad zaznaczeniem, a na telefonie (systemowe menu stoi nad zaznaczeniem) i przy braku miejsca — pod nim
+    // Above the selection; on a phone (the system menu sits above the selection) and when there is no room — below it
     const r = window.getSelection().getRangeAt(0).getBoundingClientRect();
     const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
     const below = coarse || r.top <= 60;
@@ -396,11 +396,11 @@ window.LM = window.LM || {};
           meaning,
           el("p", { class: "fc-row-back fw-sentence" }, sentenceNode(c)),
           (c.examples || []).length ? el("ul", { class: "fc-example-list" }, c.examples.map(function (s) { return el("li", { text: s }); })) : null,
-          el("p", { class: "tool-note" }, [src, src ? " · " : null, fmtDay(c) ? "dodano " + fmtDay(c) : null])
+          el("p", { class: "tool-note" }, [src, src ? " · " : null, fmtDay(c) ? "added " + fmtDay(c) : null])
         ]),
         el("div", { class: "fc-row-meta" }, [
           el("span", { class: "fc-status is-" + sts.id }, [LM.icon(sts.icon, { size: 14 }), " " + sts.label]),
-          el("span", { class: "tool-note", text: x && x.state !== "new" ? "Termin: " + F().fmtWhen(Math.max(x.due, x.buriedUntil || 0)) : "Termin: —" })
+          el("span", { class: "tool-note", text: x && x.state !== "new" ? "Due: " + F().fmtWhen(Math.max(x.due, x.buriedUntil || 0)) : "Due: —" })
         ]),
         el("div", { class: "fc-row-actions" }, [
           el("button", { type: "button", class: "btn btn-link btn-small", "aria-label": (x && x.suspended ? "Restore word: " : "Suspend word: ") + w,

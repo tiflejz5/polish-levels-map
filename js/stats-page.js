@@ -53,7 +53,7 @@ window.LM = window.LM || {};
 
   function emptyNote(text) { return el("p", { class: "st-empty", text: text }); }
 
-  // ---------- 1. Podsumowanie (kafle liczb) ----------
+  // ---------- 1. Summary (number tiles) ----------
 
   function summaryTile(rec, today) {
     const s = S().summary(rec, today);

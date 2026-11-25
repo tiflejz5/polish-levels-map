@@ -1,7 +1,7 @@
 /*
  * search.js — search across the whole app (spec 04, part A.3).
  *
- * Otwieranie:
+ * Opening:
  *   - the magnifier in the top bar (next to the theme),
  *   - the “/” key (when focus is not in a text field) and Ctrl/Cmd + K,
  *   - mouse hover at the top edge of the content area (a 12 px zone, about 50% of the width,
@@ -39,7 +39,7 @@ window.LM = window.LM || {};
 
   let panel, input, list, status, btn, hoverZone;
   let publicIndex = null;      // the prepared index from the file
-  let index = null;            // + prywatne rekordy (notatki, dziennik)
+  let index = null;            // + private records (notes, mistake log)
   let openedBy = null;         // "hover" | "key" | "button"
   let returnFocus = null;
   let options = [];            // [{ node, kind, data }]
@@ -157,7 +157,7 @@ window.LM = window.LM || {};
     window.addEventListener("hashchange", function () { if (!panel.hidden) close(false); });
   }
 
-  // ---------- Otwieranie i zamykanie ----------
+  // ---------- Opening and closing ----------
 
   function open(by) {
     if (!panel.hidden) { input.focus(); return; }
@@ -190,14 +190,14 @@ window.LM = window.LM || {};
 
   function toggle(by) { if (panel.hidden) open(by); else close(true); }
 
-  // ---------- Wyniki ----------
+  // ---------- Results ----------
 
   let optSeq = 0;
 
   function option(kind, data, children, extraClass) {
     const id = "search-opt-" + (++optSeq);
     const node = el("div", { id: id, class: "search-opt" + (extraClass ? " " + extraClass : ""), role: "option", "aria-selected": "false",
-      onmousedown: function (e) { e.preventDefault(); }, // fokus zostaje w polu
+      onmousedown: function (e) { e.preventDefault(); }, // focus stays in the field
       onclick: function () { activate(options.findIndex(function (o) { return o.node === node; })); }
     }, children);
     options.push({ node: node, kind: kind, data: data });
