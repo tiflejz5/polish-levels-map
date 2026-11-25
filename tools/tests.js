@@ -1724,11 +1724,11 @@ test("myExams: date, finished set, unpinned, pinned, date in the past (all exams
   assert.deepStrictEqual(run({ isSetDone: function (id) { return id === "c1-b"; } }), [{ id: "c1", reason: "sets", days: null }]);
 });
 
-test("formatDatePl i daysBetween", function () {
+test("formatDateLong and daysBetween", function () {
   const EL = global.LM.examLogic;
-  assert.strictEqual(EL.formatDatePl("2027-05-06"), "czwartek, 6 maja 2027");
-  assert.strictEqual(EL.formatDatePl("2027-05-12"), "środa, 12 maja 2027");
-  assert.strictEqual(EL.formatDatePl("zle"), "");
+  assert.strictEqual(EL.formatDateLong("2027-05-06"), "Thursday, May 6, 2027");
+  assert.strictEqual(EL.formatDateLong("2027-05-12"), "Wednesday, May 12, 2027");
+  assert.strictEqual(EL.formatDateLong("bad"), "");
   assert.strictEqual(EL.daysBetween("2026-11-01", "2026-10-30"), 2);
   assert.strictEqual(EL.daysBetween("2026-10-29", "2026-10-30"), -1);
 });

@@ -1,6 +1,6 @@
 /*
- * exam-logic.js — czysta logika egzaminów (bez DOM; testy w tools/tests.js).
- * Specyfikacja: docs/rozbudowa-v2/spec/05-egzaminy-i-egzamin-osmoklasisty.md, 5.1–5.2.
+ * exam-logic.js — pure exam logic (no DOM; tests in tools/tests.js).
+ * Spec: the reference app's spec 05 (exams), 5.1–5.2.
  *
  *   countWritingWords(text, opening, count)  words of a writing task: count(text) from LM.lang, without the given
  *                                 opening when the learner copied it (no exam-specific counting rules in code, spec 06 E8)
@@ -45,10 +45,10 @@ window.LM = window.LM || {};
     return -1;
   }
 
-  // ---------- B1/B2: daty i „Moje egzaminy” ----------
+  // ---------- B1/B2: dates and “My exams” ----------
 
-  const MONTHS_GEN = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
-  const WEEKDAYS = ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"];
+  const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
 
   function dayNumber(day) {
@@ -61,18 +61,18 @@ window.LM = window.LM || {};
     return n.getFullYear() + "-" + String(n.getMonth() + 1).padStart(2, "0") + "-" + String(n.getDate()).padStart(2, "0");
   }
 
-  /** Liczba dni od today do day ("RRRR-MM-DD"); ujemna = data minęła; null przy złej dacie. */
+  /** Number of days from today to day ("YYYY-MM-DD"); negative = the date has passed; null for a wrong date. */
   function daysBetween(day, today) {
     const a = dayNumber(day), b = dayNumber(today || localToday());
     return a === null || b === null ? null : a - b;
   }
 
-  /** "2027-05-06" → "czwartek, 6 maja 2027" (bez zależności od ICU przeglądarki). */
-  function formatDatePl(day) {
+  /** "2027-05-06" → "Thursday, May 6, 2027" (US English order, without depending on the browser's ICU). */
+  function formatDateLong(day) {
     const m = DAY.exec(day || "");
     if (!m) return "";
     const wd = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3]))).getUTCDay();
-    return WEEKDAYS[wd] + ", " + Number(m[3]) + " " + MONTHS_GEN[Number(m[2]) - 1] + " " + m[1];
+    return WEEKDAYS[wd] + ", " + MONTHS[Number(m[2]) - 1] + " " + Number(m[3]) + ", " + m[1];
   }
 
   /**
@@ -93,9 +93,9 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Egzaminy „moje”: ustawiona data albo ukończony zestaw (i nie odpięty ręcznie), albo ręcznie przypięte.
-   * state = examMyState(...). Zwraca [{ id, reason: "date"|"sets"|"pinned", days }] — najpierw najbliższe daty
-   * (dziś i przyszłe rosnąco), potem miniony termin (najświeższy pierwszy), na końcu bez daty (kolejność rejestru).
+   * “My” exams: a date is set or a set is done (and not unpinned by hand), or pinned by hand.
+   * state = examMyState(...). Returns [{ id, reason: "date"|"sets"|"pinned", days }] — the nearest dates first
+   * (today and future ascending), then a passed date (the latest first), last those without a date (registry order).
    */
   function myExams(state, registry, today) {
     const out = [];
@@ -124,9 +124,9 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Podział egzaminów w pasku: { shown, hidden } (id w kolejności rejestru dla hidden, w kolejności „moich” dla shown).
-   * mineIds = id z myExams; currentId = egzamin otwarty na ekranie (zostaje w pasku, choćby nie był „mój”).
-   * Brak moich → wszystkie jak dawniej, bez „+N”.
+   * Split of exams in the sidebar: { shown, hidden } (ids in registry order for hidden, in “my” order for shown).
+   * mineIds = ids from myExams; currentId = the exam open on screen (it stays in the sidebar even if not “mine”).
+   * None of mine → all as before, no “+N”.
    */
   function navSplit(registry, mineIds, currentId) {
     const all = ((registry && registry.exams) || []).map(function (e) { return e.id; });
@@ -139,6 +139,6 @@ window.LM = window.LM || {};
   LM.examLogic = {
     navSplit: navSplit,
     countWritingWords: countWritingWords, writingZone: writingZone, examBoxAnchorIndex: examBoxAnchorIndex,
-    daysBetween: daysBetween, formatDatePl: formatDatePl, localToday: localToday, examMyState: examMyState, myExams: myExams
+    daysBetween: daysBetween, formatDateLong: formatDateLong, localToday: localToday, examMyState: examMyState, myExams: myExams
   };
 })(window.LM);
