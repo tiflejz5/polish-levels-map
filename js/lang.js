@@ -162,8 +162,8 @@ window.LM = window.LM || {};
     { id: "genitive", name: "Genitive", native: "dopełniacz", questions: "kogo? czego?" },
     { id: "dative", name: "Dative", native: "celownik", questions: "komu? czemu?" },
     { id: "accusative", name: "Accusative", native: "biernik", questions: "kogo? co?" },
-    { id: "instrumental", name: "Instrumental", native: "narzędnik", questions: "(z) kim? (z) czym?" },
-    { id: "locative", name: "Locative", native: "miejscownik", questions: "(o) kim? (o) czym?" },
+    { id: "instrumental", name: "Instrumental", native: "narzędnik", questions: "z kim? z czym?" },
+    { id: "locative", name: "Locative", native: "miejscownik", questions: "o kim? o czym?" },
     { id: "vocative", name: "Vocative", native: "wołacz", questions: "o!" }
   ];
 

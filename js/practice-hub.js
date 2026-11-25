@@ -286,7 +286,7 @@ window.LM = window.LM || {};
     const view = document.getElementById("view");
     view.className = "view tool-view hub-view";
     view.dataset.file = ex().BASE;
-    view.replaceChildren(LM.ui.pageHead({ eyebrow: "Learning · Practice", title: "Practice", lead: "Exercise sets for the topics, ready mixed sets and your own drawn set. Multiple choice, putting words in order, finding mistakes, filling gaps, matching pairs, rewriting sentences, translation and dictation – in Learn mode or Exam mode. Results count in points." }));
+    view.replaceChildren(LM.ui.pageHead({ eyebrow: "Learning · Practice", title: "Practice", lead: "Exercise sets for the topics, ready mixed sets and your own drawn set. Multiple choice, putting words in order, finding mistakes, filling gaps, matching pairs, rewriting sentences, translation, dictation and tables of forms – in Learn mode or Exam mode. Results count in points." }));
     document.title = "Practice · " + LM.APP.appTitle;
     ex().loadIndex().then(function (index) {
       const now = ex().parseRoute(location.hash);

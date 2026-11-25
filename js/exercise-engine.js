@@ -776,8 +776,8 @@ window.LM = window.LM || {};
     return el("span", null, [c.name + " ", el("span", { class: "ex-par-q", lang: LM.APP.targetLang, text: "(" + c.questions + ")" })]);
   }
 
-  /** Text of a cell label for summaries and the mistake log. */
-  function cellLabelText(label) { return LM.lang.caseLabel ? LM.lang.caseLabel(label) : String(label); }
+  /** Text of a cell label for summaries and the mistake log: a case by its English name, anything else as written. */
+  function cellLabelText(label) { const c = LM.lang.caseOf ? LM.lang.caseOf(label) : null; return c ? c.name : String(label); }
 
   /** "label: form; label: form" for the given cells. */
   function paradigmText(item, cells, form) {
