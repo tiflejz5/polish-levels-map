@@ -3,15 +3,17 @@
  * in tools/tests.js. Spec: docs/rozbudowa-v2/spec/01-typy-zadan.md
  * and the reference spec 02 (lab and mixed sets) (the mixed-set algorithm).
  *
- *   normalize(str)                    answer comparison (section 4 of spec 01)
+ *   normalize(str)                    answer comparison: LM.lang.normalizeAnswer (diacritics kept)
+ *   match(answer, accepted, opts)     typed answers (spec 05 §2): { ok, near: accents|ending|typo|null, closest, index, diff }
  *   shuffle(list, rng)                Fisher–Yates shuffle (a copy of the list)
  *   prepareChoice(item, rng)          multiple-choice options in random order
  *   reorderTokens(item, rng)          words to put in order (never in the correct order)
- *   evaluate(item, answer)            { correct, points, max, … } for every item type
+ *   evaluate(item, answer, opts)      { correct, points, max, near, lenient, … } for every item type
+ *                                     (opts.lenientAccents: an answer that differs only in Polish marks counts, spec 05 §2)
  *   maxPoints(item)                   maximum points for an item (old types: 1)
  *   sessionScore(results)             session score in points { score, total }
  *   scoreTransformationParts(item, answer, limit)  Cambridge-style transformation
- *   normalizeSentence(str)            a sentence for comparison: no commas, contractions expanded (spec v6 12, 2.4)
+ *   normalizeSentence(str)            a sentence for comparison: LM.lang.normalizeSentence (no punctuation)
  *   matchesSentence(answer, accepted) does the sentence match any variant
  *   wordDiff(model, got)              word-by-word comparison (missing / extra / replaced)
  *   prepareMatch(item, rng)           the right column of match pairs (always shuffled)
@@ -28,16 +30,8 @@ window.LM = window.LM || {};
 
   const TYPES = ["multiple-choice", "reorder", "find-error", "short-answer", "gap-fill", "match", "transformation", "translate", "dictation"];
 
-  /** Trimmed, one space, ’ → ', no punctuation at the end, lower case. Contractions are NOT expanded. */
-  function normalize(str) {
-    return String(str == null ? "" : str)
-      .replace(/[‘’ʼ]/g, "'")
-      .replace(/\s+/g, " ")
-      .trim()
-      .replace(/[.,!?;]+$/, "")
-      .trim()
-      .toLowerCase();
-  }
+  /** Trimmed, one space, ’ → ', no punctuation at the end, lower case; diacritics kept (LM.lang.normalizeAnswer). */
+  function normalize(str) { return LM.lang.normalizeAnswer(str); }
 
   function shuffle(list, rng) {
     const out = list.slice();
@@ -77,10 +71,10 @@ window.LM = window.LM || {};
     return { options: order, correct: order.findIndex(function (o) { return o.original === item.correct; }) };
   }
 
-  /** Words of the model sentence without final punctuation (the first in lower case unless it is “I”). */
+  /** Words of the model sentence without final punctuation (the first in lower case unless LM.lang.keepsCapital). */
   function answerTokens(sentence) {
     const words = String(sentence).trim().replace(/[.!?;]+$/, "").split(/\s+/).filter(Boolean);
-    if (words.length && !/^I(\b|')/.test(words[0])) words[0] = words[0].charAt(0).toLowerCase() + words[0].slice(1);
+    if (words.length && !LM.lang.keepsCapital(words[0])) words[0] = words[0].charAt(0).toLowerCase() + words[0].slice(1);
     return words;
   }
 
@@ -120,8 +114,8 @@ window.LM = window.LM || {};
    *   find-error:      { noError: true } or { range: [from, to], fix: "…" }
    *   short-answer:    { text: "…" }
    */
-  function evaluate(item, answer) {
-    const res = evaluateType(item, answer || {});
+  function evaluate(item, answer, opts) {
+    const res = evaluateType(item, answer || {}, opts || {});
     // Points (spec v6 12, section 1): one-point types — 1 for a correct item
     if (res.max === undefined) { res.max = maxPoints(item); res.points = res.correct ? res.max : 0; }
     return res;
@@ -148,7 +142,7 @@ window.LM = window.LM || {};
     return { score: score, total: total };
   }
 
-  function evaluateType(item, answer) {
+  function evaluateType(item, answer, opts) {
     if (item.type === "multiple-choice") {
       return { correct: answer.chosen === item.correct, answered: Number.isInteger(answer.chosen) };
     }
@@ -163,16 +157,16 @@ window.LM = window.LM || {};
       if (!r) return { correct: false, answered: false, rangeOk: false, fixOk: false };
       if (item.noError) return { correct: false, answered: true, rangeOk: false, fixOk: false };
       const rangeOk = r[0] === item.errorRange[0] && r[1] === item.errorRange[1];
-      const fix = normalize(answer.fix);
-      const fixOk = item.fixes.some(function (f) { return normalize(f) === fix; });
-      return { correct: rangeOk && fixOk, answered: true, rangeOk: rangeOk, fixOk: fixOk };
+      const fix = shortAnswer(item.fixes, answer.fix, opts);
+      return { correct: rangeOk && fix.correct, answered: true, rangeOk: rangeOk, fixOk: fix.correct, near: fix.near, lenient: rangeOk && fix.lenient };
     }
-    if (item.type === "short-answer") return shortAnswer(item.accepted, answer.text);
+    if (item.type === "short-answer") return shortAnswer(item.accepted, answer.text, opts);
     if (item.type === "gap-fill") {
       const texts = answer.texts || [];
-      const gaps = item.gaps.map(function (g, i) { return shortAnswer(g.accepted, texts[i]); });
+      const gaps = item.gaps.map(function (g, i) { return shortAnswer(g.accepted, texts[i], opts); });
       const points = gaps.filter(function (g) { return g.correct; }).length;
-      return { correct: points === gaps.length, answered: gaps.some(function (g) { return g.answered; }), points: points, max: gaps.length, gaps: gaps };
+      return { correct: points === gaps.length, answered: gaps.some(function (g) { return g.answered; }), points: points, max: gaps.length, gaps: gaps,
+        lenient: gaps.some(function (g) { return g.lenient; }) };
     }
     if (item.type === "match") {
       const chosen = answer.pairs || {};
@@ -180,75 +174,109 @@ window.LM = window.LM || {};
       const points = pairs.filter(Boolean).length;
       return { correct: points === pairs.length, answered: Object.keys(chosen).some(function (k) { return chosen[k] != null; }), points: points, max: pairs.length, pairs: pairs };
     }
-    if (item.type === "transformation") return evaluateTransformation(item, answer.text);
-    if (item.type === "translate") return evaluateSentence(item.accepted, answer.text);
+    if (item.type === "transformation") return evaluateTransformation(item, answer.text, opts);
+    if (item.type === "translate") return evaluateSentence(item.accepted, answer.text, opts);
     if (item.type === "dictation") {
       // No target-language voice: the item is skipped and counts neither for the score nor for the stats
       if (answer.skipped) return { correct: false, answered: true, skipped: true, points: 0, max: 0 };
-      return evaluateSentence([item.text].concat(item.accepted || []), answer.text);
+      return evaluateSentence([item.text].concat(item.accepted || []), answer.text, opts);
     }
     return { correct: false, answered: false };
   }
 
-  /** One field like short-answer: a full match after normalize; a difference of 1 letter → a spelling note (0 points). */
-  function shortAnswer(accepted, value) {
-    const text = normalize(value);
-    const ok = text !== "" && accepted.some(function (a) { return normalize(a) === text; });
-    const close = !ok && text !== "" && accepted.some(function (a) { return distance(normalize(a), text) === 1; });
-    return { correct: ok, answered: text !== "", spelling: close };
+  /** One field like short-answer: LM.exLogic.match; a near miss gives 0 points with a hint (accents: lenient mode). */
+  function shortAnswer(accepted, value, opts) {
+    const m = match(value, accepted);
+    const lenient = !m.ok && m.near === "accents" && !!(opts && opts.lenientAccents);
+    return { correct: m.ok || lenient, answered: m.answered, near: m.ok ? null : m.near, closest: m.closest, lenient: lenient };
   }
 
   // =====================================================================
-  // SENTENCES (translate, dictation): normalization, contraction variants, word-by-word comparison
+  // ANSWER CHECKING (spec 05 §2): exact → accents → ending → typo → word diff
   // =====================================================================
 
-  const FIXED_CONTRACTIONS = { "won't": "will not", "can't": "cannot", "shan't": "shall not", "let's": "let us" }; // TODO stage 3: English rule, deleted (spec 03 §3)
+  function L() { return LM.lang; }
+
+  /** Normalized spellings of a text (LM.lang.variants, then normalized), without duplicates. */
+  function forms(text, sentence) {
+    const N = sentence ? L().normalizeSentence : L().normalizeAnswer;
+    const out = [];
+    L().variants(String(text == null ? "" : text)).forEach(function (v) { const n = N(v); if (out.indexOf(n) === -1) out.push(n); });
+    return out;
+  }
+
+  /** Allowed edit distance of a typo for a word of this length: 1 from 5 letters, 2 from 9 letters. */
+  function typoLimit(len) { return len >= 9 ? 2 : len >= 5 ? 1 : 0; }
+
+  /** Single words: the first 60% of the letters (at least 3) are the same, only the ending differs. */
+  function endingOnly(mine, model) {
+    if (/\s/.test(mine) || /\s/.test(model)) return false;
+    const a = L().stripMarks(mine), b = L().stripMarks(model);
+    const k = Math.max(3, Math.ceil(b.length * 0.6));
+    return a !== b && a.length >= k && b.length >= k && a.slice(0, k) === b.slice(0, k);
+  }
+
+  /** Every word the same or within the typo limit (marks ignored), at least one real typo, same number of words. */
+  function typoOnly(mine, model) {
+    const a = L().stripMarks(mine).split(" "), b = L().stripMarks(model).split(" ");
+    if (a.length !== b.length) return false;
+    let typos = 0;
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] === b[i]) continue;
+      const d = distance(a[i], b[i]);
+      if (d > typoLimit(b[i].length)) return false;
+      typos++;
+    }
+    return typos > 0;
+  }
 
   /**
-   * normalize + no commas and punctuation inside the sentence + unambiguous contractions expanded
-   * (n't → not, 're → are, 've → have, 'll → will, 'm → am, won't → will not, can't → cannot).
-   * Ambiguous 's and 'd stay (the comparison checks both expansions — sentenceVariants).
+   * Checks a typed answer against the accepted ones (spec 05 §2). Capital letters never matter.
+   *   opts.sentence  translate / dictation / transformation: punctuation ignored, word diff when wrong
+   * Returns { ok, near: null | "accents" | "ending" | "typo", closest (accepted text), index (its position in
+   * accepted), answered, diff (sentences with near = null: word ops against the closest variant) }.
+   * near never makes an answer correct; the caller decides about lenient accents.
    */
-  function normalizeSentence(str) {
-    return normalize(str)
-      .replace(/[,.!?;:"“”\u201e«»()]/g, " ")
-      .replace(/\s[–—-]+\s/g, " ")
-      .split(/\s+/).filter(Boolean).map(expandWord).join(" ");
+  function match(answer, accepted, opts) {
+    const sentence = !!(opts && opts.sentence);
+    const list = (accepted || []).map(function (a, i) { return { text: String(a == null ? "" : a), index: i, forms: forms(a, sentence) }; })
+      .filter(function (a) { return a.forms.some(Boolean); });
+    const mine = forms(answer, sentence).filter(Boolean);
+    const first = list[0] || { text: "", index: 0 };
+    if (!mine.length) return { ok: false, near: null, closest: first.text, index: first.index, answered: false, diff: null };
+    const result = function (ok, near, a, diff) { return { ok: ok, near: near, closest: a.text, index: a.index, answered: true, diff: diff || null }; };
+    const find = function (test) {
+      for (let i = 0; i < list.length; i++) {
+        for (let j = 0; j < list[i].forms.length; j++) {
+          for (let k = 0; k < mine.length; k++) if (test(mine[k], list[i].forms[j])) return list[i];
+        }
+      }
+      return null;
+    };
+    let hit = find(function (m, v) { return m === v; });
+    if (hit) return result(true, null, hit);
+    hit = find(function (m, v) { return L().stripMarks(m) === L().stripMarks(v); });
+    if (hit) return result(false, "accents", hit);
+    if (!sentence) {
+      hit = find(endingOnly);
+      if (hit) return result(false, "ending", hit);
+    }
+    hit = find(typoOnly);
+    if (hit) return result(false, "typo", hit);
+    if (!sentence || !list.length) return result(false, null, first);
+    const best = closestDiff(mine, list);
+    return result(false, null, best ? best.entry : first, best ? best.diff.ops : null);
   }
 
-  function expandWord(w) {
-    if (FIXED_CONTRACTIONS[w]) return FIXED_CONTRACTIONS[w];
-    let m = /^(.+)n't$/.exec(w);
-    if (m) return m[1] + " not";
-    m = /^(.+)'(re|ve|ll|m)$/.exec(w);
-    if (m) return m[1] + " " + { re: "are", ve: "have", ll: "will", m: "am" }[m[2]];
-    return w;
-  }
+  // =====================================================================
+  // SENTENCES (translate, dictation, transformation): word-by-word comparison
+  // =====================================================================
 
-  const AMBIGUOUS = { s: ["is", "has"], d: ["would", "had"] };
+  /** Normalized sentence for comparison (LM.lang.normalizeSentence: no punctuation, diacritics kept). */
+  function normalizeSentence(text) { return L().normalizeSentence(text); }
 
-  /** All readings of a sentence: 's = is / has / possessive, 'd = would / had (at most 64 variants). */
-  function sentenceVariants(str) {
-    let out = [[]];
-    normalizeSentence(str).split(" ").filter(Boolean).forEach(function (w) {
-      const m = /^(.+)'([sd])$/.exec(w);
-      const opts = m ? [w].concat(AMBIGUOUS[m[2]].map(function (x) { return m[1] + " " + x; })) : [w];
-      const next = [];
-      out.forEach(function (prefix) { (out.length * opts.length > 64 ? opts.slice(0, 1) : opts).forEach(function (o) { next.push(prefix.concat(o)); }); });
-      out = next;
-    });
-    return out.map(function (words) { return words.join(" "); });
-  }
-
-  /** Does the sentence match (after normalization and expanding contractions) any of the accepted ones? */
-  function matchesSentence(answer, accepted) {
-    const mine = sentenceVariants(answer);
-    if (!mine.join("")) return false;
-    return accepted.some(function (a) {
-      const theirs = sentenceVariants(a);
-      return mine.some(function (v) { return theirs.indexOf(v) !== -1; });
-    });
-  }
+  /** Does the sentence match (after normalization) any of the accepted ones? */
+  function matchesSentence(answer, accepted) { return match(answer, accepted, { sentence: true }).ok; }
 
   /**
    * Word-by-word comparison (edit distance on words):
@@ -285,39 +313,34 @@ window.LM = window.LM || {};
   }
 
   /** The closest accepted variant (fewest word changes) and the comparison with it. */
-  function closestDiff(answer, accepted) {
-    const mine = sentenceVariants(answer).map(function (v) { return v.split(" ").filter(Boolean); });
+  function closestDiff(mine, list) {
     let best = null;
-    accepted.forEach(function (a, k) {
-      sentenceVariants(a).forEach(function (v) {
+    list.forEach(function (entry) {
+      entry.forms.forEach(function (v) {
         const model = v.split(" ").filter(Boolean);
-        mine.forEach(function (got) {
-          const diff = wordDiff(model, got);
-          if (!best || diff.distance < best.diff.distance) best = { index: k, diff: diff };
+        mine.forEach(function (m) {
+          const diff = wordDiff(model, m.split(" ").filter(Boolean));
+          if (!best || diff.distance < best.diff.distance) best = { entry: entry, diff: diff };
         });
       });
     });
     return best;
   }
 
-  /** translate / dictation: 1 point for a match; otherwise a comparison with the closest variant and a possible typo. */
-  function evaluateSentence(accepted, text) {
-    const answered = normalize(text) !== "";
-    if (answered && matchesSentence(text, accepted)) return { correct: true, answered: true, points: 1, max: 1 };
-    const best = answered ? closestDiff(text, accepted) : null;
-    let spelling = false;
-    if (best) {
-      const changed = best.diff.ops.filter(function (o) { return o.op !== "same"; });
-      spelling = changed.length === 1 && changed[0].op === "replace" && changed[0].word.length >= 5 && distance(changed[0].word, changed[0].got) === 1;
-    }
-    return { correct: false, answered: answered, points: 0, max: 1, diff: best ? best.diff.ops : null, closest: best ? best.index : 0, spelling: spelling };
+  /** translate / dictation: 1 point for a match; otherwise the hint (near) or the comparison with the closest variant. */
+  function evaluateSentence(accepted, text, opts) {
+    const m = match(text, accepted, { sentence: true });
+    const lenient = !m.ok && m.near === "accents" && !!(opts && opts.lenientAccents);
+    const correct = m.ok || lenient;
+    return { correct: correct, answered: m.answered, points: correct ? 1 : 0, max: 1, near: m.ok ? null : m.near, lenient: lenient,
+      diff: correct ? null : m.diff, closest: m.index, closestText: m.closest };
   }
 
   /** Number of words in a transformation and the reason for rejecting it before grading (limit, key word), or null. */
   function transformationCheck(item, text, lim) {
     const t = trTokens(text);
     if (!t.length) return { words: 0, msg: "No answer." };
-    if (t.length < lim[0] || t.length > lim[1]) return { words: t.length, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + "; contractions count as two)." };
+    if (t.length < lim[0] || t.length > lim[1]) return { words: t.length, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + ")." };
     if (!findSeq(t, trTokens(item.keyword), 0).length) return { words: t.length, msg: "Use the key word without changing it (" + item.keyword + ")." };
     return { words: t.length, msg: null };
   }
@@ -329,17 +352,19 @@ window.LM = window.LM || {};
   }
 
   /**
-   * transformation: without parts — 1 point for a match with answers (after normalization, contractions expanded);
+   * transformation: without parts — 1 point for a match with answers (LM.exLogic.match, sentence mode);
    * with parts — 2 points, Cambridge style (scoreTransformationParts), a full match with answers always 2.
    */
-  function evaluateTransformation(item, text) {
+  function evaluateTransformation(item, text, opts) {
     const lim = transformationLimit(item);
     const max = item.parts ? 2 : 1;
     const check = transformationCheck(item, text, lim);
     const answered = check.words > 0;
     if (check.msg) return { correct: false, answered: answered, points: 0, max: max, msg: check.msg, parts: item.parts ? item.parts.map(function () { return false; }) : null };
-    if (matchesSentence(text, item.answers)) return { correct: true, answered: true, points: max, max: max, msg: null, parts: item.parts ? item.parts.map(function () { return true; }) : null };
-    if (!item.parts) return { correct: false, answered: true, points: 0, max: 1, msg: null, parts: null };
+    const m = match(text, item.answers, { sentence: true });
+    const lenient = !m.ok && m.near === "accents" && !!opts.lenientAccents;
+    if (m.ok || lenient) return { correct: true, answered: true, points: max, max: max, msg: null, near: m.ok ? null : m.near, lenient: lenient, parts: item.parts ? item.parts.map(function () { return true; }) : null };
+    if (!item.parts) return { correct: false, answered: true, points: 0, max: 1, msg: null, near: m.near, closest: m.index, parts: null };
     const r = scoreTransformationParts(item, text, lim);
     return { correct: r.score === 2, answered: true, points: r.score, max: 2, msg: r.msg, parts: r.parts };
   }
@@ -375,18 +400,9 @@ window.LM = window.LM || {};
       .trim();
   }
 
-  // Contractions count as two words: DOESN'T = DOES + N'T, I'M = I + 'M … (TODO stage 3: English rule, deleted)
-  const CONTRACTION = /^(.+?)(N'T|'S|'RE|'VE|'D|'LL|'M)$/;
-
-  /** Words of a transformation answer (upper case; a contraction = two words). */
+  /** Words of a transformation answer (upper case, no punctuation; one token per LM.lang.countWords word). */
   function trTokens(text) {
-    const out = [];
-    trNorm(text).split(" ").filter(Boolean).forEach(function (word) {
-      const m = CONTRACTION.exec(word);
-      if (m) out.push(m[1], m[2]);
-      else out.push(word);
-    });
-    return out;
+    return trNorm(text).split(" ").filter(function (w) { return LM.lang.countWords(w) === 1; });
   }
 
   /** Positions where the sequence “needle” occurs in “hay” (from index from). */
@@ -417,7 +433,7 @@ window.LM = window.LM || {};
     const parts = item.parts.map(function () { return false; });
     if (!t.length) return { score: 0, parts: parts, msg: "No answer." };
     if (t.length < lim[0] || t.length > lim[1]) {
-      return { score: 0, parts: parts, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + "; contractions count as two)." };
+      return { score: 0, parts: parts, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + ")." };
     }
     if (!findSeq(t, trTokens(item.keyword), 0).length) {
       return { score: 0, parts: parts, msg: "Use the key word without changing it (" + item.keyword + ")." };
@@ -526,7 +542,7 @@ window.LM = window.LM || {};
   function speechText(item, answered) {
     const PAUSE = " … ";
     const tidy = function (t) { return String(t).replace(/\s+/g, " ").replace(/\s+([,.;!?])/g, "$1").trim(); };
-    const lines = function (t) { return String(t || "").split("\n").map(function (l) { return l.replace(/^[A-Z][A-Za-z0-9 ]{0,12}:\s+/, ""); }).join(" "); };
+    const lines = function (t) { return String(t || "").split("\n").map(function (l) { return l.replace(/^\p{Lu}[\p{L}\p{N} ]{0,12}:\s+/u, ""); }).join(" "); };
     if (!item) return "";
     switch (item.type) {
       case "multiple-choice": {
@@ -560,6 +576,7 @@ window.LM = window.LM || {};
     bestSetLabel: bestSetLabel,
     TYPES: TYPES,
     normalize: normalize,
+    match: match,
     shuffle: shuffle,
     distance: distance,
     prepareChoice: prepareChoice,
@@ -575,7 +592,6 @@ window.LM = window.LM || {};
     scoreTransformationParts: scoreTransformationParts,
     transformationLimit: transformationLimit,
     normalizeSentence: normalizeSentence,
-    sentenceVariants: sentenceVariants,
     matchesSentence: matchesSentence,
     wordDiff: wordDiff,
     prepareMatch: prepareMatch,
