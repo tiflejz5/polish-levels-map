@@ -423,5 +423,36 @@ window.LM = window.LM || {};
     ]);
   }
 
-  LM.ui = { guestNote: guestNote, breadcrumbs: breadcrumbs, icon: icon, withIcon: withIcon, emptyState: emptyState, landIcon: landIcon, stamp: stamp, landLabel: landLabel, LANDS: LANDS, pageHead: pageHead, logo: logo, logoMark: logoMark, progressRing: progressRing, setRing: setRing, toast: toast, hideToast: hideToast };
+  /**
+   * A listen button for one target-language text (cards, mistakes): reads it with LM.speech; a second press stops.
+   * Returns null without a target-language voice or without text (spec 05 §4: no voice → no listen buttons).
+   */
+  function listenButton(text, label) {
+    text = String(text || "").trim();
+    if (!text || !LM.speech || !LM.speech.available()) return null;
+    label = label || "Listen";
+    return LM.utils.el("button", {
+      type: "button", class: "btn btn-link listen-btn", "aria-label": label, title: label,
+      onclick: function () { if (LM.speech.speaking()) LM.speech.stop(); else LM.speech.speak(text); }
+    }, icon("volume-2", { size: 16 }));
+  }
+
+  /**
+   * "Report a mistake" (spec 06 E12): a quiet link to a new issue with the title prefilled ("<id>: "), and the
+   * mailto: alternative when LM.APP.reportMail is set. id — a topic id or another content id (set, quiz, deck).
+   */
+  function reportUrl(id) { return LM.APP.reportUrl ? LM.APP.reportUrl + encodeURIComponent((id ? id + ": " : "")) : ""; }
+  function reportLink(id) {
+    const el = LM.utils.el;
+    const url = reportUrl(id);
+    const mail = LM.APP.reportMail ? "mailto:" + LM.APP.reportMail + "?subject=" + encodeURIComponent((id ? id + ": " : "") + "mistake in " + LM.APP.appTitle) : "";
+    if (!url && !mail) return null;
+    return el("p", { class: "report-link" }, [
+      url ? el("a", { href: url, target: "_blank", rel: "noopener" }, withIcon("flag", "Report a mistake")) : null,
+      url && mail ? el("span", { class: "report-sep", text: " · " }) : null,
+      mail ? el("a", { href: mail }, url ? "by email" : "Report a mistake by email") : null
+    ]);
+  }
+
+  LM.ui = { guestNote: guestNote, breadcrumbs: breadcrumbs, icon: icon, withIcon: withIcon, emptyState: emptyState, landIcon: landIcon, stamp: stamp, landLabel: landLabel, LANDS: LANDS, pageHead: pageHead, logo: logo, logoMark: logoMark, progressRing: progressRing, setRing: setRing, toast: toast, hideToast: hideToast, listenButton: listenButton, reportUrl: reportUrl, reportLink: reportLink };
 })(window.LM);
