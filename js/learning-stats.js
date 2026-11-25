@@ -1,7 +1,7 @@
 /*
  * learning-stats.js — pure logic of the attempt log, stats and automatic
  * reviews (no DOM and no localStorage; tests in tools/tests.js).
- * Specyfikacja: docs/rozbudowa-v2/spec/03-powtorki-i-statystyki.md.
+ * Spec: the reference app's v2 reviews-and-stats spec.
  *
  * A profile's attempt record: { items: [attempt…], aggregates: { <itemId>: { n, ok, lenient?, topic, type, level } } }
  * Attempt: { t, day, itemId, setId, topic, level, type, tags, correct, mode, answer, lenient? }

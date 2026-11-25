@@ -50,7 +50,7 @@ const pairs = [];
 });
 pairs.push(
   ["ink-faint", "surface", null, 4.5, "placeholder / pole"],
-  ["accent", "surface", null, 4.5, "link / karta"],
+  ["accent", "surface", null, 4.5, "link / card"],
   ["accent", "bg", null, 4.5, "link / background"],
   ["accent", "surface-2", null, 4.5, "link / sidebar"],
   ["accent", "info-bg", "surface", 4.5, "link / info box"],
@@ -126,7 +126,7 @@ pairs.push(
   const L = l.toUpperCase();
   pairs.push(
     ["lvl-" + l + "-ink", "lvl-" + l + "-soft", null, 4.5, "level text " + L + " / background " + L],
-    ["lvl-" + l + "-ink", "surface", null, 4.5, "tekst poziomu " + L + " / karta"],
+    ["lvl-" + l + "-ink", "surface", null, 4.5, "level text " + L + " / card"],
     ["lvl-" + l, "lvl-" + l + "-soft", null, 3, "bar " + L + " / track"],
     ["lvl-" + l, "surface", null, 3, "marker " + L + " / card"],
     ["lvl-" + l, "bg", null, 3, "marker " + L + " / background"],

@@ -171,14 +171,14 @@ window.LM = window.LM || {};
       const q = filter.query.trim();
       const fold = LM.searchLogic ? LM.searchLogic.fold : function (s) { return String(s).toLowerCase(); };
       const shown = all.filter(function (n) { return !q || fold(n.title + " " + n.text).indexOf(fold(q)) !== -1; });
-      count.textContent = "Notatki: " + shown.length + " z " + all.length;
+      count.textContent = "Notes: " + shown.length + " of " + all.length;
       listBox.replaceChildren();
       if (!shown.length) { listBox.appendChild(LM.ui.emptyState({ tag: "li", art: "brak-wynikow", title: "No notes match your search." })); return; }
       shown.forEach(function (n) {
         listBox.appendChild(el("li", { class: "card notes-item" }, [
           el("div", { class: "notes-item-head" }, [
             n.route ? el("a", { class: "notes-item-title", href: n.route, text: n.title || "Note" }) : el("span", { class: "notes-item-title", text: n.title || "Note" }),
-            el("span", { class: "notes-item-date", text: "Zmieniono: " + fmtDate(n.updatedAt) })
+            el("span", { class: "notes-item-date", text: "Edited: " + fmtDate(n.updatedAt) })
           ]),
           el("p", { class: "notes-item-text", text: n.text.length > 320 ? n.text.slice(0, 320) + "…" : n.text }),
           el("div", { class: "journal-actions" }, [
