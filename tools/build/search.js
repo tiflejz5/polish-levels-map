@@ -55,7 +55,11 @@ function clip(text, max) {
 
 module.exports = function buildSearch(ctx) {
   const records = [];
+  // Levels with status "soon" are not indexed (spec 06 E1): records with such a level are dropped
+  const status = C.readJson(C.content("levels.json"));
+  let soonSkipped = 0;
   const add = function (r) {
+    if (r.level && status[String(r.level).toUpperCase()] !== "available") { soonSkipped++; return; }
     records.push({
       id: r.id, group: r.group, title: r.title || "", headings: r.headings || [], summary: r.summary || "",
       text: clip(r.text || "", TEXT_MAX), level: r.level || null, category: r.category || null, route: r.route
@@ -157,5 +161,5 @@ module.exports = function buildSearch(ctx) {
   C.writeData("search-index.js", "content/", "LM.SEARCH_INDEX = " + json + ";");
   const groups = {};
   records.forEach(function (r) { groups[r.group] = (groups[r.group] || 0) + 1; });
-  return "search: " + records.length + " records (" + Object.keys(groups).map(function (g) { return g + " " + groups[g]; }).join(", ") + "), " + Math.round(json.length / 1024) + " kB";
+  return "search: " + records.length + " records (" + Object.keys(groups).map(function (g) { return g + " " + groups[g]; }).join(", ") + "), " + Math.round(json.length / 1024) + " kB" + (soonSkipped ? ", " + soonSkipped + " records of soon levels left out" : "");
 };

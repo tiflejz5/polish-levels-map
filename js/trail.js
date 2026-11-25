@@ -52,7 +52,14 @@ window.LM = window.LM || {};
   function testLevel() { const t = hasProfile() && pd() ? pd().lastTest() : null; return t && t.level ? t.level : null; }
 
   /** Punkt startu aktywnego profilu: { level, source, at }. */
-  function startInfo() { return SL().effectiveStart(ST().data(), testLevel()); }
+  function startInfo() {
+    const s = SL().effectiveStart(ST().data(), testLevel());
+    if (LM.syllabus.isAvailable(s.level)) return s;
+    // A start in a "soon" level (e.g. the placement result) falls back to the highest available level below it (E1)
+    const ids = LM.LEVEL_IDS, avail = LM.syllabus.availableLevelIds();
+    const below = avail.filter(function (l) { return ids.indexOf(l) < ids.indexOf(s.level); }).pop() || avail[0] || s.level;
+    return Object.assign({}, s, { level: below });
+  }
 
   /** Cały szlak z bieżącym stanem (142 węzły — liczone na bieżąco, bez pamięci podręcznej, więc nigdy nieaktualne). */
   function trail() { return SL().buildTrail(LM.TRAIL, ST().data(), env(), startInfo().level); }

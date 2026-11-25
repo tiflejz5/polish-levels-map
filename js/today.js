@@ -76,8 +76,11 @@ window.LM = window.LM || {};
   function currentIndex(stats) {
     const sz = LM.trail && LM.trail.ready() ? LM.trail.current() : null; // Szlak: kraina bieżącego przystanku (po teście C1 = C1)
     if (sz) { const k = stats.findIndex(function (s) { return s.id === sz.level; }); if (k !== -1) return k; }
-    const i = stats.findIndex(function (s) { return s.total && s.percent < 100; });
-    return i === -1 ? stats.length - 1 : i;
+    const i = stats.findIndex(function (s) { return !s.soon && s.total && s.percent < 100; });
+    if (i !== -1) return i;
+    // everything available is done: the last available level ("soon" levels are never "here", spec 06 E1)
+    for (let k = stats.length - 1; k >= 0; k--) if (!stats[k].soon) return k;
+    return 0;
   }
 
   function levelName(id) {
@@ -99,8 +102,6 @@ window.LM = window.LM || {};
     return "Dobry wieczór";
   }
 
-  /** Miejscownik krainy: „na Wzgórzach”, „w Lesie” (do zdania „Następny przystanek …”). */
-  const LOCATIVE = { A1: "na Polanie", A2: "w Lesie", B1: "na Wzgórzach", B2: "nad Jeziorem", C1: "w Górach", C2: "na Szczycie" };
 
   /** Opis paska „Przebyta mapa” dla czytnika ekranu: „Przebyta mapa: 41%. A1 100%, A2 100%, …”. */
   function mapSummary(mp) {
@@ -120,7 +121,7 @@ window.LM = window.LM || {};
     const ready = LM.final ? LM.final.readyLevel(stats) : null;
     let text, cta = null, extra = null;
     if (next) {
-      text = ["Następny przystanek " + LOCATIVE[cur.id] + ": ", el("strong", { text: next.text }), " · do końca krainy " + remaining + " " + (sz ? plural(remaining, "przystanek", "przystanki", "przystanków") : plural(remaining, "punkt", "punkty", "punktów"))];
+      text = ["Następny przystanek (" + LM.ui.landLabel(cur.id) + "): ", el("strong", { text: next.text }), " · do końca krainy " + remaining + " " + (sz ? plural(remaining, "przystanek", "przystanki", "przystanków") : plural(remaining, "punkt", "punkty", "punktów"))];
       cta = { href: next.href, label: "Idź dalej szlakiem" };
       if (ready) extra = ready;
     } else {
@@ -129,6 +130,9 @@ window.LM = window.LM || {};
       if (!passed && LM.final) {
         text = ["Cała kraina " + cur.id + " ma „Umiem”. Czas na test końcowy poziomu."];
         cta = { href: LM.final.testHash(cur.id), label: "Zrób test końcowy " + cur.id };
+      } else if (following && !LM.syllabus.isAvailable(following)) {
+        text = ["Kraina " + cur.id + " przebyta. ", el("strong", { text: following + " is coming soon." }), " Its topics are being written."];
+        cta = { href: LM.app.levelHash(following), label: "See what " + following + " will cover" };
       } else if (following) {
         text = ["Kraina " + cur.id + " przebyta. Dalej: ", el("strong", { text: LM.ui.landLabel(following) }), "."];
         cta = { href: LM.app.levelHash(following), label: "Zacznij krainę " + following };
@@ -154,7 +158,7 @@ window.LM = window.LM || {};
     const p = LM.app.getActiveProfile();
     const d = dateOf(learn().today());
     const cur = stats[currentIndex(stats)];
-    const mp = learn().mapProgress(stats);
+    const mp = learn().mapProgress(stats.filter(function (s) { return !s.soon; })); // progress counts available levels only (E1)
     const stage = el("div", { class: "trail-stage" });
     const card = el("section", { class: "card bento-tile map-card", "aria-labelledby": "today-title" }, [
       el("div", { class: "map-top" }, [
@@ -387,12 +391,12 @@ window.LM = window.LM || {};
       const here = i === cur;
       const passed = LM.final ? LM.final.passedText(s.id) : null; // „A1 zaliczony 12.11.2026” (test końcowy)
       list.appendChild(el("li", {
-        class: "trail-station lvl-" + s.id + (here ? " is-current" : "") + (s.percent >= 100 ? " is-done" : "") + (s.skipped ? " is-skipped" : ""),
+        class: "trail-station lvl-" + s.id + (here ? " is-current" : "") + (s.percent >= 100 ? " is-done" : "") + (s.skipped ? " is-skipped" : "") + (s.soon ? " is-soon" : ""),
         style: vertical ? "left:" + pt[0] + "px;top:" + pt[1] + "px" : "left:" + (pt[0] / g.w * 100) + "%;top:" + (pt[1] / g.h * 100) + "%"
       }, el("a", {
         class: "trail-link",
         href: LM.app.levelHash(s.id),
-        "aria-label": "Poziom " + s.id + (name ? ", " + name : "") + ": " + (s.skipped ? "pominięte testem poziomu" : s.percent + (s.szlak ? "% przystanków szlaku" : "% punktów „Umiem”")) + (here ? " – tu jesteś" : "") + (passed ? ". " + passed : "")
+        "aria-label": "Poziom " + s.id + (name ? ", " + name : "") + ": " + (s.soon ? "coming soon" : s.skipped ? "pominięte testem poziomu" : s.percent + (s.szlak ? "% przystanków szlaku" : "% punktów „Umiem”")) + (here ? " – tu jesteś" : "") + (passed ? ". " + passed : "")
       }, [
         el("span", { class: "trail-ring" }, [
           LM.ui.progressRing(s.skipped ? 100 : s.percent, { size: 56, stroke: 5, node: LM.ui.landIcon(s.id, { size: 26 }) }),
@@ -401,7 +405,7 @@ window.LM = window.LM || {};
         ]),
         el("span", { class: "trail-label", "aria-hidden": "true" }, [
           el("span", { class: "trail-name", text: LM.ui.landLabel(s.id) }),
-          el("span", { class: "trail-pct num", text: s.skipped ? "pominięte" : s.percent + "%" }),
+          el("span", { class: "trail-pct num", text: s.soon ? "soon" : s.skipped ? "pominięte" : s.percent + "%" }),
           passed ? el("span", { class: "trail-passed", text: "Zaliczony " + LM.final.fmtDate(LM.final.passedAt(s.id)) }) : null,
           here ? el("span", { class: "trail-here", text: "Tu jesteś" }) : null
         ])

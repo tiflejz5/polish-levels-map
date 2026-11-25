@@ -110,8 +110,16 @@ window.LM = window.LM || {};
   function backTo(level) { return { href: levelHash(level), label: "Wróć do poziomu " + level }; }
 
   function renderStart(view, level) {
-    document.title = "Test końcowy " + level + " · English Levels Map";
+    document.title = "Test końcowy " + level + " · " + LM.APP.appTitle;
     view.className = "view tool-view ex-view lf-view lvl-" + level;
+    if (!LM.syllabus.isAvailable(level)) { // a "soon" level has no final test yet (spec 06 E1)
+      view.appendChild(el("section", { class: "card page-pending", "aria-labelledby": "lf-soon-title" }, [
+        el("h1", { class: "page-pending-title", id: "lf-soon-title", text: "Final test " + level }),
+        el("p", { class: "page-pending-lead", text: level + " is on its way. Its final test comes with its topics." }),
+        el("p", null, el("a", { class: "btn btn-secondary", href: levelHash(level) }, LM.ui.withIcon("chevron-left", "See the planned topics")))
+      ]));
+      return;
+    }
     const info = pd().finalResult(level);
     const msg = el("p", { class: "tool-note lf-msg", role: "status", "aria-live": "polite" });
     const startBtn = el("button", { type: "button", class: "btn btn-primary", "data-fk": "start", onclick: function () { begin(level, startBtn, msg); } },
@@ -310,14 +318,14 @@ window.LM = window.LM || {};
   function readyLevel(stats) {
     if (!LM.app.getActiveProfile()) return null;
     const passed = pd().passedLevels();
-    return stats.find(function (x) { return x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; }) || null;
+    return stats.find(function (x) { return !x.soon && x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; }) || null;
   }
 
 
   function todayTip(stats) {
     if (!LM.app.getActiveProfile()) return null;
     const passed = pd().passedLevels();
-    const s = stats.find(function (x) { return x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; });
+    const s = stats.find(function (x) { return !x.soon && x.total !== 0 && x.percent >= READY_PERCENT && !passed[x.id]; });
     if (!s) return null;
     return el("section", { class: "card bento-tile bento-tip lf-tip", "aria-label": "Test końcowy " + s.id }, [
       el("div", { class: "today-tip-body" }, [

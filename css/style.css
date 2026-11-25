@@ -4426,6 +4426,9 @@ a.pw-row-label:hover { text-decoration: underline; }
 .sz-st-n { color: var(--ink-muted); min-width: 44px; text-align: right; }
 .map-unit { margin: 2px 0 0; font-size: var(--fs-sm); color: var(--ink-muted); }
 .trail-station.is-skipped .trail-ring { opacity: 0.55; }
+.trail-station.is-soon .trail-ring { opacity: 0.45; }
+.trail-station.is-soon .trail-name, .trail-station.is-soon .trail-pct { color: var(--ink-muted); font-style: italic; }
+.lt-soon { padding: 12px 16px; }
 .trail-station.is-skipped .trail-name, .trail-station.is-skipped .trail-pct { color: var(--ink-muted); }
 .trail-skip-badge { position: absolute; right: -4px; bottom: -4px; display: grid; place-content: center; width: 22px; height: 22px; border-radius: 50%; background: var(--surface); border: 2px solid var(--lvl); color: var(--lvl-ink); }
 .level-hero-text .sz-level-link { margin-top: 6px; padding-left: 0; }

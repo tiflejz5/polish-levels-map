@@ -240,14 +240,19 @@ window.LM = window.LM || {};
       onclick: function () { addWrongToJournal(wrong, addBtn); }
     }, "Dodaj błędne pytania do dziennika błędów") : null;
 
+    // The result may be a "soon" level: say so, and start the trail at the highest available level below it (E1)
+    const soon = !LM.syllabus.isAvailable(level);
+    const avail = LM.syllabus.availableLevelIds();
+    const startAt = soon ? (avail.filter(function (l) { return LM.LEVEL_IDS.indexOf(l) < LM.LEVEL_IDS.indexOf(level); }).pop() || avail[0] || level) : level;
     view.appendChild(el("section", { class: "card lt-card lt-result lvl-" + level, "aria-live": "polite" }, [
       el("p", { class: "lt-result-label", text: "Szacowany poziom:" }),
       el("p", { class: "lt-result-level" }, [el("strong", { class: "lt-result-code", text: level }), el("span", { class: "lt-result-note", text: "orientacyjnie" })]),
       desc ? el("p", { class: "tool-lead" }, U.formatText(desc)) : null,
+      soon ? el("p", { class: "callout lt-soon", role: "note", text: level + " is coming soon: its topics are being written. Until then you can revise " + startAt + " or look at what " + level + " will cover." }) : null,
       skillBreakdown(saved.answers),
-      el("p", null, el("a", { class: "wiki-link", href: LM.app.levelHash(level) + "" }, "Co umiesz na " + level)),
+      el("p", null, el("a", { class: "wiki-link", href: LM.app.levelHash(level) + "" }, soon ? "What " + level + " will cover" : "Co umiesz na " + level)),
       el("div", { class: "tool-actions" }, [
-        el("a", { class: "btn btn-primary", href: LM.trail ? LM.trail.HASH : LM.app.levelHash(level), onclick: function () { if (LM.trailStore) LM.trailStore.setStart(level, "test", true); } }, "Zacznij szlak od " + level),
+        el("a", { class: "btn btn-primary", href: LM.trail ? LM.trail.HASH : LM.app.levelHash(startAt), onclick: function () { if (LM.trailStore) LM.trailStore.setStart(startAt, "test", true); } }, "Zacznij szlak od " + startAt),
         el("button", { type: "button", class: "btn btn-secondary", onclick: function () { start(); render(); focusLater(".lt-option"); } }, "Powtórz test")
       ]),
       el("p", { class: "tool-note", text: DISCLAIMER + " Wynik z " + saved.date + "." })
