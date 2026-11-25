@@ -1043,7 +1043,7 @@ test("preview i formatDelay: podgląd terminów czterech ocen", function () {
   const pv = FH.preview(FH.newCard(), 0);
   assert.deepStrictEqual(["again", "hard", "good", "easy"].map(function (g) { return FH.formatDelay(pv[g].delay); }), ["1 min", "1 min", "10 min", "4 d"]);
   assert.strictEqual(FH.formatDelay(3 * FH.DAY), "3 d");
-  assert.strictEqual(FH.formatDelay(90 * FH.DAY), "3 mies.");
+  assert.strictEqual(FH.formatDelay(90 * FH.DAY), "3 mo");
 });
 
 console.log("\nFiszki: ocena odpowiedzi, cloze, kolejka, TSV/CSV, stan (spec 10, sekcja 8)");
@@ -1664,7 +1664,7 @@ test("exportWordsCsv: słowo; znaczenie; zdanie; źródło, cudzysłowy i średn
     { type: "cloze", text: "Most people {{commute}} to work; by train.", hint: "dojeżdżać", word: "commute", source: { route: "#/b1/slownictwo", title: "Słownictwo B1" } },
     { type: "basic", front: "ephemeral", back: "He said \"hi\"." }
   ]).split("\n");
-  assert.strictEqual(csv[0], "słowo;znaczenie;zdanie;źródło");
+  assert.strictEqual(csv[0], "word;meaning;sentence;source");
   assert.strictEqual(csv[1], 'commute;dojeżdżać;"Most people commute to work; by train.";Słownictwo B1 (#/b1/slownictwo)');
   assert.strictEqual(csv[2], 'ephemeral;;"He said ""hi"".";');
 });

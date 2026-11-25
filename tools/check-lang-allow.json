@@ -1,4 +1,22 @@
 [
-  { "file": "js/profile-data.js", "contains": "first-umiem", "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid" },
-  { "file": "js/celebrate.js", "contains": "first-umiem", "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid" }
+  {
+    "file": "js/profile-data.js",
+    "contains": "first-umiem",
+    "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid"
+  },
+  {
+    "file": "js/celebrate.js",
+    "contains": "first-umiem",
+    "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid"
+  },
+  {
+    "file": "js/cards-logic.js",
+    "contains": "¡¿\"“”„«»",
+    "reason": "punctuation stripped from answers includes the Polish opening quote; moves to LM.lang.normalizeAnswer in stage 3"
+  },
+  {
+    "file": "js/cards-logic.js",
+    "contains": "typ|type|przód|przod|front",
+    "reason": "import compatibility: column header of decks exported by the original app"
+  }
 ]

@@ -2928,7 +2928,7 @@ a.notes-item-title { color: var(--accent); text-decoration: underline; text-unde
 
 /* ===================== FISZKI (js/cards.js, spec 10) ===================== */
 /* Elementy ukrywane atrybutem hidden (przycisk przy zaznaczeniu, pola formularza) nie mogą wracać przez display */
-.fiszki-view [hidden] { display: none; }
+.cards-view [hidden] { display: none; }
 .btn-large { min-height: 52px; padding: 12px 24px; font-size: var(--fs-md); }
 .fc-hero { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; margin-bottom: 24px; }
 .fc-hero-label { margin: 0; font-size: var(--fs-xs-plus); font-weight: 600; color: var(--ink-muted); }
@@ -3085,7 +3085,7 @@ a.notes-item-title { color: var(--accent); text-decoration: underline; text-unde
 .fc-sel-menu[hidden] { display: none; }
 .fc-sel-menu .btn { min-height: 44px; }
 .journal-in-fiszki { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 6px; font-size: var(--fs-sm); font-weight: 600; color: var(--success); }
-.st-fiszki { grid-column: 1 / -1; }
+.st-cards { grid-column: 1 / -1; }
 .fc-st-bars { display: flex; align-items: flex-end; gap: 3px; height: 96px; margin: 4px 0 12px; padding: 0 2px; border-bottom: 1px solid var(--line-strong); }
 .fc-st-bar { flex: 1 1 0; min-width: 2px; border-radius: 3px 3px 0 0; background: var(--accent); }
 .fc-st-bar.is-zero { background: var(--surface-3); }
@@ -3103,7 +3103,7 @@ a.notes-item-title { color: var(--accent); text-decoration: underline; text-unde
 .fc-exam-deck { display: flex; flex-direction: column; gap: 2px; }
 .fc-exam-deck-title { margin: 0; }
 
-.fiszki-view .chip-filter + .fc-deck-list { margin-top: 16px; }
+.cards-view .chip-filter + .fc-deck-list { margin-top: 16px; }
 
 /* Ściąga poziomu (paczka v6, spec 16, sekcja 1): strona i karta na liście poziomu */
 .sciaga-card { margin-top: 16px; }

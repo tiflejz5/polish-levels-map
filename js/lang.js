@@ -64,7 +64,13 @@ window.LM = window.LM || {};
     return out;
   }
 
+  /** Does the text contain Polish letters? Moved from cards-logic.js isPolish. TODO stage 3: callers move to isTarget (spec 05). */
+  function hasTargetLetters(text) {
+    return /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(String(text == null ? "" : text));
+  }
+
   LM.lang = {
+    hasTargetLetters: hasTargetLetters,
     targetVoices: targetVoices,
     /** Fallback utterance language when no voice is found (TODO stage 3: LM.speech). */
     speechLang: function () { return ((LM.APP && LM.APP.speech && LM.APP.speech.voices) || [""])[0]; },
@@ -79,6 +85,8 @@ window.LM = window.LM || {};
     // Characters that NFD does not split into base + mark; the search folds them by hand (moved from search-logic.js).
     // TODO stage 3: fold() above becomes the only folding (spec 05), and search-logic.js calls it.
     foldChars: { "ł": "l", "Ł": "l" },
+    // Target-language samples shown in the flashcard form and import (moved from cards-browse.js). TODO stage 3: review with spec 05.
+    samples: { basicFront: "Zgadzam się.", basicBack: "I agree.", cloze: "Wczoraj {{poszłam}} do kina.", clozeAlternatives: "{{poszłam|poszedłem}}" },
     abbreviations: ["np.", "tzn.", "tj.", "m.in.", "itd.", "itp.", "dr", "prof.", "ul.", "godz.", "ok."],
     functionWords: FUNCTION_WORDS
   };
