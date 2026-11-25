@@ -145,26 +145,26 @@
       "topic": "a1-vocabulary-food-drink",
       "type": "match",
       "mode": "translation",
-      "prompt": "Match the Polish words with their English meanings.",
+      "prompt": "Match the English words with their Polish meanings.",
       "pairs": [
         [
-          "chleb",
-          "bread"
+          "bread",
+          "chleb"
         ],
         [
-          "ser",
-          "cheese"
+          "cheese",
+          "ser"
         ],
         [
-          "woda",
-          "water"
+          "water",
+          "woda"
         ],
         [
-          "śniadanie",
-          "breakfast"
+          "breakfast",
+          "śniadanie"
         ]
       ],
-      "explanation": "Chleb = bread, ser = cheese, woda = water, śniadanie = breakfast."
+      "explanation": "Bread = chleb, cheese = ser, water = woda, breakfast = śniadanie."
     },
     {
       "id": "final-a1-09",
