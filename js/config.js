@@ -23,5 +23,6 @@ LM.APP = {
   mistakesHeading: "Common mistakes for English speakers",
   lab: { title: "Case Lab" },
   reportUrl: "https://github.com/tiflejz5/polish-levels-map/issues/new?labels=content&title=",
-  reportMail: ""
+  reportMail: "",
+  repoUrl: "https://github.com/tiflejz5/polish-levels-map"
 };

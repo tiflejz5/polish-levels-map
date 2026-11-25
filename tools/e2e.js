@@ -1,6 +1,8 @@
 /*
  * e2e.js — browser smoke tests (stage 1B: syllabus checklist, routes, level status, trail, exams fixture;
- * stage 3: answer hints, lenient accents, character bar, listen buttons, no-voice paths, My words and lang markup).
+ * stage 3: answer hints, lenient accents, character bar, listen buttons, no-voice paths, My words and lang markup;
+ * stage 5: first run → placement → trail → quiz, set → mistakes → review session, export → reset → import, foreign files, E12).
+ * E2E_ONLY=<text> runs only the tests whose name contains <text>.
  *
  *   node tools/e2e.js            (or: npm run e2e)
  *
@@ -69,8 +71,15 @@ const server = http.createServer(function (req, res) {
 
 let passed = 0;
 const failures = [];
+// E2E_ONLY=<text> runs only the tests whose name contains it; a test that hangs fails after TEST_LIMIT ms
+const ONLY = process.env.E2E_ONLY || "";
+const TEST_LIMIT = 180000;
 async function test(name, fn) {
-  try { await fn(); passed++; console.log("  ok  " + name); } catch (e) { failures.push(name); console.log("  FAIL " + name + "\n       " + e.message); }
+  if (ONLY && name.indexOf(ONLY) === -1) return;
+  let timer = null;
+  const limit = new Promise(function (resolve, reject) { timer = setTimeout(function () { reject(new Error("timed out after " + TEST_LIMIT / 1000 + " s")); }, TEST_LIMIT); });
+  try { await Promise.race([fn(), limit]); passed++; console.log("  ok  " + name); } catch (e) { failures.push(name); console.log("  FAIL " + name + "\n       " + e.message); }
+  clearTimeout(timer);
 }
 function ok(cond, msg) { if (!cond) throw new Error(msg); }
 
@@ -581,6 +590,233 @@ async function main() {
     await visit(s.page, "#/practice", 900);
     ok(await s.page.locator("[data-type='paradigm']").count() === 1, "no paradigm chip");
     ok(await s.page.locator("[data-type='transformation']").count() === 1 && await s.page.locator("[data-type='short-answer']").count() === 1, "chips");
+    await s.ctx.close();
+  });
+
+  // ---------- Stage 5: the learning loop, with the original app's data on the same origin (spec 13 §1 Flows, Storage) ----------
+  console.log("\nLearning loop (stage 5)");
+  /** Data of the owner's other apps on this origin: english-levels-map (elm_*, elm.<id>.*) and another prefix (slm.). */
+  async function seedOtherApps(ctx) {
+    await ctx.addInitScript(function () {
+      if (localStorage.getItem("other_seeded")) return;
+      localStorage.setItem("other_seeded", "1");
+      localStorage.setItem("elm_profiles_v1", JSON.stringify({ version: 1, activeId: "p1", profiles: [{ id: "p1", name: "Adam", progress: { "a1-x": true } }] }));
+      localStorage.setItem("elm.p1.fiszki", JSON.stringify({ cards: { x: { due: "2026-01-01" } }, userCards: [] }));
+      localStorage.setItem("elm_journal_v1", JSON.stringify({ version: 1, profiles: { p1: [{ id: "j1" }] } }));
+      localStorage.setItem("elm_theme", "dark");
+      localStorage.setItem("slm.profiles", JSON.stringify({ version: 1, profiles: [] }));
+    });
+  }
+  /** Keys of this app (plm.*) or of the others, as a canonical JSON string (sorted object keys: order does not matter). */
+  async function storageOf(page, ours) {
+    return page.evaluate(function (ours) {
+      const sortDeep = function (v) {
+        if (Array.isArray(v)) return v.map(sortDeep);
+        if (v && typeof v === "object") { const o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = sortDeep(v[k]); }); return o; }
+        return v;
+      };
+      const out = {};
+      Object.keys(localStorage).sort().forEach(function (k) {
+        const mine = k.indexOf("plm.") === 0;
+        if (mine !== ours || k === "e2e_seeded" || k === "other_seeded") return;
+        if (/^plm\.(ui|search-recent)$/.test(k)) return; // device keys, not exported
+        let v = localStorage.getItem(k);
+        try { v = sortDeep(JSON.parse(v)); } catch (e) { /* plain string */ }
+        out[k] = v;
+      });
+      return JSON.stringify(out);
+    }, ours);
+  }
+  /** Answers the exercise engine's current item through the UI and moves on (exam mode has no Check). */
+  async function answerCurrent(page, right) {
+    const it = await page.evaluate(function () { const i = LM.exercises.currentItem(); return i ? JSON.parse(JSON.stringify(i)) : null; });
+    if (!it) return null;
+    await answer(page, it, right);
+    if (await page.locator(".ex-card .ex-check").count()) await check(page);
+    await page.click(".ex-next");
+    await page.waitForTimeout(200);
+    return it;
+  }
+  const tomorrow = function (ctx) { return ctx.clock.setFixedTime(new Date(Date.now() + 26 * 3600 * 1000)); };
+
+  await test("first run → placement → trail stop → quiz; the quiz mistake comes back as the original item; other apps' data untouched", async function () {
+    const s = await session(1280, 900, false);
+    await seedOtherApps(s.ctx);
+    await visit(s.page, "#/");
+    const others = await storageOf(s.page, false);
+    ok(/Where do you want to start\?/.test(await s.page.innerText(".home-first")), "no first-run card on the home page");
+    ok(/No accounts\. Your progress stays in this browser\./.test(await s.page.innerText(".home-foot")), "home footer");
+    ok(await s.page.locator(".home-foot a[href^='https://github.com/']").count() === 1, "footer: no repository link");
+    await s.page.click(".home-first a:has-text('Take the placement test')"); // guest: a profile first, then the test
+    await s.page.fill("#guest-name", "Ola");
+    await s.page.keyboard.press("Enter");
+    await s.page.waitForTimeout(500);
+    ok(await s.page.evaluate(function () { return location.hash; }) === "#/placement", "not on the placement test");
+    await s.page.click("#view button:has-text('Start the test')");
+    for (let i = 0; i < 12; i++) {
+      ok(await s.page.locator(".lt-question[lang='pl']").count() === 1 && await s.page.locator(".lt-option-text[lang='pl']").count() === 4, "question " + (i + 1) + ": no lang on the question or options");
+      const idx = await s.page.evaluate(function () {
+        const q = LM.PLACEMENT.questions.find(function (x) { return x.question === document.querySelector(".lt-question").textContent; });
+        return q.level === "C2" ? (q.correct + 1) % 4 : q.correct; // wrong at C2: the result is C1 (a "soon" level)
+      });
+      await s.page.locator(".lt-option").nth(idx).click();
+      await s.page.click(".lt-next");
+      await s.page.waitForTimeout(120);
+    }
+    await s.page.waitForTimeout(1200); // the result card animates in (GSAP autoAlpha)
+    const res = await viewText(s.page);
+    ok(/Estimated level: [ABC][12]/.test(res) && /is coming soon/.test(res), "result: " + res.slice(res.indexOf("Estimated"), res.indexOf("Estimated") + 200));
+    await s.page.click("a:has-text('Start the trail at A1')");
+    await s.page.waitForTimeout(600);
+    ok(/Starting point: A1 · Meadow \(from the placement test\)/.test(await viewText(s.page)), "trail: starting point");
+    await visit(s.page, "#/trail/a1-cases-accusative");
+    await s.page.click("button:has-text('Quiz (4 questions)')");
+    await s.page.waitForTimeout(400);
+    let wrongId = null;
+    for (let i = 0; i < 4; i++) { const it = await answerCurrent(s.page, i !== 1); if (i === 1) wrongId = it.id; }
+    const quiz = await viewText(s.page);
+    ok(/3\/4/.test(quiz) && /Stop done/.test(quiz) && /1 mistake added to the log/.test(quiz), "quiz result: " + quiz.slice(0, 200));
+    const report = await s.page.getAttribute(".report-link a", "href");
+    ok(report && report.indexOf(encodeURIComponent("a1-cases-accusative: ")) !== -1, "quiz result: report link " + report);
+    // next day: the quiz mistake is shown as the original item (not a card) in the review session
+    await tomorrow(s.ctx);
+    await visit(s.page, "#/review/session");
+    ok(await s.page.evaluate(function () { const i = LM.exercises.currentItem(); return i && i.id; }) === wrongId, "the session does not show the original quiz item");
+    ok(await s.page.locator(".ex-card .ex-option-text[lang='pl']").count() === 4, "session: options without lang");
+    ok(await storageOf(s.page, false) === others, "data of the other apps changed");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+
+  await test("set → mistakes logged (lang, listen button) → next day's review session with the original items → summary", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/practice/set/a1-cases-accusative-1", 900);
+    await s.page.click("button:has-text('Start')");
+    const wrong = [];
+    for (let i = 0; i < 10; i++) { const it = await answerCurrent(s.page, i % 4 !== 0); if (i % 4 === 0) wrong.push(it.id); }
+    const res = await viewText(s.page);
+    ok(/3 mistakes added to the log/.test(res), "set result: " + res.slice(0, 200));
+    ok(await s.page.locator(".ex-result .report-link a").count() === 1, "set result: no report link");
+    await tomorrow(s.ctx);
+    await visit(s.page, "#/review/mistakes");
+    await fakeVoice(s.page);
+    await s.page.evaluate(function () { document.documentElement.dataset.voice = "ready"; location.hash = "#/review"; });
+    await s.page.waitForTimeout(300);
+    await s.page.evaluate(function () { location.hash = "#/review/mistakes"; });
+    await s.page.waitForTimeout(500);
+    ok(await s.page.locator(".journal-entry").count() === 3, "log entries: " + await s.page.locator(".journal-entry").count());
+    ok(await s.page.locator(".journal-entry .journal-row.is-right dd[lang='pl']").count() === 3, "Correct without lang");
+    ok(await s.page.locator(".journal-entry .listen-btn").count() >= 3, "no listen buttons on the log entries");
+    ok(await s.page.locator(".journal-entry .journal-context span[lang='pl']").count() >= 3, "context lines without lang");
+    await s.page.evaluate(function () { location.hash = "#/review/session"; });
+    await s.page.waitForTimeout(700);
+    const seen = [];
+    for (let i = 0; i < 3; i++) {
+      const it = await answerCurrent(s.page, true);
+      ok(it, "item " + (i + 1) + " is not shown as the original item");
+      seen.push(it.id);
+      if (await s.page.locator("button:has-text('Continue')").count()) await s.page.click("button:has-text('Continue')");
+      await s.page.waitForTimeout(300);
+    }
+    ok(seen.slice().sort().join() === wrong.slice().sort().join(), "session items " + seen.join() + " ≠ mistakes " + wrong.join());
+    ok(/Session summary/.test(await viewText(s.page)), "no session summary");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+
+  await test("export → reset → import: the same data back; other apps' keys untouched by every step", async function () {
+    const s = await session(1280, 900, true);
+    await seedOtherApps(s.ctx);
+    await visit(s.page, "#/");
+    await s.page.evaluate(function () {
+      LM.app.setProgress("a1-cases-accusative", true);
+      LM.trailStore.setStart("A1", "manual");
+      LM.profileData.addEntry({ context: "Lubię ___.", myAnswer: "kawa", correct: "kawę", rule: "lubić + accusative", category: "Grammar" }); // pl-fixture: target-language test data
+    });
+    await visit(s.page, "#/");
+    // The round trip is judged on what the app exports (sections missing before the import come back as empty sections)
+    const exported = function () {
+      return s.page.evaluate(function () {
+        const sortDeep = function (v) {
+          if (Array.isArray(v)) return v.map(sortDeep);
+          if (v && typeof v === "object") { const o = {}; Object.keys(v).sort().forEach(function (k) { o[k] = sortDeep(v[k]); }); return o; }
+          return v;
+        };
+        return JSON.stringify(sortDeep(LM.profileData.exportAll()));
+      });
+    };
+    const ours = await exported(), others = await storageOf(s.page, false);
+    ok(/kaw/.test(ours) && /a1-cases-accusative/.test(ours), "the export misses the test data");
+    await s.page.click("#profile-btn");
+    const [dl] = await Promise.all([s.page.waitForEvent("download"), s.page.click("text=Export data")]);
+    const file = path.join(FIXTURE_DATA, "backup.json");
+    await dl.saveAs(file);
+    ok(/^polish-levels-map-\d{4}-\d{2}-\d{2}\.json$/.test(dl.suggestedFilename()), "file name " + dl.suggestedFilename());
+    const backup = JSON.parse(fs.readFileSync(file, "utf8"));
+    ok(backup.app === "polish-levels-map" && backup.kind === "backup" && !/elm_|elm\.|slm\./.test(JSON.stringify(backup)), "backup envelope or foreign keys in the file");
+    await s.page.keyboard.press("Escape");
+    await s.page.click("#profile-btn");
+    await s.page.click("text=Reset data…");
+    await s.page.click("dialog[open] button:has-text('Continue')");
+    await s.page.click("dialog[open] button:has-text('Yes, delete the data')");
+    await s.page.waitForTimeout(500);
+    ok(await s.page.evaluate(function () { return Object.keys(localStorage).filter(function (k) { return k.indexOf("plm.") === 0 && !/^plm\.(profiles|theme|sidebar)$/.test(k); }).join(); }) === "", "reset left plm keys");
+    ok(await storageOf(s.page, false) === others, "reset changed other apps' keys");
+    await s.page.click("#profile-btn");
+    const [fc] = await Promise.all([s.page.waitForEvent("filechooser"), s.page.click("text=Import data…")]);
+    await fc.setFiles(file);
+    await s.page.click("dialog[open] button:has-text('Import and replace')");
+    await s.page.waitForTimeout(400);
+    await s.page.keyboard.press("Escape");
+    const back = await exported();
+    if (back !== ours) { // the first difference (computed only when there is one)
+      let i = 0;
+      while (i < ours.length && back[i] === ours[i]) i++;
+      ok(false, "the imported data differs from the exported data: " + ours.slice(Math.max(0, i - 40), i + 40) + " ≠ " + back.slice(Math.max(0, i - 40), i + 40));
+    }
+    ok(await storageOf(s.page, false) === others, "import changed other apps' keys");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+
+  await test("a backup of another app (english-levels-map, another prefix, junk) is refused and nothing changes", async function () {
+    const s = await session(1280, 900, true);
+    await seedOtherApps(s.ctx);
+    await visit(s.page, "#/");
+    const all = await storageOf(s.page, true) + await storageOf(s.page, false);
+    const files = [
+      ["elm.json", { app: "english-levels-map", kind: "backup", version: 1, exportedAt: "2026-11-01T10:00:00Z", data: { profiles: { version: 1, activeId: "p1", profiles: [{ id: "p1", name: "Adam", progress: {} }] } } }, /belongs to another app \(english-levels-map\)/],
+      ["slm.json", { app: "spanish-levels-map", kind: "backup", version: 1, data: {} }, /belongs to another app \(spanish-levels-map\)/],
+      ["junk.json", { hello: 1 }, /not a Polish Levels Map backup/]
+    ];
+    for (const f of files) {
+      const file = path.join(FIXTURE_DATA, f[0]);
+      fs.writeFileSync(file, JSON.stringify(f[1]));
+      await s.page.click("#profile-btn");
+      const [fc] = await Promise.all([s.page.waitForEvent("filechooser"), s.page.click("text=Import data…")]);
+      await fc.setFiles(file);
+      await s.page.waitForTimeout(300);
+      const msg = await s.page.innerText("dialog[open]");
+      ok(f[2].test(msg) && /Nothing was changed/.test(msg), f[0] + ": " + msg.replace(/\s+/g, " "));
+      await s.page.keyboard.press("Escape");
+      await s.page.waitForTimeout(150);
+    }
+    ok(await storageOf(s.page, true) + await storageOf(s.page, false) === all, "storage changed after a refused import");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+
+  await test("E12: \"Report a mistake\" on the topic page and the card back, prefilled with the id", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/a1/cases-accusative");
+    const href = await s.page.getAttribute("#view > .report-link a", "href");
+    ok(href && href.indexOf("/issues/new?") !== -1 && href.slice(-encodeURIComponent("a1-cases-accusative: ").length) === encodeURIComponent("a1-cases-accusative: "), "topic page: " + href);
+    await visit(s.page, "#/review/session?only=deck:case-accusative");
+    await s.page.click(".fc-reveal");
+    await s.page.waitForTimeout(200);
+    const back = await s.page.getAttribute(".fc-card .report-link a", "href");
+    ok(back && /\/issues\/new\?/.test(back) && back.indexOf(encodeURIComponent(": ")) !== -1, "card back: " + back);
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });
 

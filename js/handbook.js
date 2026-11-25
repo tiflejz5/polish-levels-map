@@ -105,6 +105,8 @@ window.LM = window.LM || {};
     const trailBar = LM.trail ? LM.trail.barFor(topic.id) : null; // "Stop N of M" (Trail)
     if (trailBar) view.appendChild(trailBar);
     view.appendChild(topicNav(topic));
+    const report = LM.ui.reportLink(topic.id); // E12
+    if (report) view.appendChild(report);
     document.title = pageTitle + " · " + APP_TITLE();
     if (LM.profileData) LM.profileData.setLastPage(location.hash, levelId + " · " + pageTitle);
     U.setScroll(keepScroll);
@@ -273,23 +275,38 @@ window.LM = window.LM || {};
     document.title = APP_TITLE();
 
     const d = data();
+    const firstRun = LM.trail && LM.trail.firstRunCard ? LM.trail.firstRunCard() : null; // "placement test or start at A1"
     if (!d || !d.home) {
       view.appendChild(LM.ui.pageHead({ title: APP_TITLE(), lead: LM.APP.tagline }));
+      if (firstRun) view.appendChild(firstRun);
       if (LM.today && LM.today.compactTrail) view.appendChild(LM.today.compactTrail());
       view.appendChild(levelOverview());
+      view.appendChild(homeFooter());
+      U.setScroll(keepScroll);
       return;
     }
     const doc = LM.markdown.parse(d.home);
     const article = el("article", { class: "md home" }, LM.markdown.render(doc.blocks));
     linkLevelTable(article);
     if (LM.callouts) LM.callouts.apply(article);
+    if (firstRun) article.insertBefore(firstRun, article.querySelector(".md-section"));
     if (LM.today && LM.today.compactTrail) {
       const first = article.querySelector(".md-section");
       if (first) article.insertBefore(LM.today.compactTrail(), first); else article.appendChild(LM.today.compactTrail());
     }
     if (LM.exams && LM.exams.insertAfterIntro && LM.examCover) LM.exams.insertAfterIntro(article, LM.examCover.homeSection());
     view.appendChild(article);
+    view.appendChild(homeFooter());
     U.setScroll(keepScroll);
+  }
+
+  /** Home footer (spec 06 E12): version, the privacy sentence, the source repository. */
+  function homeFooter() {
+    return el("footer", { class: "home-foot" }, [
+      el("p", { class: "num", text: "Version " + LM.VERSION }),
+      el("p", { text: "No accounts. Your progress stays in this browser." }),
+      LM.APP.repoUrl ? el("p", null, el("a", { href: LM.APP.repoUrl, target: "_blank", rel: "noopener" }, LM.ui.withIcon("external-link", "Source code"))) : null
+    ]);
   }
 
   /** In home.md tables the level codes A1…C2 of the first column become links to the level pages. */

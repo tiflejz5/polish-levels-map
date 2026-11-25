@@ -235,7 +235,7 @@ window.LM = window.LM || {};
       umiemBox,
       wrong.length ? el("div", { class: "sz-wrong" }, [
         el("h2", { class: "lf-h", text: "To review (" + wrong.length + ")" }),
-        el("ul", { class: "lf-topic-list" }, wrong.map(function (p) { return el("li", null, [api.itemSummary(p.item), el("span", { class: "tool-note", text: " → " + api.modelAnswer(p.item) })]); }))
+        el("ul", { class: "lf-topic-list" }, wrong.map(function (p) { return el("li", null, [api.itemSummary(p.item), el("span", { class: "tool-note", lang: LM.lang.isTarget(api.modelAnswer(p.item)) ? LM.APP.targetLang : null, text: " → " + api.modelAnswer(p.item) })]); }))
       ]) : el("p", { class: "tool-note", text: "No mistakes – well done!" }),
       api.journalSummary(),
       el("div", { class: "tool-actions" }, [
@@ -243,7 +243,8 @@ window.LM = window.LM || {};
         isQuiz && !fin.passed ? el("button", { type: "button", class: "btn btn-primary", onclick: function () { startQuiz(node); } }, LM.ui.withIcon("rotate-ccw", "Try again")) : null,
         isQuiz && !fin.passed ? el("a", { class: "btn btn-secondary", href: pageHref(node.stop) }, "Read the topic again") : null,
         el("a", { class: "btn btn-secondary", href: HASH }, "Back to the trail")
-      ])
+      ]),
+      isQuiz ? LM.ui.reportLink(node.stop.quiz || node.id) : null // E12
     ]));
   }
 
@@ -541,22 +542,46 @@ window.LM = window.LM || {};
     return el("section", { class: cls, "aria-labelledby": "sz-l-" + level }, inner);
   }
 
-  /** First start (a new profile with no starting point chosen and no test). */
-  function firstRun() {
-    return el("section", { class: "card sz-first", "aria-labelledby": "sz-first-title" }, [
+  /**
+   * First start (a new profile with no starting point chosen and no test, or a guest): "placement test or start at A1".
+   * On the Trail the buttons act in place; elsewhere (the home page) "Start at A1" opens the Trail. A guest is asked
+   * for a profile first (guest mode), then the action runs.
+   */
+  function firstRun(opts) {
+    opts = opts || {};
+    const first = FIRST_LEVEL();
+    const toTest = function (e) {
+      if (hasProfile()) return; // the link does it
+      e.preventDefault();
+      LM.app.withProfile("The placement test result is saved in your profile.", function () { location.hash = LM.placement ? LM.placement.HASH : "#/placement"; });
+    };
+    const startFirst = function () {
+      LM.app.withProfile("The starting point is saved in your profile.", function () {
+        ST().setStart(first, "default");
+        if (opts.home) location.hash = HASH; else refreshView();
+      });
+    };
+    return el("section", { class: "card sz-first" + (opts.home ? " home-first" : ""), "aria-labelledby": "sz-first-title" }, [
       el("h2", { class: "sz-first-title", id: "sz-first-title", text: "Where do you want to start?" }),
       el("p", { text: "The Trail is one path through six lands, from " + landName("A1") + " to " + landName("C2") + ". You can start at the beginning or take a short placement test, and the trail starts where it makes sense for you." }),
       el("div", { class: "tool-actions" }, [
-        el("a", { class: "btn btn-primary", href: LM.placement ? LM.placement.HASH : "#/placement" }, LM.ui.withIcon("target", "Take the placement test (6 min)")),
-        el("button", { type: "button", class: "btn btn-secondary", onclick: function () { ST().setStart("A1", "default"); refreshView(); } }, "Start at A1")
+        el("a", { class: "btn btn-primary", href: LM.placement ? LM.placement.HASH : "#/placement", onclick: toTest }, LM.ui.withIcon("target", "Take the placement test (6 min)")),
+        el("button", { type: "button", class: "btn btn-secondary", onclick: startFirst }, "Start at " + first)
       ])
     ]);
   }
 
+  /** The first available level (the trail starts there by default). */
+  function FIRST_LEVEL() { return LM.syllabus.availableLevelIds()[0] || "A1"; }
+
   function needsFirstRun() {
+    if (!hasProfile()) return true;
     const st = ST().data();
     return !st.start && !testLevel() && !Object.keys(st.stops).length && !Object.keys(st.reviews).length && !Object.keys(LM.state.progress).length;
   }
+
+  /** The first-run card for the home page, or null when the profile has already started (or the Trail is not loaded). */
+  function firstRunCard() { return loaded() && needsFirstRun() ? firstRun({ home: true }) : null; }
 
   function render(route, opts) {
     opts = opts || {};
@@ -643,6 +668,6 @@ window.LM = window.LM || {};
   LM.trail = {
     levelLink: levelLink, statsTile: statsTile,
     HASH: HASH, parseRoute: parseRoute, render: render, loaded: loaded, ready: ready,
-    current: current, levelInfo: levelInfo, startLevel: startLevelId, barFor: barFor, openSheet: openSheet, startQuiz: startQuiz, positionText: positionText
+    current: current, levelInfo: levelInfo, startLevel: startLevelId, firstRunCard: firstRunCard, barFor: barFor, openSheet: openSheet, startQuiz: startQuiz, positionText: positionText
   };
 })(window.LM);

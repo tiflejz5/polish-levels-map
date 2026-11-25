@@ -2,7 +2,7 @@
  * exercise-engine.js — the exercise engine: a set session (Learn / Exam mode),
  * ten item types (paradigm = "Fill the table", spec 06 E6), the result screen, the “Check yourself” section on topic pages.
  * Item types: the reference engine's spec (docs/rozbudowa-v2/spec/01-typy-zadan.md); types gap-fill, match,
- * transformation, translate, dictation and scores in points: docs/rozbudowa-v6/spec/12-nowe-typy-zadan.md.
+ * transformation, translate, dictation and scores in points: the reference app's v6 item-type spec.
  *
  * Routes:
  *   #/practice[/mixes]             Practice (js/practice-hub.js)
@@ -427,10 +427,17 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Prompt in lines (dialogue “A: …”, “B: ___”). */
+  /**
+   * Prompt in lines (dialogue “A: …”, “B: ___”). A line with a gap, or one LM.lang recognises, is target language
+   * (lang attribute); a trailing English gloss in brackets, as in “… ___. (I like music.)”, stays outside it.
+   */
   function promptLines(text, gap, id) {
     return el("div", { class: "ex-prompt", id: id }, String(text).split("\n").map(function (line) {
-      return el("p", null, withGap(line, gap));
+      const m = /^(.*?)(\s*\([^()]*\))?\s*$/.exec(line);
+      const gloss = m[2] && !LM.lang.isTarget(m[2]) ? m[2] : "";
+      const body = gloss ? m[1] : line;
+      if (!(/_{3,}/.test(body) || LM.lang.isTarget(body))) return el("p", null, withGap(line, gap));
+      return el("p", null, [el("span", { lang: LM.APP.targetLang }, withGap(body, gap)), gloss ? el("span", { class: "ex-gloss", text: gloss }) : null]);
     }));
   }
 
@@ -532,7 +539,7 @@ window.LM = window.LM || {};
         }),
         el("span", { class: "ex-key", "aria-hidden": "true" }, done && (isCorrect || isChosen) ? LM.icon(isCorrect ? "check" : "x", { size: 16 }) : String(i + 1)),
         el("span", { class: "ex-option-body" }, [
-          el("span", { class: "ex-option-text", text: o.text }),
+          el("span", { class: "ex-option-text", lang: LM.APP.targetLang, text: o.text }), // options are target language (spec 07)
           done && isCorrect ? el("span", { class: "lt-tag is-ok", text: "Correct" }) : null,
           done && isChosen && !isCorrect ? el("span", { class: "lt-tag is-bad", text: "Your answer" }) : null,
           done && o.note ? el("span", { class: "ex-note", text: o.note }) : null
@@ -1391,7 +1398,8 @@ window.LM = window.LM || {};
       run.isMix ? topicBreakdown() : null,
       umiemBanner(),
       journalSummary(),
-      el("div", { class: "tool-actions" }, actions)
+      el("div", { class: "tool-actions" }, actions),
+      LM.ui.reportLink(run.topic || run.saveId) // E12
     ]));
 
     // Shared recording of the set: the transcript only after the end (spec 09, 3.2)
@@ -1406,8 +1414,8 @@ window.LM = window.LM || {};
         const mine = userAnswer(p);
         return el("li", null, [
           el("p", { class: "ex-wrong-q" }, [el("span", { class: "chip", text: TYPE_SHORT[p.item.type] }), p.res && p.res.max > 1 ? el("span", { class: "chip", text: p.res.points + "/" + p.res.max + " points" }) : null, " ", itemSummary(p.item)]),
-          el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: mine || "(none)" })]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: modelAnswer(p.item) })]),
+          el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { lang: mine && LM.lang.isTarget(mine) ? LM.APP.targetLang : null, text: mine || "(none)" })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { lang: LM.lang.isTarget(modelAnswer(p.item)) ? LM.APP.targetLang : null, text: modelAnswer(p.item) })]),
           p.item.explanation ? el("p", { class: "ex-wrong-expl", text: p.item.explanation }) : null,
           p.item.trap ? el("p", { class: "ex-wrong-trap" }, [el("strong", { text: "Trap: " }), p.item.trap]) : null
         ]);

@@ -36,7 +36,9 @@ const SKIP_FILES = ["js/lang.js", "js/config.js", "tools/check-lang.js"];
 const SKIP_DIRS = ["tools/fixtures", "node_modules"];
 
 const STOP_WORDS = ["Dodaj", "Zapisz", "Anuluj", "Usuń", "Dalej", "Wróć", "Wynik", "Poziom", "Zadanie",
-  "Pokaż", "Ukryj", "Umiem", "Dziś", "Szlak", "Fiszki", "Zestaw", "Błąd", "Powtórka", "Egzamin"];
+  "Pokaż", "Ukryj", "Umiem", "Dziś", "Szlak", "Fiszki", "Zestaw", "Błąd", "Powtórka", "Egzamin",
+  "Opanowane", "Nowe", "Wszystkie", "Zapisano", "Gotowe", "Talia", "Talie", "Karta", "Karty", "Notatki", "Statystyki",
+  "Podsumowanie", "Zwroty", "Egzaminy", "Wyszukiwarka", "Zmieniono", "Dodano", "Usunieto", "pkt"];
 
 const JS = /^js\//;
 const RULES = [

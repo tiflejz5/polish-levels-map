@@ -961,7 +961,7 @@ test("weighted drawing: an item with weight 2 comes into the set more often", fu
   assert.ok(heavy > light * 1.4, "waga 2: " + heavy + ", waga 1: " + light);
 });
 
-console.log("\nWyszukiwarka");
+console.log("\nSearch");
 const SR = global.LM.searchLogic;
 const SFX = langFixture("search");
 const recs = SR.prepare(SFX.records.concat([
@@ -1012,7 +1012,7 @@ test("snippet and highlight: parts with a hit flag, no HTML", function () {
   assert.deepStrictEqual(SR.highlight("Present Perfect", "perf").filter(function (p) { return p.hit; }).map(function (p) { return p.text; }), ["Perfect"]);
 });
 
-console.log("\nEgzaminy: strefy licznika (spec 06, 4.2)");
+console.log("\nExams: timer zones (spec 06, 4.2)");
 const EL = global.LM.examLogic;
 test("writingZone: matura podstawowa (<80, 80–99, 100–150, >150)", function () {
   const T = { wordRange: [100, 150], warnBelow: 80 };
@@ -2163,6 +2163,12 @@ require(path.join(__dirname, "..", "js", "mistake-task.js"));
     assert.strictEqual(MT.viewFor(entry("x", { ref: "something-manual" })), "card");
     assert.strictEqual(MT.viewFor(null), "card");
   });
+  test("mistakeTask.sourceOf: set items, trail quiz items and final-test items each find their data file (stage 5)", function () {
+    assert.deepStrictEqual(MT.sourceOf("a1-cases-accusative-1-05"), { kind: "set", setId: "a1-cases-accusative-1" });
+    assert.deepStrictEqual(MT.sourceOf("a1-cases-accusative-q3"), { kind: "quiz", quizId: "a1-cases-accusative", level: "a1" });
+    assert.deepStrictEqual(MT.sourceOf("final-a1-07"), { kind: "final", level: "A1" });
+    assert.deepStrictEqual(MT.sourceOf("b2-grammar-verbal-nouns-q4"), { kind: "quiz", quizId: "b2-grammar-verbal-nouns", level: "b2" });
+  });
 })();
 
 console.log("\nFlashcards: schedule and saving (fix of the schedule)");
@@ -2251,7 +2257,7 @@ console.log("\nFlashcards: schedule and saving (fix of the schedule)");
     const before = JSON.stringify(state);
     const q = FLg.buildQueue({ cards: cards, state: state, now: NOW, settings: { newPerDay: 2, reviewsPerDay: 100 }, today: { new: 2 }, extraNew: 5 });
     assert.deepStrictEqual(q.review, [], "cards due after today's learning day do not come back");
-    assert.strictEqual(q.fresh.length, 5, "tylko nowe: 5 dodatkowych");
+    assert.strictEqual(q.fresh.length, 5, "only new: 5 extra");
     assert.ok(q.fresh.every(function (id) { return !state[id]; }));
     assert.strictEqual(JSON.stringify(state), before, "buildQueue changes nothing");
   });
@@ -3003,7 +3009,8 @@ console.log("strip-keys");
     assert.ok(tasks.every(function (t) { return t.id && t.type && t.task && !t.unknown; }));
   });
   test("strip-keys: reorder tiles are not the solution, paradigm keeps only given forms, the same output every run", function () {
-    const sets = files.filter(function (f) { return /exercises/.test(f); }).map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); });
+    // Every set-shaped file (exercise sets, quizzes, final tests); the placement file has questions, not items
+    const sets = files.map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); }).filter(function (s) { return Array.isArray(s.items); });
     const items = [].concat.apply([], sets.map(function (s) { return s.items; }));
     tasks.filter(function (t) { return t.type === "reorder"; }).forEach(function (t) {
       const it = items.find(function (x) { return x.id === t.id; });

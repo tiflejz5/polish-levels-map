@@ -134,6 +134,11 @@ const CHECKS = {
       if (it.mode !== "translation") V.charset(ctx, where, x[0]);
       if (it.mode !== "definition") V.charset(ctx, where, x[1]);
     });
+    // An English side with target-language letters: the pairs are probably the wrong way round (stage 5 finding)
+    const englishSide = it.mode === "translation" ? 0 : it.mode === "definition" ? 1 : -1;
+    if (englishSide !== -1 && pairs.some(function (x) { return ctx.L.stripMarks(String(x[englishSide])) !== String(x[englishSide]); })) {
+      ctx.warn(where, "match (" + it.mode + "): the English side (" + (englishSide ? "right" : "left") + ") has " + ctx.APP.language + " letters; are the pairs the wrong way round?");
+    }
   },
 
   "transformation": function (ctx, where, it) {

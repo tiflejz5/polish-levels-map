@@ -289,7 +289,7 @@ window.LM = window.LM || {};
 
   function fmtDay(c) {
     const s = String(c.addedAt || c.createdAt || "").slice(0, 10);
-    return /^\d{4}-\d{2}-\d{2}$/.test(s) ? s.slice(8, 10) + "." + s.slice(5, 7) + "." + s.slice(0, 4) : "";
+    return /^\d{4}-\d{2}-\d{2}$/.test(s) ? LM.fmt.date(s) : ""; // UI locale (spec 04 §1)
   }
 
   /** The sentence with the word highlighted by <mark> (text nodes, no innerHTML). */
@@ -390,10 +390,10 @@ window.LM = window.LM || {};
       const src = c.source && c.source.route ? el("a", { class: "fw-source", href: c.source.route }, LM.ui.withIcon("external-link", c.source.title || "Source")) : null;
       return el("li", { class: "card fc-row fw-row" }, [
         el("div", { class: "fc-row-main" }, [
-          el("p", { class: "fc-row-front fw-word", text: w }),
+          el("p", { class: "fc-row-front fw-word", lang: LM.APP.targetLang, text: w }),
           meaning,
-          el("p", { class: "fc-row-back fw-sentence" }, sentenceNode(c)),
-          (c.examples || []).length ? el("ul", { class: "fc-example-list" }, c.examples.map(function (s) { return el("li", { text: s }); })) : null,
+          el("p", { class: "fc-row-back fw-sentence", lang: LM.APP.targetLang }, sentenceNode(c)),
+          (c.examples || []).length ? el("ul", { class: "fc-example-list", lang: LM.APP.targetLang }, c.examples.map(function (s) { return el("li", { text: s }); })) : null,
           el("p", { class: "tool-note" }, [src, src ? " · " : null, fmtDay(c) ? "added " + fmtDay(c) : null])
         ]),
         el("div", { class: "fc-row-meta" }, [

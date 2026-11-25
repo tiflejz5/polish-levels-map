@@ -2,7 +2,7 @@
 
 A static web app for learning Polish (A1–C2), explained in English. Ported from `english-levels-map`; the two projects are independent.
 
-> **Work in progress (stage 4).** The interface is English (spec 04), the Polish language layer is in place (spec 05), and the exercise engine runs every item type on Polish data, with the new "Fill the table" type and the full content validators (stage 4). The full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
+> **Work in progress (stage 5).** The interface is English (spec 04), the Polish language layer is in place (spec 05), the exercise engine runs every item type on Polish data with the full content validators (stage 4), and the learning loop works end to end with one available level (stage 5). The full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
 
 ## Run
 
@@ -53,6 +53,16 @@ tools/     build.js + build/*.js, validate.js + validate-*.js, strip-keys.js, te
 - **Polish data.** Put in order keeps „quotes” on their words, leaves dashes out of the tiles, lower-cases the first word unless it is a name (capitalised inside another accepted order, or `keepCapital: true`) and ignores punctuation. Speech reads no English instructions, glosses or lemma hints. Free word order and dropped pronouns are content rules: list every natural order (spec 05 §3).
 - **Tests (E10).** Placement skills are grammar, vocabulary and reading (cases and verbs count as grammar); final tests draw in proportion to the syllabus categories.
 - **Validators** (`tools/validate.js` + `validate-pages`, `-exercises`, `-tests`, `-decks`, `-lab`, `-cheatsheets`, `-phrases`, `-items`, `-lib`): every rule of `validate_plan.py`, the kept-format rules of the original validators and the E11 heuristics (subject pronoun, speaker gender, Polish alphabet, long text without diacritics). Until the first content stage an incomplete available level and a short placement pool are warnings (`STRICT_COMPLETE` in `tools/validate.js`). `npm test` checks that Node and Python flag the same places on a broken fixture (`tools/fixtures/validate/`).
+
+## Learning loop (stage 5)
+
+- **First run.** With no profile, or a profile that has not started, the home page and the Trail ask "Where do you want to start?": the placement test or the first available level. A guest is asked for a profile first (guest mode), then the action runs. Personal pages (Today, Review, Stats, Notes, Trail, Placement) show the welcome card without a profile.
+- **Placement test** (`content/tests/placement.json`, 12 temporary questions, 2 per level): adaptive from A2; a result at a "soon" level says so and starts the trail at the highest available level below it. Questions and options carry `lang`.
+- **Final test** (`content/tests/final-a1.json`, 10 temporary items; the full pool is 30). The draw takes the whole pool while it is smaller than `draw`. Until the first content stage a short pool and low topic coverage are validator warnings.
+- **Mistakes and reviews.** Wrong answers in sets, trail quizzes and final tests go to the mistake log; the next day the review session shows the **original item** (`LM.mistakeTask.sourceOf`: set items, `<topic>-qN` quiz items, `final-<level>-NN` items). Log entries mark Polish lines and answers with `lang` and have a listen button; flashcards have a listen button (S still works). Log categories: Grammar, Vocabulary, Reading, Writing, Listening, Speaking, Other.
+- **Search** indexes every topic of an available level (a topic without a page is found by title and says "This topic is being written"); `[[topic id]]` links in snippets become the topic title.
+- **Report a mistake** (E12): a quiet link on topic pages, set and quiz results and the back of content flashcards, to `LM.APP.reportUrl` with the title prefilled (`<id>: `); `LM.APP.reportMail` adds a `mailto:` alternative. The home footer shows the version, "No accounts. Your progress stays in this browser." and the source repository (`LM.APP.repoUrl`).
+- **Other apps on the same origin.** `elm_*`, `elm.<id>.*` (english-levels-map) and other prefixes (`slm.`) are never read, written, exported or cleared; a backup file of another app is refused and nothing changes (e2e).
 
 ## Routes
 

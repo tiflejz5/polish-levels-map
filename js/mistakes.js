@@ -243,8 +243,22 @@ window.LM = window.LM || {};
 
   /** Class of the category stripe (colour only as an extra — the category name is in the chip). */
   function catClass(category) {
-    const map = { "Use of English": "uoe", "Reading": "reading", "Writing": "writing", "Listening": "listening", "Speaking": "speaking", "Grammar": "grammar", "Vocabulary": "vocab", "Other": "other" };
+    const map = { "Reading": "reading", "Writing": "writing", "Listening": "listening", "Speaking": "speaking", "Grammar": "grammar", "Vocabulary": "vocab", "Other": "other" };
     return " cat-" + (map[category] || "other");
+  }
+
+  /** lang for a text of the log: the target language when LM.lang recognises it, otherwise none (English prompts, rules). */
+  function langOf(text) { return text && LM.lang && LM.lang.isTarget(text) ? LM.APP.targetLang : null; }
+
+  /** The entry's context line by line: each line in the target language gets its lang attribute (an entry mixes English instructions and Polish sentences). */
+  function contextLines(text) {
+    const lines = String(text || "").split("\n");
+    const out = [];
+    lines.forEach(function (line, i) {
+      if (i) out.push("\n");
+      out.push(langOf(line) ? el("span", { lang: LM.APP.targetLang, text: line }) : document.createTextNode(line));
+    });
+    return out;
   }
 
   function entryCard(e, rerender) {
@@ -260,10 +274,14 @@ window.LM = window.LM || {};
         el("span", { class: "journal-status " + status.cls, text: status.text }),
         e.source ? el("span", { class: "journal-source", text: e.source }) : null
       ]),
-      el("p", { class: "journal-context", text: e.context }),
+      el("p", { class: "journal-context" }, contextLines(e.context)),
       el("dl", { class: "journal-answers" }, [
-        e.myAnswer ? el("div", { class: "journal-row is-wrong" }, [el("dt", { text: "My answer" }), el("dd", { text: e.myAnswer })]) : null,
-        el("div", { class: "journal-row is-right" }, [el("dt", { text: "Correct" }), el("dd", { text: e.correct })]),
+        // answers are target language (the item's model answer, or what the learner typed for it)
+        e.myAnswer ? el("div", { class: "journal-row is-wrong" }, [el("dt", { text: "My answer" }), el("dd", { lang: LM.APP.targetLang, text: e.myAnswer })]) : null,
+        el("div", { class: "journal-row is-right" }, [el("dt", { text: "Correct" }), el("dd", { lang: LM.APP.targetLang }, [
+          el("span", { text: e.correct }),
+          LM.ui.listenButton(e.correct, "Listen to the correct answer")
+        ])]),
         e.rule ? el("div", { class: "journal-row" }, [el("dt", { text: "Why" }), el("dd", { text: e.rule })]) : null,
         link ? el("div", { class: "journal-row" }, [el("dt", { text: "Handbook" }), el("dd", null, link)]) : null
       ]),

@@ -84,7 +84,11 @@ function checkFinal(ctx, file, level) {
   if (d.version !== 1) ctx.err(rel, "version must be 1");
   if (d.kind !== "level-test") ctx.err(rel, "kind must be \"level-test\"");
   if (!ctx.topics[d.topic] && d.topic != null) ctx.err(rel, "topic " + JSON.stringify(d.topic) + " not in syllabus");
-  if (items.length !== 30 || d.draw !== 20 || d.passPercent !== 80) ctx.err(rel, "final test: 30 items, draw 20, passPercent 80");
+  // Pool size and coverage: errors from the first content stage on; until then a short temporary pool is a warning
+  const pool = ctx.strictComplete ? ctx.err : ctx.warn;
+  const later = ctx.strictComplete ? "" : " (an error from the first content stage on)";
+  if (d.draw !== 20 || d.passPercent !== 80) ctx.err(rel, "final test: draw 20, passPercent 80");
+  if (items.length !== 30) pool(rel, "final test: " + items.length + " items, expected 30" + later);
   if (d.id !== "final-" + level.toLowerCase()) ctx.err(rel, "id must be final-" + level.toLowerCase());
   if (d.level !== level) ctx.err(rel, "level must be " + level);
   if (d.defaultMode !== "exam") ctx.err(rel, "defaultMode must be \"exam\"");
@@ -106,7 +110,7 @@ function checkFinal(ctx, file, level) {
   if (mc * 2 < items.length) ctx.err(rel, mc + " of " + items.length + " items are multiple choice (at least half needed)");
   if (par > 2) ctx.err(rel, par + " paradigm items (at most two)");
   const levelTopics = Object.keys(ctx.topics).filter(function (t) { return ctx.topics[t].level === level; });
-  if (covered.size < 0.7 * levelTopics.length) ctx.err(rel, "covers " + covered.size + " of " + levelTopics.length + " topics (at least 70%)");
+  if (covered.size < 0.7 * levelTopics.length) pool(rel, "covers " + covered.size + " of " + levelTopics.length + " topics (at least 70%)" + later);
   const catCount = {};
   levelTopics.forEach(function (t) { catCount[ctx.topics[t].category] = (catCount[ctx.topics[t].category] || 0) + 1; });
   Object.keys(catCount).forEach(function (c) {

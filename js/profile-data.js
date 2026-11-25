@@ -141,7 +141,7 @@ window.LM = window.LM || {};
     return REGISTRY.some(function (r) { return r.scope === "profile" ? base.indexOf(r.key) === 0 && base.length > r.key.length : base === r.key; });
   }
 
-  const CATEGORIES = ["Use of English", "Reading", "Writing", "Listening", "Speaking", "Grammar", "Vocabulary", "Other"];
+  const CATEGORIES = ["Grammar", "Vocabulary", "Reading", "Writing", "Listening", "Speaking", "Other"];
 
   // Length limits (also on import)
   const LIMITS = {

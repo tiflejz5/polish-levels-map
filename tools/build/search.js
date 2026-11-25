@@ -27,13 +27,16 @@ function headings(body) {
   return (body.match(/^#{2,3}\s+.+$/gm) || []).map(function (h) { return clean(h.replace(/^#+\s+/, "")); });
 }
 
-/** Text without Markdown syntax (links, [[id]], bold, tables, quotes, lists). */
+// Topic titles for [[id]] links in the text (set by buildSearch before any clean())
+let TITLES = {};
+
+/** Text without Markdown syntax (links, [[id]] → the topic title, bold, tables, quotes, lists). */
 function clean(md) {
   return md
     .replace(/```[\s\S]*?```/g, " ")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, " ")
     .replace(/\[\[([^\]|]+)\|([^\]]+)\]\]/g, "$2")
-    .replace(/\[\[([^\]]+)\]\]/g, " ")
+    .replace(/\[\[([^\]]+)\]\]/g, function (m, id) { return " " + (TITLES[id.trim()] || "") + " "; })
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/^\s*\|?\s*:?-{2,}.*$/gm, " ")
     .replace(/\|/g, " ")
@@ -67,13 +70,20 @@ module.exports = function buildSearch(ctx) {
   };
   const categories = ctx.syllabus.categories || {};
   const topicTitle = {};
+  TITLES = {};
+  ctx.topics.forEach(function (t) { TITLES[t.id] = t.title; });
 
   // ---------- Topic pages ----------
   ctx.topics.forEach(function (t) {
     topicTitle[t.id] = t.title;
     const rel = C.pageFileOf(t.id);
     const file = C.content("pages", rel);
-    if (!C.exists(file)) return;
+    if (!C.exists(file)) {
+      // A topic of an available level without its page yet: findable by title (the page says "This topic is being written")
+      add({ id: "page:" + t.id, group: "pages", title: t.title, summary: "This topic is being written.", text: t.example || "", level: t.level,
+        category: categories[t.category] || t.category, route: "#/" + rel.replace(/\.md$/, "") });
+      return;
+    }
     const md = C.splitMd(C.read(file));
     if (md.meta.title) topicTitle[t.id] = md.meta.title;
     add({
@@ -85,7 +95,7 @@ module.exports = function buildSearch(ctx) {
   C.list(C.content("summaries"), /^[abc][12]\.md$/i).forEach(function (f) {
     const lvl = f.replace(/\.md$/i, "").toUpperCase();
     const md = C.splitMd(C.read(C.content("summaries", f)));
-    add({ id: "summary:" + lvl, group: "pages", title: "Podsumowanie poziomu " + lvl, headings: headings(md.body), text: clean(md.body), level: lvl, route: "#/" + lvl.toLowerCase() });
+    add({ id: "summary:" + lvl, group: "pages", title: "Level summary " + lvl, headings: headings(md.body), text: clean(md.body), level: lvl, route: "#/" + lvl.toLowerCase() });
   });
   C.list(C.content("cheatsheets"), /^[abc][12]\.md$/i).forEach(function (f) {
     const lvl = f.replace(/\.md$/i, "").toUpperCase();
@@ -124,7 +134,7 @@ module.exports = function buildSearch(ctx) {
     const groups = C.readJson(phrasesFile).groups || [];
     add({ id: "phrases", group: "exercises", title: "Phrase bank for writing", summary: "Phrases by function with level, register and text type filters.", text: "phrases writing phrase bank " + groups.map(function (g) { return g.label; }).join(" "), category: "Writing", route: "#/writing/phrases" });
     groups.forEach(function (g) {
-      add({ id: "zwroty:" + g.id, group: "exercises", title: "Zwroty: " + g.label, summary: g.description || "", text: g.phrases.map(function (p) { return p.text + " " + p.en; }).join(" "), category: "Writing", route: "#/writing/phrases/" + g.id });
+      add({ id: "phrases:" + g.id, group: "exercises", title: "Phrases: " + g.label, summary: g.description || "", text: g.phrases.map(function (p) { return p.text + " " + p.en; }).join(" "), category: "Writing", route: "#/writing/phrases/" + g.id });
     });
   }
 
