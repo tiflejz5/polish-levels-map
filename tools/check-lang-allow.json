@@ -38,5 +38,20 @@
     "file": "tools/e2e.js",
     "contains": "// pl-fixture",
     "reason": "routes of the original app used as test input (they must show Page not found)"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "elm_",
+    "reason": "stage 5 e2e: data of the original app (english-levels-map) on the same origin, which must stay untouched and be refused on import"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "elm.p1.fiszki",
+    "reason": "stage 5 e2e: data of the original app (english-levels-map) on the same origin, which must stay untouched and be refused on import"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "\"elm.json\"",
+    "reason": "stage 5 e2e: data of the original app (english-levels-map) on the same origin, which must stay untouched and be refused on import"
   }
 ]
