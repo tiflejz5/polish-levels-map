@@ -297,7 +297,7 @@ window.LM = window.LM || {};
           if (!app().hasProfiles()) { // guest mode: profile first, then the tick (the list redraws itself)
             const input = e.target, on = input.checked;
             input.checked = !on;
-            app().withProfile("Your ticks are saved in your profile.", function () { app().setProgress(topic.id, on); app().renderAll(); });
+            app().withProfile("Your “I know this” marks are saved in your profile.", function () { app().setProgress(topic.id, on); app().renderAll(); });
             return;
           }
           app().setProgress(topic.id, e.target.checked);

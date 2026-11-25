@@ -116,16 +116,6 @@ window.LM = window.LM || {};
     window.scrollTo(0, y);
   }
 
-  /**
-   * TEMPORARY (removed at the end of stage 2): three-form plural of the inherited Polish UI strings.
-   * Callers move to LM.plural one file group at a time.
-   */
-  function plural(n, one, few, many) {
-    if (n === 1) return one;
-    const d = n % 10, t = n % 100;
-    return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
-  }
-
   // ---------- English UI: plurals and formatting (spec 04 §1) ----------
 
   /** UI locale from LM.APP (config.js); never hard-coded here. */
@@ -194,7 +184,6 @@ window.LM = window.LM || {};
   LM.fmt = fmt;
 
   LM.utils = {
-    plural: plural,
     getScroll: getScroll,
     setScroll: setScroll,
     el: el,
