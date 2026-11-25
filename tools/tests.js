@@ -297,6 +297,12 @@ test("simulation (small pool, 2 questions per level): the result does not “dri
 
 console.log("\nExercise engine");
 const fs = require("fs");
+// Polish fixtures of the language layer (spec 05 §6): tools/fixtures/lang/
+const LANG_FX = path.join(__dirname, "fixtures", "lang");
+function langFixture(name) { return JSON.parse(fs.readFileSync(path.join(LANG_FX, name + ".json"), "utf8")); }
+const PL_ITEMS = langFixture("items").items;
+const LANG_ACCENTED = langFixture("match").cases.find(function (c) { return c.near === "accents"; }).closest;
+function plItem(id) { return PL_ITEMS.find(function (it) { return it.id === id; }); }
 // Test-only English fixtures from english-levels-map@275be9f (tools/fixtures/legacy-en); replaced by Polish fixtures in stages 3–4
 const LEGACY = path.join(__dirname, "fixtures", "legacy-en");
 const SETS_DIR = path.join(LEGACY, "sets");
@@ -305,10 +311,10 @@ const exBank = fs.readdirSync(SETS_DIR).filter(function (f) { return /\.json$/.t
 const allItems = [].concat.apply([], exBank.map(function (s) { return s.items.map(function (it) { return Object.assign({ topic: s.topic }, it); }); }));
 function seeded(seed) { let x = seed; return function () { x = (x * 16807) % 2147483647; return (x - 1) / 2147483646; }; }
 
-test("normalize: spaces, apostrophes, final punctuation, case; contractions not expanded", function () {
-  assert.strictEqual(X.normalize("  I  Didn’t   go. "), "i didn't go");
+test("normalize: spaces, apostrophes, final punctuation, case; diacritics kept (LM.lang.normalizeAnswer)", function () {
+  langFixture("lang").normalizeAnswer.forEach(function (c) { assert.strictEqual(X.normalize(c[0]), c[1], c[0]); });
   assert.strictEqual(X.normalize("Really?!"), "really");
-  assert.notStrictEqual(X.normalize("I'm"), X.normalize("I am"));
+  assert.notStrictEqual(X.normalize(LANG_ACCENTED), X.normalize(global.LM.lang.stripMarks(LANG_ACCENTED)));
 });
 test("prepareChoice: the correct answer and the notes follow the option after shuffling", function () {
   const item = allItems.find(function (it) { return it.type === "multiple-choice" && it.optionNotes; });
@@ -345,12 +351,17 @@ test("evaluate: find-error tells a wrong part from a wrong correction", function
   assert.ok(!X.evaluate(it, { noError: true }).correct);
   assert.ok(X.evaluate({ type: "find-error", tokens: ["Ok."], noError: true }, { noError: true }).correct);
 });
-test("evaluate: short-answer — case does not matter, a typo = 0 points with a note", function () {
-  const it = { type: "short-answer", prompt: "My mum ___ in a hospital.", accepted: ["works"] };
-  assert.ok(X.evaluate(it, { text: " Works " }).correct);
-  const one = X.evaluate(it, { text: "work" });
-  assert.ok(!one.correct && one.spelling);
-  assert.ok(!X.evaluate(it, { text: "worked" }).spelling); // 2 changes — no note
+test("evaluate: short-answer — case does not matter; accents / ending / typo = 0 points with a hint; lenient accents", function () {
+  const it = plItem("pl-fx-01");
+  const model = it.accepted[0];
+  assert.ok(X.evaluate(it, { text: " " + model.toUpperCase() + " " }).correct);
+  const accents = X.evaluate(it, { text: global.LM.lang.stripMarks(model) });
+  assert.deepStrictEqual([accents.correct, accents.near, accents.closest, accents.points], [false, "accents", model, 0]);
+  const lenient = X.evaluate(it, { text: global.LM.lang.stripMarks(model) }, { lenientAccents: true });
+  assert.deepStrictEqual([lenient.correct, lenient.lenient, lenient.near, lenient.points], [true, true, "accents", 1], "counted, the reminder stays");
+  assert.strictEqual(X.evaluate(it, { text: model }, { lenientAccents: true }).lenient, false, "an exact answer is not lenient");
+  const ending = X.evaluate(it, { text: model.slice(0, -1) + "y" }, { lenientAccents: true });
+  assert.deepStrictEqual([ending.correct, ending.near], [false, "ending"], "lenient mode does not accept other near misses");
 });
 test("reorder: pointing at the first difference", function () {
   const it = { type: "reorder", answers: ["I didn't go to school yesterday."] };
@@ -398,8 +409,8 @@ test("points: sessionScore sums points and maxima, skips items with max = 0", fu
 // Part 4 grading before it moved into exercise-logic.js (a copy from js/c1-exercises.js) — the reference for the compatibility test
 const OLD_PART4 = (function () {
   function norm(text) { return String(text || "").toUpperCase().replace(/[’‘`´]/g, "'").replace(/[^\p{L}\p{N}'\s]/gu, "").replace(/\s+/g, " ").trim(); }
-  const CONTRACTION = /^(.+?)(N'T|'S|'RE|'VE|'D|'LL|'M)$/;
-  function tokens(text) { const out = []; norm(text).split(" ").filter(Boolean).forEach(function (w) { const m = CONTRACTION.exec(w); if (m) out.push(m[1], m[2]); else out.push(w); }); return out; }
+  // Stage 3: the English contraction rule (a contraction = two words) is deleted from the engine, so from this copy too
+  function tokens(text) { return norm(text).split(" ").filter(Boolean); }
   function findSeq(hay, needle, from) { const hits = []; if (!needle.length) return hits; for (let i = from || 0; i + needle.length <= hay.length; i++) { let ok = true; for (let j = 0; j < needle.length; j++) { if (hay[i + j] !== needle[j]) { ok = false; break; } } if (ok) hits.push(i); } return hits; }
   function plural(n, one, many) { return n + " " + (n === 1 ? one : many); }
   function itemMax(item) { return item.parts.length === 1 ? 2 : item.parts.length; }
@@ -408,7 +419,7 @@ const OLD_PART4 = (function () {
     const t = tokens(answer);
     const parts = item.parts.map(function () { return false; });
     if (!t.length) return { score: 0, parts: parts, msg: "No answer." };
-    if (t.length < lim[0] || t.length > lim[1]) return { score: 0, parts: parts, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + "; contractions count as two)." };
+    if (t.length < lim[0] || t.length > lim[1]) return { score: 0, parts: parts, msg: "Type " + lim[0] + "–" + lim[1] + " words (you have " + plural(t.length, "word", "words") + ")." };
     if (!findSeq(t, tokens(item.keyword), 0).length) return { score: 0, parts: parts, msg: "Use the key word without changing it (" + item.keyword + ")." };
     let cursor = 0;
     item.parts.forEach(function (variants, k) {
@@ -477,13 +488,16 @@ test("new types: the model answer of every item in the sample file gives full po
     assert.ok(r.correct && r.points === X.maxPoints(it) && r.max === X.maxPoints(it), it.id + " " + JSON.stringify(r));
   });
 });
-test("gap-fill: a point for each gap, a typo = 0 points with a note, case does not matter", function () {
-  const it = pilot("v6-pilot-02");
-  const half = X.evaluate(it, { texts: ["Was built", "has repaired"] });
+test("gap-fill: a point for each gap, near misses = 0 points with a hint per gap, case does not matter", function () {
+  const it = plItem("pl-fx-02");
+  const a = it.gaps[0].accepted[0], b = it.gaps[1].accepted[0];
+  const half = X.evaluate(it, { texts: [a.toUpperCase(), "zzz"] });
   assert.deepStrictEqual([half.points, half.max, half.correct], [1, 2, false]);
   assert.deepStrictEqual(half.gaps.map(function (g) { return g.correct; }), [true, false]);
-  const typo = X.evaluate(it, { texts: ["was bilt", ""] });
-  assert.ok(typo.gaps[0].spelling && !typo.gaps[0].correct && typo.answered);
+  const near = X.evaluate(it, { texts: [a, global.LM.lang.stripMarks(b)] });
+  assert.deepStrictEqual([near.gaps[1].near, near.gaps[1].closest, near.points], ["accents", b, 1]);
+  const lenient = X.evaluate(it, { texts: [a, global.LM.lang.stripMarks(b)] }, { lenientAccents: true });
+  assert.deepStrictEqual([lenient.points, lenient.correct, lenient.lenient], [2, true, true]);
   assert.ok(!X.evaluate(it, { texts: ["", " "] }).answered);
 });
 test("match: a point for each pair, extraRight is never correct", function () {
@@ -502,12 +516,12 @@ test("prepareMatch: the right column is always shuffled, with extraRight, nothin
     }
   });
 });
-test("transformation: answers, contractions, word limit, key word; with parts — partial points", function () {
+test("transformation: answers, word limit (LM.lang.countWords), key word; with parts — partial points", function () {
   const it = pilot("v6-pilot-05");
   assert.ok(X.evaluate(it, { text: "that I saw Tom was" }).correct);
   assert.ok(X.evaluate(it, { text: "i SAW tom was" }).correct);
   const long = X.evaluate(it, { text: "I saw Tom for the first time was" });
-  assert.ok(!long.correct && /2–5 words \(you have 8 words/.test(long.msg));
+  assert.ok(!long.correct && /2–5 words \(you have 8 words\)/.test(long.msg), long.msg);
   const kw = X.evaluate(it, { text: "I seen Tom was" });
   assert.ok(!kw.correct && /key word without changing it \(SAW\)/.test(kw.msg));
   assert.strictEqual(X.evaluate(it, { text: "I saw him was" }).points, 0);
@@ -516,49 +530,45 @@ test("transformation: answers, contractions, word limit, key word; with parts �
   assert.deepStrictEqual([one.points, one.max, one.correct], [1, 2, false]);
   assert.deepStrictEqual(one.parts, [true, false]);
   assert.strictEqual(X.evaluate(p, { text: "is said to be" }).points, 2);
-  // a contraction = two words: “didn't” fits the limit like “did not”
-  const c = { type: "transformation", keyword: "NOT", answers: ["did not go"], wordLimit: [2, 3] };
-  assert.ok(X.evaluate({ type: "transformation", keyword: "DID", answers: ["did not go"], wordLimit: [2, 3] }, { text: "didn't go" }).correct);
-  assert.ok(/you have 4 words/.test(X.evaluate(c, { text: "didn't not go" }).msg));
+  // Polish: no contraction rule, an apostrophe word is one word; accents give a hint
+  const pl = plItem("pl-fx-04");
+  assert.ok(X.evaluate(pl, { text: pl.answers[0] }).correct);
+  assert.strictEqual(X.trTokens("didn't go").length, 2, "a contraction is one word now");
+  const tooLong = X.evaluate(pl, { text: "ma już dwadzieścia lat" }); // pl-fixture
+  assert.ok(/2–3 words \(you have 4 words\)/.test(tooLong.msg), tooLong.msg);
+  const acc = X.evaluate(pl, { text: global.LM.lang.stripMarks(pl.answers[0]) });
+  assert.deepStrictEqual([acc.correct, acc.near], [false, "accents"]);
+  assert.ok(X.evaluate(pl, { text: global.LM.lang.stripMarks(pl.answers[0]) }, { lenientAccents: true }).correct);
 });
-test("normalizeSentence: contractions expanded on both sides, commas and apostrophes", function () {
-  const N = X.normalizeSentence;
-  assert.strictEqual(N("I don’t know, really."), "i do not know really");
-  assert.strictEqual(N("We won't go"), "we will not go");
-  assert.strictEqual(N("She can't swim"), "she cannot swim");
-  assert.strictEqual(N("They're here and we've seen it"), "they are here and we have seen it");
-  assert.strictEqual(N("I'll call, I'm sure"), "i will call i am sure");
-  assert.strictEqual(N("It isn't, is it?"), "it is not is it");
-  assert.strictEqual(N("Let's go!"), "let us go");
-  assert.strictEqual(N("  Hello ,  world  "), "hello world");
-  // 's and 'd are ambiguous — they stay, the comparison checks both expansions
-  assert.strictEqual(N("He's gone"), "he's gone");
-  assert.ok(X.sentenceVariants("He's gone").indexOf("he has gone") !== -1);
-  assert.ok(X.sentenceVariants("I'd go").indexOf("i would go") !== -1 && X.sentenceVariants("I'd go").indexOf("i had go") !== -1);
+test("normalizeSentence: the language's punctuation („ ” « » dashes) removed, diacritics kept, no contraction rule", function () { // pl-fixture
+  langFixture("lang").normalizeSentence.forEach(function (c) {
+    assert.strictEqual(X.normalizeSentence(c[0]), c[1], c[0]);
+    assert.strictEqual(global.LM.lang.normalizeSentence(c[0]), c[1], c[0]);
+  });
+  assert.strictEqual(X.normalizeSentence("I don’t know, really."), "i don't know really", "English contractions are not expanded any more");
+  assert.strictEqual(X.normalizeSentence("  Hello ,  world  "), "hello world");
+  assert.strictEqual(X.sentenceVariants, undefined, "the English 's / 'd readings are deleted");
 });
-test("translate: a match after normalization (contractions, commas), I'd = I would, possessive 's stays", function () {
-  const it = pilot("v6-pilot-07");
-  assert.ok(X.evaluate(it, { text: "if I had more time I'd learn to play the guitar" }).correct);
-  assert.ok(X.evaluate(it, { text: "If I had more time, I would learn to play the guitar!" }).correct);
-  assert.ok(!X.evaluate(it, { text: "If I have more time, I will learn to play the guitar." }).correct);
-  const pos = { type: "translate", accepted: ["This is John's car."] };
-  assert.ok(X.evaluate(pos, { text: "this is johns car" }).correct === false);
-  assert.ok(X.evaluate(pos, { text: "This is John’s car" }).correct);
-  assert.ok(X.evaluate({ type: "translate", accepted: ["She has gone home."] }, { text: "She's gone home" }).correct);
-  assert.ok(!X.evaluate({ type: "translate", accepted: ["She is at home."] }, { text: "" }).answered);
+test("translate: a match after normalization, every accepted order, hints near: accents / typo, lenient accents", function () {
+  const it = plItem("pl-fx-03");
+  assert.ok(X.evaluate(it, { text: it.accepted[0].toLowerCase().replace(/[.]/g, "") }).correct);
+  assert.ok(X.evaluate(it, { text: it.accepted[1] }).correct, "the second order");
+  const acc = X.evaluate(it, { text: global.LM.lang.stripMarks(it.accepted[1]) });
+  assert.deepStrictEqual([acc.correct, acc.near, acc.closest, acc.closestText], [false, "accents", 1, it.accepted[1]]);
+  assert.ok(X.evaluate(it, { text: global.LM.lang.stripMarks(it.accepted[0]) }, { lenientAccents: true }).lenient);
+  assert.ok(!X.evaluate({ type: "translate", accepted: ["x"] }, { text: "" }).answered);
 });
-test("word-by-word comparison: missing, extra, replaced; the closest variant; a typo", function () {
-  const d = X.wordDiff(["have", "you", "ever", "been", "to", "london"], ["have", "you", "been", "in", "to", "london", "yet"]);
-  assert.deepStrictEqual(d.ops.filter(function (o) { return o.op !== "same"; }), [
-    { op: "missing", word: "ever" }, { op: "extra", got: "in" }, { op: "extra", got: "yet" }
-  ]);
-  const r = X.wordDiff(["i", "went", "home"], ["i", "go", "home"]);
-  assert.deepStrictEqual(r.ops[1], { op: "replace", word: "went", got: "go" });
-  const it = pilot("v6-pilot-08");
-  const res = X.evaluate(it, { text: "Have you ever been in Londn?" });
-  assert.ok(!res.correct && res.spelling && res.closest === 1, JSON.stringify(res));
-  const miss = X.evaluate(it, { text: "Have you been to London?" });
-  assert.ok(!miss.spelling && miss.closest === 0 && miss.diff.some(function (o) { return o.op === "missing" && o.word === "ever"; }));
+test("word-by-word comparison: missing, extra, replaced (6-word Polish sentence); the closest variant; a typo", function () {
+  const D = langFixture("items").diff;
+  assert.strictEqual(D.model.length, 6);
+  assert.deepStrictEqual(X.wordDiff(D.model, D.got).ops.filter(function (o) { return o.op !== "same"; }), D.ops);
+  const r = X.wordDiff(["mam", "brata"], ["mam", "brat"]);
+  assert.deepStrictEqual(r.ops[1], { op: "replace", word: "brata", got: "brat" });
+  const it = plItem("pl-fx-03");
+  const miss = X.evaluate(it, { text: "Mam brata." });
+  assert.ok(!miss.near && miss.closest === 0 && miss.diff.some(function (o) { return o.op === "missing"; }), JSON.stringify(miss));
+  const second = X.evaluate(it, { text: "Mam siostrę i." }); // pl-fixture
+  assert.strictEqual(second.closest, 1, "the closest accepted order");
 });
 test("dictation: text and variants from accepted; skipped (no voice) — 0 of 0, does not count", function () {
   const it = pilot("v6-pilot-10");
@@ -952,28 +962,37 @@ test("weighted drawing: an item with weight 2 comes into the set more often", fu
 
 console.log("\nWyszukiwarka");
 const SR = global.LM.searchLogic;
-const recs = SR.prepare([ // pl-fixture: search over target-language text
-  { id: "1", group: "pages", title: "Present Perfect", headings: ["Pułapki Polaków", "Budowa"], summary: "Przeszłość związana z teraźniejszością.", text: "Have/has + trzecia forma. Byłem w Paryżu dwa razy." }, // pl-fixture
-  { id: "2", group: "pages", title: "Present Simple", headings: [], summary: "Rutyna.", text: "Mieszkam we Wrocławiu." }, // pl-fixture
-  { id: "3", group: "lab", title: "Past Simple", headings: [], summary: "Zakończone zdarzenia.", text: "Present Perfect kontra Past Simple." }, // pl-fixture
-  { id: "4", group: "exercises", title: "Zaimki dzierżawcze – sprawdź się", headings: [], summary: "", text: "" } // pl-fixture
-]);
+const SFX = langFixture("search");
+const recs = SR.prepare(SFX.records.concat([
+  { id: "5", group: "pages", title: "Present Perfect", headings: [], summary: "", text: "Present tense." },
+  { id: "6", group: "lab", title: "Present Simple", headings: [], summary: "", text: "" }
+]));
 
-test("fold: Polish letters, case, the same length", function () {
-  assert.strictEqual(SR.fold("ZAŻÓŁĆ Gęślą"), "zazolc gesla"); // pl-fixture
-  assert.strictEqual(SR.fold("Łódź").length, 4); // pl-fixture
+test("fold: LM.lang.fold — Polish letters (ł has no decomposition), case, quotes, the same length", function () { // pl-fixture
+  langFixture("lang").fold.forEach(function (c) {
+    assert.strictEqual(SR.fold(c[0]), c[1], c[0]);
+    assert.strictEqual(SR.fold(c[0]).length, c[0].length, "length " + c[0]);
+  });
+  assert.strictEqual("ł".normalize("NFD"), "ł", "NFD does not split ł; fold must handle it itself"); // pl-fixture
   assert.deepStrictEqual(SR.tokenize("Don’t stop, I'm here!"), ["don't", "stop", "i'm", "here"]);
+  assert.deepStrictEqual(SR.tokenize("biało-czerwona A1"), ["bialo-czerwona", "bialo", "czerwona", "a1"]); // pl-fixture
 });
-test("search: prefix, Polish letters with and without marks, every word must match, field weights", function () {
+test("search: Polish words with and without marks (ł too), hyphenated words, every word must match", function () { // pl-fixture
   const ids = function (q) { return [].concat.apply([], SR.search(recs, q).groups.map(function (g) { return g.results.map(function (r) { return r.record.id; }); })); };
-  assert.deepStrictEqual(ids("pres").slice(0, 2).sort(), ["1", "2"]);
-  assert.deepStrictEqual(ids("wroclawiu"), ["2"]);
-  assert.deepStrictEqual(ids("Wrocławiu"), ["2"]); // pl-fixture
-  assert.deepStrictEqual(ids("dzierzawcze"), ["4"]);
-  assert.deepStrictEqual(ids("present paryzu"), ["1"]); // both words
-  const pp = SR.search(recs, "present perfect").groups;
-  assert.strictEqual(pp[0].results[0].record.id, "1"); // title > text (record 3)
-  assert.deepStrictEqual(ids("zzzz"), []);
+  SFX.queries.forEach(function (c) { assert.deepStrictEqual(ids(c[0]), c[1], c[0]); });
+  assert.deepStrictEqual(ids("pres").slice(0, 2).sort(), ["5", "6"]);
+  assert.deepStrictEqual(ids("mieszkam lodzi"), ["2"]); // both words
+  assert.deepStrictEqual(ids("mieszkam zzzz"), []);
+});
+test("highlight and snippet with Polish text: offsets in the original, ł matched by l and by ł", function () { // pl-fixture
+  SFX.highlight.forEach(function (c) {
+    const parts = SR.highlight(c[0], c[1]);
+    assert.strictEqual(parts.map(function (x) { return x.text; }).join(""), c[0], "the text unchanged");
+    assert.deepStrictEqual(parts.filter(function (x) { return x.hit; }).map(function (x) { return x.text; }), c[2], c[0] + " / " + c[1]);
+  });
+  const sn = SR.snippet(SFX.records[1].text + " <b>x</b>", "wroclaw");
+  assert.ok(sn.some(function (x) { return x.hit && /^Wroc/.test(x.text); }));
+  assert.ok(sn.map(function (x) { return x.text; }).join("").indexOf("<b>") !== -1); // the text unchanged, for textContent
 });
 test("search: typos only from 5 characters, swapped letters = one typo", function () {
   assert.ok(SR.search(recs, "presnet").total > 0);
@@ -981,18 +1000,14 @@ test("search: typos only from 5 characters, swapped letters = one typo", functio
   assert.strictEqual(SR.distance("presnet", "present"), 1);
 });
 test("search: anchor to a heading, groups in the given order, limit and “show more”", function () {
-  const r = SR.search(recs, "pulapki", { groups: ["lab", "pages"] });
-  assert.strictEqual(r.groups[0].results[0].anchor, "Pułapki Polaków"); // pl-fixture
+  const r = SR.search(recs, "typowe", { groups: ["lab", "pages"] });
+  assert.strictEqual(r.groups[0].results[0].anchor, SFX.records[0].headings[1]);
   const g = SR.search(recs, "present", { groups: ["lab", "pages"], limit: 1 });
   assert.deepStrictEqual(g.groups.map(function (x) { return x.group; }), ["lab", "pages"]);
   assert.strictEqual(g.groups[1].results.length, 1);
-  assert.strictEqual(g.groups[1].total, 2);
-  assert.strictEqual(SR.search(recs, "present", { limit: 1, expanded: { pages: true } }).groups.find(function (x) { return x.group === "pages"; }).results.length, 2);
+  assert.strictEqual(SR.search(recs, "present", { limit: 1, expanded: { lab: true } }).groups.find(function (x) { return x.group === "lab"; }).results.length, 1);
 });
 test("snippet and highlight: parts with a hit flag, no HTML", function () {
-  const s = SR.snippet("Mieszkam we Wrocławiu od lat <b>pięciu</b>.", "wroclaw"); // pl-fixture
-  assert.ok(s.some(function (p) { return p.hit && p.text === "Wrocławiu"; })); // pl-fixture
-  assert.ok(s.map(function (p) { return p.text; }).join("").indexOf("<b>") !== -1); // the text unchanged, for textContent
   assert.deepStrictEqual(SR.highlight("Present Perfect", "perf").filter(function (p) { return p.hit; }).map(function (p) { return p.text; }), ["Perfect"]);
 });
 
@@ -1048,18 +1063,26 @@ test("preview and formatDelay: preview of the due dates of the four ratings", fu
 
 console.log("\nFlashcards: answer check, cloze, queue, TSV/CSV, state (spec 10, section 8)");
 const FL = global.LM.cardsLogic;
-test("normalize: lower case, spaces, apostrophes, punctuation at the edges", function () {
+test("normalize: lower case, spaces, apostrophes, punctuation at the edges (Polish quotes too), diacritics kept", function () {
   assert.strictEqual(FL.normalize("  Don’t   Give Up!  "), "don't give up");
   assert.strictEqual(FL.normalize("“Come up with”."), "come up with");
   assert.strictEqual(FL.normalize("well-known"), "well-known"); // a hyphen inside stays
+  langFixture("words").selection.forEach(function (c) { assert.strictEqual(FL.normalize(c[0]), c[1].toLowerCase(), c[0]); });
 });
-test("checkAnswer: exact / typo (Levenshtein 1, ≥ 5 characters) / wrong / empty", function () {
-  assert.deepStrictEqual(FL.checkAnswer("Decision", ["decision"]).result, "exact");
-  assert.strictEqual(FL.checkAnswer("decison", ["decision"]).result, "typo");
-  assert.strictEqual(FL.checkAnswer("decison", ["decision"]).suggested, "hard");
-  assert.strictEqual(FL.checkAnswer("decide", ["decision"]).suggested, "again");
-  assert.strictEqual(FL.checkAnswer("bok", ["box"]).result, "wrong"); // short: no tolerance
-  assert.strictEqual(FL.checkAnswer("   ", ["box"]).result, "empty");
+test("checkAnswer: the shared LM.exLogic.match — exact / accents / ending / typo / wrong / empty, lenient accents", function () {
+  const M = langFixture("match").cases.filter(function (c) { return !c.sentence; });
+  M.forEach(function (c) {
+    const r = FL.checkAnswer(c.answer, c.accepted);
+    const want = c.answered === false ? "empty" : c.ok ? "exact" : c.near || "wrong";
+    assert.strictEqual(r.result, want, c.answer);
+    if (want !== "empty") assert.strictEqual(r.expected, c.closest, c.answer);
+  });
+  assert.strictEqual(FL.checkAnswer("siotrę", ["siostrę"]).suggested, "hard"); // pl-fixture
+  assert.strictEqual(FL.checkAnswer("kawe", ["kawę"]).suggested, "hard"); // pl-fixture
+  assert.strictEqual(FL.checkAnswer("kawa", ["kawę"]).suggested, "again"); // pl-fixture
+  const len = FL.checkAnswer("kawe", ["kawę"], { lenientAccents: true }); // pl-fixture
+  assert.deepStrictEqual([len.result, len.lenient, len.suggested], ["exact", true, "good"]);
+  assert.strictEqual(FL.checkAnswer("   ", ["kot"]).result, "empty");
 });
 test("checkAnswer: alternatives a|b, case and apostrophes", function () {
   const alts = FL.parseCloze("I {{gave up|quit}} smoking.").answers;
@@ -1577,18 +1600,32 @@ test("wordFromSelection: 1–6 words and up to 60 characters, punctuation edges 
   assert.strictEqual(FL.wordFromSelection("don’t"), "don’t");
   assert.strictEqual(FL.wordFromSelection(""), "");
 });
-test("isPolish: Polish letters turn off “Add to My words” (3.4)", function () {
-  ["zażółć", "Łódź", "więc", "ŻÓŁW", "sąd", "kość", "źle", "ń"].forEach(function (w) { assert.ok(FL.isPolish(w), w); }); // pl-fixture
-  ["commute", "naïve café", "über", "résumé", "", null].forEach(function (w) { assert.ok(!FL.isPolish(w), String(w)); });
+test("isTarget (LM.lang.isTarget): 10 Polish and 10 English sentences; diacritics alone decide", function () {
+  const T = langFixture("lang").isTarget;
+  assert.strictEqual(T.polish.length, 10);
+  assert.strictEqual(T.english.length, 10);
+  T.polish.forEach(function (x) { assert.ok(FL.isTarget(x), x); });
+  T.english.forEach(function (x) { assert.ok(!FL.isTarget(x), x); });
+  ["", null, "naïve café", "über"].forEach(function (x) { assert.ok(!FL.isTarget(x), String(x)); });
+  assert.strictEqual(FL.isPolish, undefined, "the old meaning (explanation language) is gone");
 });
-test("splitSentences / extractSentence: abbreviations (e.g., Mr., etc.), numbers 3.5, quotes, initials", function () {
-  const t = "Mr. Brown works hard, e.g. on Sundays. He earns 3.5 thousand pounds. “Really?” she asked. J. K. Rowling wrote it. We use tea, coffee, etc. They never complain.";
-  assert.strictEqual(FL.extractSentence(t, "Sundays"), "Mr. Brown works hard, e.g. on Sundays.");
-  assert.strictEqual(FL.extractSentence(t, "thousand"), "He earns 3.5 thousand pounds.");
-  assert.strictEqual(FL.extractSentence(t, "asked"), "“Really?” she asked.");
-  assert.strictEqual(FL.extractSentence(t, "Rowling"), "J. K. Rowling wrote it.");
-  assert.strictEqual(FL.extractSentence(t, "tea"), "We use tea, coffee, etc. They never complain."); // etc. nie dzieli
-  assert.strictEqual(FL.extractSentence("Dr. Smith said so. Prof. Lee agreed.", "agreed"), "Prof. Lee agreed.");
+test("My words with Polish text: selection cleaning, word keys keep diacritics", function () {
+  const W = langFixture("words");
+  W.selection.forEach(function (c) { assert.strictEqual(FL.wordFromSelection(c[0]), c[1], c[0]); });
+  W.sameKey.forEach(function (c) { assert.strictEqual(FL.wordKey(c[0]), FL.wordKey(c[1]), c.join(" = ")); });
+  W.differentKey.forEach(function (c) { assert.notStrictEqual(FL.wordKey(c[0]), FL.wordKey(c[1]), c.join(" ≠ ")); });
+});
+test("splitSentences / extractSentence: Polish abbreviations (np., ul., m.in., itd., ok., godz., prof.), numbers, „quotes”, initials", function () { // pl-fixture
+  const W = langFixture("words");
+  W.extract.forEach(function (c) { assert.strictEqual(FL.extractSentence(W.text, c[0]), c[1], c[0]); });
+  // the abbreviation list comes from LM.lang
+  assert.ok(global.LM.lang.abbreviations.indexOf("np.") !== -1);
+});
+test("makeCloze with Polish words: diacritics, hyphens, case from the text, word boundaries", function () {
+  langFixture("words").cloze.forEach(function (c) {
+    assert.strictEqual(FL.makeCloze(c[0], c[1]), c[2], c[0] + " / " + c[1]);
+    if (c[2]) assert.strictEqual(FL.parseCloze(c[2]).ok, true);
+  });
 });
 test("extractSentence: a table cell and a single sentence, case and spaces, the selection not in the text", function () {
   assert.strictEqual(FL.extractSentence("  Commute   to work.  ", "COMMUTE"), "Commute to work.");
@@ -2350,16 +2387,129 @@ test("LM.APP: storage prefix plm., target language pl, export name", function ()
   assert.strictEqual(global.LM.APP.exportName, "polish-levels-map");
   assert.strictEqual(global.LM.APP.chars.length, 9);
 });
-test("LM.lang stub: full interface; stripMarks and fold keep the length", function () {
+test("LM.lang: full interface (spec 05 §1); stripMarks and fold keep the length; countWords", function () {
   const LG = global.LM.lang;
-  ["stripMarks", "fold", "normalizeAnswer", "normalizeSentence", "variants", "countWords", "isTarget"].forEach(function (k) { assert.strictEqual(typeof LG[k], "function", k); });
+  ["stripMarks", "fold", "normalizeAnswer", "normalizeSentence", "variants", "countWords", "isTarget", "keepsCapital"].forEach(function (k) { assert.strictEqual(typeof LG[k], "function", k); });
   assert.ok(Array.isArray(LG.abbreviations) && Array.isArray(LG.functionWords) && typeof LG.wordPattern === "string");
-  const s = "Zażółć gęślą jaźń. ŁÓDŹ"; // pl-fixture
-  assert.strictEqual(LG.stripMarks(s), "Zazolc gesla jazn. LODZ");
-  assert.strictEqual(LG.fold(s).length, s.length);
-  assert.deepStrictEqual(LG.variants("kawę"), ["kawę"]); // pl-fixture
-  assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę"); // pl-fixture
+  ["targetVoices", "speechLang", "hasTargetLetters", "foldChars"].forEach(function (k) { assert.strictEqual(LG[k], undefined, k + " moved to LM.speech / removed"); });
+  const F = langFixture("lang");
+  F.stripMarks.forEach(function (c) { assert.strictEqual(LG.stripMarks(c[0]), c[1]); assert.strictEqual(LG.stripMarks(c[0]).length, c[0].length); });
+  F.fold.forEach(function (c) { assert.strictEqual(LG.fold(c[0]).length, c[0].length); });
+  F.countWords.forEach(function (c) { assert.strictEqual(LG.countWords(c[0]), c[1], c[0]); });
+  F.normalizeAnswer.forEach(function (c) { assert.strictEqual(LG.normalizeAnswer(c[0]), c[1], c[0]); });
+  assert.deepStrictEqual(LG.variants(F.stripMarks[0][0]), [F.stripMarks[0][0]]);
+  const word = new RegExp("^" + LG.wordPattern + "$", "u");
+  F.isTarget.polish.join(" ").replace(/[.,?!]/g, "").split(" ").forEach(function (w) { assert.ok(word.test(w), w); });
+  assert.ok(word.test("biało-czerwona") && !word.test("-x") && !word.test("a b")); // pl-fixture
 });
+test("LM.exLogic.match: every fixture case (exact, accents, ending, typo, sentence diff)", function () {
+  langFixture("match").cases.forEach(function (c) {
+    const r = X.match(c.answer, c.accepted, { sentence: !!c.sentence });
+    assert.deepStrictEqual([r.ok, r.near, r.closest], [c.ok, c.near, c.closest], c.answer + (c.why ? " (" + c.why + ")" : ""));
+    if (c.index !== undefined) assert.strictEqual(r.index, c.index, c.answer);
+    if (c.answered === false) assert.strictEqual(r.answered, false);
+    if (c.sentence && !c.ok && !c.near) assert.ok(Array.isArray(r.diff) && r.diff.length, "a word diff for a wrong sentence");
+  });
+});
+
+console.log("\nSpeech: LM.speech (spec 05 §4) with a fake speechSynthesis");
+require(path.join(__dirname, "..", "js", "speech.js"));
+/** A fake Web Speech API: voices, spoken utterances (ended at once when auto), cancel count. */
+function fakeSpeech(voices, auto) {
+  const spoken = [];
+  const api = {
+    spoken: spoken, cancels: 0, listeners: [],
+    getVoices: function () { return voices; },
+    speak: function (u) { spoken.push(u); if (auto) setImmediate(function () { if (u.onend) u.onend(); }); },
+    cancel: function () { api.cancels++; },
+    addEventListener: function (t, fn) { api.listeners.push(fn); }
+  };
+  global.speechSynthesis = api;
+  global.SpeechSynthesisUtterance = function (text) { this.text = text; };
+  return api;
+}
+function noSpeech() { delete global.speechSynthesis; delete global.SpeechSynthesisUtterance; }
+const SP = global.LM.speech;
+const V = function (lang, name, local) { return { lang: lang, name: name, localService: local !== false }; };
+
+test("no synthesizer → unsupported: nothing is read, available() false", function () {
+  noSpeech();
+  assert.strictEqual(SP._refresh(true), "unsupported");
+  assert.strictEqual(SP.available(), false);
+  assert.strictEqual(SP.speak("x"), false);
+  assert.strictEqual(SP.speakScript("A: x"), false);
+});
+test("voices without the target language → none (transcript, no dictation, hidden listen buttons)", function () {
+  const api = fakeSpeech([V("en-US", "US"), V("de-DE", "DE")]); // pl-fixture
+  assert.strictEqual(SP._refresh(true), "none");
+  assert.strictEqual(SP.available(), false);
+  assert.strictEqual(SP.speak("x"), false);
+  assert.strictEqual(api.spoken.length, 0);
+});
+test("voices still loading (empty list): loading, then none after the wait; speak uses only the language code", function () {
+  const api = fakeSpeech([]);
+  assert.strictEqual(SP._refresh(false), "loading");
+  assert.strictEqual(SP.speak("tekst"), true);
+  assert.strictEqual(api.spoken[0].lang, global.LM.APP.speech.voices[0]);
+  assert.strictEqual(api.spoken[0].voice, undefined);
+  SP.stop();
+  assert.strictEqual(SP._refresh(true), "none");
+});
+test("voice choice: prefix match on LM.APP.speech.voices, pl-PL before pl, local voices first, no other variants", function () { // pl-fixture
+  const list = [V("en-GB", "GB"), V("pl", "plain"), V("pl-PL", "online", false), V("pl_PL", "local"), V("plx-XX", "not")]; // pl-fixture
+  const picked = SP._pickVoices(list).map(function (v) { return v.name; });
+  assert.deepStrictEqual(picked, ["local", "online", "plain"]);
+});
+test("speak: rate default 0.9, gaps read as a pause, the same text again stops (toggle), onend called", function () {
+  const api = fakeSpeech([V("pl-PL", "Zosia")]); // pl-fixture
+  assert.strictEqual(SP._refresh(true), "ready");
+  assert.ok(SP.available());
+  assert.strictEqual(SP.speak("Lubię ___ z mlekiem."), true); // pl-fixture
+  const u = api.spoken[0];
+  assert.strictEqual(u.rate, global.LM.APP.speech.rate);
+  assert.strictEqual(u.voice.name, "Zosia");
+  assert.ok(!/_/.test(u.text) && /…/.test(u.text), u.text);
+  assert.ok(SP.speaking());
+  assert.strictEqual(SP.speak("Lubię ___ z mlekiem."), false, "a second call while speaking stops"); // pl-fixture
+  assert.ok(!SP.speaking());
+  let ended = false;
+  SP.speak("Dalej.", { rate: 0.7, onend: function () { ended = true; } }); // pl-fixture
+  assert.strictEqual(api.spoken[1].rate, 0.7, "dictation keeps its slow replay");
+  api.spoken[1].onend();
+  assert.ok(ended && !SP.speaking());
+});
+test("speakScript: speaker labels not read, two voices take turns (A / B, names in order of appearance)", function () {
+  const api = fakeSpeech([V("pl-PL", "One"), V("pl-PL", "Two")]); // pl-fixture
+  SP._refresh(true);
+  const lines = ["A: Dzień dobry.", "B: Dzień dobry pani.", "Anna: Cześć!", "Łukasz: Cześć, Anno.", "Anna: Pa!"]; // pl-fixture
+  let finished = false;
+  assert.ok(SP.speakScript(lines.join("\n"), { pause: 0, onend: function () { finished = true; } }));
+  // utterances are queued one after another: end each in turn
+  for (let i = 0; i < lines.length; i++) {
+    const u = api.spoken[i];
+    assert.ok(u, "line " + i);
+    assert.ok(!/^[^:]+:/.test(u.text), "label read: " + u.text);
+    u.onend();
+  }
+  assert.deepStrictEqual(api.spoken.map(function (u) { return u.voice.name; }), ["One", "Two", "One", "Two", "One"]);
+  assert.ok(finished);
+});
+test("onChange: listeners hear the new status; stop() cancels", function () {
+  const api = fakeSpeech([]);
+  SP._refresh(false);
+  const seen = [];
+  const off = SP.onChange(function (st) { seen.push(st); });
+  fakeSpeech([V("pl-PL", "P")]); // pl-fixture
+  SP._refresh(true);
+  off();
+  noSpeech();
+  SP._refresh(true);
+  assert.deepStrictEqual(seen, ["ready"]);
+  assert.ok(api.cancels >= 0);
+});
+noSpeech();
+SP._refresh(true);
+
 
 console.log("\nEnglish UI helpers: LM.plural and LM.fmt (spec 04 §1)");
 require(path.join(__dirname, "..", "js", "utils.js"));
@@ -2411,9 +2561,19 @@ test("check-lang: diacritics, Polish opening quote, stop words, locales, legacy 
   assert.deepStrictEqual(rules("const a = \"Dzień dobry\";"), ["diacritics"]); // pl-fixture
   assert.deepStrictEqual(rules("const a = \"„Hi”\";"), ["quote"]); // pl-fixture
   assert.deepStrictEqual(rules("label: \"Dalej\""), ["stop-word"]); // pl-fixture
-  assert.deepStrictEqual(rules("u.lang = \"en-GB\";"), ["locale"]); // pl-fixture
+  assert.deepStrictEqual(rules("u.lang = \"en-GB\";"), ["locale", "lang-code"]); // pl-fixture
   assert.deepStrictEqual(rules("ELM.x(); elm_theme"), ["legacy-name"]); // pl-fixture
   assert.deepStrictEqual(rules("text: “Next”, \"Continue the trail\", helmet, element, dalejx"), []);
+  // stage 3: language facts only in js/lang.js, js/config.js and content/
+  assert.deepStrictEqual(rules("el(\"p\", { lang: \"en\" })"), ["lang-code"]);
+  assert.deepStrictEqual(rules("if (code === \"pl\") x();"), ["lang-code"]);
+  assert.deepStrictEqual(rules("el(\"p\", { lang: LM.APP.targetLang })"), []);
+  assert.deepStrictEqual(rules("const A = [\"np.\", \"m.in.\"];"), ["abbreviation"]);
+  assert.deepStrictEqual(rules("const W = [\"jest\", \"nie\"];"), ["function-word"]);
+  assert.deepStrictEqual(rules("const FIXED_CONTRACTIONS = {};"), ["english-rule"]);
+  assert.deepStrictEqual(rules("window.speechSynthesis.cancel();"), ["speech-api"]);
+  assert.deepStrictEqual(CL.checkText("js/speech.js", "window.speechSynthesis.cancel();", []), [], "LM.speech itself may use the API");
+  assert.deepStrictEqual(CL.checkText("tools/build.js", "const A = [\"np.\"];", []), [], "js-only rules do not apply to tools");
   const allow = [{ file: "js/x.js", contains: "Dalej", reason: "test", used: 0 }]; // pl-fixture
   assert.deepStrictEqual(CL.checkText("js/x.js", "Dalej", allow), []); // pl-fixture
   assert.strictEqual(allow[0].used, 1);

@@ -1,0 +1,29 @@
+{
+  "about": "My words and flashcards with Polish text: sentence splitting with Polish abbreviations, cloze around words with diacritics and hyphens, selection cleaning.",
+  "text": "Kupiłam owoce, np. jabłka i gruszki. Kosztowały 3,5 zł. „Naprawdę?” zapytał. Dr Nowak mieszka przy ul. Długiej. Lubię m.in. jazz, rock itd. Wracam ok. godz. 18. J. Tuwim napisał ten wiersz. Prof. Lis to potwierdził.",
+  "extract": [
+    ["gruszki", "Kupiłam owoce, np. jabłka i gruszki."],
+    ["Kosztowały", "Kosztowały 3,5 zł."],
+    ["zapytał", "„Naprawdę?” zapytał."],
+    ["Długiej", "Dr Nowak mieszka przy ul. Długiej."],
+    ["jazz", "Lubię m.in. jazz, rock itd. Wracam ok. godz. 18."],
+    ["wiersz", "J. Tuwim napisał ten wiersz."],
+    ["potwierdził", "Prof. Lis to potwierdził."]
+  ],
+  "cloze": [
+    ["Piję kawę z mlekiem.", "kawę", "Piję {{kawę}} z mlekiem."],
+    ["Mam biało-czerwoną flagę.", "biało-czerwoną", "Mam {{biało-czerwoną}} flagę."],
+    ["Łódź to duże miasto. Lubię Łódź.", "łódź", "{{Łódź}} to duże miasto. Lubię Łódź."],
+    ["Dzień dobry, pani Anno!", "dzień dobry", "{{Dzień dobry}}, pani Anno!"],
+    ["Kotka śpi na oknie.", "kot", null],
+    ["Żółw jest wolny.", "zolw", null]
+  ],
+  "selection": [
+    ["  kawę, ", "kawę"],
+    ["„Dzień dobry”.", "Dzień dobry"],
+    ["(biało-czerwona)", "biało-czerwona"],
+    ["– żółć –", "żółć"]
+  ],
+  "sameKey": [["Kawę.", "kawę"], ["ŻÓŁW", "żółw"]],
+  "differentKey": [["kawę", "kawe"], ["kot", "kota"]]
+}

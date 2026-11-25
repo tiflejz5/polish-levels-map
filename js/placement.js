@@ -195,7 +195,7 @@ window.LM = window.LM || {};
 
     const body = [
       // Reading: a short text in a frame above the question (spec v6 13, 1.2)
-      q.passage ? el("div", { class: "lt-passage", lang: "en" }, [
+      q.passage ? el("div", { class: "lt-passage", lang: LM.APP.targetLang }, [
         el("p", { class: "lt-passage-label", text: "Read the text:" }),
         el("p", { class: "lt-passage-text", text: q.passage })
       ]) : null,
@@ -270,7 +270,7 @@ window.LM = window.LM || {};
       wrong.length ? el("ol", { class: "lt-wrong" }, wrong.map(function (x) {
         const link = x.q.itemId && LM.mistakes ? LM.mistakes.itemLink(x.q.itemId) : null;
         return el("li", null, [
-          x.q.passage ? el("details", { class: "lt-wrong-passage" }, [el("summary", null, "Text for the question"), el("p", { lang: "en", text: x.q.passage })]) : null,
+          x.q.passage ? el("details", { class: "lt-wrong-passage" }, [el("summary", null, "Text for the question"), el("p", { lang: LM.APP.targetLang, text: x.q.passage })]) : null,
           el("p", { class: "lt-wrong-q" }, [el("span", { class: "c1-chip", text: x.q.level }), " ", x.q.question]),
           el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: x.q.options[x.q.correct] })]),
           x.a.chosen >= 0 ? el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: x.q.options[x.a.chosen] || "" })]) : el("p", { class: "tool-note", text: "You chose “I don't know”." }),

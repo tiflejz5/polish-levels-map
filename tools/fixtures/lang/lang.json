@@ -1,0 +1,60 @@
+{
+  "about": "Polish fixtures for LM.lang (spec 05 §6). Each pair is [input, expected].",
+  "stripMarks": [
+    ["Zażółć gęślą jaźń. ŁÓDŹ", "Zazolc gesla jazn. LODZ"],
+    ["Ćma, Śląsk, Źródło, Żaba, Ńa", "Cma, Slask, Zrodlo, Zaba, Na"],
+    ["kawa", "kawa"],
+    ["", ""]
+  ],
+  "fold": [
+    ["ZAŻÓŁĆ Gęślą", "zazolc gesla"],
+    ["„Tak” – powiedział’", "\"tak\" – powiedzial'"],
+    ["Łódź", "lodz"],
+    ["Café NAÏVE", "cafe naive"]
+  ],
+  "normalizeAnswer": [
+    ["  Kawę  proszę. ", "kawę proszę"],
+    ["Mam kota!", "mam kota"],
+    ["Czy masz czas?", "czy masz czas"],
+    ["Ma’am", "ma'am"]
+  ],
+  "normalizeSentence": [
+    ["„Nie wiem” – powiedziała, i wyszła.", "nie wiem powiedziała i wyszła"],
+    ["Tak, to prawda — chyba…", "tak to prawda chyba"],
+    ["Biało-czerwona flaga (nowa)!", "biało-czerwona flaga nowa"],
+    ["«Dzień dobry», pani Anno.", "dzień dobry pani anno"]
+  ],
+  "countWords": [
+    ["Mam brata i siostrę.", 4],
+    ["Nie wiem – może jutro.", 4],
+    ["  biało-czerwona  flaga ", 2],
+    ["Mam 30 lat.", 3],
+    ["", 0]
+  ],
+  "isTarget": {
+    "polish": [
+      "Mam brata i siostrę.",
+      "Czytasz książkę czy gazetę?",
+      "To jest moja mama.",
+      "Nie mam czasu na kawę.",
+      "Gdzie jest dworzec?",
+      "Jutro idę do kina z Anną.",
+      "Tak, ale nie dzisiaj.",
+      "Poproszę herbatę z cytryną.",
+      "W sobotę jedziemy na wieś.",
+      "Czy masz brata?"
+    ],
+    "english": [
+      "I have a brother and a sister.",
+      "Are you reading a book or a newspaper?",
+      "Polish nouns change their endings.",
+      "The accusative is the form for the direct object.",
+      "I'm buying a new phone.",
+      "Do you know my friend?",
+      "I want to go to a party.",
+      "Excuse me, ma'am.",
+      "To be or not to be.",
+      "A tea with lemon, please."
+    ]
+  }
+}

@@ -40,16 +40,14 @@ window.LM = window.LM || {};
   function elementOf(node) { return node && (node.nodeType === 1 ? node : node.parentElement); }
 
   /**
-   * A table cell in the explanation column (“English” / “Meaning”) — that text is not in the target language (spec 14, 3.4).
-   * TODO stage 3: replaced by lang attributes (spec 05 §5).
+   * Is the node inside target-language text? Content marks it with a lang attribute (spec 05 §5: Polish italics,
+   * the Polish table column, blockquotes; item and card fields). The nearest lang attribute decides, so English
+   * inside Polish (a gloss) is excluded again.
    */
-  function inExplanationColumn(cell) {
-    const table = cell.closest && cell.closest("table");
-    if (!table || !/^(TD|TH)$/.test(cell.tagName)) return false;
-    const idx = Array.prototype.indexOf.call(cell.parentElement.children, cell);
-    const head = table.querySelector("thead tr") || table.rows[0];
-    const h = head && head.cells[idx];
-    return !!h && h !== cell && /^\s*(english|in english|meaning)\b/i.test(h.textContent);
+  function inTarget(node) {
+    const e = elementOf(node);
+    const host = e && e.closest("[lang]");
+    return !!host && String(host.getAttribute("lang") || "").toLowerCase().split("-")[0] === LM.APP.targetLang;
   }
 
   function pageTitle() {
@@ -81,7 +79,7 @@ window.LM = window.LM || {};
     const word = L().wordFromSelection(text);
     return {
       text: text, word: word, block: block, blockText: block.textContent || "",
-      canWord: !!word && !L().isPolish(text) && !inExplanationColumn(block),
+      canWord: !!word && inTarget(s.anchorNode) && inTarget(s.focusNode),
       source: { route: /^#\/[^\s<>"]*$/.test(location.hash || "") ? location.hash.slice(0, 200) : "", title: pageTitle() }
     };
   }
@@ -365,7 +363,7 @@ window.LM = window.LM || {};
       });
       const day = function (c) { return String(c.addedAt || c.createdAt || ""); };
       shown.sort(function (a, b) {
-        if (view.sort === "az") return wordOf(a).localeCompare(wordOf(b), "en", { sensitivity: "base" });
+        if (view.sort === "az") return wordOf(a).localeCompare(wordOf(b), LM.APP.targetLang, { sensitivity: "base" });
         if (view.sort === "weakest") return weakness(b) - weakness(a) || day(b).localeCompare(day(a));
         return day(b).localeCompare(day(a));
       });
@@ -467,7 +465,7 @@ window.LM = window.LM || {};
     if (e.type === "mouseover" || e.type === "focusin") showTip(s); else hideTip(s);
   }
 
-  /** Underlines saved words in texts (no headings, links, code or item texts); ≤ 300 words. */
+  /** Underlines saved words in target-language texts (no English, headings, links, code or item texts); ≤ 300 words. */
   function applyHighlights() {
     if (hlObserver) hlObserver.disconnect();
     clearHighlights();
@@ -487,7 +485,7 @@ window.LM = window.LM || {};
         const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
           acceptNode: function (n) {
             const p = n.parentElement;
-            return p && !p.closest(HL_SKIP) && n.nodeValue.length > 2 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+            return p && !p.closest(HL_SKIP) && n.nodeValue.length > 2 && inTarget(p) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
           }
         });
         const nodes = [];

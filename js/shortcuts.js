@@ -2,11 +2,13 @@
  * shortcuts.js — the keyboard shortcut panel (“?”) and the shared sentence listening (pack v8, S5).
  *
  *   LM.shortcuts.open()        panel with the shortcuts of the current view (sets, review session, exams, topic pages)
- *   LM.shortcuts.speak(text)   reads a sentence aloud in the target language (voice from LM.lang); a second call while reading stops it
+ *   LM.shortcuts.speak(text)   reads a sentence aloud in the target language (LM.speech) with a message when there is no voice;
+ *                              a second call while reading stops it
  *
  * Shortcuts do not work in text fields (except Enter, which the views handle themselves).
  * Sets: js/exercise-engine.js, review session: js/cards.js, topic pages: js/handbook.js; here: “?”,
- * listening to a row in exam exercises (S, the last chosen row) and Enter = “Check” in exam fields.
+ * listening to a row in exam exercises (S, the last chosen row), S on a focused example of a topic page (spec 06 E5),
+ * and Enter = “Check” in exam fields. The Alt + letter rows come from LM.charbar (js/charbar.js).
  */
 window.LM = window.LM || {};
 
@@ -24,6 +26,7 @@ window.LM = window.LM || {};
         ["Enter", "Check, and after checking Next"],
         ["S", "listen to the sentence (before checking, a gap is a pause)"],
         ["Tab", "next gap"],
+        ["Alt + letter", "CHARS"],
         ["Backspace", "take back the last word (putting words in order)"],
         ["Ctrl + Enter", "Check in a multi-line field"],
         ["?", "this list"]
@@ -35,6 +38,7 @@ window.LM = window.LM || {};
         ["Space", "show the answer, then “Good”"],
         ["1–4", "ratings: Again, Hard, Good, Easy"],
         ["S", "listen to the sentence on the card (a gap is a pause)"],
+        ["Alt + letter", "CHARS"],
         ["Z", "undo the last rating"],
         ["W", "suspend the card"],
         ["B", "put the card off until tomorrow"],
@@ -47,6 +51,7 @@ window.LM = window.LM || {};
       rows: [
         ["Enter", "Check (in an answer field)"],
         ["Tab", "next field"],
+        ["Alt + letter", "CHARS"],
         ["S", "listen to the last chosen sentence (outside a text field)"],
         ["?", "this list"]
       ]
@@ -56,6 +61,7 @@ window.LM = window.LM || {};
       rows: [
         ["[", "previous topic of the level"],
         ["]", "next topic of the level"],
+        ["S", "listen to the focused example (a table row or a dialogue)"],
         ["/", "search"],
         ["Ctrl + K", "search"],
         ["?", "this list"]
@@ -90,6 +96,11 @@ window.LM = window.LM || {};
     const c = CONTEXTS[contextNow()];
     const list = el("dl", { class: "kbd-list" });
     c.rows.forEach(function (r) {
+      if (r[1] === "CHARS") {
+        const hint = LM.charbar ? LM.charbar.cycleHint() : "";
+        if (!hint) return;
+        r = [r[0], LM.APP.language + " letters in a text field: " + hint];
+      }
       list.appendChild(el("dt", null, r[0].split(" or ").map(function (k, i) {
         return [i ? " or " : null, el("kbd", { text: k })];
       })));
@@ -105,34 +116,15 @@ window.LM = window.LM || {};
 
   // ---------- listening ----------
 
-  let current = null;
-
-  function targetVoice() {
-    return LM.lang.targetVoices(window.speechSynthesis.getVoices())[0] || null;
-  }
-
-  /** Reads a sentence in the target language; true when it started (false: no synthesizer or no voice — then a message). Pressing S again stops it. */
+  /** Reads a sentence in the target language (LM.speech); true when it started. No synthesizer or no voice: a message. */
   function speak(text, rate) {
-    const s = window.speechSynthesis;
-    if (!s || typeof window.SpeechSynthesisUtterance !== "function") {
-      if (LM.ui) LM.ui.toast({ text: "This browser has no speech synthesizer.", icon: "volume-x" });
+    const st = LM.speech.status();
+    if (st === "unsupported" || st === "none") {
+      if (LM.ui) LM.ui.toast({ text: st === "unsupported" ? "This browser has no speech synthesizer." : "No " + LM.APP.language + " voice found on this device. See Learning settings in the profile menu.", icon: "volume-x" });
       return false;
     }
-    if (current) { s.cancel(); current = null; return true; }
-    const voice = targetVoice();
-    const all = s.getVoices();
-    if (all.length && !voice) {
-      if (LM.ui) LM.ui.toast({ text: "This browser has no " + LM.APP.language + " voice.", icon: "volume-x" });
-      return false;
-    }
-    const u = new window.SpeechSynthesisUtterance(text);
-    if (voice) u.voice = voice;
-    u.lang = voice ? voice.lang : LM.lang.speechLang();
-    u.rate = rate || 0.95;
-    u.onend = u.onerror = function () { current = null; };
-    current = u;
-    s.speak(u);
-    return true;
+    if (LM.speech.speaking()) { LM.speech.stop(); return true; }
+    return LM.speech.speak(text, { rate: rate });
   }
 
   // ---------- exam exercises: text fields in rows ----------
@@ -174,6 +166,12 @@ window.LM = window.LM || {};
     if ((e.key === "s" || e.key === "S") && c1View() && lastRow && document.contains(lastRow) && !document.querySelector(".ex-view .ex-card")) {
       const text = rowText(lastRow);
       if (text) { e.preventDefault(); speak(text); }
+      return;
+    }
+    // S on a topic page: the focused example (a row of the Polish table or a blockquote with a listen button)
+    if ((e.key === "s" || e.key === "S") && LM.markdown && LM.markdown.listenFor) {
+      const host = LM.markdown.listenFor(document.activeElement);
+      if (host) { e.preventDefault(); LM.markdown.listen(host); }
     }
   });
 

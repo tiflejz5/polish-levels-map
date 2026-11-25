@@ -41,7 +41,7 @@ const ICONS = [
   "flag", "info", "triangle-alert", "user-round", "external-link",
   "pin", "pin-off", "panel-left-open", "panel-left-close",
   "flame", "calendar-days", "map-pin", "list-checks", "sparkles", "notebook-text", "eye",
-  "flask-conical", "dumbbell", "volume-2", "shuffle", "arrow-left-right", "split", "layout-grid", "route",
+  "flask-conical", "dumbbell", "volume-2", "volume-x", "shuffle", "arrow-left-right", "split", "layout-grid", "route",
   "chart-column", "notebook", "clock", "corner-down-left", "file-text", "graduation-cap", "undo-2", "layers", "star"
 ];
 
@@ -69,7 +69,7 @@ FONTS.forEach(function (f) {
   if (fs.existsSync(src)) fs.copyFileSync(src, path.join(OUT, "fonts", l[1]));
 });
 
-// ---------- Ikony ----------
+// ---------- Icons ----------
 const nodes = JSON.parse(fs.readFileSync(need(path.join(NM, "lucide-static", "icon-nodes.json")), "utf8"));
 const icons = {};
 const missing = [];
@@ -99,5 +99,5 @@ fs.copyFileSync(need(path.join(NM, "gsap", "dist", "gsap.min.js")), path.join(OU
 const gsapVersion = JSON.parse(fs.readFileSync(path.join(NM, "gsap", "package.json"), "utf8")).version;
 
 console.log("Fonts: " + FONTS.length + " files, " + Math.round(fontBytes / 1024) + " KB");
-console.log("Ikony: " + Object.keys(icons).length + " (Lucide " + lucideVersion + ")");
+console.log("Icons: " + Object.keys(icons).length + " (Lucide " + lucideVersion + ")");
 console.log("GSAP " + gsapVersion + ": assets/vendor/gsap.min.js (loaded only on demand)");

@@ -12,13 +12,14 @@
  *                      best / last = { score, total, date }; recent — fractions of the last 5 results
  *                      (the “I know this” suggestion); lastMix — items of the last mixed session;
  *                      dismissed: { <setId>: "YYYY-MM-DD" } — the “I know this” suggestion was declined
- *   plm.attempts  { version: 1, profiles: { <id>: { items: [attempt…], aggregates: { <itemId>: { n, ok, topic, type, level } } } } }
+ *   plm.attempts  { version: 1, profiles: { <id>: { items: [attempt…], aggregates: { <itemId>: { n, ok, lenient?, topic, type, level } } } } }
  *                    — attempt log: every answer in sets (buffer of 3000, older ones in aggregates; js/learning-stats.js)
  *   plm.autojournal { version: 1, profiles: { <id>: { items: { <itemId>: { entryId, created, wrongCount, lastWrongAt, returned } } } } }
  *                    — mistake log entries added automatically from sets (plm.journal format unchanged;
  *                      the entry is linked by the field ref = "ex:<itemId>")
- *   plm.prefs { version: 1, profiles: { <id>: { autoJournal: true|false, selectionMenu: true|false, highlightWords: true|false } } } — learning settings
- *                    (selectionMenu and highlightWords — “My words”, pack v6; a missing field in old data = the default value)
+ *   plm.prefs { version: 1, profiles: { <id>: { autoJournal, selectionMenu, highlightWords, lenientAccents, autoplayCards (true|false) } } }
+ *                    — learning settings (selectionMenu and highlightWords — “My words”; lenientAccents — answers without Polish marks
+ *                      count, spec 05 §2; autoplayCards — read the Polish side of a flashcard aloud; a missing field = the default value)
  *   plm.notes     { version: 1, profiles: { <id>: { items: { <page key>: { text, updatedAt, title, route } } } } }
  *                    — the learner's own notes (plain text, max. 10,000 characters)
  *   plm.exams     { version: 1, profiles: { <id>: { exams: { <examId>: { examDate, drafts: { <task>: text }, tasks: { <page>: { <no>: true } },
@@ -198,7 +199,7 @@ window.LM = window.LM || {};
     if (kind === "exercises") return { sets: {}, lastMix: [], dismissed: {} };
     if (kind === "attempts") return { items: [], aggregates: {} };
     if (kind === "autojournal") return { items: {} };
-    if (kind === "prefs") return { autoJournal: true, selectionMenu: true, highlightWords: false };
+    if (kind === "prefs") return { autoJournal: true, selectionMenu: true, highlightWords: false, lenientAccents: false, autoplayCards: false };
     if (kind === "notes") return { items: {} };
     if (kind === "exams") return { exams: {} };
     if (kind === "speaking") return { sessions: [] };
@@ -317,6 +318,7 @@ window.LM = window.LM || {};
         const g = raw.aggregates[id];
         if (!EX_ID.test(id) || !U.isPlainObject(g) || !Number.isInteger(g.n) || !Number.isInteger(g.ok) || g.n < 1 || g.ok < 0 || g.ok > g.n) return;
         aggregates[id] = { n: g.n, ok: g.ok, topic: optId(g.topic), type: ATTEMPT_TYPES.indexOf(g.type) !== -1 ? g.type : null, level: learn().LEVELS.indexOf(g.level) !== -1 ? g.level : null };
+        if (Number.isInteger(g.lenient) && g.lenient > 0 && g.lenient <= g.ok) aggregates[id].lenient = g.lenient;
       });
       return { items: items, aggregates: aggregates };
     }
@@ -356,7 +358,8 @@ window.LM = window.LM || {};
       });
       return { starred: starred };
     }
-    if (kind === "prefs") return { autoJournal: raw.autoJournal !== false, selectionMenu: raw.selectionMenu !== false, highlightWords: raw.highlightWords === true };
+    if (kind === "prefs") return { autoJournal: raw.autoJournal !== false, selectionMenu: raw.selectionMenu !== false, highlightWords: raw.highlightWords === true,
+      lenientAccents: raw.lenientAccents === true, autoplayCards: raw.autoplayCards === true };
     if (kind === "speaking") {
       const out = { sessions: (Array.isArray(raw.sessions) ? raw.sessions : []).slice(-SPEAKING_MAX).map(normalizeSpeakingSession).filter(Boolean) };
       const seen = normalizeSeen(raw.seen);
@@ -475,6 +478,8 @@ window.LM = window.LM || {};
       mode: ATTEMPT_MODES.indexOf(raw.mode) !== -1 ? raw.mode : "learn",
       answer: text(raw.answer, 200)
     };
+    // Optional: accepted only thanks to lenient accents (spec 05 §2, shown apart in the stats)
+    if (raw.lenient === true) out.lenient = true;
     // Optional (items worth several points, pack v6): points ≤ max ≤ 20
     if (Number.isInteger(raw.max) && raw.max > 0 && raw.max <= 20 && Number.isInteger(raw.points) && raw.points >= 0 && raw.points <= raw.max) {
       out.points = raw.points;
@@ -782,6 +787,8 @@ window.LM = window.LM || {};
     if (key === "autoJournal") rec.autoJournal = value !== false;
     if (key === "selectionMenu") rec.selectionMenu = value !== false;   // menu on text selection (My words), on by default
     if (key === "highlightWords") rec.highlightWords = value === true;  // underlining saved words, off by default
+    if (key === "lenientAccents") rec.lenientAccents = value === true;  // answers without Polish marks count (spec 05 §2), off by default
+    if (key === "autoplayCards") rec.autoplayCards = value === true;    // read the Polish side of a flashcard aloud (spec 06 E5), off by default
     save("prefs");
   }
 

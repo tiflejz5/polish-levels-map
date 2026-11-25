@@ -1,0 +1,28 @@
+{
+  "about": "LM.exLogic.match cases (spec 05 §2). near: null | accents | ending | typo; closest: the accepted text shown in the hint.",
+  "cases": [
+    { "answer": "Kawę", "accepted": ["kawę"], "ok": true, "near": null, "closest": "kawę", "why": "capital letters never matter" },
+    { "answer": "kawę.", "accepted": ["kawę"], "ok": true, "near": null, "closest": "kawę", "why": "a final full stop is dropped" },
+    { "answer": "ŁÓDŹ", "accepted": ["Łódź"], "ok": true, "near": null, "closest": "Łódź" },
+    { "answer": "poszedłem", "accepted": ["poszłam", "poszedłem"], "ok": true, "near": null, "closest": "poszedłem", "index": 1, "why": "alternatives" },
+    { "answer": "kawe", "accepted": ["kawę"], "ok": false, "near": "accents", "closest": "kawę" },
+    { "answer": "zupe pomidorowa", "accepted": ["zupę pomidorową"], "ok": false, "near": "accents", "closest": "zupę pomidorową" },
+    { "answer": "lodz", "accepted": ["Łódź"], "ok": false, "near": "accents", "closest": "Łódź", "why": "ł has no decomposition, stripMarks handles it" },
+    { "answer": "kawa", "accepted": ["kawę"], "ok": false, "near": "ending", "closest": "kawę" },
+    { "answer": "kot", "accepted": ["kota"], "ok": false, "near": "ending", "closest": "kota", "why": "a missing ending" },
+    { "answer": "nauczyciel", "accepted": ["nauczyciela"], "ok": false, "near": "ending", "closest": "nauczyciela" },
+    { "answer": "książkami", "accepted": ["książkę"], "ok": false, "near": "ending", "closest": "książkę" },
+    { "answer": "siotrę", "accepted": ["siostrę"], "ok": false, "near": "typo", "closest": "siostrę" },
+    { "answer": "ksążka", "accepted": ["książka"], "ok": false, "near": "typo", "closest": "książka" },
+    { "answer": "pzyjaciulka", "accepted": ["przyjaciółka"], "ok": false, "near": "typo", "closest": "przyjaciółka", "why": "9+ letters: distance 2 allowed" },
+    { "answer": "pzyjaculka", "accepted": ["przyjaciółka"], "ok": false, "near": null, "closest": "przyjaciółka", "why": "distance 3 is too far" },
+    { "answer": "dom", "accepted": ["kot"], "ok": false, "near": null, "closest": "kot" },
+    { "answer": "lot", "accepted": ["kot"], "ok": false, "near": null, "closest": "kot", "why": "words under 5 letters get no typo tolerance" },
+    { "answer": "   ", "accepted": ["kot"], "ok": false, "near": null, "closest": "kot", "answered": false },
+    { "answer": "Mam brata", "accepted": ["Mam brata."], "sentence": true, "ok": true, "near": null, "closest": "Mam brata." },
+    { "answer": "„Nie wiem” – powiedziała.", "accepted": ["Nie wiem, powiedziała."], "sentence": true, "ok": true, "near": null, "closest": "Nie wiem, powiedziała." },
+    { "answer": "Mam brata i siostre", "accepted": ["Mam brata i siostrę."], "sentence": true, "ok": false, "near": "accents", "closest": "Mam brata i siostrę." },
+    { "answer": "Mam brata i siotrę", "accepted": ["Mam brata i siostrę."], "sentence": true, "ok": false, "near": "typo", "closest": "Mam brata i siostrę." },
+    { "answer": "Mam siostrę", "accepted": ["Mam brata i siostrę."], "sentence": true, "ok": false, "near": null, "closest": "Mam brata i siostrę." }
+  ]
+}

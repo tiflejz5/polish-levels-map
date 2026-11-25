@@ -1,9 +1,23 @@
 /*
  * lang.js — LM.lang: every rule the code needs to know about Polish (spec 05 §1).
  *
- * STAGE 1 STUB: enough to boot and to fix the interface. Nothing calls it yet;
- * the real implementation (answer checking, folding for search, tests of spec 05 §6)
- * comes in stage 3, when the English-specific rules in the other files move here.
+ * The other files contain generic algorithms and read language facts only from here (rules) and from
+ * js/config.js (values: names, locale, voices, characters). Unit tests: tools/tests.js, fixtures in
+ * tools/fixtures/lang/.
+ *
+ *   stripMarks(str)          ą→a ć→c ę→e ł→l ń→n ó→o ś→s ź→z ż→z (any case; same length as the input)
+ *   fold(str)                for search: lower-case + stripMarks + unified quotes and apostrophes; same length
+ *   wordPattern              RegExp source for one Polish word (letters, inner hyphen or apostrophe)
+ *   normalizeAnswer(str)     trim, one space, lower-case, ’ → ', no final punctuation; KEEPS diacritics
+ *   normalizeSentence(str)   normalizeAnswer + punctuation removed („ ” « » dashes …); keeps diacritics
+ *   variants(str)            equivalent spellings, the input included (Polish: [str])
+ *   countWords(str)          words of a Polish text (a dash between spaces is not a word)
+ *   isTarget(text)           fallback without a lang attribute: diacritics, or Polish function words that
+ *                            outweigh English ones
+ *   keepsCapital(word)       does the first word of a sentence keep its capital in a word pool (reorder)
+ *   abbreviations            never end a sentence (with their own full stop, as written)
+ *   functionWords            frequent Polish function words (isTarget)
+ *   samples                  target-language samples for the flashcard form and the import help
  */
 window.LM = window.LM || {};
 
@@ -13,81 +27,111 @@ window.LM = window.LM || {};
   const MARKS = { "ą": "a", "ć": "c", "ę": "e", "ł": "l", "ń": "n", "ó": "o", "ś": "s", "ź": "z", "ż": "z",
     "Ą": "A", "Ć": "C", "Ę": "E", "Ł": "L", "Ń": "N", "Ó": "O", "Ś": "S", "Ź": "Z", "Ż": "Z" };
   const MARKS_RE = /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g;
+  const HAS_MARKS = /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/;
+  const LETTERS = "A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż";
+
+  function str(s) { return String(s == null ? "" : s); }
 
   /** ą→a … ż→z; one character in, one character out (offsets stay valid). */
-  function stripMarks(str) {
-    return String(str == null ? "" : str).replace(MARKS_RE, function (c) { return MARKS[c]; });
+  function stripMarks(s) {
+    return str(s).replace(MARKS_RE, function (c) { return MARKS[c]; });
   }
 
-  /** For search: lower-case + stripMarks + unified quotes; same length as the input. TODO stage 3: full spec. */
-  function fold(str) {
-    return stripMarks(String(str == null ? "" : str).toLowerCase()).replace(/[„”“’‘]/g, function (c) { return c === "’" || c === "‘" ? "'" : "\""; });
-  }
-
-  /** Trim, collapse spaces, lower-case, ’ → ', drop a final full stop. Keeps diacritics. */
-  function normalizeAnswer(str) {
-    return String(str == null ? "" : str).trim().replace(/\s+/g, " ").toLowerCase().replace(/[’‘]/g, "'").replace(/\.$/, "");
-  }
-
-  /** normalizeAnswer + punctuation removed (including „ ” and dashes). TODO stage 3: full spec. */
-  function normalizeSentence(str) {
-    return normalizeAnswer(str).replace(/[.,!?;:„”“"()…–—]/g, " ").replace(/\s+/g, " ").trim();
-  }
-
-  function countWords(str) {
-    const s = String(str == null ? "" : str).trim();
-    return s ? s.split(/\s+/).length : 0;
-  }
-
-  const FUNCTION_WORDS = ["i", "w", "z", "na", "do", "że", "się", "nie", "to", "jest", "a", "ale", "o", "po"];
-
-  /** Fallback when there is no lang attribute. TODO stage 3: "not mostly English" check. */
-  function isTarget(text) {
-    const s = String(text == null ? "" : text);
-    if (/[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(s)) return true;
-    const words = s.toLowerCase().split(/[^a-ząćęłńóśźż]+/).filter(Boolean);
-    return words.filter(function (w) { return FUNCTION_WORDS.indexOf(w) !== -1; }).length >= 2;
-  }
+  /** Quotes and apostrophes, one character each: typographic → plain. */
+  const QUOTES = { "„": "\"", "”": "\"", "“": "\"", "«": "\"", "»": "\"", "’": "'", "‘": "'", "ʼ": "'", "`": "'", "´": "'" };
 
   /**
-   * Voices of the target language, best first (order of LM.APP.speech.voices: "pl-PL", then any "pl").
-   * TODO stage 3: replaced by LM.speech (spec 05 §4). Until then the engine's speech places (shortcuts, exercises,
-   * lab, speaking trainer) call this instead of their own English (en-GB / en-US) voice choice.
+   * For search: lower-case, without Polish marks, quotes unified. Character by character, so the result has
+   * exactly the length of the input and indexes found in it are valid in the original (highlighting).
+   * Other Latin letters with marks (é, ü in names) lose them too (NFD); letters NFD does not split stay.
    */
-  function targetVoices(all) {
-    const wanted = (LM.APP && LM.APP.speech && LM.APP.speech.voices) || [];
-    const out = [];
-    wanted.forEach(function (code) {
-      const re = new RegExp("^" + code.replace("-", "[-_]") + (code.indexOf("-") === -1 ? "(?:[-_]|$)" : "$"), "i");
-      (all || []).forEach(function (v) { if (re.test(v.lang) && out.indexOf(v) === -1) out.push(v); });
-    });
+  function fold(s) {
+    const src = str(s);
+    let out = "";
+    for (let i = 0; i < src.length; i++) {
+      const c = src[i];
+      if (MARKS[c]) { out += MARKS[c].toLowerCase(); continue; }
+      if (QUOTES[c]) { out += QUOTES[c]; continue; }
+      const base = c.normalize("NFD")[0].toLowerCase();
+      out += base.length === 1 ? base : c;
+    }
     return out;
   }
 
-  /** Does the text contain Polish letters? Moved from cards-logic.js isPolish. TODO stage 3: callers move to isTarget (spec 05). */
-  function hasTargetLetters(text) {
-    return /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/.test(String(text == null ? "" : text));
+  /** Trimmed, one space, lower case, ’ → ', no punctuation at the end. Diacritics stay. */
+  function normalizeAnswer(s) {
+    return str(s)
+      .replace(/[’‘ʼ`´]/g, "'")
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/[\s.,!?;:…]+$/, "")
+      .trim()
+      .toLowerCase();
   }
 
+  /** normalizeAnswer + every punctuation mark removed (Polish quotes „ ” and « », dashes, brackets). */
+  function normalizeSentence(s) {
+    return normalizeAnswer(s)
+      .replace(/[.,!?;:…"„”“«»()[\]]/g, " ")
+      .replace(/(^|\s)[–—-]+(?=\s|$)/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  /** Polish has no contractions to expand: the only spelling is the input. */
+  function variants(s) { return [str(s)]; }
+
+  /** Words of a text: a dash or punctuation between spaces is not a word. */
+  function countWords(s) {
+    const words = str(s).trim().split(/\s+/).filter(function (w) { return /[\p{L}\p{N}]/u.test(w); });
+    return words.length;
+  }
+
+  const FUNCTION_WORDS = ["i", "w", "z", "na", "do", "że", "się", "nie", "to", "jest", "a", "ale", "o", "po"];
+  // Other very frequent Polish words without diacritics (isTarget only)
+  const FREQUENT = ["czy", "jak", "co", "gdzie", "kto", "tak", "jestem", "mam", "masz", "ma", "mamy", "moja", "moje",
+    "ten", "ta", "tu", "tam", "bardzo", "dobry", "dobrze", "jutro", "dzisiaj", "teraz"];
+  // Words that are both Polish and frequent English words: half a point to each side
+  const SHARED = ["a", "i", "to", "do", "o", "no", "on"];
+  // Frequent English words that are not Polish words: they show the text is "mostly English"
+  const ENGLISH = ["the", "an", "is", "are", "was", "were", "of", "and", "in", "it", "you", "that", "this", "for", "with",
+    "be", "have", "has", "not", "what", "my", "we", "he", "she", "they", "at", "or", "from", "your", "can", "will", "there"];
+
+  /**
+   * Is a text without a lang attribute Polish? Diacritics decide at once; otherwise Polish function words must
+   * reach two points and outweigh the English ones (words shared by both languages give half a point to each).
+   */
+  function isTarget(text) {
+    const s = str(text);
+    if (HAS_MARKS.test(s)) return true;
+    const words = s.toLowerCase().split(/[^a-z']+/).filter(Boolean);
+    let pl = 0, en = 0;
+    words.forEach(function (w) {
+      if (SHARED.indexOf(w) !== -1) { pl += 0.5; en += 0.5; }
+      else if (FUNCTION_WORDS.indexOf(w) !== -1 || FREQUENT.indexOf(w) !== -1) pl++;
+      else if (ENGLISH.indexOf(w) !== -1) en++;
+    });
+    return pl >= 2 && pl > en;
+  }
+
+  /**
+   * A word pool (reorder) shows the first word of the model sentence in lower case so that it does not give the
+   * order away. Polish has no always-capital pronoun like English "I"; a proper noun needs the content to say so.
+   */
+  function keepsCapital() { return false; }
+
   LM.lang = {
-    hasTargetLetters: hasTargetLetters,
-    targetVoices: targetVoices,
-    /** Fallback utterance language when no voice is found (TODO stage 3: LM.speech). */
-    speechLang: function () { return ((LM.APP && LM.APP.speech && LM.APP.speech.voices) || [""])[0]; },
     stripMarks: stripMarks,
     fold: fold,
-    wordPattern: "[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+(?:[-'][A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+)*",
+    wordPattern: "[" + LETTERS + "]+(?:[-'’][" + LETTERS + "]+)*",
     normalizeAnswer: normalizeAnswer,
     normalizeSentence: normalizeSentence,
-    variants: function (str) { return [str]; },
+    variants: variants,
     countWords: countWords,
     isTarget: isTarget,
-    // Characters that NFD does not split into base + mark; the search folds them by hand (moved from search-logic.js).
-    // TODO stage 3: fold() above becomes the only folding (spec 05), and search-logic.js calls it.
-    foldChars: { "ł": "l", "Ł": "l" },
-    // Target-language samples shown in the flashcard form and import (moved from cards-browse.js). TODO stage 3: review with spec 05.
-    samples: { basicFront: "Zgadzam się.", basicBack: "I agree.", cloze: "Wczoraj {{poszłam}} do kina.", clozeAlternatives: "{{poszłam|poszedłem}}" },
+    keepsCapital: keepsCapital,
     abbreviations: ["np.", "tzn.", "tj.", "m.in.", "itd.", "itp.", "dr", "prof.", "ul.", "godz.", "ok."],
-    functionWords: FUNCTION_WORDS
+    functionWords: FUNCTION_WORDS,
+    samples: { basicFront: "Zgadzam się.", basicBack: "I agree.", cloze: "Wczoraj {{poszłam}} do kina.", clozeAlternatives: "{{poszłam|poszedłem}}" }
   };
 })(window.LM);
