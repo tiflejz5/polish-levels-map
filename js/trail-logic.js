@@ -1,5 +1,7 @@
 /*
- * trail-logic.js — czysta logika Szlaku (spec v7 13): bez DOM i localStorage (testy: node tools/tests.js).
+ * trail-logic.js — pure logic of the trail (spec 06 E9): no DOM, no localStorage (tests: node tools/tests.js).
+ * The trail data (LM.TRAIL) is generated from the syllabus by tools/build/trail.js: one lesson stop per topic
+ * (items = [topic id]) and one checkpoint per unit. Stops of "soon" levels are drawn dimmed and are never current.
  *
  *   emptyState(), sanitizeState(raw)     stan profilu plm.trail.<id> { version, start, stops, reviews }; zły format → wyjątek
  *   statusOf(stop, state, env)           { status: "done" | "skipped" | "open", via }  (sekcja 3.1)
@@ -65,7 +67,7 @@ window.LM = window.LM || {};
 
   /** Przystanek (lekcja) → zaliczony / pominięty / otwarty (sekcja 3.1). Powtórki: zaliczona po podejściu, wynik nie blokuje. */
   function statusOf(stop, state, env) {
-    if (stop.type === "review") return state.reviews[stop.id] ? { status: "done", via: "review" } : { status: "open", via: null };
+    if (stop.type === "checkpoint") return state.reviews[stop.id] ? { status: "done", via: "review" } : { status: "open", via: null };
     const rec = state.stops[stop.id];
     if (rec && rec.via === "quiz" && typeof rec.best === "number" && rec.best >= PASS_QUIZ) return { status: "done", via: "quiz" };
     if (stop.items && stop.items.length && stop.items.every(function (id) { return env.isUmiem(id); })) return { status: "done", via: "umiem" };
@@ -89,6 +91,7 @@ window.LM = window.LM || {};
     let lesson = 0;
     data.levels.forEach(function (lv) {
       const li = levelIndex(lv.level); // numer poziomu A1…C2 (dane testowe mogą nie mieć wszystkich)
+      const soon = lv.status === "soon";
       let inLevel = 0;
       const total = lv.units.reduce(function (a, u) { return a + u.stops.filter(function (s) { return s.type === "lesson"; }).length; }, 0);
       lv.units.forEach(function (u, ui) {
@@ -101,14 +104,14 @@ window.LM = window.LM || {};
           const isLesson = stop.type === "lesson";
           if (isLesson) { inLevel++; inUnit++; lesson++; }
           nodes.push({
-            id: stop.id, stop: stop, type: stop.type, status: status, via: via, level: lv.level, levelIndex: li, land: lv.land,
+            id: stop.id, stop: stop, type: stop.type, status: status, via: via, level: lv.level, levelIndex: li, land: lv.land, soon: soon,
             unitId: u.id, unitIndex: ui, unitTitle: u.title, unitCount: lv.units.length,
             number: isLesson ? inLevel : null, levelTotal: total, inUnit: isLesson ? inUnit : null, unitTotal: unitTotal, global: isLesson ? lesson : null
           });
         });
       });
     });
-    const current = nodes.find(function (n) { return n.type === "lesson" && n.status === "open" && n.levelIndex >= start; }) || null;
+    const current = nodes.find(function (n) { return n.type === "lesson" && n.status === "open" && n.levelIndex >= start && !n.soon; }) || null;
     nodes.forEach(function (n) { n.current = n === current; });
     return { nodes: nodes, startIndex: start, current: current };
   }

@@ -5,8 +5,9 @@
  *   #/trail              widok szlaku (bieżący przystanek przewinięty do widoku)
  *   #/trail/<idPrzystanku>   jak wyżej, z otwartym arkuszem przystanku (linki z „Dziś”; adres wraca do #/trail)
  *
- * Czysta logika: js/trail-logic.js. Stan: js/trail-store.js (plm.trail.<profil>). Dane: szlak/szlak-dane.js (LM.TRAIL,
- * ładowane przy starcie) i szlak/quizy-<poziom>.js (LM.QUIZZES, na żądanie).
+ * Pure logic: js/trail-logic.js. State: js/trail-store.js (plm.trail.<profile>). Data: data/trail.js (LM.TRAIL, generated
+ * from the syllabus at build time, spec 06 E9: stop = topic, one checkpoint per unit) and data/quizzes-<level>.js
+ * (LM.QUIZZES by topic id, on demand). A "soon" level is drawn dimmed with "Coming soon" and has no stops to open.
  * Dostępność: lista przystanków to <ol> z przyciskami, stan zapisany tekstem („zaliczony”, „bieżący”, „pominięty”).
  */
 window.LM = window.LM || {};
@@ -18,10 +19,8 @@ window.LM = window.LM || {};
   const el = U.el;
   const HASH = "#/trail";
   const ROW = 108;                 // wysokość wiersza przystanku (px)
-  const ACC = { A1: "Polanę", A2: "Las", B1: "Wzgórza", B2: "Jezioro", C1: "Góry", C2: "Szczyt" }; // „Zalecamy najpierw skończyć …”
-  const LOC = { A1: "na Polanie", A2: "w Lesie", B1: "na Wzgórzach", B2: "nad Jeziorem", C1: "w Górach", C2: "na Szczycie" };
-  const CAT_ICON = { g: "notebook-text", f: "arrow-left-right", v: "layers", mix: "sparkles" };
-  const CAT_NAME = { g: "gramatyka", f: "funkcje", v: "słownictwo", mix: "mieszany" };
+  // Stop icon by syllabus category
+  const CAT_ICON = { cases: "layout-grid", verbs: "clock", grammar: "notebook-text", functions: "arrow-left-right", vocabulary: "layers" };
   const STATUS_TEXT = { done: "zaliczony", current: "bieżący", open: "otwarty", skipped: "pominięty" };
 
   function SL() { return LM.trailLogic; }
@@ -60,19 +59,15 @@ window.LM = window.LM || {};
 
   function nodeById(tr, id) { return tr.nodes.find(function (n) { return n.id === id; }) || null; }
 
-  function itemCat(id) { const m = /^e_[a-c]\d_([gfv])\d+$/.exec(id); return m ? m[1] : null; }
-  function stopCat(stop) {
-    const cats = {};
-    (stop.items || []).forEach(function (i) { const c = itemCat(i); if (c) cats[c] = true; });
-    const keys = Object.keys(cats);
-    return keys.length === 1 ? keys[0] : "mix";
-  }
+  function stopCat(stop) { const t = LM.syllabus.topic(stop.id); return t ? t.category : null; }
+  function landName(level) { const l = LM.syllabus.level(level); return l ? l.land : level; }
+  function levelSoon(level) { return !LM.syllabus.isAvailable(level); }
 
   function pageHref(stop) { return "#/" + stop.page; }
   function setHref(stop) { return "#/practice/set/" + stop.set; }
 
   /** Tekst do etykiet: „Przystanek 7 z 22 na Polanie”. */
-  function positionText(n) { return "Przystanek " + n.number + " z " + n.levelTotal + " " + LOC[n.level]; }
+  function positionText(n) { return "Stop " + n.number + " of " + n.levelTotal + " in " + landName(n.level); }
 
   // =====================================================================
   // API DLA INNYCH WIDOKÓW (Dziś, strona tematu, strona poziomu, statystyki)
@@ -96,18 +91,19 @@ window.LM = window.LM || {};
 
   function startLevelId() { return ready() ? startInfo().level : null; }
 
-  /** Pasek „Przystanek N z M” na dole strony tematu (page: „a1/czasy-present-simple”) albo null. */
-  function barFor(page) {
-    if (!loaded()) return null;
+  /** The "Stop N of M" bar at the end of a topic page (stop id = topic id), or null (unknown topic, "soon" level). */
+  function barFor(topicId) {
+    if (!loaded() || levelSoon(LM.syllabus.levelOfId(topicId))) return null;
     let found = null;
-    LM.TRAIL.levels.forEach(function (lv) { lv.units.forEach(function (u) { u.stops.forEach(function (s) { if (s.type === "lesson" && s.page === page && !found) found = s.id; }); }); });
+    LM.TRAIL.levels.forEach(function (lv) { lv.units.forEach(function (u) { u.stops.forEach(function (s) { if (s.type === "lesson" && s.id === topicId) found = s.id; }); }); });
     if (!found) return null;
     const guest = !hasProfile();
     const tr = guest ? SL().buildTrail(LM.TRAIL, SL().emptyState(), { isUmiem: function () { return false; }, setPercent: function () { return null; } }, "A1") : trail();
     const n = nodeById(tr, found);
     if (!n) return null;
     const lessons = tr.nodes.filter(function (x) { return x.type === "lesson"; });
-    const next = lessons.slice(lessons.indexOf(n) + 1).find(function (x) { return x.status !== "done" && x.status !== "skipped"; }) || lessons[lessons.indexOf(n) + 1] || null;
+    const after = lessons.slice(lessons.indexOf(n) + 1).filter(function (x) { return !x.soon; });
+    const next = after.find(function (x) { return x.status !== "done" && x.status !== "skipped"; }) || after[0] || null;
     const actions = [];
     if (n.stop.quiz) actions.push(el("button", { type: "button", class: "btn btn-primary btn-small", onclick: function () { startQuiz(n); } }, LM.ui.withIcon("play", "Sprawdź się (4 pytania)")));
     else actions.push(el("button", { type: "button", class: "btn btn-secondary btn-small", onclick: function () { openSheet(n.id); } }, "Otwórz przystanek na szlaku"));
@@ -125,15 +121,18 @@ window.LM = window.LM || {};
   // ŁADOWANIE QUIZÓW I POWTÓREK
   // =====================================================================
 
+  const quizLevels = {};
+  /** Loads data/quizzes-<level>.js once (a level without quizzes has no file: the stops then have no quiz). */
   function loadQuizzes(level) {
     const lvl = String(level).toLowerCase();
-    if (LM.QUIZZES && Object.keys(LM.QUIZZES).some(function (k) { return k.indexOf("szlak-" + lvl + "-") === 0; })) return Promise.resolve();
-    return LM.loadModule("data/quizzes-" + lvl + ".js").catch(function () { /* poziom bez quizów */ });
+    if (quizLevels[lvl]) return quizLevels[lvl];
+    quizLevels[lvl] = LM.loadModule("data/quizzes-" + lvl + ".js").catch(function () { /* level without quizzes */ });
+    return quizLevels[lvl];
   }
 
   /** Zadania quizu w formacie silnika (temat, poziom i zestaw potrzebne do dziennika podejść i statystyk). */
   function quizItems(quiz) {
-    return quiz.items.map(function (it) { return Object.assign({ topic: quiz.topic, level: quiz.level, setId: quiz.id, tags: ["szlak"] }, it); });
+    return quiz.items.map(function (it) { return Object.assign({ topic: quiz.topic, level: quiz.level, setId: quiz.id, tags: ["trail"] }, it); });
   }
 
   /** Quiz przystanku (po załadowaniu poziomu) albo null. */
@@ -302,14 +301,14 @@ window.LM = window.LM || {};
     const rec = opts.force ? null : recommendFirst(tr, n);
     if (rec) {
       parts.push(el("div", { class: "sz-recommend", role: "note" }, [
-        el("p", { text: "Zalecamy najpierw skończyć " + ACC[rec] + ". Dalsze krainy są otwarte, ale szlak podpowiada kolejność." }),
+        el("p", { text: "We suggest finishing " + landName(rec) + " first. The later lands are open, the trail only suggests an order." }),
         el("button", { type: "button", class: "btn btn-secondary btn-small", onclick: function () { paintSheet(body, id, { force: true }); } }, "Mimo to otwórz")
       ]));
       body.replaceChildren.apply(body, parts);
       return;
     }
 
-    if (n.type === "review") {
+    if (n.type === "checkpoint") {
       parts.push(el("p", { text: "Sześć pytań z przystanków tego odcinka. Wynik nie blokuje dalszej drogi, błędne odpowiedzi trafiają do dziennika błędów." }));
       const r = ST().data().reviews[n.id];
       if (r) parts.push(el("p", { class: "tool-note", text: "Najlepszy wynik: " + r.best + "/" + r.of + "." }));
@@ -390,9 +389,9 @@ window.LM = window.LM || {};
       const form = el("form", { class: "sz-start-form" }, SL().LEVELS.map(function (lvl) {
         const id = "sz-start-" + lvl;
         return el("label", { class: "sz-start-opt lvl-" + lvl, for: id }, [
-          el("input", { type: "radio", name: "sz-start", id: id, value: lvl, checked: cur.level === lvl }),
+          el("input", { type: "radio", name: "sz-start", id: id, value: lvl, checked: cur.level === lvl, disabled: levelSoon(lvl) }),
           el("span", { class: "sz-start-land", "aria-hidden": "true" }, LM.ui.landIcon(lvl, { size: 22 })),
-          el("span", { text: LM.ui.landLabel(lvl) })
+          el("span", { text: LM.ui.landLabel(lvl) + (levelSoon(lvl) ? " (coming soon)" : "") })
         ]);
       }));
       LM.dialogs.open({
@@ -423,10 +422,10 @@ window.LM = window.LM || {};
 
   function nodeButton(n, geo) {
     const st = n.current ? "current" : n.status;
-    const isReview = n.type === "review";
+    const isReview = n.type === "checkpoint";
     const cat = isReview ? null : stopCat(n.stop);
     const label = (isReview ? "Powtórka: " : "") + n.stop.title + ". " + (isReview ? "" : positionText(n) + ". ") + STATUS_TEXT[st] + (n.via === "start" ? " testem poziomu" : "") + ".";
-    const icon = st === "done" ? "check" : isReview ? "rotate-ccw" : (st === "skipped" ? "arrow-right" : CAT_ICON[cat]);
+    const icon = st === "done" ? "check" : isReview ? "rotate-ccw" : (st === "skipped" ? "arrow-right" : CAT_ICON[cat] || "notebook-text");
     return el("li", { class: "sz-node is-" + st + (isReview ? " is-review" : ""), style: "left:" + geo.x.toFixed(1) + "%;top:" + geo.y + "px", "data-stop": n.id }, [
       el("button", { type: "button", class: "sz-btn", "aria-label": label, "aria-haspopup": "dialog", onclick: function () { openSheet(n.id); } }, [
         el("span", { class: "sz-circle", "aria-hidden": "true" }, LM.icon(icon, { size: st === "done" ? 24 : 22 })),
@@ -484,8 +483,28 @@ window.LM = window.LM || {};
     ]);
   }
 
+  /** A "soon" land: dimmed, "Coming soon", the unit titles of the syllabus, no stops to open (spec 06 E1). */
+  function soonSection(lv) {
+    const level = lv.level;
+    return el("section", { class: "sz-level is-soon lvl-" + level, "aria-labelledby": "sz-l-" + level }, [
+      el("header", { class: "sz-level-head" }, [
+        el("span", { class: "sz-level-icon", "aria-hidden": "true" }, LM.ui.landIcon(level, { size: 30 })),
+        el("div", { class: "sz-level-text" }, [
+          el("h2", { class: "sz-level-title", id: "sz-l-" + level, text: LM.ui.landLabel(level) }),
+          el("p", { class: "sz-level-sub" }, el("span", { class: "chip sz-soon-chip", text: "Coming soon" }))
+        ]),
+        el("div", { class: "sz-level-links" }, el("a", { class: "btn btn-link btn-small", href: LM.app.levelHash(level) }, "Planned topics"))
+      ]),
+      el("ol", { class: "sz-soon-units" }, lv.units.map(function (u) {
+        const n = u.stops.filter(function (s) { return s.type === "lesson"; }).length;
+        return el("li", null, [el("span", { text: u.title }), el("span", { class: "tool-note num", text: " · " + n + " stops" })]);
+      }))
+    ]);
+  }
+
   function levelSection(tr, lv, curLevel) {
     const level = lv.level;
+    if (lv.status === "soon") return soonSection(lv);
     const p = SL().levelProgress(tr, level);
     const skipped = SL().LEVELS.indexOf(level) < tr.startIndex && p.percent < 100;
     const passed = LM.final ? LM.final.passedText(level) : null;
@@ -590,10 +609,10 @@ window.LM = window.LM || {};
     }
   }
 
-  /** Link „Zobacz Polanę na szlaku” na stronie poziomu. */
+  /** "See Meadow on the trail" on the level page. */
   function levelLink(level) {
-    if (!loaded()) return null;
-    return el("a", { class: "btn btn-link btn-small sz-level-link", href: HASH }, LM.ui.withIcon("route", "Zobacz " + ACC[level] + " na szlaku"));
+    if (!loaded() || levelSoon(level)) return null;
+    return el("a", { class: "btn btn-link btn-small sz-level-link", href: HASH }, LM.ui.withIcon("route", "See " + landName(level) + " on the trail"));
   }
 
   /** Kafel „Szlak” w Statystykach: zaliczone przystanki na poziom i średni wynik quizów. */
@@ -602,7 +621,7 @@ window.LM = window.LM || {};
     const tr = trail();
     const st = ST().data();
     const avg = SL().quizAverage(st);
-    const rows = SL().LEVELS.map(function (lvl) {
+    const rows = SL().LEVELS.filter(function (lvl) { return !levelSoon(lvl); }).map(function (lvl) {
       const p = SL().levelProgress(tr, lvl);
       return el("li", { class: "sz-st-row lvl-" + lvl }, [
         el("span", { class: "sz-st-name", text: LM.ui.landLabel(lvl) }),
@@ -620,7 +639,7 @@ window.LM = window.LM || {};
   }
 
   LM.trail = {
-    levelLink: levelLink, statsTile: statsTile, LOC: LOC, ACC: ACC,
+    levelLink: levelLink, statsTile: statsTile,
     HASH: HASH, parseRoute: parseRoute, render: render, loaded: loaded, ready: ready,
     current: current, levelInfo: levelInfo, startLevel: startLevelId, barFor: barFor, openSheet: openSheet, startQuiz: startQuiz, positionText: positionText
   };
