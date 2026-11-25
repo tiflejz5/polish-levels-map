@@ -11,11 +11,6 @@
   },
   {
     "file": "js/cards-logic.js",
-    "contains": "¡¿\"“”„«»",
-    "reason": "punctuation stripped from answers includes the Polish opening quote; moves to LM.lang.normalizeAnswer in stage 3"
-  },
-  {
-    "file": "js/cards-logic.js",
     "contains": "typ|type|przód|przod|front",
     "reason": "import compatibility: column header of decks exported by the original app"
   },

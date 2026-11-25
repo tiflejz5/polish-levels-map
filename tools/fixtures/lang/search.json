@@ -1,0 +1,26 @@
+{
+  "about": "Search over Polish text: folding (ł too), hyphenated words, highlighting offsets in the original text.",
+  "records": [
+    { "id": "1", "group": "pages", "title": "Accusative: the direct object", "headings": ["Kiedy używać", "Typowe błędy"], "summary": "Mam brata. Lubię kawę.", "text": "Czytam książkę. Anna ma małego psa." },
+    { "id": "2", "group": "pages", "title": "Cities", "headings": [], "summary": "Miasta.", "text": "Mieszkam w Łodzi, a mój brat we Wrocławiu." },
+    { "id": "3", "group": "lab", "title": "Colours", "headings": [], "summary": "", "text": "Flaga jest biało-czerwona." },
+    { "id": "4", "group": "exercises", "title": "Zaimki dzierżawcze – sprawdź się", "headings": [], "summary": "", "text": "" }
+  ],
+  "queries": [
+    ["wroclawiu", ["2"]],
+    ["Wrocławiu", ["2"]],
+    ["lodzi", ["2"]],
+    ["łodzi", ["2"]],
+    ["czerwona", ["3"]],
+    ["biało-czerwona", ["3"]],
+    ["dzierzawcze", ["4"]],
+    ["ksiazke", ["1"]],
+    ["zzzz", []]
+  ],
+  "highlight": [
+    ["Mieszkam w Łodzi, a mój brat we Wrocławiu.", "lodz", ["Łodzi"]],
+    ["Mieszkam w Łodzi, a mój brat we Wrocławiu.", "łódź", ["Łodzi"]],
+    ["Łódź, Łęczyca i Łask", "ł", ["Łódź", "Łęczyca", "Łask"]],
+    ["Żółta łódka", "zolta lodka", ["Żółta", "łódka"]]
+  ]
+}

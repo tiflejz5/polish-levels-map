@@ -1,5 +1,6 @@
 /*
- * e2e.js — browser smoke tests (stage 1B: syllabus checklist, routes, level status, trail, exams fixture).
+ * e2e.js — browser smoke tests (stage 1B: syllabus checklist, routes, level status, trail, exams fixture;
+ * stage 3: answer hints, lenient accents, character bar, listen buttons, no-voice paths, My words and lang markup).
  *
  *   node tools/e2e.js            (or: npm run e2e)
  *
@@ -265,6 +266,179 @@ async function main() {
     ok(/Work in progress/.test(await viewText(s.page)), "soon exam");
     await visit(s.page, "#/exams/nope", 800);
     ok(/Page not found/.test(await viewText(s.page)), "unknown exam");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+
+  console.log("\nLanguage layer (stage 3: spec 05, spec 06 E3–E5)");
+  // A fake Web Speech API: with a Polish voice (listen buttons) or with English voices only (no-voice paths)
+  const fakeVoices = function (ctx, langs) {
+    return ctx.addInitScript(function (list) {
+      const voices = list.map(function (l, i) { return { lang: l, name: "Fake " + l + " " + i, localService: true, voiceURI: "fake-" + i, default: i === 0 }; });
+      const fake = { spoken: [], speaking: false, pending: false, paused: false,
+        getVoices: function () { return voices; },
+        speak: function (u) { fake.spoken.push(u.text); setTimeout(function () { if (u.onend) u.onend(); }, 30); },
+        cancel: function () {}, addEventListener: function () {} };
+      Object.defineProperty(window, "speechSynthesis", { value: fake, configurable: true });
+      window.SpeechSynthesisUtterance = function (t) { this.text = t; };
+    }, langs);
+  };
+  const GAP_ITEM = { id: "e2e-gap-1", type: "gap-fill", topic: "a1-cases-accusative", level: "A1", text: "Mam {{1}} i {{2}}.", gaps: [{ accepted: ["brata"] }, { accepted: ["siostrę"] }] }; // pl-fixture: target-language test data
+  const SINGLE_HOST = "#/a1/verbs-byc";
+  async function single(page, item) {
+    await page.evaluate(function (it) {
+      LM.exercises.startSingle({ item: it, back: { href: "#/practice", label: "Practice" }, noJournal: true, onDone: function () {} });
+    }, item);
+    await page.waitForSelector(".ex-view .ex-card");
+  }
+  async function answerGaps(page, texts) {
+    const inputs = page.locator(".ex-gap-input");
+    for (let i = 0; i < texts.length; i++) await inputs.nth(i).fill(texts[i]);
+    await page.click("button:has-text('Check')");
+    await page.waitForTimeout(250);
+  }
+  await test("answer hints: accents-only, ending, typo — 0 points with the closest answer; lenient mode counts accents with the reminder", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, SINGLE_HOST); // a route the exercise engine does not own (startSingle keeps its own route)
+    const cases = [["siostre", "accents", /Almost\. Check the Polish letters: siostrę/], ["siostra", "ending", /Right word, wrong ending: siostrę/], ["siotrę", "typo", /Looks like a typo: siostrę/]]; // pl-fixture: target-language test data
+    for (const c of cases) {
+      await single(s.page, GAP_ITEM);
+      await answerGaps(s.page, ["brata", c[0]]);
+      const hint = s.page.locator(".ex-near.is-" + c[1]);
+      ok(await hint.count() === 1, c[1] + ": no hint");
+      ok(c[2].test(await hint.innerText()), c[1] + ": " + await hint.innerText());
+      ok(/1 \/ 2 points/.test(await viewText(s.page)), c[1] + ": points");
+    }
+    await s.page.evaluate(function () { LM.profileData.setPref("lenientAccents", true); });
+    await single(s.page, GAP_ITEM);
+    await answerGaps(s.page, ["brata", "siostre"]);
+    ok(/2 \/ 2 points/.test(await viewText(s.page)), "lenient: points");
+    ok(/Accepted without accents\. Check the Polish letters: siostrę/.test(await s.page.innerText(".ex-near.is-lenient")), "lenient: reminder"); // pl-fixture: target-language test data
+    const att = await s.page.evaluate(function () { const a = LM.profileData.attempts().items; return a[a.length - 1]; });
+    ok(att && att.correct === true && att.lenient === true, "attempt not logged as lenient: " + JSON.stringify(att));
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("character bar: a button inserts at the cursor and keeps the focus; Shift gives the capital; Alt + letter cycles", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, SINGLE_HOST); // a route the exercise engine does not own (startSingle keeps its own route)
+    await single(s.page, GAP_ITEM);
+    ok(await s.page.locator(".charbar .charbar-key").count() === 9, "nine keys");
+    const second = s.page.locator(".ex-gap-input").nth(1);
+    await second.fill("siostr");
+    await second.focus();
+    await s.page.click(".charbar-key[aria-label='Insert ę']"); // pl-fixture: target-language test data
+    ok(await second.inputValue() === "siostrę", "insert: " + await second.inputValue()); // pl-fixture: target-language test data
+    ok(await s.page.evaluate(function () { return document.activeElement === document.querySelectorAll(".ex-gap-input")[1]; }), "focus left the field");
+    await s.page.click(".charbar-key[aria-label='Insert ś']", { modifiers: ["Shift"] }); // pl-fixture: target-language test data
+    ok(/Ś$/.test(await second.inputValue()), "shift: " + await second.inputValue()); // pl-fixture: target-language test data
+    const first = s.page.locator(".ex-gap-input").first();
+    await first.fill("");
+    await first.focus();
+    const seen = [];
+    for (let i = 0; i < 3; i++) { await s.page.keyboard.press("Alt+KeyZ"); seen.push(await first.inputValue()); }
+    ok(seen.join(",") === "ź,ż,z", "Alt+Z cycle: " + seen.join(",")); // pl-fixture: target-language test data
+    await s.page.keyboard.press("Alt+KeyA");
+    ok(await first.inputValue() === "zą", "Alt+A: " + await first.inputValue()); // pl-fixture: target-language test data
+    await first.evaluate(function (n) { n.blur(); });
+    await s.page.keyboard.press("?");
+    await s.page.waitForSelector("dialog[open]");
+    ok(/Alt \+ letter/.test(await s.page.innerText("dialog[open]")) && /a → ą/.test(await s.page.innerText("dialog[open]")), "shortcut panel entry"); // pl-fixture: target-language test data
+    await s.ctx.close();
+  });
+  await test("topic page markup: Polish italics, the Polish column and listen buttons with a voice; S reads the focused example", async function () {
+    const s = await session(1280, 900, true);
+    await fakeVoices(s.ctx, ["pl-PL", "en-US"]); // pl-fixture: target-language test data
+    await visit(s.page, "#/a1/cases-accusative", 1200);
+    ok(await s.page.evaluate(function () { return document.documentElement.getAttribute("data-voice"); }) === "ready", "voice state");
+    ok(await s.page.locator("article.md em[lang=pl]").count() > 10, "italics with lang");
+    ok(await s.page.locator("article.md em:not([lang])").count() === 0, "italics without lang");
+    const rows = await s.page.locator("article.md tr.has-listen").count();
+    ok(rows === 8, "rows with a listen button: " + rows);
+    ok(await s.page.locator("article.md td[lang=pl]").count() === 8, "Polish cells");
+    ok(await s.page.locator("article.md tr.has-listen .listen-btn").first().isVisible(), "button hidden with a voice");
+    await s.page.click("article.md tr.has-listen .listen-btn >> nth=0");
+    await s.page.waitForTimeout(100);
+    const spoken = await s.page.evaluate(function () { return window.speechSynthesis.spoken.slice(); });
+    ok(spoken[0] === "Mam brata i siostrę.", "spoken: " + JSON.stringify(spoken)); // pl-fixture: target-language test data
+    await s.page.focus("article.md tr.has-listen >> nth=2 >> .listen-btn");
+    await s.page.keyboard.press("s");
+    await s.page.waitForTimeout(100);
+    const spoken2 = await s.page.evaluate(function () { return window.speechSynthesis.spoken.slice(); });
+    ok(spoken2[spoken2.length - 1] === "Czytasz książkę czy gazetę?", "S: " + JSON.stringify(spoken2)); // pl-fixture: target-language test data
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("no Polish voice: listen buttons hidden, settings explain how to add one, dictation is skipped, listening shows the transcript", async function () {
+    const s = await session(1280, 900, true);
+    await fakeVoices(s.ctx, ["en-US", "de-DE"]); // pl-fixture: target-language test data
+    await visit(s.page, "#/a1/cases-accusative", 1200);
+    ok(await s.page.evaluate(function () { return document.documentElement.getAttribute("data-voice"); }) === "none", "voice state");
+    ok(await s.page.locator("article.md .listen-btn:visible").count() === 0, "visible listen buttons");
+    await s.page.click("#profile-btn");
+    await s.page.waitForTimeout(300);
+    const menu = await s.page.innerText("#profile-menu");
+    ok(/No Polish voice found on this device\./.test(menu) && /How to add one/.test(menu), "settings help");
+    await s.page.keyboard.press("Escape");
+    await visit(s.page, SINGLE_HOST); // a route the exercise engine does not own (startSingle keeps its own route)
+    await single(s.page, { id: "e2e-dict-1", type: "dictation", topic: "a1-cases-accusative", level: "A1", text: "Mam brata.", accepted: [] });
+    ok(/No Polish voice found on this device/.test(await viewText(s.page)), "dictation help");
+    await s.page.click("button:has-text('Skip')");
+    await s.page.waitForTimeout(250);
+    ok(/Skipped/.test(await viewText(s.page)), "dictation skipped");
+    await single(s.page, { id: "e2e-listen-1", type: "multiple-choice", kind: "listening", topic: "a1-cases-accusative", level: "A1", script: "A: Dzień dobry.\nB: Dzień dobry.", prompt: "Who speaks?", options: ["two people", "one person"], correct: 0 }); // pl-fixture: target-language test data
+    await s.page.click("button:has-text('Show the transcript to read')");
+    await s.page.waitForTimeout(200);
+    ok(await s.page.locator(".ex-transcript[lang=pl]").count() === 1, "transcript");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("My words: \"Add to My words\" on a Polish selection, not on English text", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/a1/cases-accusative", 1000);
+    const select = function (sel) {
+      return s.page.evaluate(function (q) {
+        const n = document.querySelector(q);
+        const r = document.createRange();
+        r.selectNodeContents(n.firstChild && n.firstChild.nodeType === 3 ? n.firstChild : n);
+        const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }, sel);
+    };
+    await select("article.md td[lang=pl]");
+    await s.page.waitForTimeout(400);
+    ok(await s.page.locator(".fc-sel-menu:not([hidden]) button:has-text('Add to My words')").count() === 1, "no Add to My words on Polish");
+    await select("article.md h1 + p");
+    await s.page.waitForTimeout(400);
+    ok(await s.page.locator(".fc-sel-menu:not([hidden])").count() === 1, "menu hidden on English");
+    ok(await s.page.locator(".fc-sel-menu:not([hidden]) button:has-text('Add to My words')").count() === 0, "Add to My words on English");
+    await s.ctx.close();
+  });
+
+
+  await test("speaking trainer: cards without usefulPhrases or prepSeconds draw every tab without errors (phrasesBox fix)", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/a1", 600);
+    await s.page.addScriptTag({ url: URL + "js/recorder.js" });
+    await s.page.addScriptTag({ url: URL + "js/speaking-trainer.js" });
+    const out = await s.page.evaluate(function () {
+      const data = {
+        format: "matura", criteria: [{ id: "a", label: "Content" }],
+        intro: { seconds: 60, groups: [{ questions: ["Q1"] }] },
+        roleplay: { seconds: 60, cards: [{ situation: "Situation", elements: ["one"], examinerLines: ["Line"] }] },
+        picture: { seconds: 60, cards: [{ description: "Picture", questions: ["Q2"] }] },
+        choice: { seconds: 60, cards: [{ situation: "Choose", options: ["A", "B"], criteria: ["why"], questions: ["Q3"] }] }
+      };
+      const t = LM.speakingTrainer.create({ data: function () { return data; }, section: function () { return { label: "Speaking" }; },
+        crumb: function (l) { return LM.utils.el("p", { text: l }); }, notFound: function (m) { return LM.utils.el("p", { text: m }); }, examId: "e2e" });
+      const view = document.getElementById("view");
+      view.replaceChildren();
+      t.render(view);
+      return Array.prototype.map.call(document.querySelectorAll(".sp-tab"), function (b) {
+        b.click();
+        return document.querySelector("#sp-panel").children.length > 1 ? "ok" : "empty";
+      });
+    });
+    ok(out.length === 5 && out.every(function (x) { return x === "ok"; }), "tabs: " + out.join(","));
     ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });

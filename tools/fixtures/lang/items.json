@@ -1,0 +1,107 @@
+{
+  "about": "Polish exercise items for the engine tests of stage 3 (answer checking, word diff, word limits). Not app content.",
+  "items": [
+    {
+      "id": "pl-fx-01",
+      "type": "short-answer",
+      "prompt": "Lubię ___. (kawa)",
+      "accepted": [
+        "kawę"
+      ]
+    },
+    {
+      "id": "pl-fx-02",
+      "type": "gap-fill",
+      "text": "Mam {{1}} i {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "brata"
+          ],
+          "hint": "(brat)"
+        },
+        {
+          "accepted": [
+            "siostrę"
+          ],
+          "hint": "(siostra)"
+        }
+      ]
+    },
+    {
+      "id": "pl-fx-03",
+      "type": "translate",
+      "source": "I have a brother and a sister.",
+      "accepted": [
+        "Mam brata i siostrę.",
+        "Mam siostrę i brata."
+      ]
+    },
+    {
+      "id": "pl-fx-04",
+      "type": "transformation",
+      "source": "Anna ma dwadzieścia lat.",
+      "keyword": "LAT",
+      "before": "Anna",
+      "after": ".",
+      "answers": [
+        "ma dwadzieścia lat"
+      ],
+      "wordLimit": [
+        2,
+        3
+      ]
+    },
+    {
+      "id": "pl-fx-05",
+      "type": "dictation",
+      "text": "Poproszę herbatę z cytryną.",
+      "accepted": []
+    },
+    {
+      "id": "pl-fx-06",
+      "type": "find-error",
+      "tokens": [
+        "Lubię",
+        "kawa",
+        "z",
+        "mlekiem."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "kawę"
+      ]
+    }
+  ],
+  "diff": {
+    "model": [
+      "czy",
+      "byłeś",
+      "kiedyś",
+      "w",
+      "starym",
+      "krakowie"
+    ],
+    "got": [
+      "czy",
+      "byłeś",
+      "w",
+      "starym",
+      "krakowie",
+      "wczoraj"
+    ],
+    "ops": [
+      {
+        "op": "missing",
+        "word": "kiedyś"
+      },
+      {
+        "op": "extra",
+        "got": "wczoraj"
+      }
+    ]
+  }
+}

@@ -8,12 +8,18 @@
  * Not scanned: js/lang.js and js/config.js (the only code files that may hold Polish), this file (it holds the
  * stop list), tools/legacy/ (unchanged validators of the original app, deleted in stage 4), tools/fixtures/ (data).
  *
- * Rules (one finding per rule and line):
- *   diacritics   Polish letters ą ć ę ł ń ó ś ź ż, any case
- *   quote        the Polish opening quote „ (the closing ” is also the English closing quote, so it is allowed)
- *   stop-word    a frequent Polish UI word (whole word, any case)
- *   locale       the locale codes pl-PL, en-GB, en-US (locales come from LM.APP)
- *   legacy-name  names of the original app: ELM, elm_, niezbednik, szlak, fiszki
+ * Rules (one finding per rule and line). Polish language facts live only in js/lang.js, js/config.js and content/
+ * (stage 3, spec 05):
+ *   diacritics     Polish letters, any case (the letters are written as escapes in RULES below)
+ *   quote          the Polish opening quote (U+201E; the closing quote is also the English one, so it is allowed)
+ *   stop-word      a frequent Polish UI word (whole word, any case)
+ *   locale         the locale codes pl-PL, en-GB, en-US (locales come from LM.APP)
+ *   legacy-name    names of the original app: ELM, elm_, niezbednik, szlak, fiszki
+ *   lang-code      js/: a hard-coded language code as a string ("pl", lang: "en"); use LM.APP.targetLang / uiLocale
+ *   abbreviation   js/: a Polish abbreviation as a string ("np.", "m.in.", …); they are LM.lang.abbreviations
+ *   function-word  js/: a Polish function word as a string ("jest", "nie", "ale"); they are LM.lang.functionWords
+ *   english-rule   js/: names of the English rules deleted in stage 3 (contractions, en-GB voices, isPolish, …)
+ *   speech-api     js/: the Web Speech API outside js/speech.js (one implementation, LM.speech)
  *
  * False positives go into tools/check-lang-allow.json: [{ "file", "contains", "reason" }]. An entry matches a
  * finding when the file is the same and the line contains the given text. Unused entries are reported as warnings.
@@ -32,12 +38,18 @@ const SKIP_DIRS = ["tools/legacy", "tools/fixtures", "node_modules"];
 const STOP_WORDS = ["Dodaj", "Zapisz", "Anuluj", "Usuń", "Dalej", "Wróć", "Wynik", "Poziom", "Zadanie",
   "Pokaż", "Ukryj", "Umiem", "Dziś", "Szlak", "Fiszki", "Zestaw", "Błąd", "Powtórka", "Egzamin"];
 
+const JS = /^js\//;
 const RULES = [
-  { id: "diacritics", re: /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/u },
-  { id: "quote", re: /„/u },
+  { id: "diacritics", re: /[\u0105\u0107\u0119\u0142\u0144\u00f3\u015b\u017a\u017c\u0104\u0106\u0118\u0141\u0143\u00d3\u015a\u0179\u017b]/u },
+  { id: "quote", re: /\u201e/u },
   { id: "stop-word", re: new RegExp("(?<![\\p{L}\\p{N}_])(?:" + STOP_WORDS.join("|") + ")(?![\\p{L}\\p{N}_])", "iu") },
   { id: "locale", re: /\b(?:pl-PL|en-GB|en-US)\b/ },
-  { id: "legacy-name", re: /\bELM\b|\belm_|niezbednik|szlak|fiszki/i }
+  { id: "legacy-name", re: /\bELM\b|\belm_|niezbednik|szlak|fiszki/i },
+  { id: "lang-code", only: JS, re: /\blang\s*[:=]\s*["'][a-z]{2}(?:-[A-Za-z]{2})?["']|["'](?:pl|pl-pl|pl_PL)["']|\/\^pl\b/ },
+  { id: "abbreviation", only: JS, re: /["'](?:np|tzn|tj|m\.in|itd|itp|godz|ul|prof|ok)\.["']/ },
+  { id: "function-word", only: JS, re: /["'](?:jest|nie|ale|sie|ze)["']/i },
+  { id: "english-rule", only: JS, re: /\b(?:FIXED_CONTRACTIONS|CONTRACTION|expandWord|sentenceVariants|isPolish|inPolishColumn|inExplanationColumn|targetVoices|speechLang|hasTargetLetters|foldChars)\b|en\[-_\]GB/ },
+  { id: "speech-api", only: JS, except: ["js/speech.js"], re: /\bspeechSynthesis\b|\bSpeechSynthesisUtterance\b/ }
 ];
 
 function rel(p) { return path.relative(ROOT, p).split(path.sep).join("/"); }
@@ -76,6 +88,8 @@ function checkText(file, text, allow) {
   const findings = [];
   text.split(/\r?\n/).forEach(function (line, i) {
     RULES.forEach(function (rule) {
+      if (rule.only && !rule.only.test(file)) return;
+      if (rule.except && rule.except.indexOf(file) !== -1) return;
       const m = rule.re.exec(line);
       if (!m) return;
       const a = (allow || []).find(function (e) { return e.file === file && line.indexOf(e.contains) !== -1; });
@@ -101,7 +115,7 @@ function main() {
     console.log("\ncheck:lang FAILED: " + findings.length + " findings in " + Object.keys(byFile).length + " files.");
     process.exit(1);
   }
-  console.log("check:lang OK: " + files.length + " files, no Polish text or language facts outside js/lang.js and js/config.js.");
+  console.log("check:lang OK: " + files.length + " files, no Polish text or language facts outside js/lang.js, js/config.js and content/.");
 }
 
 if (require.main === module) main();
