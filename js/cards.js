@@ -283,7 +283,7 @@ window.LM = window.LM || {};
         el("span", { class: "fc-legend is-learning", text: "Learning: " + (stats.learning + stats.review) }),
         el("span", { class: "fc-legend is-due", text: "Due today: " + stats.due }),
         el("span", { class: "fc-legend is-later", text: "Later: " + stats.later }),
-        el("span", { class: "fc-legend is-mastered", text: "Opanowane: " + stats.mastered }),
+        el("span", { class: "fc-legend is-mastered", text: "Mastered: " + stats.mastered }),
         stats.suspended ? el("span", { class: "fc-legend", text: "Suspended: " + stats.suspended }) : null
       ])
     ]);
@@ -324,7 +324,7 @@ window.LM = window.LM || {};
     if (!hasProfile()) return;
     LM.dialogs.prompt({ title: "New deck", label: "Deck name", confirmLabel: "Create deck" }).then(function (name) {
       if (!name) return;
-      const d = { id: "u-" + U.uid("talia").toLowerCase().replace(/[^a-z0-9-]/g, "-").slice(0, 40), title: name.trim().slice(0, 80), createdAt: new Date().toISOString() };
+      const d = { id: "u-" + U.uid("deck").toLowerCase().replace(/[^a-z0-9-]/g, "-").slice(0, 40), title: name.trim().slice(0, 80), createdAt: new Date().toISOString() };
       st().userDecks.push(d);
       st().settings.enabledDecks.push(d.id);
       saveState();
@@ -635,7 +635,8 @@ window.LM = window.LM || {};
     const typedMode = cardIsTyped(card);
     const cardNode = el("section", { class: "card fc-card" + (session.revealed ? " is-revealed" : ""), "aria-label": "Flashcard" + (deck ? " from the deck " + deck.title : "") }, [
       el("p", { class: "fc-card-meta" }, [deck ? el("span", { text: deck.title }) : null, el("span", { class: "fc-type", text: { basic: "Basic", cloze: "Cloze", typed: "Type" }[card.type] })]),
-      el("div", { class: "fc-front" }, renderFront(card))
+      el("div", { class: "fc-front" }, renderFront(card)),
+      LM.ui.listenButton(cardSpeech(card, session.revealed), "Listen to the card (S)")
     ]);
     if (session.lastNote) root.appendChild(el("p", { class: "fc-last-note", role: "status" }, [LM.icon("check", { size: 16 }), " " + session.lastNote]));
     root.appendChild(cardNode);
@@ -671,6 +672,8 @@ window.LM = window.LM || {};
 
     if (session.revealed) {
       cardNode.appendChild(el("div", { class: "fc-backside" + (LM.reducedMotion && LM.reducedMotion() ? "" : " is-anim") }, renderBack(card)));
+      // E12: a quiet "Report a mistake" on the back of content cards (own cards are the learner's text)
+      if (!/^u-/.test(card.id)) { const rep = LM.ui.reportLink(card.topic || (deck && (deck.topic || deck.id)) || card.deck); if (rep) cardNode.appendChild(rep); }
       const pv = H().preview(st().cards[card.id] && st().cards[card.id].state !== "new" ? st().cards[card.id] : H().newCard(), now());
       const suggested = session.typed ? session.typed.result.suggested : null;
       root.appendChild(el("div", { class: "fc-grades", role: "group", "aria-label": "Rate how it went" }, GRADE_INFO.map(function (g) {
@@ -1074,7 +1077,7 @@ window.LM = window.LM || {};
     }
     const max = Math.max(1, Math.max.apply(null, per));
     const bars = el("div", { class: "fc-st-bars", role: "img", "aria-label": "Flashcard reviews in the last 30 days: " + total + " in total, the most in one day: " + Math.max.apply(null, per) + "." },
-      per.map(function (n, i) { return el("span", { class: "fc-st-bar" + (n ? "" : " is-zero"), style: "height:" + Math.max(n ? 6 : 2, Math.round(100 * n / max)) + "%", title: days[i].slice(8, 10) + "." + days[i].slice(5, 7) + ": " + n, "aria-hidden": "true" }); }));
+      per.map(function (n, i) { return el("span", { class: "fc-st-bar" + (n ? "" : " is-zero"), style: "height:" + Math.max(n ? 6 : 2, Math.round(100 * n / max)) + "%", title: LM.fmt.dayMonth(days[i]) + ": " + n, "aria-hidden": "true" }); }));
     const stat = function (label, value, note) {
       return el("div", { class: "st-stat" }, [el("p", { class: "st-stat-label", text: label }), el("p", { class: "st-stat-value", text: value }), note ? el("p", { class: "st-stat-note tool-note", text: note }) : null]);
     };

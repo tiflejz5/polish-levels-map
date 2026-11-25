@@ -20,7 +20,7 @@
  *   wordDiff(model, got)              word-by-word comparison (missing / extra / replaced)
  *   prepareMatch(item, rng)           the right column of match pairs (always shuffled)
  *
- * Types of pack v6 (spec docs/rozbudowa-v6/spec/12-nowe-typy-zadan.md): gap-fill, match,
+ * Types of pack v6 (the reference app's v6 item-type spec): gap-fill, match,
  * transformation, translate, dictation. Answers: { texts: […] }, { pairs: { leftIndex: rightText } },
  * { text }, { text }, { text } or { skipped: true } (dictation without a voice).
  * paradigm (spec 06 E6): { texts: [one per cell, given cells ignored] }; a point per cell to fill, correct = all.

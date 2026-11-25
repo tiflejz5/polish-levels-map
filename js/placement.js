@@ -187,7 +187,7 @@ window.LM = window.LM || {};
         onclick: function () { answer(i); }
       }, [
         el("span", { class: "lt-letter", "aria-hidden": "true" }, last && (i === q.correct || i === last.chosen) ? LM.icon(i === q.correct ? "check" : "x", { size: 16 }) : LETTERS[i]),
-        el("span", { class: "lt-option-text", text: text }),
+        el("span", { class: "lt-option-text", lang: LM.APP.targetLang, text: text }),
         last && i === q.correct ? el("span", { class: "lt-tag is-ok", "aria-hidden": "true", text: "Correct" }) : null,
         last && i === last.chosen && i !== q.correct ? el("span", { class: "lt-tag is-bad", "aria-hidden": "true", text: "Your answer" }) : null
       ]));
@@ -199,7 +199,7 @@ window.LM = window.LM || {};
         el("p", { class: "lt-passage-label", text: "Read the text:" }),
         el("p", { class: "lt-passage-text", text: q.passage })
       ]) : null,
-      el("p", { class: "lt-question", id: "lt-question", text: q.question }),
+      el("p", { class: "lt-question", id: "lt-question", lang: LM.APP.targetLang, text: q.question }), // questions and options are target language (spec 07 §6)
       el("ol", { class: "lt-options", "aria-labelledby": "lt-question" }, options)
     ];
     if (!last) {
@@ -271,9 +271,9 @@ window.LM = window.LM || {};
         const link = x.q.itemId && LM.mistakes ? LM.mistakes.itemLink(x.q.itemId) : null;
         return el("li", null, [
           x.q.passage ? el("details", { class: "lt-wrong-passage" }, [el("summary", null, "Text for the question"), el("p", { lang: LM.APP.targetLang, text: x.q.passage })]) : null,
-          el("p", { class: "lt-wrong-q" }, [el("span", { class: "c1-chip", text: x.q.level }), " ", x.q.question]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: x.q.options[x.q.correct] })]),
-          x.a.chosen >= 0 ? el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: x.q.options[x.a.chosen] || "" })]) : el("p", { class: "tool-note", text: "You chose “I don't know”." }),
+          el("p", { class: "lt-wrong-q" }, [el("span", { class: "c1-chip", text: x.q.level }), " ", el("span", { lang: LM.APP.targetLang, text: x.q.question })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { lang: LM.APP.targetLang, text: x.q.options[x.q.correct] })]),
+          x.a.chosen >= 0 ? el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { lang: LM.APP.targetLang, text: x.q.options[x.a.chosen] || "" })]) : el("p", { class: "tool-note", text: "You chose “I don't know”." }),
           link ? el("p", null, ["To review: ", link]) : null
         ]);
       })) : el("p", { class: "tool-note", text: "All answers were correct." }),

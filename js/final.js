@@ -221,7 +221,7 @@ window.LM = window.LM || {};
 
     view.appendChild(el("section", { class: "card ex-result lf-result " + (passed ? "is-passed" : "is-failed"), "aria-live": "polite" }, [
       el("p", { class: "ex-result-score" }, [
-        el("strong", { class: "num", text: run.score + "/" + total + " pkt" }),
+        el("strong", { class: "num", text: run.score + "/" + total + " points" }),
         el("span", { class: "ex-result-pct num", text: pct + "%" })
       ]),
       el("p", { class: "lf-verdict" }, [
@@ -265,18 +265,19 @@ window.LM = window.LM || {};
       actions.insertBefore(el("a", { class: "btn btn-secondary", href: "#/practice/set/" + found[0] }, "Sets for these topics"), actions.children[1]);
     });
 
-    view.appendChild(el("section", { class: "card ex-review" }, [
-      el("h2", { class: "section-title", text: wrong.length ? "To correct (" + wrong.length + ")" : "No mistakes – well done!" }),
-      wrong.length ? el("ol", { class: "ex-wrong" }, wrong.map(function (p) {
+    // The list of mistakes (with no mistakes the result card already says so)
+    if (wrong.length) view.appendChild(el("section", { class: "card ex-review" }, [
+      el("h2", { class: "section-title", text: "To correct (" + wrong.length + ")" }),
+      el("ol", { class: "ex-wrong" }, wrong.map(function (p) {
         const mine = api.userAnswer(p);
         return el("li", null, [
-          el("p", { class: "ex-wrong-q" }, [el("span", { class: "chip", text: api.typeShort[p.item.type] }), p.res && p.res.max > 1 ? el("span", { class: "chip", text: p.res.points + "/" + p.res.max + " pkt" }) : null, " ", api.itemSummary(p.item)]),
-          el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { text: mine || "(none)" })]),
-          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { text: api.modelAnswer(p.item) })]),
+          el("p", { class: "ex-wrong-q" }, [el("span", { class: "chip", text: api.typeShort[p.item.type] }), p.res && p.res.max > 1 ? el("span", { class: "chip", text: p.res.points + "/" + p.res.max + " points" }) : null, " ", api.itemSummary(p.item)]),
+          el("p", { class: "journal-row is-wrong" }, [el("span", { class: "review-label", text: "Your answer: " }), el("span", { lang: mine && LM.lang.isTarget(mine) ? LM.APP.targetLang : null, text: mine || "(none)" })]),
+          el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: "Correct: " }), el("strong", { lang: LM.lang.isTarget(api.modelAnswer(p.item)) ? LM.APP.targetLang : null, text: api.modelAnswer(p.item) })]),
           p.item.explanation ? el("p", { class: "ex-wrong-expl", text: p.item.explanation }) : null,
           p.item.trap ? el("p", { class: "ex-wrong-trap" }, [el("strong", { text: "Trap: " }), p.item.trap]) : null
         ]);
-      })) : el("p", { class: "tool-note", text: "All answers were correct." })
+      }))
     ]));
     setTimeout(function () { const b = view.querySelector("[data-fk='again']"); if (b) b.focus({ preventScroll: true }); }, 0);
   }
