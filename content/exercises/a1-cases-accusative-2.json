@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "id": "a1-cases-accusative-2",
+  "topic": "a1-cases-accusative",
+  "level": "A1",
+  "title": "Accusative: type it yourself",
+  "intro": "10 tasks: type the forms, write a dictation, rewrite sentences, find the mistake and translate.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-cases-accusative-2-01",
+      "type": "short-answer",
+      "tags": [
+        "accusative",
+        "adjectives",
+        "feminine"
+      ],
+      "prompt": "Lubię ___. (polska muzyka)",
+      "accepted": [
+        "polską muzykę"
+      ],
+      "explanation": "Lubić takes the accusative. Feminine: the adjective -a → -ą, the noun -a → -ę."
+    },
+    {
+      "id": "a1-cases-accusative-2-02",
+      "type": "short-answer",
+      "tags": [
+        "accusative",
+        "masculine-a"
+      ],
+      "prompt": "Znasz ___? (mój kolega)",
+      "accepted": [
+        "mojego kolegę"
+      ],
+      "explanation": "Kolega is a man, so the adjective takes -ego, but the noun ends in -a, so it takes -ę: mojego kolegę."
+    },
+    {
+      "id": "a1-cases-accusative-2-03",
+      "type": "dictation",
+      "tags": [
+        "accusative",
+        "masculine-animate",
+        "spelling"
+      ],
+      "text": "Anna ma małego psa i dużego kota.",
+      "explanation": "Animals take -ego and -a. Pies loses its e: psa. Listen for ł in małego and ż in dużego."
+    },
+    {
+      "id": "a1-cases-accusative-2-04",
+      "type": "transformation",
+      "tags": [
+        "accusative",
+        "masculine-animate",
+        "adjectives"
+      ],
+      "source": "Mój brat jest starszy.",
+      "keyword": "starszego",
+      "before": "Mam",
+      "after": ".",
+      "answers": [
+        "starszego brata"
+      ],
+      "explanation": "Mieć takes the accusative. A brother is a person: starszego brata."
+    },
+    {
+      "id": "a1-cases-accusative-2-05",
+      "type": "transformation",
+      "tags": [
+        "accusative",
+        "masculine-inanimate",
+        "food"
+      ],
+      "source": "Moja ulubiona zupa to żurek.",
+      "keyword": "lubię",
+      "before": "Najbardziej",
+      "after": ".",
+      "answers": [
+        "lubię żurek"
+      ],
+      "explanation": "Żurek is a masculine thing, so after lubię it stays the same as in the dictionary."
+    },
+    {
+      "id": "a1-cases-accusative-2-06",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "accusative",
+        "masculine-a"
+      ],
+      "prompt": "Znam ___. (I know your dad.)",
+      "options": [
+        "twojego tatę",
+        "twoją tatę",
+        "twojego tata",
+        "twój tata"
+      ],
+      "correct": 0,
+      "explanation": "Tata is a man with a feminine-looking ending: the noun takes -ę, the adjective stays masculine (-ego).",
+      "optionNotes": [
+        null,
+        "Twoją is feminine, but tata is a man.",
+        "The noun ends in -a, so it changes to -ę.",
+        "Nominative: the object needs the accusative."
+      ]
+    },
+    {
+      "id": "a1-cases-accusative-2-07",
+      "type": "gap-fill",
+      "tags": [
+        "accusative",
+        "days",
+        "masculine-inanimate"
+      ],
+      "context": "On Saturday I watch a new series.",
+      "text": "W {{1}} oglądam {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "sobotę"
+          ],
+          "hint": "(sobota)"
+        },
+        {
+          "accepted": [
+            "nowy serial"
+          ],
+          "hint": "(nowy serial)"
+        }
+      ],
+      "explanation": "W + a day takes the accusative: w sobotę. Serial is a masculine thing, so it does not change."
+    },
+    {
+      "id": "a1-cases-accusative-2-08",
+      "type": "find-error",
+      "tags": [
+        "accusative",
+        "adjectives",
+        "feminine"
+      ],
+      "tokens": [
+        "Piotr",
+        "zna",
+        "moja",
+        "siostrę."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "moją"
+      ],
+      "explanation": "The word before siostrę agrees with it: moja → moją."
+    },
+    {
+      "id": "a1-cases-accusative-2-09",
+      "type": "translate",
+      "tags": [
+        "accusative",
+        "names",
+        "questions"
+      ],
+      "source": "Do you know Ewa? (to a friend)",
+      "accepted": [
+        "Znasz Ewę?",
+        "Czy znasz Ewę?",
+        "Ty znasz Ewę?",
+        "Czy ty znasz Ewę?"
+      ],
+      "hint": "to know (a person) = znać",
+      "explanation": "Znać + accusative: Ewa → Ewę. To a friend use the ty form: znasz. Czy at the start is optional."
+    },
+    {
+      "id": "a1-cases-accusative-2-10",
+      "type": "reorder",
+      "tags": [
+        "accusative",
+        "food",
+        "word-order"
+      ],
+      "context": "We are eating a sandwich and drinking tea.",
+      "answers": [
+        "Jemy kanapkę i pijemy herbatę.",
+        "Pijemy herbatę i jemy kanapkę."
+      ],
+      "explanation": "Both objects are feminine: kanapka → kanapkę, herbata → herbatę. The two parts can come in either order."
+    }
+  ]
+}

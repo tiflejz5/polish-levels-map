@@ -1,6 +1,6 @@
 /*
  * exercise-engine.js — the exercise engine: a set session (Learn / Exam mode),
- * nine item types, the result screen, the “Check yourself” section on topic pages.
+ * ten item types (paradigm = "Fill the table", spec 06 E6), the result screen, the “Check yourself” section on topic pages.
  * Item types: the reference engine's spec (docs/rozbudowa-v2/spec/01-typy-zadan.md); types gap-fill, match,
  * transformation, translate, dictation and scores in points: docs/rozbudowa-v6/spec/12-nowe-typy-zadan.md.
  *
@@ -41,7 +41,8 @@ window.LM = window.LM || {};
     "match": "Match pairs",
     "transformation": "Rewrite the sentence",
     "translate": "Translate",
-    "dictation": "Dictation"
+    "dictation": "Dictation",
+    "paradigm": "Fill the table"
   };
   const TYPE_SHORT = {
     "multiple-choice": "multiple choice",
@@ -52,7 +53,8 @@ window.LM = window.LM || {};
     "match": "match pairs",
     "transformation": "rewrite the sentence",
     "translate": "translate",
-    "dictation": "dictation"
+    "dictation": "dictation",
+    "paradigm": "fill the table"
   };
 
   // =====================================================================
@@ -193,7 +195,7 @@ window.LM = window.LM || {};
     if (p.item.type === "multiple-choice") return { chosen: st.chosen === null ? null : p.choice.options[st.chosen].original };
     if (p.item.type === "reorder") return { words: st.line.map(function (t) { return t.text; }) };
     if (p.item.type === "find-error") return st.noError ? { noError: true } : { range: st.range, fix: st.fix };
-    if (p.item.type === "gap-fill") return { texts: st.texts };
+    if (p.item.type === "gap-fill" || p.item.type === "paradigm") return { texts: st.texts };
     if (p.item.type === "match") {
       const pairs = {};
       Object.keys(st.pairs).forEach(function (i) { pairs[i] = rightById(p, st.pairs[i]).text; });
@@ -215,7 +217,8 @@ window.LM = window.LM || {};
     "match": "First connect at least one pair.",
     "transformation": "First complete the sentence.",
     "translate": "First type your translation.",
-    "dictation": "First listen to the recording and type what you hear."
+    "dictation": "First listen to the recording and type what you hear.",
+    "paradigm": "First fill in the table."
   };
 
   /** “Check” (Learn mode) or “Next” (Exam mode). */
@@ -291,14 +294,17 @@ window.LM = window.LM || {};
     else if (item.type === "transformation") context = item.source + "\n" + String(item.keyword).toUpperCase() + "\n" + [item.before, "___", item.after].filter(Boolean).join(" ");
     else if (item.type === "translate") context = "Translate: " + item.source;
     else if (item.type === "dictation") context = "Dictation: " + item.text;
+    else if (item.type === "paradigm") context = paradigmContext(item);
     else context = (item.context ? item.context + "\n" : "") + item.prompt;
     const rule = (item.explanation || "") + (item.trap ? " Trap: " + item.trap : "");
-    // Match pairs: only the wrong pairs in the log (mine and the correct ones)
+    // Match pairs and table cells: only the wrong ones in the log (mine and the correct ones)
     const wrongPairs = item.type === "match" && p.res && p.res.pairs ? item.pairs.filter(function (_, i) { return !p.res.pairs[i]; }) : null;
+    const wrongCells = item.type === "paradigm" && p.res && p.res.cells ? X().paradigmCells(item).filter(function (c) { return !p.res.cells[c.index].correct; }) : null;
     return {
       context: context,
-      myAnswer: (wrongPairs ? matchText(p, true) : userAnswer(p)) || "(no answer)",
-      correct: wrongPairs ? wrongPairs.map(function (x) { return x[0] + " – " + x[1]; }).join("; ") : modelAnswer(item),
+      myAnswer: (wrongPairs ? matchText(p, true) : wrongCells ? paradigmText(item, wrongCells, function (c) { return (p.st.texts[c.index] || "").trim() || "…"; }) : userAnswer(p)) || "(no answer)",
+      correct: wrongPairs ? wrongPairs.map(function (x) { return x[0] + " – " + x[1]; }).join("; ")
+        : wrongCells ? paradigmText(item, wrongCells, function (c) { return c.accepted[0]; }) : modelAnswer(item),
       rule: rule.trim(),
       source: "Set: " + run.title,
       category: journalCategory(item.topic),
@@ -761,6 +767,74 @@ window.LM = window.LM || {};
     ];
   }
 
+  // ---------- Fill the table (paradigm, spec 06 E6) ----------
+
+  /** A cell label: a case id becomes "Genitive (kogo? czego?)" (LM.lang.caseLabel); anything else is shown as written. */
+  function cellLabel(label) {
+    const c = LM.lang.caseOf ? LM.lang.caseOf(label) : null;
+    if (!c) return el("span", { lang: LM.APP.targetLang, text: label });
+    return el("span", null, [c.name + " ", el("span", { class: "ex-par-q", lang: LM.APP.targetLang, text: "(" + c.questions + ")" })]);
+  }
+
+  /** Text of a cell label for summaries and the mistake log: a case by its English name, anything else as written. */
+  function cellLabelText(label) { const c = LM.lang.caseOf ? LM.lang.caseOf(label) : null; return c ? c.name : String(label); }
+
+  /** "label: form; label: form" for the given cells. */
+  function paradigmText(item, cells, form) {
+    return cells.map(function (c) { return cellLabelText(c.label) + ": " + form(c); }).join("; ");
+  }
+
+  /** The task in words: prompt, lemma (gloss) and the labels of the cells to fill. */
+  function paradigmContext(item) {
+    const cells = X().paradigmCells(item);
+    return (item.prompt ? item.prompt + "\n" : "") + item.lemma + (item.gloss ? " (" + item.gloss + ")" : "") + "\n" +
+      cells.map(function (c) { return cellLabelText(c.label) + ": " + (c.given ? c.accepted[0] : "___"); }).join(" / ");
+  }
+
+  function bodyParadigm(p) {
+    const st = p.st, done = !!p.res, item = p.item;
+    const cells = X().paradigmCells(item);
+    const open = cells.filter(function (c) { return !c.given; });
+    const rows = Math.ceil(cells.length / 2);
+    let firstOpen = true;
+    const grid = el("div", { class: "ex-par-grid", role: "group", "aria-labelledby": "ex-prompt", style: "--par-rows:" + rows }, cells.map(function (c) {
+      const id = "ex-par-" + c.index;
+      const r = done && p.res.cells ? p.res.cells[c.index] : null;
+      let input;
+      if (c.given) {
+        input = el("input", { type: "text", class: "field ex-par-input is-given", id: id, value: c.accepted[0] || "", readonly: true, tabindex: "-1", lang: LM.APP.targetLang, "aria-describedby": id + "-given" });
+      } else {
+        const fk = firstOpen ? "first" : "cell-" + c.index;
+        firstOpen = false;
+        input = textField("input", {
+          type: "text", id: id, value: st.texts[c.index] || "", disabled: done, "data-fk": fk,
+          class: "field ex-par-input" + (r ? (r.correct ? " is-ok" : " is-bad") : "") + (r && r.correct && run.mode === "learn" ? " ex-hl" : ""),
+          "aria-describedby": r && !r.correct ? id + "-model" : null,
+          oninput: function () { st.texts[c.index] = input.value; }
+        });
+      }
+      return el("div", { class: "ex-par-cell" + (c.given ? " is-given" : "") }, [
+        el("label", { class: "ex-par-label", for: id }, [cellLabel(c.label), r && !c.given ? el("span", { class: "visually-hidden", text: r.correct ? " – correct" : " – wrong" }) : null]),
+        el("span", { class: "ex-par-field" }, [
+          input,
+          c.given ? el("span", { class: "ex-par-tag", id: id + "-given", text: "given" }) : null,
+          r && !c.given ? el("span", { class: "ex-gap-mark " + (r.correct ? "is-ok" : "is-bad"), "aria-hidden": "true" }, LM.icon(r.correct ? "check" : "x", { size: 16 })) : null
+        ]),
+        r && !c.given && !r.correct ? el("span", { class: "ex-par-model", id: id + "-model" }, [el("span", { class: "visually-hidden", text: "correct: " }), el("span", { lang: LM.APP.targetLang, text: c.accepted[0] })]) : null
+      ]);
+    }));
+    return [
+      item.prompt ? el("p", { class: "ex-par-prompt", text: item.prompt }) : null,
+      el("p", { class: "ex-prompt ex-par-lemma", id: "ex-prompt" }, [
+        el("strong", { lang: LM.APP.targetLang, text: item.lemma || "" }),
+        item.gloss ? el("span", { class: "ex-par-gloss", text: " – " + item.gloss }) : null
+      ]),
+      grid,
+      charBar(done),
+      done ? null : el("p", { class: "tool-note ex-keys-hint", text: open.length + " " + LM.pluralWord(open.length, "cell", "cells") + " to fill. Tab goes to the next cell, Enter checks." })
+    ];
+  }
+
   const MATCH_HEADS = {
     definition: ["Word", "Definition"],
     halves: ["Start of the sentence", "End"],
@@ -988,16 +1062,20 @@ window.LM = window.LM || {};
     ];
   }
 
-  /** Word-by-word comparison with the closest correct variant (translate, dictation). */
-  function diffView(ops) {
-    const show = function (w) { return w === "i" ? "I" : w; };
+  /**
+   * Word-by-word comparison with the closest correct variant (translate, dictation). The words are normalized (lower
+   * case); the first one gets its capital back when the model sentence starts with one.
+   */
+  function diffView(ops, modelText) {
+    const capital = /^[^\p{L}]*\p{Lu}/u.test(String(modelText || ""));
+    const show = function (w, k) { return capital && k === 0 && w ? w.replace(/\p{L}/u, function (c) { return c.toUpperCase(); }) : w; };
     const nodes = [];
     ops.forEach(function (o, k) {
       if (k) nodes.push(" ");
-      if (o.op === "same") nodes.push(el("span", { class: "ex-diff-w", text: show(o.word) }));
-      else if (o.op === "missing") nodes.push(el("span", { class: "ex-diff-w is-missing" }, [el("span", { class: "visually-hidden", text: "(missing: " }), el("span", { "aria-hidden": "true", text: "+" }), show(o.word), el("span", { class: "visually-hidden", text: ")" })]));
-      else if (o.op === "extra") nodes.push(el("span", { class: "ex-diff-w is-extra" }, [el("span", { class: "visually-hidden", text: "(extra: " }), el("s", { text: show(o.got) }), el("span", { class: "visually-hidden", text: ")" })]));
-      else nodes.push(el("span", { class: "ex-diff-w is-replace" }, [el("span", { class: "visually-hidden", text: "(instead of " }), el("s", { text: show(o.got) }), el("span", { class: "visually-hidden", text: " it should be " }), " ", el("strong", { text: show(o.word) }), el("span", { class: "visually-hidden", text: ")" })]));
+      if (o.op === "same") nodes.push(el("span", { class: "ex-diff-w", text: show(o.word, k) }));
+      else if (o.op === "missing") nodes.push(el("span", { class: "ex-diff-w is-missing" }, [el("span", { class: "visually-hidden", text: "(missing: " }), el("span", { "aria-hidden": "true", text: "+" }), show(o.word, k), el("span", { class: "visually-hidden", text: ")" })]));
+      else if (o.op === "extra") nodes.push(el("span", { class: "ex-diff-w is-extra" }, [el("span", { class: "visually-hidden", text: "(extra: " }), el("s", { text: show(o.got, k) }), el("span", { class: "visually-hidden", text: ")" })]));
+      else nodes.push(el("span", { class: "ex-diff-w is-replace" }, [el("span", { class: "visually-hidden", text: "(instead of " }), el("s", { text: show(o.got, k) }), el("span", { class: "visually-hidden", text: " it should be " }), " ", el("strong", { text: show(o.word, k) }), el("span", { class: "visually-hidden", text: ")" })]));
     });
     const missing = ops.filter(function (o) { return o.op === "missing"; }).length;
     const extra = ops.filter(function (o) { return o.op === "extra"; }).length;
@@ -1024,6 +1102,7 @@ window.LM = window.LM || {};
     if (item.type === "transformation") return [item.before, item.answers[0], item.after].filter(Boolean).join(" ");
     if (item.type === "translate") return item.accepted[0];
     if (item.type === "dictation") return item.text;
+    if (item.type === "paradigm") return paradigmText(item, X().paradigmCells(item).filter(function (c) { return !c.given; }), function (c) { return c.accepted[0]; });
     if (item.noError) return "The sentence is correct – it has no mistake.";
     const t = item.tokens.slice();
     const fix = item.fixes[0];
@@ -1053,6 +1132,10 @@ window.LM = window.LM || {};
     if (item.type === "short-answer") return st.text;
     if (item.type === "gap-fill") return st.texts.some(function (t) { return t && t.trim(); }) ? gapText(item, function (i) { return "[" + ((st.texts[i] || "").trim() || "…") + "]"; }) : "";
     if (item.type === "match") return Object.keys(st.pairs).length ? matchText(p, false) : "";
+    if (item.type === "paradigm") {
+      const open = X().paradigmCells(item).filter(function (c) { return !c.given; });
+      return open.some(function (c) { return (st.texts[c.index] || "").trim(); }) ? paradigmText(item, open, function (c) { return (st.texts[c.index] || "").trim() || "…"; }) : "";
+    }
     if (item.type === "dictation" && p.res && p.res.skipped) return "Skipped (no " + LM.APP.language + " voice)";
     if (item.type === "transformation" || item.type === "translate" || item.type === "dictation") return st.text.trim();
     if (st.noError) return "No mistake";
@@ -1070,6 +1153,7 @@ window.LM = window.LM || {};
     if (item.type === "transformation") return item.source + " (" + String(item.keyword).toUpperCase() + ") → " + [item.before, "___", item.after].filter(Boolean).join(" ");
     if (item.type === "translate") return "Translate: " + item.source;
     if (item.type === "dictation") return "Dictation";
+    if (item.type === "paradigm") return "Fill the table: " + item.lemma + (item.gloss ? " (" + item.gloss + ")" : "");
     return (item.context ? item.context + " → " : "") + item.prompt;
   }
 
@@ -1125,6 +1209,12 @@ window.LM = window.LM || {};
     if (item.type === "gap-fill") {
       res.gaps.forEach(function (g, i) { lines.push(nearHint(g.near, g.closest, g.lenient, "Gap " + (i + 1) + ": ")); });
     }
+    if (item.type === "paradigm") {
+      X().paradigmCells(item).forEach(function (c) {
+        const g = res.cells[c.index];
+        if (!c.given) lines.push(nearHint(g.near, g.closest, g.lenient, cellLabelText(c.label) + ": "));
+      });
+    }
     if (item.type === "transformation") {
       if (res.msg) lines.push(el("p", { class: "ex-spelling", text: res.msg }));
       if (keyOn(p)) lines.push(keywordLine(item, p.st.text));
@@ -1135,9 +1225,9 @@ window.LM = window.LM || {};
       }
     }
     const sentence = item.type === "translate" || item.type === "dictation";
-    if (sentence && !res.correct && res.diff) lines.push(diffView(res.diff));
+    if (sentence && !res.correct && res.diff) lines.push(diffView(res.diff, res.closestText));
     // “Correct: …” after a mistake for every type (match pairs too: the pairs written as text under the list)
-    if (!res.correct || item.type === "reorder" || item.type === "find-error") {
+    if ((!res.correct && item.type !== "paradigm") || item.type === "reorder" || item.type === "find-error") {
       const model = sentence && !res.skipped ? (item.type === "translate" ? item.accepted : [item.text].concat(item.accepted || []))[res.closest || 0] : modelAnswer(item);
       lines.push(el("p", { class: "journal-row is-right" }, [el("span", { class: "review-label", text: res.skipped ? "Text: " : "Correct: " }), el("strong", { lang: sentence ? LM.APP.targetLang : null, text: model })]));
     }
@@ -1232,6 +1322,7 @@ window.LM = window.LM || {};
     else if (p.item.type === "transformation") body = bodyTransformation(p);
     else if (p.item.type === "translate") body = bodyTranslate(p);
     else if (p.item.type === "dictation") body = bodyDictation(p);
+    else if (p.item.type === "paradigm") body = bodyParadigm(p);
     else body = bodyShort(p);
 
     const last = run.i === run.items.length - 1;

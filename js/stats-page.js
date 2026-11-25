@@ -22,7 +22,7 @@ window.LM = window.LM || {};
   const SVG_NS = "http://www.w3.org/2000/svg";
   const TYPE_LABEL = {
     "multiple-choice": "Multiple choice", "reorder": "Put in order", "find-error": "Find the mistake", "short-answer": "Short answer",
-    "gap-fill": "Fill the gaps", "match": "Match pairs", "transformation": "Rewrite the sentence", "translate": "Translate", "dictation": "Dictation",
+    "gap-fill": "Fill the gaps", "match": "Match pairs", "transformation": "Rewrite the sentence", "translate": "Translate", "dictation": "Dictation", "paradigm": "Fill the table",
     "paradigm": "Fill the table"
   };
   // Monday first; Jan 1, 2024 was a Monday

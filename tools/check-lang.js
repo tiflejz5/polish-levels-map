@@ -6,7 +6,7 @@
  *
  * Scanned: js/, css/, index.html, tools/ (comments included: comments must be English too).
  * Not scanned: js/lang.js and js/config.js (the only code files that may hold Polish), this file (it holds the
- * stop list), tools/legacy/ (unchanged validators of the original app, deleted in stage 4), tools/fixtures/ (data).
+ * stop list), tools/fixtures/ (data, including the Polish test fixtures).
  *
  * Rules (one finding per rule and line). Polish language facts live only in js/lang.js, js/config.js and content/
  * (stage 3, spec 05):
@@ -33,7 +33,7 @@ const ROOT = path.join(__dirname, "..");
 const ALLOW_FILE = path.join(__dirname, "check-lang-allow.json");
 
 const SKIP_FILES = ["js/lang.js", "js/config.js", "tools/check-lang.js"];
-const SKIP_DIRS = ["tools/legacy", "tools/fixtures", "node_modules"];
+const SKIP_DIRS = ["tools/fixtures", "node_modules"];
 
 const STOP_WORDS = ["Dodaj", "Zapisz", "Anuluj", "Usuń", "Dalej", "Wróć", "Wynik", "Poziom", "Zadanie",
   "Pokaż", "Ukryj", "Umiem", "Dziś", "Szlak", "Fiszki", "Zestaw", "Błąd", "Powtórka", "Egzamin"];

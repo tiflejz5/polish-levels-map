@@ -1,0 +1,90 @@
+{
+ "version": 1,
+ "id": "a1-cases-accusative",
+ "topic": "a1-cases-accusative",
+ "level": "A1",
+ "title": "Stop: accusative",
+ "passScore": 2,
+ "items": [
+  {
+   "id": "a1-cases-accusative-q1",
+   "type": "multiple-choice",
+   "kind": "form",
+   "prompt": "Lubię ___. (I like music.)",
+   "options": [
+    "muzyka",
+    "muzykę",
+    "muzyką",
+    "muzyki"
+   ],
+   "correct": 1,
+   "explanation": "Lubić takes the accusative. Feminine nouns change -a to -ę: muzykę.",
+   "optionNotes": [
+    "Nominative: the dictionary form, used for the subject.",
+    null,
+    "Instrumental (-ą), used after być and z.",
+    "Genitive, used after nie."
+   ]
+  },
+  {
+   "id": "a1-cases-accusative-q2",
+   "type": "multiple-choice",
+   "kind": "form",
+   "prompt": "Mam ___. (I have a brother.)",
+   "options": [
+    "brat",
+    "bratem",
+    "bratę",
+    "brata"
+   ],
+   "correct": 7,
+   "explanation": "Masculine nouns for people and animals take -a in the accusative: brata.",
+   "optionNotes": [
+    "Nominative. English does not change the noun here, Polish does.",
+    "Instrumental, as in Jestem bratem Anny.",
+    "-ę is the feminine ending.",
+    null
+   ]
+  },
+  {
+   "id": "a1-cases-accusative-q3",
+   "type": "multiple-choice",
+   "kind": "form",
+   "prompt": "Kupuję ___ telefon.",
+   "options": [
+    "nowy",
+    "nowego",
+    "nową",
+    "nowe"
+   ],
+   "correct": 0,
+   "explanation": "Telefon is a masculine thing, so nothing changes: nowy telefon.",
+   "optionNotes": [
+    null,
+    "-ego is for masculine people and animals: nowego kolegę.",
+    "-ą is the feminine ending.",
+    "-e is the neuter ending."
+   ]
+  },
+  {
+   "id": "a1-cases-accusative-q4",
+   "type": "multiple-choice",
+   "kind": "form",
+   "prompt": "Which sentence is correct?",
+   "options": [
+    "Piję dobra kawę.",
+    "Piję dobrą kawa.",
+    "Piję dobrą kawę.",
+    "Piję dobra kawa."
+   ],
+   "correct": 2,
+   "explanation": "Both words change: the adjective takes -ą and the noun takes -ę.",
+   "optionNotes": [
+    "The adjective must change too.",
+    "The noun must change too.",
+    null,
+    "This is the nominative; the object needs the accusative."
+   ]
+  }
+ ]
+}

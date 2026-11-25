@@ -332,7 +332,7 @@ test("reorderTokens: never in the correct order at once, the same set of words",
     for (let s = 1; s < 40; s++) {
       const t = X.reorderTokens(it, seeded(s)).map(function (x) { return x.text; });
       assert.ok(!X.evaluate(it, { words: t }).correct, it.id + " given in the correct order");
-      assert.deepStrictEqual(t.slice().sort(), X.answerTokens(it.answers[0]).concat(it.extraTokens || []).sort());
+      assert.deepStrictEqual(t.slice().sort(), X.answerTokens(it.answers[0], it).concat(it.extraTokens || []).sort());
     }
   });
 });
@@ -370,7 +370,7 @@ test("reorder: pointing at the first difference", function () {
 /** An answer to an old-type item: correct or wrong (for the points regression test). */
 function oldTypeAnswer(it, ok) {
   if (it.type === "multiple-choice") return { chosen: ok ? it.correct : (it.correct + 1) % it.options.length };
-  if (it.type === "reorder") return { words: ok ? X.answerTokens(it.answers[0]) : X.answerTokens(it.answers[0]).reverse() };
+  if (it.type === "reorder") return { words: ok ? X.answerTokens(it.answers[0], it) : X.answerTokens(it.answers[0], it).reverse() };
   if (it.type === "find-error") return ok ? (it.noError ? { noError: true } : { range: it.errorRange.slice(), fix: it.fixes[0] }) : (it.noError ? { range: [0, 0], fix: "x" } : { noError: true });
   return { text: ok ? it.accepted[0] : "zzz" };
 }
@@ -465,12 +465,13 @@ function pilot(id) { return PILOT.find(function (it) { return it.id === id; }); 
 /** The model answer of an item (every type) in the evaluate format. */
 function modelAnswerOf(it) {
   if (it.type === "multiple-choice") return { chosen: it.correct };
-  if (it.type === "reorder") return { words: X.answerTokens(it.answers[0]) };
+  if (it.type === "reorder") return { words: X.answerTokens(it.answers[0], it) };
   if (it.type === "find-error") return it.noError ? { noError: true } : { range: it.errorRange.slice(), fix: it.fixes[0] };
   if (it.type === "gap-fill") return { texts: it.gaps.map(function (g) { return g.accepted[0]; }) };
   if (it.type === "match") { const p = {}; it.pairs.forEach(function (x, i) { p[i] = x[1]; }); return { pairs: p }; }
   if (it.type === "transformation") return { text: it.answers[0] };
   if (it.type === "dictation") return { text: it.text };
+  if (it.type === "paradigm") return { texts: it.cells.map(function (c) { return c.given ? "" : c.accepted[0]; }) };
   return { text: it.accepted[0] };
 }
 
@@ -2734,6 +2735,286 @@ console.log("\nExams: generic module with the fixture exam (spec 06 E8, tools/fi
     global.LM.SETS_INDEX = saved.sets;
     fs.rmSync(tmp, { recursive: true, force: true });
   }
+})();
+
+// ---------- Stage 4: the engine with Polish data, paradigm (E6), tests (E10) ----------
+console.log("Exercises with Polish data (stage 4)");
+(function () {
+  const exDir = path.join(__dirname, "..", "content", "exercises");
+  const contentSets = fs.readdirSync(exDir).filter(function (f) { return /\.json$/.test(f) && f !== "topics.json" && f !== "mixes.json"; })
+    .map(function (f) { return JSON.parse(fs.readFileSync(path.join(exDir, f), "utf8")); });
+  const plItems = [].concat.apply([], contentSets.map(function (s) { return s.items.map(function (it) { return Object.assign({ topic: s.topic }, it); }); }));
+  const byId = function (id) { return plItems.find(function (it) { return it.id === id; }); };
+  const S4 = JSON.parse(fs.readFileSync(path.join(LANG_FX, "stage4.json"), "utf8"));
+  const PAR = byId("a1-cases-accusative-1-09");
+
+  test("content sets: every item type has Polish data", function () {
+    const types = {};
+    plItems.forEach(function (it) { types[it.type] = true; });
+    X.TYPES.forEach(function (t) { assert.ok(types[t], "no Polish item of type " + t); });
+  });
+  test("content sets: the model answer of every item is correct with full points", function () {
+    plItems.forEach(function (it) {
+      const r = X.evaluate(it, modelAnswerOf(it));
+      assert.ok(r.correct && r.points === r.max && r.max === X.maxPoints(it), it.id);
+    });
+  });
+  test("content sets: every accepted variant counts (translate, dictation, transformation, short answer, reorder orders, cells)", function () {
+    plItems.forEach(function (it) {
+      if (it.type === "translate") it.accepted.forEach(function (a) { assert.ok(X.evaluate(it, { text: a }).correct, it.id + " " + a); });
+      if (it.type === "dictation") (it.accepted || []).forEach(function (a) { assert.ok(X.evaluate(it, { text: a }).correct, it.id + " " + a); });
+      if (it.type === "transformation") it.answers.forEach(function (a) { assert.ok(X.evaluate(it, { text: a }).correct, it.id + " " + a); });
+      if (it.type === "short-answer") it.accepted.forEach(function (a) { assert.ok(X.evaluate(it, { text: a }).correct, it.id + " " + a); });
+      if (it.type === "reorder") it.answers.forEach(function (a) {
+        const words = a.trim().split(/\s+/).filter(function (w) { return /[\p{L}\p{N}]/u.test(w); });
+        assert.ok(X.evaluate(it, { words: words }).correct, it.id + " " + a);
+      });
+      if (it.type === "paradigm") it.cells.forEach(function (c) { c.accepted.forEach(function (a) { assert.ok(X.match(a, c.accepted).ok, it.id + " " + a); }); });
+    });
+  });
+  test("content sets: reorder tiles are never the solution and keep the words of the model", function () {
+    plItems.filter(function (it) { return it.type === "reorder"; }).forEach(function (it) {
+      for (let s = 1; s < 30; s++) {
+        const t = X.reorderTokens(it, seeded(s)).map(function (x) { return x.text; });
+        assert.ok(!X.evaluate(it, { words: t }).correct, it.id);
+        assert.deepStrictEqual(t.slice().sort(), X.answerTokens(it.answers[0], it).sort());
+      }
+    });
+  });
+
+  test("paradigm: a point per cell to fill, given cells are free, correct = all cells", function () {
+    const it = S4.paradigm;
+    assert.strictEqual(X.maxPoints(it), 3);
+    const all = X.evaluate(it, { texts: S4.paradigmAll });
+    assert.deepStrictEqual([all.correct, all.points, all.max], [true, 3, 3]);
+    const part = X.evaluate(it, { texts: S4.paradigmPart });
+    assert.deepStrictEqual([part.correct, part.points, part.max, part.answered], [false, 1, 3, true]);
+    assert.strictEqual(part.cells[0].given, true);
+    assert.strictEqual(part.cells[3].near, "accents");
+    const lenient = X.evaluate(it, { texts: S4.paradigmNoMarks }, { lenientAccents: true });
+    assert.deepStrictEqual([lenient.correct, lenient.lenient], [true, true]);
+    assert.strictEqual(X.evaluate(it, { texts: [] }).answered, false);
+    assert.strictEqual(X.sessionScore([{ item: it, res: part }, { item: it, res: null }]).total, 6);
+  });
+  test("paradigm: the example item (6 phrases in the accusative) and a wrong ending in one cell", function () {
+    assert.ok(PAR && PAR.type === "paradigm");
+    assert.strictEqual(X.maxPoints(PAR), 6);
+    const texts = PAR.cells.map(function (c) { return c.accepted[0]; });
+    texts[1] = S4.exampleWrongCell;
+    const r = X.evaluate(PAR, { texts: texts });
+    assert.deepStrictEqual([r.points, r.max, r.correct], [5, 6, false]);
+    assert.deepStrictEqual(X.paradigmCells(PAR).map(function (c) { return c.given; }), [false, false, false, false, false, false]);
+  });
+  test("paradigm: speech text only after checking, the forms in table order", function () {
+    assert.strictEqual(X.speechText(PAR, false), "");
+    assert.strictEqual(X.speechText(PAR, true), S4.exampleSpeech);
+  });
+
+  test("reorder: Polish quotes stay on their words, a dash is not a tile, the letter after a quote loses its capital", function () {
+    const q = S4.quotes, it = q.item;
+    assert.deepStrictEqual(X.answerTokens(it.answers[0], it), q.tokens);
+    assert.ok(X.evaluate(it, { words: q.tokens }).correct);
+    assert.ok(X.evaluate(it, { words: q.second }).correct, "the second order, punctuation ignored");
+    assert.ok(!X.evaluate(it, { words: q.wrong }).correct);
+  });
+  test("reorder: a proper noun at the start keeps its capital (capitalised inside another order); keepCapital forces it", function () {
+    const c = S4.capitals;
+    const it = byId("a1-cases-accusative-1-06");
+    assert.strictEqual(X.answerTokens(it.answers[0], it)[0], c.name);
+    assert.strictEqual(X.answerTokens(c.otherOrder, { answers: [c.otherOrder] })[0], c.otherFirst);
+    assert.strictEqual(X.answerTokens(c.city, { answers: [c.city], keepCapital: true })[0], c.cityKept);
+    assert.strictEqual(X.answerTokens(c.city, { answers: [c.city] })[0], c.cityLower);
+  });
+  test("reorder: words with diacritics compare exactly (no folding), capitals never matter", function () {
+    const d = S4.diacritics;
+    assert.ok(X.evaluate(d.item, { words: d.upper }).correct);
+    assert.ok(!X.evaluate(d.item, { words: d.folded }).correct);
+    assert.strictEqual(X.firstDifference(d.item, d.swapped), 1);
+  });
+  test("translate: every natural order comes from the content, the variant without the pronoun counts", function () {
+    const t = S4.translate;
+    const it = byId("a1-cases-accusative-1-07");
+    t.ok.forEach(function (a) { assert.ok(X.evaluate(it, { text: a }).correct, a); });
+    assert.strictEqual(X.evaluate(it, { text: t.accents }).near, "accents");
+    const d = X.evaluate(it, { text: t.wrong });
+    assert.ok(!d.correct && d.diff.some(function (o) { return o.op === "replace" && o.word === t.word && o.got === t.got; }));
+  });
+  test("transformation: word limit and key word with Polish words (a dash is not a word)", function () {
+    const t = S4.transformation;
+    assert.strictEqual(X.trTokens(t.dash).length, 2);
+    assert.ok(X.evaluate(t.item, { text: t.ok }).correct);
+    assert.match(X.evaluate(t.item, { text: t.noKeyword }).msg, /key word/);
+    assert.match(X.evaluate(t.item, { text: t.tooLong }).msg, /2–5 words/);
+  });
+  test("speechText: English instructions and glosses are not read, lemma hints after a gap are not read", function () {
+    S4.speech.forEach(function (c) { assert.strictEqual(X.speechText(c.item, c.answered), c.text); });
+  });
+
+  test("LM.lang: speaker gender of past and conditional forms, case labels with questions", function () {
+    assert.deepStrictEqual(S4.gender.words.map(global.LM.lang.speakerGender), S4.gender.expected);
+    S4.caseLabels.forEach(function (c) { assert.strictEqual(global.LM.lang.caseLabel(c[0]), c[1]); });
+    assert.deepStrictEqual(global.LM.lang.cases.map(function (c) { return c.id; }), ["nominative", "genitive", "dative", "accusative", "instrumental", "locative", "vocative"]);
+    S4.english.forEach(function (c) { assert.strictEqual(global.LM.lang.looksEnglish(c[0]), c[1], c[0]); });
+  });
+
+  test("E10 placement: skills grammar / vocabulary / reading; cases and verbs count as grammar", function () {
+    assert.strictEqual(L.skillOf({ skill: "cases" }), "grammar");
+    assert.strictEqual(L.skillOf({ skill: "verbs" }), "grammar");
+    assert.strictEqual(L.skillOf({ skill: "vocabulary" }), "vocabulary");
+    assert.strictEqual(L.skillOf({ skill: "reading" }), "reading");
+    assert.strictEqual(L.skillOf({}), "grammar");
+    assert.strictEqual(L.skillOfCategory("functions"), "vocabulary");
+  });
+  test("E6/E10 final test: proportional draw over syllabus categories, at most two paradigm items", function () {
+    const F = global.LM.finalLogic;
+    const cats = ["cases", "verbs", "grammar", "vocabulary", "functions"];
+    const pool = [];
+    cats.forEach(function (c, ci) {
+      for (let i = 0; i < 6; i++) pool.push({ id: c + i, topic: "t-" + c + (i % 3), category: c, type: i < 3 && ci < 2 ? "paradigm" : (i % 2 ? "multiple-choice" : "gap-fill") });
+    });
+    for (let s = 1; s < 40; s++) {
+      const got = F.drawItems(pool, 20, function (it) { return it.category; }, seeded(s));
+      assert.strictEqual(got.length, 20);
+      assert.ok(got.filter(function (it) { return it.type === "paradigm"; }).length <= 2, "seed " + s);
+      cats.forEach(function (c) {
+        const n = got.filter(function (it) { return it.category === c; }).length;
+        assert.ok(n >= 3 && n <= 5, c + " " + n);
+      });
+      assert.strictEqual(new Set(got.map(function (it) { return it.id; })).size, 20);
+    }
+  });
+})();
+
+// ---------- Stage 4: validators (E11), Node and Python agree ----------
+console.log("Validators (E11)");
+(function () {
+  const cp = require("child_process");
+  const os = require("os");
+  const REPO = path.join(__dirname, "..");
+  const PY = path.join(REPO, "docs", "plan", "scripts", "validate_plan.py");
+
+  /** A working Python 3 (python3, python, py -3) or null; on Windows "python3" may be a Store shortcut, so each is tried. */
+  function findPython() {
+    const cands = [["python3"], ["python"], ["py", "-3"]];
+    for (let i = 0; i < cands.length; i++) {
+      const r = cp.spawnSync(cands[i][0], cands[i].slice(1).concat(["-c", "import sys; print(sys.version_info[0])"]), { encoding: "utf8" });
+      if (r.status === 0 && /^3/.test(String(r.stdout).trim())) return cands[i];
+    }
+    return null;
+  }
+  function node(root) {
+    const r = cp.spawnSync(process.execPath, [path.join(__dirname, "validate.js"), "--root", root, "--json"], { encoding: "utf8" });
+    return JSON.parse(r.stdout);
+  }
+  function python(py, root) {
+    const r = cp.spawnSync(py[0], py.slice(1).concat(["-X", "utf8", PY, "."]), { cwd: root, encoding: "utf8", env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) });
+    const lines = String(r.stdout).split(/\r?\n/);
+    return { errors: lines.filter(function (l) { return /^ERROR /.test(l); }), warnings: lines.filter(function (l) { return /^warn /.test(l); }) };
+  }
+  /** "examples/exercises/x.json #3" from a message of either validator (the place, not the wording). */
+  function place(line) {
+    const m = /(examples[\\/][^\s:]+(?: #\d+)?)/.exec(line.replace(/\\/g, "/"));
+    return m ? m[1].replace(/\\/g, "/") : line;
+  }
+  function tree(examples) {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "plm-val-"));
+    fs.copyFileSync(path.join(REPO, "docs", "plan", "syllabus.json"), path.join(tmp, "syllabus.json"));
+    fs.cpSync(examples, path.join(tmp, "examples"), { recursive: true });
+    return tmp;
+  }
+  const py = findPython();
+
+  test("node validators: the plan examples have 0 errors and 0 warnings", function () {
+    const r = node(path.join(REPO, "docs", "plan"));
+    assert.deepStrictEqual(r.errors, []);
+    assert.deepStrictEqual(r.warnings, []);
+  });
+  test("node validators: content/ has 0 errors", function () {
+    assert.deepStrictEqual(node(path.join(REPO, "content")).errors, []);
+  });
+  test("node validators: the broken fixture fails in the expected places, E11 heuristics warn", function () {
+    const tmp = tree(path.join(__dirname, "fixtures", "validate", "examples"));
+    try {
+      const r = node(tmp);
+      const set = "examples/exercises/a1-cases-accusative-1.json";
+      [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].forEach(function (n) {
+        assert.ok(r.errors.some(function (e) { return place(e) === set + " #" + n; }), "no error at item #" + n);
+      });
+      assert.ok(!r.errors.some(function (e) { return place(e) === set + " #7"; }), "#7 has only warnings");
+      const w7 = r.warnings.filter(function (w) { return place(w) === set + " #7"; }).join("\n");
+      assert.match(w7, /subject pronoun/);
+      assert.match(w7, /only the masculine form/);
+      const two = r.warnings.filter(function (w) { return place(w).indexOf("a1-cases-accusative-2.json") !== -1; });
+      assert.ok(two.some(function (w) { return /without any diacritics/.test(w); }), "no-diacritics warning");
+      assert.ok(!two.some(function (w) { return /form .* is accepted/.test(w); }), "both genders accepted: no warning");
+      assert.ok(r.errors.some(function (e) { return /pages\/a1\/cases-accusative\.md/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /placement\.sample\.json #1/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /lab\/cases\.sample\.json/.test(e) && /7 cases/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /decks\/case-accusative\.sample\.json #1/.test(e); }));
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  });
+
+  if (!py) {
+    console.log("  skip Python agreement (no Python 3 found)");
+    return;
+  }
+  test("Python and Node agree on the plan examples: 0 errors each", function () {
+    assert.deepStrictEqual(python(py, path.join(REPO, "docs", "plan")).errors, []);
+    assert.deepStrictEqual(node(path.join(REPO, "docs", "plan")).errors, []);
+  });
+  test("Python and Node agree on the broken fixture: the same places have errors (Node may add its own)", function () {
+    const tmp = tree(path.join(__dirname, "fixtures", "validate", "examples"));
+    try {
+      const p = python(py, tmp), n = node(tmp);
+      const pPlaces = Array.from(new Set(p.errors.map(place))).sort();
+      const nPlaces = Array.from(new Set(n.errors.map(place))).sort();
+      assert.ok(pPlaces.length >= 15, "the fixture should break many rules (" + pPlaces.length + ")");
+      pPlaces.forEach(function (x) { assert.ok(nPlaces.indexOf(x) !== -1, "Python flags " + x + ", Node does not"); });
+      assert.strictEqual(n.errors.length >= p.errors.length, true);
+      // Every Python warning place is a Node warning place too
+      p.warnings.map(place).forEach(function (x) { assert.ok(n.warnings.map(place).indexOf(x) !== -1, "Python warns at " + x + ", Node does not"); });
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  });
+})();
+
+// ---------- Stage 4: tools/strip-keys.js (spec 10 §4, step 4) ----------
+console.log("strip-keys");
+(function () {
+  const SK = require(path.join(__dirname, "strip-keys.js"));
+  const dirs = ["exercises", "quizzes", "tests"].map(function (d) { return path.join(__dirname, "..", "content", d); });
+  function filesOf(dir) {
+    let out = [];
+    fs.readdirSync(dir).forEach(function (f) {
+      const full = path.join(dir, f);
+      if (fs.statSync(full).isDirectory()) out = out.concat(filesOf(full));
+      else if (/\.json$/.test(f) && f !== "topics.json" && f !== "mixes.json") out.push(full);
+    });
+    return out;
+  }
+  const files = [].concat.apply([], dirs.map(filesOf));
+  const tasks = SK.stripFiles(files);
+  const KEYS = ["correct", "accepted", "answers", "explanation", "optionNotes", "trap", "tags", "fixes", "errorRange", "noError", "parts"];
+
+  test("strip-keys: no key field anywhere in the output, every item is there", function () {
+    const text = JSON.stringify(tasks);
+    KEYS.forEach(function (k) { assert.ok(text.indexOf("\"" + k + "\"") === -1, k); });
+    const n = files.reduce(function (s, f) { const d = JSON.parse(fs.readFileSync(f, "utf8")); return s + (d.items || d.questions || []).length; }, 0);
+    assert.strictEqual(tasks.length, n);
+    assert.ok(tasks.every(function (t) { return t.id && t.type && t.task && !t.unknown; }));
+  });
+  test("strip-keys: reorder tiles are not the solution, paradigm keeps only given forms, the same output every run", function () {
+    const sets = files.filter(function (f) { return /exercises/.test(f); }).map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); });
+    const items = [].concat.apply([], sets.map(function (s) { return s.items; }));
+    tasks.filter(function (t) { return t.type === "reorder"; }).forEach(function (t) {
+      const it = items.find(function (x) { return x.id === t.id; });
+      assert.ok(!X.evaluate(it, { words: t.words }).correct, t.id);
+    });
+    tasks.filter(function (t) { return t.type === "paradigm"; }).forEach(function (t) {
+      const it = items.find(function (x) { return x.id === t.id; });
+      t.cells.forEach(function (c, i) { assert.strictEqual(c.given, it.cells[i].given ? it.cells[i].accepted[0] : undefined); });
+    });
+    assert.deepStrictEqual(SK.stripFiles(files), tasks);
+  });
 })();
 
 console.log("\nResult: " + passed + " ok, " + failures.length + " failed");

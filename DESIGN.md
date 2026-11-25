@@ -381,6 +381,12 @@ Skipped. The app is not in React, and the brief allowed this step only for React
   - Shown in `role="status"`: the verdict, the model answer, the explanation, an amber “Trap” box.
   - Animations: a “snap” of the card (`ex-pop`) or a short shake (`ex-shake`), both in CSS and turned off with `prefers-reduced-motion` (a global rule).
 - **Phone.** The “Check / Next” buttons stick to the bottom of the card (`position: sticky`, background `--sticky-bg`).
+- **Fill the table** (`paradigm`, stage 4).
+  - The lemma in the display face with its English gloss; under it a grid of cells, the label above its field (case labels: the English name in `--ink`, the question words in `--ink-muted`).
+  - From 480 px two columns filled top to bottom (`grid-auto-flow: column`, so Tab goes down a column); below 480 px one column. Fields 44 px high, full width of the cell.
+  - A given cell: `--surface-2` background, dashed border, read-only, the word “given” next to it.
+  - After checking: right cells `--success-soft` with ✓, wrong ones `--danger-soft`, struck through, ✗ and the right form under the field (the same chip as a gap model). Points in the status line (“4 / 6 points”).
+  - One character bar under the grid serves every cell.
 - **Result:** a big number in the display face (`--fs-4xl`), a warm comment by percentage and a “To correct” list. A mixed session adds accuracy per topic.
 - **Set cards** (`.ex-set-card`): a top stripe in the level colour, the best and last score, a “Start” button. They look the same in “Check yourself”, in Practice and on the lab card.
 
@@ -782,3 +788,4 @@ Limitation: an automatic audit does not replace a test with a screen reader (NVD
   - Writing: “Phrase bank” as one paragraph; more even spacing around “Your exams” and the “Streak” card.
 - **Stage 2 of Polish Levels Map (English UI).** The interface, comments and this file in English (spec 04); `LM.plural` and `LM.fmt`; `npm run check:lang` and `tools/extract-strings.js`; callouts keyed on the English headings of spec 07; classes renamed (`.know-toggle`, `.ex-known`, `.cards-view`, `.st-cards`); the trail step label in CSS says “Step”.
 - **Stage 3 of Polish Levels Map (language layer).** Listen buttons, the character bar, the voice help box and answer hints (section 3.17); `lang` markup for Polish italics, the Polish table column and blockquotes.
+- **Stage 4 of Polish Levels Map (exercises).** The “Fill the table” item (section 3.9); every item type checked with Polish data (quotes, dashes, names in Put in order); case labels with their question words.

@@ -5,7 +5,8 @@
  *   drawItems(pool, draw, categoryOf, rng)   draws `draw` items from the pool; each category is represented
  *                                            in proportion to its share of the pool (at least 1), items
  *                                            of one category from different topic pages where possible; an item
- *                                            worth several points counts as one
+ *                                            worth several points counts as one; at most TYPE_LIMIT items of a
+ *                                            limited type (paradigm: 2, spec 06 E6)
  *   isPassed(score, total, percent)          the pass mark counted in points (score / total ≥ percent %)
  *   breakdown(results, categoryOf)           the result split into categories and topics with mistakes
  */
@@ -15,6 +16,29 @@ window.LM = window.LM || {};
   "use strict";
 
   function X() { return LM.exLogic; }
+
+  // Item types with a cap per drawn test (spec 06 E6: at most two "Fill the table" items)
+  const TYPE_LIMIT = { paradigm: 2 };
+
+  /**
+   * Replaces items over a type's cap with unused items of other types (same category first, then any).
+   * Without enough replacements the extra items stay (a small pool must still give a test).
+   */
+  function capTypes(picked, pool, categoryOf, rng) {
+    const out = picked.slice();
+    Object.keys(TYPE_LIMIT).forEach(function (type) {
+      const idx = out.map(function (it, i) { return it.type === type ? i : -1; }).filter(function (i) { return i !== -1; });
+      idx.slice(TYPE_LIMIT[type]).forEach(function (i) {
+        const used = new Set(out);
+        const free = X().shuffle(pool.filter(function (it) { return !used.has(it) && !TYPE_LIMIT[it.type]; }), rng);
+        const cat = categoryOf(out[i]) || "other";
+        const same = free.find(function (it) { return (categoryOf(it) || "other") === cat; });
+        const repl = same || free[0];
+        if (repl) out[i] = repl;
+      });
+    });
+    return out;
+  }
 
   /** Does the score in points reach the pass mark (e.g. 16 of 20 at 80%)? */
   function isPassed(score, total, percent) {
@@ -75,6 +99,7 @@ window.LM = window.LM || {};
     const alloc = pool.length <= draw ? counts : allocate(counts, draw);
     let picked = [];
     Object.keys(byCat).sort().forEach(function (c) { picked = picked.concat(pickSpread(byCat[c], alloc[c], rng)); });
+    picked = capTypes(picked, pool, categoryOf, rng);
     // Order: the same type at most twice in a row (limitRuns is one-pass, so after an unlucky
     // shuffle we try again; after 40 tries the last one stays)
     let order;
@@ -114,5 +139,5 @@ window.LM = window.LM || {};
     return { categories: cats, topics: topics };
   }
 
-  LM.finalLogic = { isPassed: isPassed, allocate: allocate, drawItems: drawItems, breakdown: breakdown };
+  LM.finalLogic = { TYPE_LIMIT: TYPE_LIMIT, isPassed: isPassed, allocate: allocate, drawItems: drawItems, breakdown: breakdown };
 })(window.LM);
