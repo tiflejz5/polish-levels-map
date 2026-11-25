@@ -25,7 +25,7 @@ window.LM = window.LM || {};
         ["1–4 or A–D", "choose an answer (with options A–H: the option's letter)"],
         ["Enter", "Check, and after checking Next"],
         ["S", "listen to the sentence (before checking, a gap is a pause)"],
-        ["Tab", "next gap"],
+        ["Tab", "next gap or table cell"],
         ["Alt + letter", "CHARS"],
         ["Backspace", "take back the last word (putting words in order)"],
         ["Ctrl + Enter", "Check in a multi-line field"],

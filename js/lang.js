@@ -15,6 +15,13 @@
  *   isTarget(text)           fallback without a lang attribute: diacritics, or Polish function words that
  *                            outweigh English ones
  *   keepsCapital(word)       does the first word of a sentence keep its capital in a word pool (reorder)
+  looksEnglish(text)       no diacritics and English function words outweigh Polish ones (speech: skip instructions)
+  pronouns                 subject pronouns that are usually dropped (validators, spec 05 §3)
+  alphabet                 letters and marks allowed in target-language fields besides ASCII (validators, E11)
+  speakerGender(word)      "m" | "f" | null: a 1st / 2nd person singular past or conditional form (-łem / -łam,
+                           -łeś / -łaś, -łbym / -łabym, -łbyś / -łabyś); validators warn when the other gender is missing
+  cases, caseLabel(id)     the seven cases in school order with English name, Polish name and question words;
+                           caseLabel("genitive") → "Genitive (kogo? czego?)" (paradigm labels, Case Lab)
  *   abbreviations            never end a sentence (with their own full stop, as written)
  *   functionWords            frequent Polish function words (isTarget)
  *   samples                  target-language samples for the flashcard form and the import help
@@ -120,6 +127,58 @@ window.LM = window.LM || {};
    */
   function keepsCapital() { return false; }
 
+  /** No Polish letters and more English than Polish function words (shared words count half to each side). */
+  function looksEnglish(text) {
+    const s = str(text);
+    if (HAS_MARKS.test(s)) return false;
+    let pl = 0, en = 0;
+    s.toLowerCase().split(/[^a-z']+/).filter(Boolean).forEach(function (w) {
+      if (SHARED.indexOf(w) !== -1) { pl += 0.5; en += 0.5; }
+      else if (FUNCTION_WORDS.indexOf(w) !== -1 || FREQUENT.indexOf(w) !== -1) pl++;
+      else if (ENGLISH.indexOf(w) !== -1) en++;
+    });
+    return en > pl;
+  }
+
+  // Past tense and conditional, 1st and 2nd person singular: the ending shows the speaker's / addressee's gender
+  const MASC_FORM = /\p{L}ł(?:em|eś|bym|byś)$/u;
+  const FEM_FORM = /\p{L}ła(?:m|ś|bym|byś)$/u;
+  // Instrumental of nouns in -ł / -ło: the same ending, not a verb form
+  const NOUNS_IN_LEM = ["stołem", "kołem", "dołem", "mydłem", "masłem", "szkłem", "krzesłem", "hasłem", "wiosłem", "orłem",
+    "osłem", "posłem", "kotłem", "węzłem", "aniołem", "kościołem", "popiołem", "zespołem", "pawłem", "michałem", "rafałem"];
+
+  /** "m" for byłem / zrobiłbyś, "f" for byłam / zrobiłabyś, otherwise null (one word, any case). */
+  function speakerGender(word) {
+    const w = str(word).toLowerCase().replace(/[^\p{L}]/gu, "");
+    if (!w || NOUNS_IN_LEM.indexOf(w) !== -1) return null;
+    if (FEM_FORM.test(w)) return "f";
+    if (MASC_FORM.test(w)) return "m";
+    return null;
+  }
+
+  // School order (spec 08 §1); questions as Polish grammars print them
+  const CASES = [
+    { id: "nominative", name: "Nominative", native: "mianownik", questions: "kto? co?" },
+    { id: "genitive", name: "Genitive", native: "dopełniacz", questions: "kogo? czego?" },
+    { id: "dative", name: "Dative", native: "celownik", questions: "komu? czemu?" },
+    { id: "accusative", name: "Accusative", native: "biernik", questions: "kogo? co?" },
+    { id: "instrumental", name: "Instrumental", native: "narzędnik", questions: "(z) kim? (z) czym?" },
+    { id: "locative", name: "Locative", native: "miejscownik", questions: "(o) kim? (o) czym?" },
+    { id: "vocative", name: "Vocative", native: "wołacz", questions: "o!" }
+  ];
+
+  /** "genitive" → { name: "Genitive", questions: "kogo? czego?", … } or null (any case of the id). */
+  function caseOf(id) {
+    const k = str(id).trim().toLowerCase();
+    return CASES.find(function (c) { return c.id === k; }) || null;
+  }
+
+  /** "Genitive (kogo? czego?)"; an id that is not a case comes back unchanged. */
+  function caseLabel(id) {
+    const c = caseOf(id);
+    return c ? c.name + " (" + c.questions + ")" : str(id);
+  }
+
   LM.lang = {
     stripMarks: stripMarks,
     fold: fold,
@@ -130,6 +189,13 @@ window.LM = window.LM || {};
     countWords: countWords,
     isTarget: isTarget,
     keepsCapital: keepsCapital,
+    looksEnglish: looksEnglish,
+    pronouns: ["ja", "ty", "on", "ona", "ono", "my", "wy", "oni", "one"],
+    alphabet: "ąćęłńóśźżĄĆĘŁŃÓŚŹŻ„”",
+    speakerGender: speakerGender,
+    cases: CASES,
+    caseOf: caseOf,
+    caseLabel: caseLabel,
     abbreviations: ["np.", "tzn.", "tj.", "m.in.", "itd.", "itp.", "dr", "prof.", "ul.", "godz.", "ok."],
     functionWords: FUNCTION_WORDS,
     samples: { basicFront: "Zgadzam się.", basicBack: "I agree.", cloze: "Wczoraj {{poszłam}} do kina.", clozeAlternatives: "{{poszłam|poszedłem}}" }

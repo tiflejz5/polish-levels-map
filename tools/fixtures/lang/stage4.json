@@ -1,0 +1,66 @@
+{
+  "about": "Polish fixtures for the stage 4 engine tests (paradigm, reorder with Polish punctuation, speech text, validators heuristics). Not app content.",
+  "paradigm": {
+    "type": "paradigm", "lemma": "być", "prompt": "Present tense", "gloss": "to be",
+    "cells": [
+      { "label": "ja", "accepted": ["jestem"], "given": true },
+      { "label": "ty", "accepted": ["jesteś"] },
+      { "label": "on, ona, ono", "accepted": ["jest"] },
+      { "label": "my", "accepted": ["jesteśmy"] }
+    ]
+  },
+  "paradigmAll": ["", "jesteś", "Jest.", "jesteśmy"],
+  "paradigmPart": ["xxx", "jesteś", "", "jestesmy"],
+  "paradigmNoMarks": ["", "jestes", "jest", "jestesmy"],
+  "exampleWrongCell": "dobrego lekarzem",
+  "exampleSpeech": "nowy dom, dobrego lekarza, małego kota, dobrą pracę, nową lampę, małe dziecko",
+
+  "quotes": {
+    "item": { "type": "reorder", "answers": ["„Dzień dobry” – powiedziała pani Ewa.", "Pani Ewa powiedziała: „Dzień dobry”."] },
+    "tokens": ["„dzień", "dobry”", "powiedziała", "pani", "Ewa"],
+    "second": ["pani", "Ewa", "powiedziała", "„dzień", "dobry”"],
+    "wrong": ["dobry”", "„dzień", "powiedziała", "pani", "Ewa"]
+  },
+  "capitals": {
+    "name": "Tomek",
+    "otherOrder": "Ciekawą książkę czyta Tomek.",
+    "otherFirst": "ciekawą",
+    "city": "Kraków jest piękny.",
+    "cityKept": "Kraków",
+    "cityLower": "kraków"
+  },
+  "diacritics": {
+    "item": { "type": "reorder", "answers": ["Lubię polską kuchnię."] },
+    "upper": ["LUBIĘ", "polską", "kuchnię"],
+    "folded": ["lubie", "polska", "kuchnie"],
+    "swapped": ["lubię", "kuchnię", "polską"]
+  },
+  "translate": {
+    "ok": ["mam siostrę", "Ja mam siostrę!"],
+    "accents": "Mam siostre.",
+    "wrong": "Ja mam brata",
+    "word": "siostrę",
+    "got": "brata"
+  },
+  "transformation": {
+    "dash": "jest – siostrą",
+    "item": { "type": "transformation", "source": "Mam brata.", "keyword": "mój", "before": "To jest", "after": ".", "answers": ["mój brat"] },
+    "ok": "Mój brat",
+    "noKeyword": "twój brat",
+    "tooLong": "to jest na pewno mój brat"
+  },
+  "speech": [
+    { "item": { "type": "multiple-choice", "prompt": "Lubię ___. (I like music.)", "options": ["muzykę"], "correct": 0 }, "answered": true, "text": "Lubię muzykę." },
+    { "item": { "type": "multiple-choice", "prompt": "Finish the sentence: Mam ___.", "options": ["brata"], "correct": 0 }, "answered": true, "text": "Mam brata." },
+    { "item": { "type": "multiple-choice", "prompt": "In a café: Poproszę ___.", "options": ["kawę"], "correct": 0 }, "answered": true, "text": "Poproszę kawę." },
+    { "item": { "type": "gap-fill", "text": "Mam {{1}} (brat) i {{2}} (siostra).", "gaps": [{ "accepted": ["brata"] }, { "accepted": ["siostrę"] }] }, "answered": true, "text": "Mam brata i siostrę." },
+    { "item": { "type": "gap-fill", "text": "Mam {{1}} (brat).", "gaps": [{ "accepted": ["brata"] }] }, "answered": false, "text": "Mam …." },
+    { "item": { "type": "multiple-choice", "prompt": "Anna: Mam ___ i psa (i to jest wszystko).", "options": ["kota"], "correct": 0 }, "answered": true, "text": "Mam kota i psa (i to jest wszystko)." }
+  ],
+  "gender": {
+    "words": ["byłem", "Byłam", "zrobiłbyś", "zrobiłabyś", "poszłam", "szedłeś", "stołem", "mam", "była"],
+    "expected": ["m", "f", "m", "f", "f", "m", null, null, null]
+  },
+  "caseLabels": [["genitive", "Genitive (kogo? czego?)"], ["Accusative", "Accusative (kogo? co?)"], ["nowy dom", "nowy dom"]],
+  "english": [["Finish the sentence", true], ["Mam dwie rzeczy", false]]
+}

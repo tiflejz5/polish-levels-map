@@ -182,8 +182,16 @@
       return null;
     },
 
-    /** The question's skill (no skill field — grammar, for older questions). */
-    skillOf: function (q) { return q.skill || "grammar"; },
+    /**
+     * The question's skill: grammar, vocabulary or reading (spec 06 E10). A syllabus category given as the skill counts
+     * as its skill (cases and verbs are grammar, functions vocabulary); no skill field — grammar, for older questions.
+     */
+    skillOf: function (q) { return learn.skillOfCategory(q && q.skill) || "grammar"; },
+
+    /** Placement skill of a syllabus category or skill name: grammar | vocabulary | reading, or null. */
+    skillOfCategory: function (c) {
+      return { grammar: "grammar", cases: "grammar", verbs: "grammar", vocabulary: "vocabulary", functions: "vocabulary", reading: "reading" }[c] || null;
+    },
 
     /** Choice from the level pool: first without questions from the previous attempt, then the rarest skill. */
     pickBalanced: function (pool, opts, rnd) {

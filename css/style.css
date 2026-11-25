@@ -2169,6 +2169,25 @@ html.focus-mode .c1-writing-area { box-shadow: 0 0 0 4px var(--accent-soft); }
 .ex-gap-model { padding: 0 8px; border-radius: var(--radius-xs); background: var(--success-soft); color: var(--success); font-family: var(--font); font-size: var(--fs-md); font-weight: 600; line-height: 1.6; }
 .ex-gap-hints { list-style: none; margin: -6px 0 12px; padding: 0; }
 
+/* Fill the table (paradigm, E6): label above its field; two columns filled top to bottom from 480 px (Tab goes down) */
+.ex-par-prompt { margin: 0 0 var(--space-2); }
+.ex-par-lemma { margin: 0 0 var(--space-3); font-size: var(--fs-md); }
+.ex-par-gloss { color: var(--ink-muted); }
+.ex-par-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3) var(--space-5); margin-bottom: var(--space-3); }
+@media (min-width: 480px) {
+  .ex-par-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(var(--par-rows, 4), auto); grid-auto-flow: column; }
+}
+.ex-par-cell { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; }
+.ex-par-label { font-size: var(--fs-sm-plus); font-weight: 600; color: var(--ink); }
+.ex-par-q { font-weight: 400; color: var(--ink-muted); }
+.ex-par-field { display: flex; align-items: center; gap: var(--space-2); min-width: 0; }
+.ex-par-input { flex: 1 1 auto; width: 100%; min-width: 0; min-height: 44px; font-family: var(--font); font-size: var(--fs-md); }
+.ex-par-input.is-given { background: var(--surface-2); color: var(--ink-muted); border-style: dashed; }
+.ex-par-input.is-ok { border-color: var(--success); background: var(--success-soft); }
+.ex-par-input.is-bad { border-color: var(--danger); background: var(--danger-soft); text-decoration: line-through; text-decoration-color: var(--strike); }
+.ex-par-tag { flex: none; font-size: var(--fs-sm); color: var(--ink-muted); }
+.ex-par-model { align-self: flex-start; padding: 0 8px; border-radius: var(--radius-xs); background: var(--success-soft); color: var(--success); font-size: var(--fs-md); font-weight: 600; line-height: 1.6; }
+
 /* Match pairs: two columns, one under the other on a phone */
 .ex-match-prompt { margin: 0 0 12px; font-weight: 600; }
 .ex-match { display: grid; grid-template-columns: 1fr; gap: 14px; }

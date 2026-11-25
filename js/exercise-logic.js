@@ -7,7 +7,9 @@
  *   match(answer, accepted, opts)     typed answers (spec 05 §2): { ok, near: accents|ending|typo|null, closest, index, diff }
  *   shuffle(list, rng)                Fisher–Yates shuffle (a copy of the list)
  *   prepareChoice(item, rng)          multiple-choice options in random order
- *   reorderTokens(item, rng)          words to put in order (never in the correct order)
+ *   reorderTokens(item, rng)          words to put in order (never in the correct order); punctuation-only tokens
+ *                                     (dashes) are left out, the first word loses its capital unless it is a proper noun
+ *   paradigmCells(item)               [{ index, label, accepted, given }] of a paradigm item; cells to fill = not given
  *   evaluate(item, answer, opts)      { correct, points, max, near, lenient, … } for every item type
  *                                     (opts.lenientAccents: an answer that differs only in Polish marks counts, spec 05 §2)
  *   maxPoints(item)                   maximum points for an item (old types: 1)
@@ -21,6 +23,7 @@
  * Types of pack v6 (spec docs/rozbudowa-v6/spec/12-nowe-typy-zadan.md): gap-fill, match,
  * transformation, translate, dictation. Answers: { texts: […] }, { pairs: { leftIndex: rightText } },
  * { text }, { text }, { text } or { skipped: true } (dictation without a voice).
+ * paradigm (spec 06 E6): { texts: [one per cell, given cells ignored] }; a point per cell to fill, correct = all.
  *   pickMix(pool, opts, rng)          drawing a mixed set
  */
 window.LM = window.LM || {};
@@ -28,7 +31,7 @@ window.LM = window.LM || {};
 (function (LM) {
   "use strict";
 
-  const TYPES = ["multiple-choice", "reorder", "find-error", "short-answer", "gap-fill", "match", "transformation", "translate", "dictation"];
+  const TYPES = ["multiple-choice", "reorder", "find-error", "short-answer", "gap-fill", "match", "transformation", "translate", "dictation", "paradigm"];
 
   /** Trimmed, one space, ’ → ', no punctuation at the end, lower case; diacritics kept (LM.lang.normalizeAnswer). */
   function normalize(str) { return LM.lang.normalizeAnswer(str); }
@@ -71,11 +74,34 @@ window.LM = window.LM || {};
     return { options: order, correct: order.findIndex(function (o) { return o.original === item.correct; }) };
   }
 
-  /** Words of the model sentence without final punctuation (the first in lower case unless LM.lang.keepsCapital). */
-  function answerTokens(sentence) {
-    const words = String(sentence).trim().replace(/[.!?;]+$/, "").split(/\s+/).filter(Boolean);
-    if (words.length && !LM.lang.keepsCapital(words[0])) words[0] = words[0].charAt(0).toLowerCase() + words[0].slice(1);
+  /**
+   * Words of the model sentence: final punctuation and punctuation-only tokens (a dash between spaces) left out,
+   * quotes stay on their words. The first word loses its capital (it would give the order away) unless
+   * LM.lang.keepsCapital says so, the item says keepCapital: true, or another accepted order has the same word with a
+   * capital inside the sentence (a proper noun: "Tomek czyta…" / "…czyta Tomek.").
+   */
+  function answerTokens(sentence, item) {
+    const words = String(sentence).trim().replace(/[.!?;…]+(?=["”»]?$)/, "").split(/\s+/)
+      .filter(function (w) { return /[\p{L}\p{N}]/u.test(w); });
+    if (words.length && !keepCapital(words[0], item)) {
+      words[0] = words[0].replace(/\p{L}/u, function (c) { return c.toLowerCase(); });
+    }
     return words;
+  }
+
+  /** Does the first word of a reorder sentence keep its capital? */
+  function keepCapital(word, item) {
+    if (LM.lang.keepsCapital(word)) return true;
+    if (!item) return false;
+    if (item.keepCapital === true) return true;
+    const bare = function (w) { return String(w).replace(/[^\p{L}\p{N}'’-]/gu, ""); };
+    const w = bare(word);
+    if (!w || w.charAt(0) === w.charAt(0).toLowerCase()) return false;
+    // A capital after a colon or a full stop, or at the start of a quotation, is a sentence capital, not a name
+    return (item.answers || []).some(function (a) {
+      const t = String(a).trim().split(/\s+/);
+      return t.some(function (x, i) { return i > 0 && bare(x) === w && !/^["\u201e\u201c\u00ab(]/.test(x) && !/[:.!?]$/.test(t[i - 1]); });
+    });
   }
 
   /**
@@ -83,7 +109,7 @@ window.LM = window.LM || {};
    * that it is NOT already the correct sentence.
    */
   function reorderTokens(item, rng) {
-    const words = answerTokens(item.answers[0]).concat(item.extraTokens || []);
+    const words = answerTokens(item.answers[0], item).concat(item.extraTokens || []);
     const tokens = words.map(function (text, i) { return { id: "t" + i, text: text }; });
     if (tokens.length < 2) return tokens;
     let out = shuffle(tokens, rng);
@@ -92,15 +118,16 @@ window.LM = window.LM || {};
     return out;
   }
 
+  /** Punctuation never decides (LM.lang.normalizeSentence): a comma or a dash in another place is the same order. */
   function isAccepted(item, words) {
-    const s = normalize(words.join(" "));
-    return item.answers.some(function (a) { return normalize(a) === s; });
+    const s = LM.lang.normalizeSentence(words.join(" "));
+    return item.answers.some(function (a) { return LM.lang.normalizeSentence(a) === s; });
   }
 
   /** Index of the first word of the answer that differs from the model (or -1). */
   function firstDifference(item, words) {
-    const model = answerTokens(item.answers[0]).map(normalize);
-    const got = words.map(normalize);
+    const model = answerTokens(item.answers[0], item).map(LM.lang.normalizeSentence);
+    const got = words.map(LM.lang.normalizeSentence);
     for (let i = 0; i < Math.max(model.length, got.length); i++) {
       if (model[i] !== got[i]) return i;
     }
@@ -121,9 +148,10 @@ window.LM = window.LM || {};
     return res;
   }
 
-  /** Maximum points for an item: gaps and pairs — a point each, transformation with parts — 2, the rest — 1. */
+  /** Maximum points for an item: gaps, pairs and cells to fill — a point each, transformation with parts — 2, the rest — 1. */
   function maxPoints(item) {
     if (item.type === "gap-fill") return (item.gaps || []).length || 1;
+    if (item.type === "paradigm") return paradigmCells(item).filter(function (c) { return !c.given; }).length || 1;
     if (item.type === "match") return (item.pairs || []).length || 1;
     if (item.type === "transformation") return item.parts ? 2 : 1;
     return 1;
@@ -174,6 +202,16 @@ window.LM = window.LM || {};
       const points = pairs.filter(Boolean).length;
       return { correct: points === pairs.length, answered: Object.keys(chosen).some(function (k) { return chosen[k] != null; }), points: points, max: pairs.length, pairs: pairs };
     }
+    if (item.type === "paradigm") {
+      const texts = answer.texts || [];
+      const cells = paradigmCells(item).map(function (c) {
+        return c.given ? { given: true, correct: true, answered: false } : shortAnswer(c.accepted, texts[c.index], opts);
+      });
+      const open = cells.filter(function (c) { return !c.given; });
+      const points = open.filter(function (c) { return c.correct; }).length;
+      return { correct: open.length > 0 && points === open.length, answered: open.some(function (c) { return c.answered; }), points: points, max: open.length,
+        cells: cells, lenient: open.some(function (c) { return c.lenient; }) };
+    }
     if (item.type === "transformation") return evaluateTransformation(item, answer.text, opts);
     if (item.type === "translate") return evaluateSentence(item.accepted, answer.text, opts);
     if (item.type === "dictation") {
@@ -182,6 +220,13 @@ window.LM = window.LM || {};
       return evaluateSentence([item.text].concat(item.accepted || []), answer.text, opts);
     }
     return { correct: false, answered: false };
+  }
+
+  /** Cells of a paradigm item in file order: { index, label, accepted: [..], given }. */
+  function paradigmCells(item) {
+    return ((item && item.cells) || []).map(function (c, i) {
+      return { index: i, label: String(c.label == null ? "" : c.label), accepted: Array.isArray(c.accepted) ? c.accepted : [], given: !!c.given };
+    });
   }
 
   /** One field like short-answer: LM.exLogic.match; a near miss gives 0 points with a hint (accents: lenient mode). */
@@ -542,19 +587,33 @@ window.LM = window.LM || {};
   function speechText(item, answered) {
     const PAUSE = " … ";
     const tidy = function (t) { return String(t).replace(/\s+/g, " ").replace(/\s+([,.;!?])/g, "$1").trim(); };
-    const lines = function (t) { return String(t || "").split("\n").map(function (l) { return l.replace(/^\p{Lu}[\p{L}\p{N} ]{0,12}:\s+/u, ""); }).join(" "); };
+    // Only target-language text is read (spec 05 §4): a speaker label or an English instruction before a colon goes,
+    // and so does a bracket that is not target text ("(I like music.)") or that follows a gap (a lemma hint: "{{1}} (brat)")
+    const lines = function (t) {
+      return String(t || "").split("\n").map(function (l) {
+        const lead = /^([^:\n]{1,60}):\s+/.exec(l);
+        if (lead && (/^\p{Lu}[\p{L}\p{N} ]{0,12}$/u.test(lead[1]) || LM.lang.looksEnglish(lead[1]))) return l.slice(lead[0].length);
+        return l;
+      }).join(" ");
+    };
+    const brackets = function (t) {
+      return String(t).replace(/(_{2,}|\{\{\d+\}\})?(\s*)\(([^()]*)\)/g, function (m, gap, sp, inner) {
+        if (gap) return gap;
+        return LM.lang.isTarget(inner) ? m : "";
+      });
+    };
     if (!item) return "";
     switch (item.type) {
       case "multiple-choice": {
         const gap = /_{2,}/;
-        const text = lines(item.prompt);
+        const text = brackets(lines(item.prompt));
         if (!gap.test(text)) return tidy(text);
         return tidy(text.replace(gap, answered ? item.options[item.correct] : PAUSE));
       }
       case "short-answer":
-        return tidy(lines(item.prompt).replace(/_{2,}/, answered ? item.accepted[0] : PAUSE));
+        return tidy(brackets(lines(item.prompt)).replace(/_{2,}/, answered ? item.accepted[0] : PAUSE));
       case "gap-fill":
-        return tidy(String(item.text).replace(/\{\{(\d+)\}\}/g, function (m, n) {
+        return tidy(brackets(item.text).replace(/\{\{(\d+)\}\}/g, function (m, n) {
           const g = item.gaps[Number(n) - 1];
           return answered && g ? g.accepted[0] : PAUSE;
         }));
@@ -566,6 +625,9 @@ window.LM = window.LM || {};
         return answered ? tidy(item.accepted[0]) : "";
       case "find-error":
         return tidy((item.tokens || []).join(" "));
+      case "paradigm":
+        // After checking: the forms in table order; before: nothing (it would give the answers away)
+        return answered ? paradigmCells(item).map(function (c) { return c.accepted[0]; }).filter(Boolean).join(", ") : "";
       default:
         return "";
     }
@@ -582,6 +644,7 @@ window.LM = window.LM || {};
     prepareChoice: prepareChoice,
     answerTokens: answerTokens,
     reorderTokens: reorderTokens,
+    paradigmCells: paradigmCells,
     firstDifference: firstDifference,
     evaluate: evaluate,
     maxPoints: maxPoints,
