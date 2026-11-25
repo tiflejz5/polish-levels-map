@@ -1,10 +1,9 @@
 /*
- * utils.js — drobne funkcje pomocnicze używane w całej aplikacji.
+ * utils.js — small helpers used across the app, plus LM.plural and LM.fmt (spec 04 §1).
  *
- * BEZPIECZEŃSTWO: treść wpisaną przez użytkownika wstawiamy wyłącznie
- * jako tekst (textContent / value). Nigdzie nie używamy innerHTML
- * na danych użytkownika, więc np. <script>alert(1)</script>
- * wyświetli się jako zwykły tekst.
+ * SECURITY: text typed by the user goes into the DOM only as text
+ * (textContent / value). We never use innerHTML with user data, so e.g.
+ * <script>alert(1)</script> is shown as plain text.
  */
 window.LM = window.LM || {};
 
@@ -12,14 +11,14 @@ window.LM = window.LM || {};
   "use strict";
 
   /**
-   * Tworzy element DOM.
-   *   el("button", { class: "btn", text: "OK", onclick: fn }, [dzieci])
-   * - "text"     → textContent (bezpieczne)
-   * - "value"    → wartość pola formularza
-   * - "onXxx"    → nasłuch zdarzenia "xxx"
-   * - checked/disabled/hidden → właściwości logiczne
-   * - pozostałe → atrybuty HTML (null/false = pomiń)
-   * Dzieci: element, tekst (zawsze jako węzeł tekstowy) lub tablica.
+   * Creates a DOM element.
+   *   el("button", { class: "btn", text: "Save note", onclick: fn }, [children])
+   * - "text"     → textContent (safe)
+   * - "value"    → form field value
+   * - "onXxx"    → event listener for "xxx"
+   * - checked/disabled/hidden → boolean properties
+   * - anything else → HTML attributes (null/false = skip)
+   * Children: element, text (always as a text node) or an array.
    */
   function el(tag, attrs, children) {
     const node = document.createElement(tag);
@@ -43,7 +42,7 @@ window.LM = window.LM || {};
     return node;
   }
 
-  /** Dokleja dzieci do rodzica; tekst zawsze jako bezpieczny węzeł tekstowy. */
+  /** Appends children to a parent; text always as a safe text node. */
   function appendChildren(parent, children) {
     if (children === null || children === undefined || children === false) return;
     if (Array.isArray(children)) {
@@ -55,23 +54,23 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Zamienia tekst na fragment DOM z obsługą **pogrubienia**.
-   * Łamania linii zachowuje CSS (white-space: pre-wrap).
-   * Każdy kawałek trafia do DOM jako tekst, więc HTML nie jest wykonywany.
+   * Turns text into a DOM fragment with **bold** support.
+   * Line breaks are kept by CSS (white-space: pre-wrap).
+   * Every piece goes into the DOM as text, so HTML is never executed.
    */
   function formatText(text) {
     const frag = document.createDocumentFragment();
     const parts = String(text || "").split(/\*\*([\s\S]+?)\*\*/);
     parts.forEach(function (part, i) {
       if (!part) return;
-      // Nieparzyste indeksy to fragmenty pomiędzy ** **
+      // Odd indexes are the pieces between ** **
       if (i % 2 === 1) frag.appendChild(el("strong", { text: part }));
       else frag.appendChild(document.createTextNode(part));
     });
     return frag;
   }
 
-  /** Unikalny identyfikator: prefiks + czas + losowy ciąg, np. "t_lq2k9x8f3a". */
+  /** Unique id: prefix + time + random string, e.g. "t_lq2k9x8f3a". */
   function uid(prefix) {
     let rand = "";
     if (window.crypto && window.crypto.getRandomValues) {
@@ -84,27 +83,27 @@ window.LM = window.LM || {};
     return prefix + "_" + Date.now().toString(36) + rand.slice(0, 8);
   }
 
-  /** Dopasowuje wysokość pola tekstowego do treści. */
+  /** Fits a textarea's height to its content. */
   function autoGrow(textarea) {
     textarea.style.height = "auto";
     textarea.style.height = (textarea.scrollHeight + 2) + "px";
   }
 
-  /** Dzisiejsza data jako RRRR-MM-DD (czas lokalny). */
+  /** Today's date as YYYY-MM-DD (local time). */
   function dateStamp() {
     const d = new Date();
     const pad = function (n) { return String(n).padStart(2, "0"); };
     return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
   }
 
-  /** Sprawdza, czy wartość to zwykły obiekt {…} (nie tablica, nie null). */
+  /** Is the value a plain object {…} (not an array, not null)? */
   function isPlainObject(value) {
     return value !== null && typeof value === "object" && !Array.isArray(value);
   }
 
   /**
-   * Przewinięcie treści. Na komputerze przewija się <main>, a na telefonie
-   * (węższy układ) cała strona — dlatego obsługujemy oba przypadki.
+   * Content scroll position. On a computer <main> scrolls; on a phone
+   * (narrow layout) the whole page scrolls, so both cases are handled.
    */
   function getScroll() {
     const main = document.getElementById("main");
@@ -117,18 +116,74 @@ window.LM = window.LM || {};
     window.scrollTo(0, y);
   }
 
-  /**
-   * Three-form plural of the inherited Polish UI strings (1 / 2–4 / 5+), moved here from the old C1 module so the
-   * remaining Polish UI keeps working until stage 2, which replaces it with the English two-form LM.plural (spec 04 §1).
-   */
-  function plural(n, one, few, many) {
-    if (n === 1) return one;
-    const d = n % 10, t = n % 100;
-    return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
+  // ---------- English UI: plurals and formatting (spec 04 §1) ----------
+
+  /** UI locale from LM.APP (config.js); never hard-coded here. */
+  function uiLocale() { return (LM.APP && LM.APP.uiLocale) || undefined; }
+
+  const formatters = {};
+  function dtf(key, options) {
+    if (!formatters[key]) formatters[key] = new Intl.DateTimeFormat(uiLocale(), options);
+    return formatters[key];
   }
 
+  /** "1 day", "3 days", "1,250 cards". Two English forms; only exactly 1 is singular. */
+  function englishPlural(n, one, many) {
+    return fmtNumber(n) + " " + pluralWord(n, one, many);
+  }
+
+  /** The word alone: pluralWord(3, "day", "days") → "days" (when the number is shown separately). */
+  function pluralWord(n, one, many) {
+    return Number(n) === 1 ? one : many;
+  }
+
+  /** Date | timestamp | "YYYY-MM-DD" (read as a local day, no time-zone shift) | ISO string → Date or null. */
+  function toDate(value) {
+    if (value instanceof Date) return isNaN(value.getTime()) ? null : value;
+    if (typeof value === "number") { const d = new Date(value); return isNaN(d.getTime()) ? null : d; }
+    if (typeof value === "string") {
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+      const d = m ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(value);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    return null;
+  }
+
+  function fmtNumber(n, maxDigits) {
+    const x = Number(n);
+    if (!isFinite(x)) return "";
+    return new Intl.NumberFormat(uiLocale(), { maximumFractionDigits: maxDigits == null ? 0 : maxDigits }).format(x);
+  }
+
+  const fmt = {
+    /** "Nov 12, 2026" */
+    date: function (v) { const d = toDate(v); return d ? dtf("date", { month: "short", day: "numeric", year: "numeric" }).format(d) : ""; },
+    /** "November 12, 2026" */
+    longDate: function (v) { const d = toDate(v); return d ? dtf("longDate", { month: "long", day: "numeric", year: "numeric" }).format(d) : ""; },
+    /** "Nov 12" */
+    dayMonth: function (v) { const d = toDate(v); return d ? dtf("dayMonth", { month: "short", day: "numeric" }).format(d) : ""; },
+    /** "Thursday"; weekday(v, "short") → "Thu" */
+    weekday: function (v, style) {
+      const d = toDate(v);
+      const s = style === "short" || style === "narrow" ? style : "long";
+      return d ? dtf("weekday-" + s, { weekday: s }).format(d) : "";
+    },
+    /** "3:05 PM" */
+    time: function (v) { const d = toDate(v); return d ? dtf("time", { hour: "numeric", minute: "2-digit" }).format(d) : ""; },
+    /** "Nov 12, 2026, 3:05 PM" */
+    dateTime: function (v) { const d = toDate(v); return d ? fmt.date(d) + ", " + fmt.time(d) : ""; },
+    /** "1,234"; number(2.345, 1) → "2.3" */
+    number: fmtNumber,
+    /** Value already in percent: percent(42) → "42%", percent(12.5, 1) → "12.5%" */
+    percent: function (n, maxDigits) { const s = fmtNumber(n, maxDigits); return s ? s + "%" : ""; },
+    toDate: toDate
+  };
+
+  LM.plural = englishPlural;
+  LM.pluralWord = pluralWord;
+  LM.fmt = fmt;
+
   LM.utils = {
-    plural: plural,
     getScroll: getScroll,
     setScroll: setScroll,
     el: el,

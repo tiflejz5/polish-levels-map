@@ -1,13 +1,13 @@
 /*
- * trail-store.js — stan Szlaku w localStorage (spec v7 13, sekcja 3).
+ * trail-store.js — the Trail state in localStorage (spec v7 13, section 3).
  *
- *   Klucz per profil: plm.trail.<profileId> (rejestr kluczy: js/profile-data.js)
+ *   Key per profile: plm.trail.<profileId> (key registry: js/profile-data.js)
  *   { version: 1, start: { level, source: "test"|"manual"|"default", at } | null,
- *     stops: { <idPrzystanku>: { done, via: "quiz"|"umiem"|"skip"|"set", best?, at } },
- *     reviews: { <idPowtórki>: { best, of, at } } }
+ *     stops: { <stopId>: { done, via: "quiz"|"umiem"|"skip"|"set", best?, at } },
+ *     reviews: { <checkpointId>: { best, of, at } } }
  *
- * Eksport / import / reset i usuwanie profilu działają jak w js/cards-store.js (część „trail” kopii).
- * Walidacja: LM.trailLogic.sanitizeState. Bez profilu: stan tymczasowy, niezapisywany.
+ * Export / import / reset and profile deletion work as in js/cards-store.js (the “trail” part of the backup).
+ * Validation: LM.trailLogic.sanitizeState. Without a profile: a temporary state, not saved.
  */
 window.LM = window.LM || {};
 
@@ -34,7 +34,7 @@ window.LM = window.LM || {};
     let data = null;
     if (raw) {
       try { data = L().sanitizeState(JSON.parse(raw)); } catch (e) {
-        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* trudno */ }
+        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* never mind */ }
         data = null;
       }
     }
@@ -47,17 +47,17 @@ window.LM = window.LM || {};
     if (!pid || !memory[pid]) return true;
     if (LM.state && LM.state.storageOk === false) return false;
     try { window.localStorage.setItem(keyOf(pid), JSON.stringify(memory[pid])); return true; } catch (e) {
-      if (app() && app().reportSaveError) app().reportSaveError("Nie zapisano postępu na Szlaku! Brak miejsca albo dostępu do pamięci przeglądarki.");
+      if (app() && app().reportSaveError) app().reportSaveError("Trail progress was not saved! The browser storage is full or not available.");
       return false;
     }
   }
 
-  /** Stan aktywnego profilu (bez profilu — tymczasowy). */
+  /** State of the active profile (without a profile — temporary). */
   function data() { return load(activeId()); }
 
-  // ---------- zmiany stanu ----------
+  // ---------- state changes ----------
 
-  /** Punkt startu. source: „test” (wynik testu poziomu), „manual” (ręcznie), „default”. Ręczny wybór nie jest nadpisywany testem. */
+  /** Starting point. source: “test” (placement test result), “manual” (by hand), “default”. A manual choice is not overwritten by a test. */
   function setStart(level, source, force) {
     if (!activeId() || L().LEVELS.indexOf(level) === -1) return false;
     const d = data();
@@ -66,7 +66,7 @@ window.LM = window.LM || {};
     return save();
   }
 
-  /** Wynik quizu przystanku (liczba dobrych odpowiedzi); zapamiętujemy najlepszy. Zaliczenie ≥ 3/4 (via „quiz”). */
+  /** A stop's quiz result (number of correct answers); we keep the best. Passed with ≥ 3/4 (via “quiz”). */
   function recordQuiz(stopId, score) {
     if (!activeId()) return null;
     const d = data();
@@ -82,7 +82,7 @@ window.LM = window.LM || {};
     if (!activeId()) return false;
     const d = data();
     const cur = d.stops[stopId];
-    if (cur && cur.via === "quiz" && cur.best >= L().PASS_QUIZ) return false; // zaliczony quizem zostaje zaliczony
+    if (cur && cur.via === "quiz" && cur.best >= L().PASS_QUIZ) return false; // a stop passed by a quiz stays passed
     d.stops[stopId] = { done: false, via: "skip", at: stamp() };
     return save();
   }
@@ -103,7 +103,7 @@ window.LM = window.LM || {};
     return d.reviews[id];
   }
 
-  // ---------- profile, eksport, import, reset ----------
+  // ---------- profiles, export, import, reset ----------
 
   function storedIds() {
     const out = [];
@@ -113,35 +113,35 @@ window.LM = window.LM || {};
         const pid = idOfKey(k);
         if (pid) out.push(pid);
       }
-    } catch (e) { /* brak dostępu */ }
+    } catch (e) { /* no access */ }
     Object.keys(memory).forEach(function (pid) { if (out.indexOf(pid) === -1) out.push(pid); });
     return out;
   }
 
   function removeProfile(pid) {
     delete memory[pid];
-    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* brak dostępu */ }
+    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* no access */ }
   }
 
-  /** Część eksportu: { <profileId>: stan } (tylko profile z danymi). */
+  /** Export part: { <profileId>: state } (only profiles with data). */
   function exportData() {
     const out = {};
     storedIds().forEach(function (pid) { out[pid] = JSON.parse(JSON.stringify(load(pid))); });
     return out;
   }
 
-  /** Część importu: zły format → wyjątek z opisem (cały import odrzucony). */
+  /** Import part: a wrong format → an exception with a description (the whole import is refused). */
   function parseImport(raw) {
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("The \"trail\" part of the file has a wrong format.");
     const out = {};
     Object.keys(raw).slice(0, 500).forEach(function (pid) {
       if (typeof pid !== "string" || pid.length > 80) return;
-      out[pid] = L().sanitizeState(raw[pid]); // wyjątek = cały import odrzucony
+      out[pid] = L().sanitizeState(raw[pid]); // exception = the whole import is refused
     });
     return out;
   }
 
-  /** Zapis importu: część z pliku zastępuje dane Szlaku; profile spoza listy są usuwane. */
+  /** Saving an import: the part from the file replaces the Trail data; profiles not on the list are deleted. */
   function applyImport(parsed, profileIds) {
     storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
     Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid); });

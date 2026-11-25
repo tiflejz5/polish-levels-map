@@ -3,18 +3,18 @@
  * The trail data (LM.TRAIL) is generated from the syllabus by tools/build/trail.js: one lesson stop per topic
  * (items = [topic id]) and one checkpoint per unit. Stops of "soon" levels are drawn dimmed and are never current.
  *
- *   emptyState(), sanitizeState(raw)     stan profilu plm.trail.<id> { version, start, stops, reviews }; zły format → wyjątek
- *   statusOf(stop, state, env)           { status: "done" | "skipped" | "open", via }  (sekcja 3.1)
- *   buildTrail(data, state, env)         cały szlak z kolejnością, statusami, krainami przed startem jako „pominięte”
- *   currentStop(trail)                   pierwszy niezaliczony przystanek od punktu startu albo null
- *   levelProgress(trail, level)          { done, total, percent } — postęp krainy = zaliczone przystanki / wszystkie
- *   unitProgress(trail, unitId)          { done, total, index, count } dla odcinka
- *   pickReview(review, src, rng)         { source: "quiz" | "set" | "final" | null, items } — losowanie powtórki z fallbackami (3.4)
- *   effectiveStart(state, testLevel)     punkt startu: ręczny > test poziomu > domyślny A1 (3.2)
- *   quizAverage(state)                   średni wynik quizów w % (Statystyki)
+ *   emptyState(), sanitizeState(raw)     profile state plm.trail.<id> { version, start, stops, reviews }; a wrong format → an exception
+ *   statusOf(stop, state, env)           { status: "done" | "skipped" | "open", via }  (section 3.1)
+ *   buildTrail(data, state, env)         the whole trail with the order, statuses, lands before the start as “skipped”
+ *   currentStop(trail)                   the first stop not done from the starting point, or null
+ *   levelProgress(trail, level)          { done, total, percent } — land progress = stops done / all
+ *   unitProgress(trail, unitId)          { done, total, index, count } for a unit
+ *   pickReview(review, src, rng)         { source: "quiz" | "set" | "final" | null, items } — drawing a checkpoint with fallbacks (3.4)
+ *   effectiveStart(state, testLevel)     the starting point: manual > placement test > default A1 (3.2)
+ *   quizAverage(state)                   average quiz score in % (Stats)
  *
- *   env = { isUmiem(itemId) → bool, setPercent(setId) → liczba 0–100 albo null }
- *   src = { quizItems(stopId) → [zadanie], setItems(setId) → [zadanie], finalItems(level) → [zadanie], stops: {id: przystanek} }
+ *   env = { isKnown(itemId) → bool, setPercent(setId) → a number 0–100 or null }
+ *   src = { quizItems(stopId) → [item], setItems(setId) → [item], finalItems(level) → [item], stops: {id: stop} }
  */
 window.LM = window.LM || {};
 
@@ -23,9 +23,9 @@ window.LM = window.LM || {};
 
   const VERSION = 1;
   const LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
-  const PASS_QUIZ = 3;      // z 4 pytań
+  const PASS_QUIZ = 3;      // of 4 questions
   const PASS_SET_PERCENT = 80;
-  const VIA = ["quiz", "umiem", "skip", "set"];
+  const VIA = ["quiz", "umiem", "skip", "set"]; // stored values ("umiem" = every topic marked “I know this”)
   const SOURCES = ["test", "manual", "default"];
   const ID = /^[a-z0-9][a-z0-9-]{0,80}$/;
 
@@ -34,10 +34,10 @@ window.LM = window.LM || {};
   function isoOrEmpty(v) { return typeof v === "string" && /^\d{4}-\d{2}-\d{2}/.test(v) ? v.slice(0, 30) : ""; }
   function int(v, min, max) { return typeof v === "number" && isFinite(v) && v >= min && v <= max ? Math.floor(v) : null; }
 
-  /** Stan z localStorage albo importu → poprawny stan; zły format lub nieznana wersja → wyjątek. */
+  /** State from localStorage or import → a valid state; a wrong format or an unknown version → an exception. */
   function sanitizeState(raw) {
-    if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Nieprawidłowy format danych Szlaku.");
-    if (raw.version !== VERSION) throw new Error("Nieobsługiwana wersja danych Szlaku (" + raw.version + ").");
+    if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Wrong format of the Trail data.");
+    if (raw.version !== VERSION) throw new Error("Unsupported version of the Trail data (" + raw.version + ").");
     const out = emptyState();
     const s = raw.start;
     if (s && typeof s === "object" && LEVELS.indexOf(s.level) !== -1) {
@@ -65,12 +65,12 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Przystanek (lekcja) → zaliczony / pominięty / otwarty (sekcja 3.1). Powtórki: zaliczona po podejściu, wynik nie blokuje. */
+  /** A stop (lesson) → done / skipped / open (section 3.1). Checkpoints: done after an attempt, the result does not block. */
   function statusOf(stop, state, env) {
     if (stop.type === "checkpoint") return state.reviews[stop.id] ? { status: "done", via: "review" } : { status: "open", via: null };
     const rec = state.stops[stop.id];
     if (rec && rec.via === "quiz" && typeof rec.best === "number" && rec.best >= PASS_QUIZ) return { status: "done", via: "quiz" };
-    if (stop.items && stop.items.length && stop.items.every(function (id) { return env.isUmiem(id); })) return { status: "done", via: "umiem" };
+    if (stop.items && stop.items.length && stop.items.every(function (id) { return env.isKnown(id); })) return { status: "done", via: "umiem" };
     if (!stop.quiz && stop.set) {
       const p = env.setPercent(stop.set);
       if (typeof p === "number" && p >= PASS_SET_PERCENT) return { status: "done", via: "set" };
@@ -82,15 +82,15 @@ window.LM = window.LM || {};
   function levelIndex(level) { return LEVELS.indexOf(level); }
 
   /**
-   * Szlak jako płaska lista węzłów z kolejnością i statusami. Krainy przed punktem startu: niezaliczone przystanki
-   * dostają „skipped” (via „start”). Zwraca { nodes, startIndex, current }.
+   * The trail as a flat list of nodes with the order and statuses. Lands before the starting point: stops not done
+   * get “skipped” (via “start”). Returns { nodes, startIndex, current }.
    */
   function buildTrail(data, state, env, startLevel) {
     const start = levelIndex(startLevel || (state.start && state.start.level) || "A1");
     const nodes = [];
     let lesson = 0;
     data.levels.forEach(function (lv) {
-      const li = levelIndex(lv.level); // numer poziomu A1…C2 (dane testowe mogą nie mieć wszystkich)
+      const li = levelIndex(lv.level); // level number A1…C2 (test data may not have all of them)
       const soon = lv.status === "soon";
       let inLevel = 0;
       const total = lv.units.reduce(function (a, u) { return a + u.stops.filter(function (s) { return s.type === "lesson"; }).length; }, 0);
@@ -118,7 +118,7 @@ window.LM = window.LM || {};
 
   function currentStop(trail) { return trail.current; }
 
-  /** Postęp krainy: zaliczone przystanki / wszystkie (powtórki nie wchodzą do licznika). */
+  /** Land progress: stops done / all (checkpoints do not count). */
   function levelProgress(trail, level) {
     const lessons = trail.nodes.filter(function (n) { return n.type === "lesson" && n.level === level; });
     const done = lessons.filter(function (n) { return n.status === "done"; }).length;
@@ -138,7 +138,7 @@ window.LM = window.LM || {};
     return a;
   }
 
-  /** Po jednym pytaniu z każdego przystanku po kolei (round-robin), aż do `size`; z mieszaniem wewnątrz przystanków. */
+  /** One question from each stop in turn (round-robin), up to `size`; shuffled within the stops. */
   function spread(groups, size, rng) {
     const queues = groups.map(function (g) { return shuffle(g, rng); }).filter(function (g) { return g.length; });
     const out = [];
@@ -152,8 +152,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Powtórka (węzeł „review”): losuje `size` pytań z quizów przystanków `from`; gdy ich nie mają, z zestawów `set`;
-   * gdy i tego brak, z pytań testu końcowego poziomu; bez źródeł → { source: null, items: [] } (węzeł jest pomijany).
+   * Checkpoint (a “review” node): draws `size` questions from the quizzes of the stops `from`; when they have none, from the sets `set`;
+   * when that is missing too, from the questions of the level final test; no sources → { source: null, items: [] } (the node is skipped).
    */
   function pickReview(review, src, rng) {
     rng = rng || Math.random;
@@ -169,14 +169,14 @@ window.LM = window.LM || {};
     return { source: null, items: [] };
   }
 
-  /** Punkt startu: wybrany ręcznie albo z testu poziomu (zapisany), inaczej z ostatniego testu, inaczej A1. */
+  /** The starting point: chosen by hand or from the placement test (saved), otherwise from the last test, otherwise A1. */
   function effectiveStart(state, testLevel) {
     if (state && state.start && state.start.source !== "default") return state.start;
     if (testLevel && LEVELS.indexOf(testLevel) !== -1) return { level: testLevel, source: "test", at: "" };
     return (state && state.start) || { level: "A1", source: "default", at: "" };
   }
 
-  /** Średni wynik quizów zaliczonych i niezaliczonych (najlepsze podejścia) w %, albo null. */
+  /** Average score of passed and failed quizzes (best attempts) in %, or null. */
   function quizAverage(state, quizSize) {
     const size = quizSize || 4;
     const vals = Object.keys(state.stops).map(function (id) { const r = state.stops[id]; return r.via === "quiz" && typeof r.best === "number" ? r.best : null; })

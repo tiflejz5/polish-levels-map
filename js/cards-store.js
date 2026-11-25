@@ -1,14 +1,14 @@
 /*
- * cards-store.js — dane fiszek w localStorage (spec 10, sekcja 4).
+ * cards-store.js — flashcard data in localStorage (spec 10, section 4).
  *
- *   Klucz per profil: plm.cards.<profileId> (rejestr kluczy: js/profile-data.js)
- *   { version: 1, cards: { <id>: stan }, userDecks: [...], userCards: [...], settings: {...}, daily: { <dzień>: {...} } }
+ *   Key per profile: plm.cards.<profileId> (key registry: js/profile-data.js)
+ *   { version: 1, cards: { <id>: state }, userDecks: [...], userCards: [...], settings: {...}, daily: { <day>: {...} } }
  *
- * Stan jest zapisywany tylko dla kart, które użytkownik ruszył (reszta = nowe). Zapis po każdej
- * zmianie, w try/catch; przy błędzie (np. brak miejsca) komunikat i praca dalej w pamięci.
- * Uszkodzony zapis jest odkładany jako plm.cards.<id>.corrupt-backup i zaczynamy od pustego.
- * Dane trafiają do eksportu (data.cards: { <profileId>: stan }), importu, resetu i usuwania profilu
- * (rejestr kluczy). Walidacja: LM.cardsLogic.sanitizeState.
+ * State is saved only for cards the user has touched (the rest = new). Saved after every
+ * change, in try/catch; on an error (e.g. storage full) a message, and work goes on in memory.
+ * A damaged record is put aside as plm.cards.<id>.corrupt-backup and we start from empty.
+ * The data goes into the export (data.cards: { <profileId>: state }), import, reset and profile deletion
+ * (key registry). Validation: LM.cardsLogic.sanitizeState.
  */
 window.LM = window.LM || {};
 
@@ -35,7 +35,7 @@ window.LM = window.LM || {};
     let data = null;
     if (raw) {
       try { data = L().sanitizeState(JSON.parse(raw)); } catch (e) {
-        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* trudno */ }
+        try { window.localStorage.setItem(keyOf(pid) + BACKUP, raw); } catch (e2) { /* never mind */ }
         data = null;
       }
     }
@@ -43,7 +43,7 @@ window.LM = window.LM || {};
     return memory[pid];
   }
 
-  /** Dołącza do pamięci to, co druga karta przeglądarki zapisała w międzyczasie (patrz fiszki-logic mergeStates). → true, gdy coś przejęto. */
+  /** Adds to memory what another browser tab saved in the meantime (see cards-logic mergeStates). → true when something was taken. */
   function mergeStored(pid) {
     if (!memory[pid]) return false;
     try {
@@ -53,8 +53,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Zapis stanu profilu. Domyślnie scala go z zapisem w localStorage (dwie karty przeglądarki nie nadpisują sobie ocen);
-   * force = true zapisuje stan z pamięci bez scalania (cofnięcie oceny, import), bo tam stan celowo się cofa albo zastępuje.
+   * Saving the profile state. By default it is merged with the record in localStorage (two browser tabs do not overwrite each other's ratings);
+   * force = true saves the state from memory without merging (undoing a rating, import), because there the state goes back or is replaced on purpose.
    */
   function save(pid, force) {
     pid = pid || activeId();
@@ -67,16 +67,16 @@ window.LM = window.LM || {};
       saveFailed = false;
       return true;
     } catch (e) {
-      if (!saveFailed && app() && app().reportSaveError) app().reportSaveError("Nie zapisano fiszek! Brak miejsca albo dostępu do pamięci przeglądarki – nauka trwa dalej, ale zmiany mogą zniknąć po zamknięciu strony.");
+      if (!saveFailed && app() && app().reportSaveError) app().reportSaveError("Flashcards were not saved! The browser storage is full or not available – learning goes on, but changes may be lost when you close the page.");
       saveFailed = true;
       return false;
     }
   }
 
-  /** Stan aktywnego profilu (bez profilu — tymczasowy, niezapisywany). */
+  /** State of the active profile (without a profile — temporary, not saved). */
   function data() { return load(activeId()); }
 
-  /** Profile, które mają zapis fiszek (do eksportu, resetu i porządkowania). */
+  /** Profiles that have a flashcard record (for export, reset and cleanup). */
   function storedIds() {
     const out = [];
     try {
@@ -85,35 +85,35 @@ window.LM = window.LM || {};
         const pid = idOfKey(k);
         if (pid) out.push(pid);
       }
-    } catch (e) { /* brak dostępu */ }
+    } catch (e) { /* no access */ }
     Object.keys(memory).forEach(function (pid) { if (out.indexOf(pid) === -1) out.push(pid); });
     return out;
   }
 
   function removeProfile(pid) {
     delete memory[pid];
-    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* brak dostępu */ }
+    try { window.localStorage.removeItem(keyOf(pid)); window.localStorage.removeItem(keyOf(pid) + BACKUP); } catch (e) { /* no access */ }
   }
 
-  /** Część eksportu: { <profileId>: stan } (tylko profile z danymi). */
+  /** Export part: { <profileId>: state } (only profiles with data). */
   function exportData() {
     const out = {};
     storedIds().forEach(function (pid) { out[pid] = JSON.parse(JSON.stringify(load(pid))); });
     return out;
   }
 
-  /** Część importu: zły format → wyjątek z opisem (cały import odrzucony). */
+  /** Import part: a wrong format → an exception with a description (the whole import is refused). */
   function parseImport(raw) {
     if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("The \"cards\" part of the file has a wrong format.");
     const out = {};
     Object.keys(raw).slice(0, 500).forEach(function (pid) {
       if (typeof pid !== "string" || pid.length > 80) return;
-      out[pid] = L().sanitizeState(raw[pid]); // wyjątek = cały import odrzucony (np. nieznana wersja)
+      out[pid] = L().sanitizeState(raw[pid]); // exception = the whole import is refused (e.g. an unknown version)
     });
     return out;
   }
 
-  /** Zapis importu: część z pliku zastępuje fiszki; profile spoza listy są usuwane. */
+  /** Saving an import: the part from the file replaces the flashcards; profiles not on the list are deleted. */
   function applyImport(parsed, profileIds) {
     storedIds().forEach(function (pid) { if (!parsed[pid]) removeProfile(pid); });
     Object.keys(parsed).forEach(function (pid) { memory[pid] = parsed[pid]; save(pid, true); });
@@ -122,7 +122,7 @@ window.LM = window.LM || {};
 
   function clearAll() { storedIds().forEach(removeProfile); }
 
-  // Druga karta przeglądarki zapisała fiszki: przejmujemy nowsze oceny, żeby następny zapis stąd ich nie cofnął
+  // Another browser tab saved flashcards: we take the newer ratings so the next save from here does not undo them
   window.addEventListener("storage", function (e) {
     const pid = idOfKey(e.key);
     if (!pid) return;

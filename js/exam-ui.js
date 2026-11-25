@@ -1,9 +1,9 @@
 /*
- * exam-ui.js — wspólne elementy egzaminów (paczka v7, spec 19 sekcja B):
- *   LM.examMy            „Moje egzaminy” per profil: list(), isMine(id), info(id), pin(id), unpin(id)
- *   LM.examDate.card     jedna karta daty egzaminu (C1 i egzaminy z rejestru)
- *   LM.examCover         okładki: full (strona startowa), compact (podstrony), mini (kafel: główna, Dziś)
- * Czysta logika (myExams, formatDatePl, daysBetween) jest w js/exam-logic.js i ma testy.
+ * exam-ui.js — shared exam pieces (pack v7, spec 19 section B):
+ *   LM.examMy            “My exams” per profile: list(), isMine(id), info(id), pin(id), unpin(id)
+ *   LM.examDate.card     one exam date card (exams from the registry)
+ *   LM.examCover         covers: full (start page), compact (sub-pages), mini (tile: home, Today)
+ * The pure logic (myExams, formatDateLong, daysBetween) is in js/exam-logic.js and has tests.
  * Exam dates live in plm.exams (js/profile-data.js), per profile.
  */
 window.LM = window.LM || {};
@@ -18,14 +18,9 @@ window.LM = window.LM || {};
   function pd() { return LM.profileData; }
   function registry() { return LM.EXAM_REGISTRY || { exams: [] }; }
   function byId(id) { return registry().exams.find(function (e) { return e.id === id; }) || null; }
-  function plural(n, one, few, many) {
-    if (n === 1) return one;
-    const d = n % 10, t = n % 100;
-    return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
-  }
 
   // =====================================================================
-  // DATA I STAN EGZAMINU
+  // EXAM DATA AND STATE
   // =====================================================================
 
   function getDate(e) {
@@ -52,12 +47,12 @@ window.LM = window.LM || {};
     });
   }
 
-  /** Moje egzaminy: [{ id, reason, days }] (czysta logika w exam-logic.js). */
+  /** My exams: [{ id, reason, days }] (pure logic in exam-logic.js). */
   function list() { return L().myExams(state(), registry()); }
 
   function isMine(id) { return list().some(function (x) { return x.id === id; }); }
 
-  /** { date, days, done, total } dla okładek i panelu. */
+  /** { date, days, done, total } for covers and the sidebar. */
   function info(id) {
     const e = byId(id);
     const st = state();
@@ -69,23 +64,23 @@ window.LM = window.LM || {};
   function unpin(id) { if (pd() && pd().setExamMy(id, "hidden")) changed(); }
 
   // =====================================================================
-  // TEKSTY ODLICZANIA
+  // COUNTDOWN TEXTS
   // =====================================================================
 
-  /** Tekst stanu bez dużej liczby: „Egzamin jutro”, „Egzamin był 3 dni temu”, „Ustaw datę…”. */
+  /** State text without a big number: “Exam tomorrow”, “The exam was 3 days ago”, “Set the date…”. */
   function stateText(days) {
-    if (days === null) return "Ustaw datę, żeby widzieć odliczanie";
-    if (days === 1) return "Egzamin jutro";
-    if (days === 0) return "Egzamin dziś";
-    if (days < 0) return "Egzamin był " + (-days) + " " + plural(-days, "dzień", "dni", "dni") + " temu";
-    return days + " " + plural(days, "dzień", "dni", "dni") + " do egzaminu";
+    if (days === null) return "Set the date to see the countdown";
+    if (days === 1) return "Exam tomorrow";
+    if (days === 0) return "Exam today";
+    if (days < 0) return "The exam was " + LM.plural(-days, "day", "days") + " ago";
+    return LM.plural(days, "day", "days") + " to the exam";
   }
 
-  /** Krótko do kafli i panelu: „188 dni do egzaminu” albo null, gdy nie ma daty. */
+  /** Short, for tiles and the sidebar: “188 days to the exam”, or null when there is no date. */
   function shortCountdown(days) { return days === null ? null : stateText(days); }
 
   // =====================================================================
-  // ODŚWIEŻANIE PO ZMIANIE (data, przypięcie): okładki, przyciski i panel
+  // REFRESH AFTER A CHANGE (date, pin): covers, buttons and the sidebar
   // =====================================================================
 
   function changed() {
@@ -101,12 +96,12 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // KARTA DATY (B2)
+  // DATE CARD (B2)
   // =====================================================================
 
   /**
-   * LM.examDate.card({ examId, getDate, setDate, suggested, hint }): lewo duża liczba dni albo tekst stanu,
-   * prawo pole daty z polskim zapisem i akcjami „Wstaw termin główny” / „Usuń datę”.
+   * LM.examDate.card({ examId, getDate, setDate, suggested, hint }): on the left a big number of days or a state text,
+   * on the right the date field with the date written out and the actions “Use the main date” / “Remove date”.
    */
   function dateCard(o) {
     const inputId = "exam-date-" + o.examId;
@@ -133,21 +128,21 @@ window.LM = window.LM || {};
       const big = days !== null && days > 1;
       number.textContent = big ? String(days) : "";
       number.hidden = !big;
-      text.textContent = big ? plural(days, "dzień do egzaminu", "dni do egzaminu", "dni do egzaminu") : stateText(days);
-      pretty.textContent = date ? L().formatDatePl(date) : "";
+      text.textContent = big ? LM.pluralWord(days, "day", "days") + " to the exam" : stateText(days);
+      pretty.textContent = date ? L().formatDateLong(date) : "";
       pretty.hidden = !date;
       actions.replaceChildren();
       if (o.suggested && date !== o.suggested) {
         actions.appendChild(el("button", { type: "button", class: "btn btn-link btn-small", onclick: function () { save(o.suggested); } },
-          "Wstaw termin główny: " + L().formatDatePl(o.suggested).replace(/^[^,]+, /, "")));
+          "Use the main date: " + L().formatDateLong(o.suggested).replace(/^[^,]+, /, "")));
       }
-      if (date) actions.appendChild(el("button", { type: "button", class: "btn btn-link btn-small", onclick: function () { save(""); } }, "Usuń datę"));
+      if (date) actions.appendChild(el("button", { type: "button", class: "btn btn-link btn-small", onclick: function () { save(""); } }, "Remove date"));
     }
     update();
-    return el("section", { class: "card exam-date-card", "aria-label": "Odliczanie do egzaminu" }, [
+    return el("section", { class: "card exam-date-card", "aria-label": "Countdown to the exam" }, [
       el("div", { class: "exam-date-main", "aria-live": "polite" }, [number, text]),
       el("div", { class: "exam-date-side" }, [
-        el("label", { class: "field-label", for: inputId, text: "Data egzaminu" }),
+        el("label", { class: "field-label", for: inputId, text: "Exam date" }),
         input,
         pretty,
         actions,
@@ -156,19 +151,19 @@ window.LM = window.LM || {};
     ]);
   }
 
-  /** Karta daty dla egzaminu z rejestru: C1 i bez stałego terminu (B2) dostają podpowiedź o centrum. */
+  /** Date card for an exam from the registry: an exam without a fixed date gets a hint about the exam centre. */
   function dateCardFor(e) {
     return dateCard({
       examId: e.id,
       getDate: function () { return getDate(e); },
       setDate: function (v) { setDate(e, v); },
       suggested: e.suggestedDate || null,
-      hint: e.suggestedDate ? null : "Termin zależy od centrum egzaminacyjnego."
+      hint: e.suggestedDate ? null : "The date depends on the exam centre."
     });
   }
 
   // =====================================================================
-  // OKŁADKI (B3)
+  // COVERS (B3)
   // =====================================================================
 
   /** The exam's colours (registry accents) as CSS variables; no accent → the app accent. */
@@ -178,7 +173,7 @@ window.LM = window.LM || {};
 
   function href(e) { return "#/exams/" + e.id; }
 
-  /** Pełna szerokość: kod, nazwa, poziom i instytucja; po prawej data albo „Ustaw datę”. */
+  /** Full width: code, name, level and institution; on the right the date or “Set date”. */
   function coverFull(e) {
     const i = info(e.id);
     let side;
@@ -189,10 +184,10 @@ window.LM = window.LM || {};
           const input = document.getElementById("exam-date-" + e.id);
           if (input) { input.scrollIntoView({ block: "center" }); input.focus(); }
         }
-      }, "Ustaw datę");
+      }, "Set date");
     } else {
       side = el("p", { class: "exam-cover-date" }, [
-        el("span", { class: "exam-cover-date-day", text: L().formatDatePl(i.date).replace(/^[^,]+, /, "") }),
+        el("span", { class: "exam-cover-date-day", text: L().formatDateLong(i.date).replace(/^[^,]+, /, "") }),
         el("span", { class: "exam-cover-date-left", text: stateText(i.days) })
       ]);
     }
@@ -207,7 +202,7 @@ window.LM = window.LM || {};
     ]);
   }
 
-  /** Kompaktowa na podstronach: pasek 6 px, kod 28 px, nazwa i odliczanie (link do strony startowej). */
+  /** Compact on sub-pages: a 6 px bar, a 28 px code, the name and the countdown (a link to the start page). */
   function coverCompact(e) {
     const i = info(e.id);
     return el("header", { class: "exam-cover is-compact", "data-exam-cover": e.id, "data-variant": "compact", style: colorStyle(e) }, [
@@ -215,30 +210,30 @@ window.LM = window.LM || {};
       el("a", { class: "exam-cover-home", href: href(e) }, [
         el("span", { class: "exam-cover-code", "aria-hidden": "true", text: e.code }),
         el("span", { class: "exam-cover-title", text: e.label }),
-        el("span", { class: "visually-hidden", text: " – przegląd egzaminu" })
+        el("span", { class: "visually-hidden", text: " – exam overview" })
       ]),
       el("a", { class: "exam-cover-count" + (i.days === null ? " is-unset" : ""), href: href(e) },
-        i.days === null ? "Ustaw datę" : shortCountdown(i.days))
+        i.days === null ? "Set date" : shortCountdown(i.days))
     ]);
   }
 
-  /** Mini: kafel „Moich egzaminów” (strona główna, Dziś). */
+  /** Mini: a “My exams” tile (home page, Today). */
   function coverMini(e) {
     const i = info(e.id);
-    const progress = i.total ? "zestawy " + i.done + "/" + i.total : null;
+    const progress = i.total ? "sets " + i.done + "/" + i.total : null;
     return el("a", { class: "card exam-cover is-mini", href: href(e), "data-exam-cover": e.id, "data-variant": "mini", style: colorStyle(e) }, [
       el("span", { class: "exam-cover-bar", "aria-hidden": "true" }),
       el("span", { class: "exam-cover-code", "aria-hidden": "true", text: e.code }),
       el("span", { class: "exam-cover-body" }, [
         el("span", { class: "exam-cover-title", text: e.label }),
-        el("span", { class: "exam-cover-count" + (i.days === null ? " is-unset" : ""), text: i.days === null ? "Ustaw datę" : shortCountdown(i.days) }),
+        el("span", { class: "exam-cover-count" + (i.days === null ? " is-unset" : ""), text: i.days === null ? "Set date" : shortCountdown(i.days) }),
         progress ? el("span", { class: "exam-cover-progress", text: progress }) : null
       ]),
       el("span", { class: "exam-cover-chev", "aria-hidden": "true" }, LM.icon("chevron-right", { size: 20 }))
     ]);
   }
 
-  /** Kafel wyboru egzaminu (strona główna, gdy nic nie jest przypięte): kod, nazwa, poziom i instytucja; bez odliczania i daty. */
+  /** Exam choice tile (home page, when nothing is pinned): code, name, level and institution; no countdown and no date. */
   function coverPick(e) {
     return el("a", { class: "card exam-cover is-mini is-pick", href: href(e), "data-exam-cover": e.id, "data-variant": "pick", style: colorStyle(e) }, [
       el("span", { class: "exam-cover-bar", "aria-hidden": "true" }),
@@ -256,29 +251,29 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // PRZYPINANIE (B1) I KAFLE
+  // PINNING (B1) AND TILES
   // =====================================================================
 
-  /** „Przypnij do Dziś” / „Odepnij z Dziś i strony głównej” — stan wynika z myExams. */
+  /** “Pin to Today” / “Unpin from Today and the home page” — the state follows from myExams. */
   function pinButton(e) {
     const mine = isMine(e.id);
     return el("p", { class: "exam-pin", "data-exam-pin": e.id }, el("button", {
       type: "button", class: "btn btn-secondary",
       "aria-pressed": mine ? "true" : "false",
       onclick: function () { if (mine) unpin(e.id); else pin(e.id); }
-    }, LM.ui.withIcon(mine ? "pin-off" : "pin", mine ? "Odepnij z Dziś i strony głównej" : "Przypnij do Dziś")));
+    }, LM.ui.withIcon(mine ? "pin-off" : "pin", mine ? "Unpin from Today and the home page" : "Pin to Today")));
   }
 
-  /** Sekcja „Twoje egzaminy” na stronie głównej (albo jedna linijka, gdy nic nie jest moje). */
+  /** The “Your exams” section on the home page (or one line when nothing is mine). */
   function homeSection() {
     if (!registry().exams.length) return null; // no exams until stage E: nothing on the home page
     const mine = list();
     const section = el("section", { class: "home-exams", "aria-labelledby": "home-exams-title" }, [
-      el("h2", { id: "home-exams-title", class: "home-exams-title", text: mine.length ? "Twoje egzaminy" : "Egzaminy" })
+      el("h2", { id: "home-exams-title", class: "home-exams-title", text: mine.length ? "Your exams" : "Exams" })
     ]);
     if (!mine.length) {
-      // Nic nie jest przypięte (też w trybie gościa): kafelki wszystkich egzaminów zamiast samego zdania (spec v7 14, P6)
-      section.appendChild(el("p", { class: "tool-note", text: "Przygotowujesz się do egzaminu? Wybierz go. Na jego stronie możesz go przypiąć do Dziś." }));
+      // Nothing is pinned (guest mode too): tiles of all exams instead of a single sentence (spec v7 14, P6)
+      section.appendChild(el("p", { class: "tool-note", text: "Preparing for an exam? Choose it. On its page you can pin it to Today." }));
       section.appendChild(el("div", { class: "home-exams-grid" }, registry().exams.filter(function (e) { return e.status !== "hidden"; }).map(coverPick)));
       return section;
     }
@@ -286,7 +281,7 @@ window.LM = window.LM || {};
     return section;
   }
 
-  /** Kafle na Dziś: maks. 2 moje egzaminy, najbliższa data pierwsza. */
+  /** Tiles on Today: max. 2 of my exams, the nearest date first. */
   function todayTiles() {
     return list().slice(0, 2).map(function (m) {
       const tile = coverMini(byId(m.id));
@@ -295,7 +290,7 @@ window.LM = window.LM || {};
     });
   }
 
-  /** Podpis w panelu: odliczanie tylko dla moich egzaminów, dla pozostałych poziom i instytucja. */
+  /** Caption in the sidebar: a countdown only for my exams, level and institution for the others. */
   function navSub(e) {
     const i = info(e.id);
     return isMine(e.id) && i.days !== null && i.days > 0 ? stateText(i.days) : (e.subtitle || "");

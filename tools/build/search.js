@@ -90,7 +90,7 @@ module.exports = function buildSearch(ctx) {
   C.list(C.content("cheatsheets"), /^[abc][12]\.md$/i).forEach(function (f) {
     const lvl = f.replace(/\.md$/i, "").toUpperCase();
     const md = C.splitMd(C.read(C.content("cheatsheets", f)));
-    add({ id: "cheatsheet:" + lvl, group: "pages", title: "Ściąga " + lvl, headings: headings(md.body), summary: md.meta.summary || "", text: clean(md.body), level: lvl, category: "Ściąga", route: "#/" + lvl.toLowerCase() + "/cheatsheet" });
+    add({ id: "cheatsheet:" + lvl, group: "pages", title: "Cheat sheet " + lvl, headings: headings(md.body), summary: md.meta.summary || "", text: clean(md.body), level: lvl, category: "Cheat sheet", route: "#/" + lvl.toLowerCase() + "/cheatsheet" });
   });
 
   // ---------- Exams from the registry ----------
@@ -114,24 +114,24 @@ module.exports = function buildSearch(ctx) {
   });
 
   // ---------- Flashcards: shortcuts only (cards are not indexed: too much noise) ----------
-  add({ id: "fiszki", group: "exercises", title: "Fiszki i błędy", summary: "Jedna kolejka powtórek: fiszki z talii, Moje błędy i słabe punkty z ćwiczeń, w rosnących odstępach.", text: "fiszki flashcards powtórki active recall talie dziennik błędów słabe punkty", category: "Fiszki", route: "#/review" });
-  add({ id: "fiszki:bledy", group: "exercises", title: "Moje błędy (fiszki)", summary: "Talia fiszek z wpisów Dziennika błędów.", text: "fiszki moje błędy dziennik", category: "Fiszki", route: "#/review/decks/deck/u-moje-bledy" });
-  add({ id: "fiszki:slowa", group: "exercises", title: "Moje słowa", summary: "Słowa i wyrażenia zaznaczone w tekstach, ze zdaniem i znaczeniem.", text: "moje słowa słowniczek osobisty zapisane słówka fiszki zaznaczenie", category: "Fiszki", route: "#/review/words" });
+  add({ id: "cards", group: "exercises", title: "Flashcards and mistakes", summary: "One review queue: flashcards from decks, My mistakes and weak spots from practice, at growing intervals.", text: "flashcards review active recall decks mistake log weak spots", category: "Flashcards", route: "#/review" });
+  add({ id: "cards:mistakes", group: "exercises", title: "My mistakes (flashcards)", summary: "A flashcard deck made from the entries of the mistake log.", text: "flashcards my mistakes mistake log", category: "Flashcards", route: "#/review/decks/deck/u-moje-bledy" });
+  add({ id: "cards:words", group: "exercises", title: "My words", summary: "Words and phrases you selected in texts, with the sentence and the meaning.", text: "my words personal glossary saved words flashcards selection", category: "Flashcards", route: "#/review/words" });
 
   // Phrase bank (B1 extras): the bank page and each group
   const phrasesFile = C.content("writing", "phrases.json");
   if (C.exists(phrasesFile)) {
     const groups = C.readJson(phrasesFile).groups || [];
-    add({ id: "zwroty", group: "exercises", title: "Bank zwrotów do pisania", summary: "Zwroty według funkcji z filtrem poziomu, rejestru i gatunku.", text: "zwroty pisanie phrases writing " + groups.map(function (g) { return g.label; }).join(" "), category: "Pisanie", route: "#/writing/phrases" });
+    add({ id: "phrases", group: "exercises", title: "Phrase bank for writing", summary: "Phrases by function with level, register and text type filters.", text: "phrases writing phrase bank " + groups.map(function (g) { return g.label; }).join(" "), category: "Writing", route: "#/writing/phrases" });
     groups.forEach(function (g) {
-      add({ id: "zwroty:" + g.id, group: "exercises", title: "Zwroty: " + g.label, summary: g.description || "", text: g.phrases.map(function (p) { return p.text + " " + p.en; }).join(" "), category: "Pisanie", route: "#/writing/phrases/" + g.id });
+      add({ id: "zwroty:" + g.id, group: "exercises", title: "Zwroty: " + g.label, summary: g.description || "", text: g.phrases.map(function (p) { return p.text + " " + p.en; }).join(" "), category: "Writing", route: "#/writing/phrases/" + g.id });
     });
   }
 
   // Built-in decks by title (no cards)
   const decksFile = C.content("decks", "index.json");
   if (C.exists(decksFile)) C.readJson(decksFile).decks.forEach(function (d) {
-    add({ id: "fiszki:talia:" + d.id, group: "exercises", title: d.title + " (fiszki)", summary: d.description, text: "fiszki talia " + d.title + " " + d.level, category: "Fiszki", route: "#/review/decks/deck/" + d.id });
+    add({ id: "cards:deck:" + d.id, group: "exercises", title: d.title + " (flashcards)", summary: d.description, text: "flashcards deck " + d.title + " " + d.level, category: "Flashcards", route: "#/review/decks/deck/" + d.id });
   });
 
   // ---------- Exercises (topic sets and mixes) ----------
@@ -143,13 +143,13 @@ module.exports = function buildSearch(ctx) {
         const file = C.content("exercises", id + ".json");
         if (!C.exists(file)) return;
         const s = C.readJson(file);
-        add({ id: "set:" + id, group: "exercises", title: s.title, summary: s.intro || "", text: "Temat: " + (topicTitle[t] || t), level: s.level, category: "Zestaw zadań", route: "#/practice/set/" + id });
+        add({ id: "set:" + id, group: "exercises", title: s.title, summary: s.intro || "", text: "Topic: " + (topicTitle[t] || t), level: s.level, category: "Exercise set", route: "#/practice/set/" + id });
       });
     });
   }
   const mixFile = C.content("exercises", "mixes.json");
   if (C.exists(mixFile)) C.readJson(mixFile).mixes.forEach(function (m) {
-    add({ id: "mix:" + m.id, group: "exercises", title: m.title, summary: m.description || "", text: "Zestaw mieszany. Tematy: " + m.topics.map(function (t) { return topicTitle[t] || t; }).join(", "), category: "Zestaw mieszany", route: "#/practice/mix/" + m.id });
+    add({ id: "mix:" + m.id, group: "exercises", title: m.title, summary: m.description || "", text: "Mixed set. Topics: " + m.topics.map(function (t) { return topicTitle[t] || t; }).join(", "), category: "Mixed set", route: "#/practice/mix/" + m.id });
   });
 
   // ---------- Write (with size control) ----------

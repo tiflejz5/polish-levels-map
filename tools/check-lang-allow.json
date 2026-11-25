@@ -1,0 +1,47 @@
+[
+  {
+    "file": "js/profile-data.js",
+    "contains": "first-umiem",
+    "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid"
+  },
+  {
+    "file": "js/celebrate.js",
+    "contains": "first-umiem",
+    "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid"
+  },
+  {
+    "file": "js/cards-logic.js",
+    "contains": "¡¿\"“”„«»",
+    "reason": "punctuation stripped from answers includes the Polish opening quote; moves to LM.lang.normalizeAnswer in stage 3"
+  },
+  {
+    "file": "js/cards-logic.js",
+    "contains": "typ|type|przód|przod|front",
+    "reason": "import compatibility: column header of decks exported by the original app"
+  },
+  {
+    "file": "js/trail.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "js/trail-logic.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "js/trail-store.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "tools/tests.js",
+    "contains": "// pl-fixture",
+    "reason": "target-language (Polish) test data, or fixtures of the language check itself; marked line by line"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "// pl-fixture",
+    "reason": "routes of the original app used as test input (they must show Page not found)"
+  }
+]

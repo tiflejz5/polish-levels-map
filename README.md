@@ -2,7 +2,7 @@
 
 A static web app for learning Polish (A1–C2), explained in English. Ported from `english-levels-map`; the two projects are independent.
 
-> **Work in progress (stage 1).** The interface is still the Polish UI of the original app; it becomes English in stage 2. The full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
+> **Work in progress (stage 2).** The interface is English (spec 04). The Polish language layer comes in stage 3; the full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
 
 ## Run
 
@@ -14,7 +14,7 @@ Open `index.html` (from disk or any static server, for example GitHub Pages). No
 npm run build        # validate → regenerate data/ from content/ → stamp ?v=N; --bump raises the version
 npm run validate     # content validators (stage 1: structural rules; item-level rules arrive in stage 4)
 npm test             # unit tests for pure logic
-npm run check:lang   # fails until stage 2 (the UI is still Polish)
+npm run check:lang   # no Polish text or language facts outside js/lang.js and js/config.js; false positives in tools/check-lang-allow.json
 npm run contrast     # WCAG contrast of the design tokens
 npm run e2e          # browser smoke tests (skipped without Playwright)
 npm run assets       # copy fonts, icons and GSAP from node_modules into assets/ (after npm install)

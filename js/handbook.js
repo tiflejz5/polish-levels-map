@@ -17,7 +17,7 @@ window.LM = window.LM || {};
   const S = function () { return LM.syllabus; };
 
   // Sections (## headings) hidden behind "Show answers"
-  const HIDDEN_SECTIONS = ["Odpowiedzi", "Przykładowe odpowiedzi", "Answers", "Sample answers"];
+  const HIDDEN_SECTIONS = ["Answers", "Sample answers"];
   const APP_TITLE = function () { return LM.APP.appTitle; };
 
   function data() { return LM.PAGES || null; }
@@ -310,7 +310,7 @@ window.LM = window.LM || {};
   /** The page's "I know this" switch: the same state as the checkbox on the level page (active profile). */
   function knowToggle(topic) {
     const done = LM.state.progress[topic.id] === true;
-    const label = el("label", { class: "umiem umiem-lg" + (done ? " is-done" : "") }, [
+    const label = el("label", { class: "know-toggle know-toggle-lg" + (done ? " is-done" : "") }, [
       el("input", {
         type: "checkbox",
         checked: done,
@@ -319,7 +319,7 @@ window.LM = window.LM || {};
           if (!LM.app.hasProfiles()) { // guest mode: profile first, then the tick (the page redraws itself)
             const input = e.target, on = input.checked;
             input.checked = !on;
-            LM.app.withProfile("Your ticks are saved in your profile.", function () { LM.app.setProgress(topic.id, on); LM.app.renderAll(); });
+            LM.app.withProfile("Your “I know this” marks are saved in your profile.", function () { LM.app.setProgress(topic.id, on); LM.app.renderAll(); });
             return;
           }
           LM.app.setProgress(topic.id, e.target.checked);

@@ -1,51 +1,51 @@
 /*
- * profile-data.js — dane nauki zapisywane OSOBNO DLA KAŻDEGO PROFILU
- * (tak jak „Umiem”), pod nowymi kluczami localStorage:
+ * profile-data.js — learning data saved SEPARATELY FOR EACH PROFILE
+ * (like “I know this”), under these localStorage keys:
  *
- *   plm.journal   { version: 1, profiles: { <idProfilu>: { entries: [wpis…] } } }
- *   plm.activity  { version: 1, profiles: { <idProfilu>: { days: ["RRRR-MM-DD"…], lastPage } } }
- *   plm.placement { version: 1, profiles: { <idProfilu>: { last: wynik | null } } }
- *   plm.celebrated { version: 1, profiles: { <idProfilu>: { ids: ["first-umiem", …] } } }
- *                    — kamienie milowe już pokazane (każdy tylko raz na profil, js/celebrate.js)
- *   plm.exercises { version: 1, profiles: { <idProfilu>: { sets: { <idZestawu>: { best, last } }, lastMix: [idZadania…] } } }
- *                    — wyniki zestawów ćwiczeń (silnik zadań, js/exercise-engine.js);
- *                      best / last = { score, total, date }; recent — ułamki ostatnich 5 wyników
- *                      (sugestia „Umiem”); lastMix — zadania ostatniej sesji mieszanej;
- *                      dismissed: { <idZestawu>: "RRRR-MM-DD" } — odmowa sugestii „Umiem”
- *   plm.attempts  { version: 1, profiles: { <id>: { items: [podejście…], aggregates: { <idZadania>: { n, ok, topic, type, level } } } } }
- *                    — dziennik podejść: każda odpowiedź w zadaniach (bufor 3000, starsze w agregatach; js/learning-stats.js)
- *   plm.autojournal { version: 1, profiles: { <id>: { items: { <idZadania>: { entryId, created, wrongCount, lastWrongAt, returned } } } } }
- *                    — wpisy dziennika błędów dodane automatycznie z zadań (format plm.journal bez zmian;
- *                      wpis łączy pole ref = "ex:<idZadania>")
- *   plm.prefs { version: 1, profiles: { <id>: { autoJournal: true|false, selectionMenu: true|false, highlightWords: true|false } } } — ustawienia nauki
- *                    (selectionMenu i highlightWords — „Moje słowa”, paczka v6; brak pola w starych danych = domyślna wartość)
- *   plm.notes     { version: 1, profiles: { <id>: { items: { <klucz strony>: { text, updatedAt, title, route } } } } }
- *                    — własne notatki (zwykły tekst, maks. 10 000 znaków)
- *   plm.exams     { version: 1, profiles: { <id>: { exams: { <idEgzaminu>: { examDate, drafts: { <zadanie>: tekst }, tasks: { <strona>: { <nr>: true } },
- *                    choices: { <grupa wyboru>: <zadanie> } } } } } }  (choices: wybór jednego z dwóch zadań, matura rozszerzona;
- *                    w starszych danych brak pola → {})
- *                    — egzaminy w nowym module (np. Egzamin ósmoklasisty, js/exam-core.js)
- *   plm.speaking  { version: 1, profiles: { <id>: { sessions: [ { day, exam, part: 1–4, scores: { <kryterium>: 1–5 } } ] } } }
- *                    — historia sesji trenera Speaking (samoocena, js/speaking-trainer.js; najnowsze na końcu, maks. 500)
- *                    Opcjonalnie (paczka v6, spec 18): sesja z polem full: true (tryb „Cały egzamin”) oraz w rekordzie profilu
- *                    seen: { "<egzamin>:<część>": [ "<id karty>", … ] } — karty już wylosowane w bieżącym cyklu (losowanie bez powtórek).
- *                    Stary zapis bez tych pól jest poprawny.
- *   plm.finals { version: 1, profiles: { <id>: { levels: { "A1": { passedAt: "RRRR-MM-DD" | null, best: { score, total, date }, last: { score, total, date } } } } } }
- *                    — testy końcowe poziomów A1–C2 i znaczki „poziom zaliczony” (js/final.js, paczka v6);
- *                      passedAt = dzień pierwszego zaliczenia (znaczek zostaje po późniejszej porażce);
- *                      to NIE jest plm.placement (szybki test poziomu)
- *   plm.phrases   { version: 1, profiles: { <id>: { starred: [ "opinia-05", … ] } } }
- *                    — ulubione zwroty z banku zwrotów do pisania (js/writing-phrases.js, paczka v6); id zwrotu z dane/pisanie/zwroty.json
+ *   plm.journal   { version: 1, profiles: { <profileId>: { entries: [entry…] } } }
+ *   plm.activity  { version: 1, profiles: { <profileId>: { days: ["YYYY-MM-DD"…], lastPage } } }
+ *   plm.placement { version: 1, profiles: { <profileId>: { last: result | null } } }
+ *   plm.celebrated { version: 1, profiles: { <profileId>: { ids: ["first-umiem", …] } } }
+ *                    — milestones already shown (each only once per profile, js/celebrate.js; the stored ids keep their old names)
+ *   plm.exercises { version: 1, profiles: { <profileId>: { sets: { <setId>: { best, last } }, lastMix: [itemId…] } } }
+ *                    — exercise set results (exercise engine, js/exercise-engine.js);
+ *                      best / last = { score, total, date }; recent — fractions of the last 5 results
+ *                      (the “I know this” suggestion); lastMix — items of the last mixed session;
+ *                      dismissed: { <setId>: "YYYY-MM-DD" } — the “I know this” suggestion was declined
+ *   plm.attempts  { version: 1, profiles: { <id>: { items: [attempt…], aggregates: { <itemId>: { n, ok, topic, type, level } } } } }
+ *                    — attempt log: every answer in sets (buffer of 3000, older ones in aggregates; js/learning-stats.js)
+ *   plm.autojournal { version: 1, profiles: { <id>: { items: { <itemId>: { entryId, created, wrongCount, lastWrongAt, returned } } } } }
+ *                    — mistake log entries added automatically from sets (plm.journal format unchanged;
+ *                      the entry is linked by the field ref = "ex:<itemId>")
+ *   plm.prefs { version: 1, profiles: { <id>: { autoJournal: true|false, selectionMenu: true|false, highlightWords: true|false } } } — learning settings
+ *                    (selectionMenu and highlightWords — “My words”, pack v6; a missing field in old data = the default value)
+ *   plm.notes     { version: 1, profiles: { <id>: { items: { <page key>: { text, updatedAt, title, route } } } } }
+ *                    — the learner's own notes (plain text, max. 10,000 characters)
+ *   plm.exams     { version: 1, profiles: { <id>: { exams: { <examId>: { examDate, drafts: { <task>: text }, tasks: { <page>: { <no>: true } },
+ *                    choices: { <choice group>: <task> } } } } } }  (choices: one of two tasks is chosen;
+ *                    older data without the field → {})
+ *                    — exams in the exam module (js/exam-core.js)
+ *   plm.speaking  { version: 1, profiles: { <id>: { sessions: [ { day, exam, part: 1–4, scores: { <criterion>: 1–5 } } ] } } }
+ *                    — session history of the speaking trainer (self-assessment, js/speaking-trainer.js; newest last, max. 500)
+ *                    Optional (pack v6, spec 18): a session with full: true (“Whole exam” mode) and in the profile record
+ *                    seen: { "<exam>:<part>": [ "<card id>", … ] } — cards already drawn in the current cycle (drawing without repeats).
+ *                    Old records without these fields are valid.
+ *   plm.finals { version: 1, profiles: { <id>: { levels: { "A1": { passedAt: "YYYY-MM-DD" | null, best: { score, total, date }, last: { score, total, date } } } } } }
+ *                    — level final tests A1–C2 and the “level passed” badges (js/final.js, pack v6);
+ *                      passedAt = day of the first pass (the badge stays after a later fail);
+ *                      this is NOT plm.placement (the short placement test)
+ *   plm.phrases   { version: 1, profiles: { <id>: { starred: [ "opinion-05", … ] } } }
+ *                    — favorite phrases from the writing phrase bank (js/writing-phrases.js, pack v6); phrase id from data/phrases.js
  *
- * Wpis dziennika błędów:
- *   { id, createdAt: "RRRR-MM-DD", context, myAnswer, correct, rule, source,
+ * Mistake log entry:
+ *   { id, createdAt: "YYYY-MM-DD", context, myAnswer, correct, rule, source,
  *     category, itemId, ref, review: { stage, due, mastered } }
- *   ref — klucz zadania, z którego pochodzi wpis (np. "c1:uoe-p4-warunki:3"),
- *         służy do wykrywania duplikatów.
+ *   ref — key of the item the entry comes from (e.g. "ex:a1-cases-accusative-1-03"),
+ *         used to find duplicates.
  *
- * Seria nauki: zapisujemy WYŁĄCZNIE listę dni aktywności; serię liczy
- * LM.learn.streak. Wszystkie dane trafiają do eksportu i są czyszczone
- * przez „Resetuj dane”. Każdy dostęp do localStorage jest w try/catch.
+ * Streak: ONLY the list of activity days is saved; LM.learn.streak counts
+ * the streak. All data goes into the export and is cleared
+ * by “Reset data”. Every localStorage access is in try/catch.
  */
 window.LM = window.LM || {};
 
@@ -140,9 +140,9 @@ window.LM = window.LM || {};
     return REGISTRY.some(function (r) { return r.scope === "profile" ? base.indexOf(r.key) === 0 && base.length > r.key.length : base === r.key; });
   }
 
-  const CATEGORIES = ["Use of English", "Reading", "Writing", "Listening", "Speaking", "Gramatyka", "Słownictwo", "Inne"];
+  const CATEGORIES = ["Use of English", "Reading", "Writing", "Listening", "Speaking", "Grammar", "Vocabulary", "Other"];
 
-  // Limity długości (także przy imporcie)
+  // Length limits (also on import)
   const LIMITS = {
     context: 2000, myAnswer: 1000, correct: 1000, rule: 2000, source: 200,
     ref: 300, itemId: 120, id: 80, entries: 5000, days: 4000, title: 200, hash: 300, answers: 60
@@ -161,8 +161,8 @@ window.LM = window.LM || {};
     try { raw = window.localStorage.getItem(KEYS[kind]); } catch (e) { raw = null; }
     let data = null;
     try { data = raw ? normalizeStore(kind, JSON.parse(raw)) : null; } catch (e) {
-      // Uszkodzony zapis: odkładamy kopię i zaczynamy od pustego
-      try { window.localStorage.setItem(KEYS[kind] + BACKUP, raw); } catch (e2) { /* trudno */ }
+      // Damaged record: keep a copy aside and start from empty
+      try { window.localStorage.setItem(KEYS[kind] + BACKUP, raw); } catch (e2) { /* never mind */ }
       data = null;
     }
     memory[kind] = data || { version: VERSION, profiles: {} };
@@ -174,7 +174,7 @@ window.LM = window.LM || {};
     try {
       window.localStorage.setItem(KEYS[kind], JSON.stringify(load(kind)));
     } catch (e) {
-      if (app() && app().reportSaveError) app().reportSaveError("Nie zapisano danych nauki! Brak miejsca albo dostępu do pamięci przeglądarki.");
+      if (app() && app().reportSaveError) app().reportSaveError("Learning data was not saved! The browser storage is full or not available.");
     }
   }
 
@@ -183,7 +183,7 @@ window.LM = window.LM || {};
     return p ? p.id : null;
   }
 
-  /** Rekord danego rodzaju dla profilu (tworzony, jeśli go brakuje). */
+  /** The record of a given kind for a profile (created when missing). */
   function record(kind, pid) {
     const store = load(kind);
     if (!pid) return emptyRecord(kind);
@@ -207,7 +207,7 @@ window.LM = window.LM || {};
     return { last: null };
   }
 
-  // ---------- Walidacja (zapis i import) ----------
+  // ---------- Validation (saving and import) ----------
 
   function text(value, max) {
     if (typeof value !== "string") return "";
@@ -222,7 +222,7 @@ window.LM = window.LM || {};
     return { stage: stage, due: due, mastered: raw.mastered === true };
   }
 
-  /** Czysta kopia wpisu albo null, gdy brakuje pól wymaganych. */
+  /** A clean copy of an entry, or null when required fields are missing. */
   function normalizeEntry(raw) {
     if (!U.isPlainObject(raw)) return null;
     const context = text(raw.context, LIMITS.context).trim();
@@ -238,7 +238,7 @@ window.LM = window.LM || {};
       correct: correct,
       rule: text(raw.rule, LIMITS.rule).trim(),
       source: text(raw.source, LIMITS.source).trim(),
-      category: CATEGORIES.indexOf(raw.category) !== -1 ? raw.category : "Inne",
+      category: CATEGORIES.indexOf(raw.category) !== -1 ? raw.category : "Other",
       itemId: text(raw.itemId, LIMITS.itemId).trim(),
       ref: text(raw.ref, LIMITS.ref).trim(),
       review: normalizeReview(raw.review, createdAt)
@@ -370,7 +370,7 @@ window.LM = window.LM || {};
         exams[id] = normalizeExam(raw.exams[id]);
       });
       const out = { exams: exams };
-      // Opcjonalne ręczne przypięcie/odpięcie egzaminu (też C1): { "<idEgzaminu>": "pinned" | "hidden" }
+      // Optional manual pin/unpin of an exam: { "<examId>": "pinned" | "hidden" }
       if (U.isPlainObject(raw.my)) {
         const my = {};
         Object.keys(raw.my).slice(0, 20).forEach(function (id) {
@@ -403,7 +403,7 @@ window.LM = window.LM || {};
   const ATTEMPT_TYPES = ["multiple-choice", "reorder", "find-error", "short-answer", "gap-fill", "match", "transformation", "translate", "dictation"];
   const ATTEMPT_MODES = ["learn", "exam", "mix", "weak", "review"];
 
-  /** Dane jednego egzaminu: data, szkice trenera pisania, odhaczone listy na stronach, wybrane zadania w grupach wyboru. */
+  /** Data of one exam: date, writing trainer drafts, ticked lists on pages, chosen tasks in choice groups. */
   function normalizeExam(raw) {
     const out = { examDate: "", drafts: {}, tasks: {}, choices: {} };
     if (!U.isPlainObject(raw)) return out;
@@ -431,7 +431,7 @@ window.LM = window.LM || {};
   const SEEN_KEYS_MAX = 40;
   const SEEN_IDS_MAX = 200;
 
-  /** Widziane karty trenera Speaking: { "<egzamin>:<część>": [id, …] } albo null, gdy nic nie ma (pole opcjonalne). */
+  /** Seen cards of the speaking trainer: { "<exam>:<part>": [id, …] } or null when there are none (optional field). */
   function normalizeSeen(raw) {
     if (!U.isPlainObject(raw)) return null;
     const out = {};
@@ -444,7 +444,7 @@ window.LM = window.LM || {};
     });
     return n ? out : null;
   }
-  /** Sesja trenera Speaking: dzień, egzamin, część 1–4, oceny 1–5 (do 8 kryteriów) albo null. */
+  /** A speaking trainer session: day, exam, part 1–4, scores 1–5 (up to 8 criteria) or null. */
   function normalizeSpeakingSession(raw) {
     if (!U.isPlainObject(raw) || !learn().isDay(raw.day) || !EX_ID.test(raw.exam || "")) return null;
     if (!Number.isInteger(raw.part) || raw.part < 1 || raw.part > 4) return null;
@@ -455,11 +455,11 @@ window.LM = window.LM || {};
     });
     if (!Object.keys(scores).length) return null;
     const session = { day: raw.day, exam: raw.exam, part: raw.part, scores: scores };
-    if (raw.full === true) session.full = true; // tryb „Cały egzamin” (opcjonalne)
+    if (raw.full === true) session.full = true; // “Whole exam” mode (optional)
     return session;
   }
 
-  /** Podejście (dziennik podejść) albo null przy złym formacie. */
+  /** An attempt (attempt log) or null for a wrong format. */
   function normalizeAttempt(raw) {
     if (!U.isPlainObject(raw) || !EX_ID.test(raw.itemId || "") || !learn().isDay(raw.day)) return null;
     const out = {
@@ -475,7 +475,7 @@ window.LM = window.LM || {};
       mode: ATTEMPT_MODES.indexOf(raw.mode) !== -1 ? raw.mode : "learn",
       answer: text(raw.answer, 200)
     };
-    // Opcjonalnie (zadania za kilka punktów, paczka v6): points ≤ max ≤ 20
+    // Optional (items worth several points, pack v6): points ≤ max ≤ 20
     if (Number.isInteger(raw.max) && raw.max > 0 && raw.max <= 20 && Number.isInteger(raw.points) && raw.points >= 0 && raw.points <= raw.max) {
       out.points = raw.points;
       out.max = raw.max;
@@ -483,7 +483,7 @@ window.LM = window.LM || {};
     return out;
   }
 
-  /** Wynik zestawu { score, total, date } albo null. */
+  /** A set result { score, total, date } or null. */
   function normalizeScore(raw) {
     if (!U.isPlainObject(raw)) return null;
     const total = Number.isInteger(raw.total) && raw.total > 0 && raw.total <= 500 ? raw.total : 0;
@@ -491,10 +491,10 @@ window.LM = window.LM || {};
     return { score: raw.score, total: total, date: raw.date };
   }
 
-  /** { version, profiles: { id: rekord } } → czysta kopia (wyjątek przy złym formacie). */
+  /** { version, profiles: { id: record } } → a clean copy (throws for a wrong format). */
   function normalizeStore(kind, raw) {
-    if (!U.isPlainObject(raw) || !U.isPlainObject(raw.profiles)) throw new Error("Nieprawidłowy format danych (" + KEYS[kind] + ").");
-    if (typeof raw.version !== "number" || raw.version > VERSION) throw new Error("Nieobsługiwana wersja danych (" + KEYS[kind] + ").");
+    if (!U.isPlainObject(raw) || !U.isPlainObject(raw.profiles)) throw new Error("Wrong data format (" + KEYS[kind] + ").");
+    if (typeof raw.version !== "number" || raw.version > VERSION) throw new Error("Unsupported data version (" + KEYS[kind] + ").");
     const profiles = {};
     Object.keys(raw.profiles).slice(0, 500).forEach(function (pid) {
       if (typeof pid === "string" && pid.length <= LIMITS.id) profiles[pid] = normalizeRecord(kind, raw.profiles[pid]);
@@ -503,7 +503,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // DZIENNIK BŁĘDÓW
+  // MISTAKE LOG
   // =====================================================================
 
   function entries() { return record("journal", activeId()).entries; }
@@ -512,7 +512,7 @@ window.LM = window.LM || {};
     return entries().find(function (e) { return e.id === id; }) || null;
   }
 
-  /** Dodaje wpis (pola już sprawdzone). Zwraca zapisany wpis. */
+  /** Adds an entry (fields already checked). Returns the saved entry. */
   function addEntry(fields) {
     const today = learn().today();
     const entry = normalizeEntry(Object.assign({}, fields, { id: U.uid("err"), createdAt: today, review: learn().newReview(today) }));
@@ -520,7 +520,7 @@ window.LM = window.LM || {};
     entries().unshift(entry);
     save("journal");
     markActivity();
-    if (LM.cards) LM.cards.autoAddFromJournal(entry); // każdy wpis ma kartę „Moje błędy” od razu (paczka v8)
+    if (LM.cards) LM.cards.autoAddFromJournal(entry); // every entry gets a “My mistakes” card at once (pack v8)
     return entry;
   }
 
@@ -545,7 +545,7 @@ window.LM = window.LM || {};
     if (LM.cards) LM.cards.journalRemoved(gone);
   }
 
-  /** Wynik powtórki: known = true („Wiedziałem(am)”) / false („Znowu błąd”). */
+  /** Review result: known = true (“I knew it”) / false (“Wrong again”). */
   function reviewEntry(id, known) {
     const e = getEntry(id);
     if (!e) return null;
@@ -563,23 +563,23 @@ window.LM = window.LM || {};
 
   function dueCount() { return activeId() ? dueEntries().length : 0; }
 
-  /** Porównanie odpowiedzi przy wykrywaniu duplikatów (wielkość liter i spacje bez znaczenia). */
+  /** Answer comparison for finding duplicates (case and spaces do not matter). */
   function sameAnswer(a, b) {
     const n = function (s) { return String(s || "").toLowerCase().replace(/\s+/g, " ").trim(); };
     return n(a) === n(b);
   }
 
-  /** Istniejący wpis z tego samego zadania z tą samą błędną odpowiedzią (albo null). */
+  /** An existing entry from the same item with the same wrong answer (or null). */
   function findDuplicate(ref, myAnswer) {
     if (!ref) return null;
     return entries().find(function (e) { return e.ref === ref && sameAnswer(e.myAnswer, myAnswer); }) || null;
   }
 
   // =====================================================================
-  // AKTYWNOŚĆ (seria) I „KONTYNUUJ”
+  // ACTIVITY (streak) AND “CONTINUE”
   // =====================================================================
 
-  /** Zapisuje dzisiejszy dzień jako dzień nauki aktywnego profilu. */
+  /** Saves today as a learning day of the active profile. */
   function markActivity() {
     const pid = activeId();
     if (!pid) return;
@@ -589,12 +589,12 @@ window.LM = window.LM || {};
     rec.days.push(today);
     if (rec.days.length > LIMITS.days) rec.days.splice(0, rec.days.length - LIMITS.days);
     save("activity");
-    if (LM.celebrate) LM.celebrate.check(); // nowy dzień nauki może zamknąć kamień milowy serii
+    if (LM.celebrate) LM.celebrate.check(); // a new learning day may complete a streak milestone
   }
 
   function activityDays() { return record("activity", activeId()).days.slice(); }
 
-  /** Ostatnio otwarta podstrona (do „Kontynuuj” na stronie „Dziś”). */
+  /** The last opened topic page (for “Continue” on the Today page). */
   function setLastPage(hash, title) {
     const pid = activeId();
     if (!pid) return;
@@ -608,7 +608,7 @@ window.LM = window.LM || {};
   function lastPage() { return record("activity", activeId()).lastPage; }
 
   // =====================================================================
-  // TEST POZIOMU
+  // PLACEMENT TEST
   // =====================================================================
 
   function lastTest() { return record("levelTest", activeId()).last; }
@@ -623,10 +623,10 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // KAMIENIE MILOWE (już pokazane celebracje)
+  // MILESTONES (celebrations already shown)
   // =====================================================================
 
-  /** Zbiór pokazanych kamieni milowych aktywnego profilu albo null, gdy profil nie ma jeszcze zapisu. */
+  /** The set of shown milestones of the active profile, or null when the profile has no record yet. */
   function celebrated() {
     const pid = activeId();
     if (!pid) return null;
@@ -643,10 +643,10 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // WYNIKI ZESTAWÓW ĆWICZEŃ
+  // EXERCISE SET RESULTS
   // =====================================================================
 
-  /** { best, last } zestawu dla aktywnego profilu albo null. */
+  /** { best, last } of a set for the active profile, or null. */
   function setScore(setId) {
     const pid = activeId();
     if (!pid) return null;
@@ -654,7 +654,7 @@ window.LM = window.LM || {};
     return rec && rec.sets[setId] ? { best: rec.sets[setId].best, last: rec.sets[setId].last } : null;
   }
 
-  /** Zapisuje wynik ukończonej sesji: ostatni zawsze, najlepszy, gdy procent jest wyższy; recent — ostatnie 5 wyników. */
+  /** Saves the result of a finished session: last always, best when the percentage is higher; recent — the last 5 results. */
   function saveSetScore(setId, score, total) {
     const pid = activeId();
     if (!pid || !EX_ID.test(setId)) return null;
@@ -670,10 +670,10 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // TESTY KOŃCOWE POZIOMÓW (paczka v6, spec 13 sekcja 2.4)
+  // LEVEL FINAL TESTS (pack v6, spec 13 section 2.4)
   // =====================================================================
 
-  /** { passedAt, best, last } testu końcowego poziomu aktywnego profilu albo null. */
+  /** { passedAt, best, last } of the level final test for the active profile, or null. */
   function finalResult(level) {
     const pid = activeId();
     const rec = pid ? load("levelTests").profiles[pid] : null;
@@ -681,7 +681,7 @@ window.LM = window.LM || {};
     return r ? { passedAt: r.passedAt, best: Object.assign({}, r.best), last: Object.assign({}, r.last) } : null;
   }
 
-  /** Zaliczone poziomy aktywnego profilu: { "A1": "RRRR-MM-DD", … }. */
+  /** Passed levels of the active profile: { "A1": "YYYY-MM-DD", … }. */
   function passedLevels() {
     const pid = activeId();
     const rec = pid ? load("levelTests").profiles[pid] : null;
@@ -691,8 +691,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Zapisuje wynik testu końcowego: ostatni zawsze, najlepszy (wyższy procent), dzień pierwszego zaliczenia.
-   * res: { score, total, passed }. Zwraca { passed, firstPass, passedAt, best, last } albo null.
+   * Saves a final test result: last always, best (higher percentage), day of the first pass.
+   * res: { score, total, passed }. Returns { passed, firstPass, passedAt, best, last } or null.
    */
   function saveFinalResult(level, res) {
     const pid = activeId();
@@ -712,16 +712,16 @@ window.LM = window.LM || {};
     return { passed: !!res.passed, firstPass: firstPass, passedAt: rec.levels[level].passedAt, best: Object.assign({}, rec.levels[level].best), last: clean };
   }
 
-  // ---------- Ulubione zwroty (bank zwrotów do pisania, plm.phrases) ----------
+  // ---------- Favorite phrases (writing phrase bank, plm.phrases) ----------
 
-  /** Id ulubionych zwrotów aktywnego profilu (kopia). */
+  /** Ids of the active profile's favorite phrases (a copy). */
   function starredPhrases() {
     const pid = activeId();
     const rec = pid ? load("phrases").profiles[pid] : null;
     return rec ? rec.starred.slice() : [];
   }
 
-  /** Przełącza gwiazdkę zwrotu; zwraca true, gdy zwrot jest teraz ulubiony (false także bez profilu albo przy braku miejsca). */
+  /** Toggles a phrase's star; returns true when the phrase is now a favorite (false also without a profile or when storage is full). */
   function togglePhraseStar(id) {
     const pid = activeId();
     if (!pid || typeof id !== "string" || !PHRASE_ID.test(id)) return false;
@@ -734,14 +734,14 @@ window.LM = window.LM || {};
     return true;
   }
 
-  /** Dzień odmowy sugestii „Umiem” dla zestawu (albo null) i zapis odmowy. */
+  /** Day the “I know this” suggestion for a set was declined (or null), and saving the decline. */
   function umiemDismissed(setId) {
     const pid = activeId();
     const rec = pid ? load("exercises").profiles[pid] : null;
     return rec && rec.dismissed ? rec.dismissed[setId] || null : null;
   }
 
-  function dismissUmiem(setId) {
+  function dismissKnown(setId) {
     const pid = activeId();
     if (!pid || !EX_ID.test(setId)) return;
     const rec = record("exercises", pid);
@@ -751,13 +751,13 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // DZIENNIK PODEJŚĆ
+  // ATTEMPT LOG
   // =====================================================================
 
-  /** Rekord podejść aktywnego profilu (do statystyk; nie modyfikuj). */
+  /** The active profile's attempt record (for stats; do not modify). */
   function attempts() { return record("attempts", activeId()); }
 
-  /** Zapisuje jedną odpowiedź (po każdym zadaniu). */
+  /** Saves one answer (after each item). */
   function addAttempt(fields) {
     const pid = activeId();
     if (!pid) return null;
@@ -770,7 +770,7 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // USTAWIENIA NAUKI
+  // LEARNING SETTINGS
   // =====================================================================
 
   function prefs() { return Object.assign({}, record("prefs", activeId())); }
@@ -780,18 +780,18 @@ window.LM = window.LM || {};
     if (!pid) return;
     const rec = record("prefs", pid);
     if (key === "autoJournal") rec.autoJournal = value !== false;
-    if (key === "selectionMenu") rec.selectionMenu = value !== false;   // menu przy zaznaczeniu tekstu (Moje słowa), domyślnie włączone
-    if (key === "highlightWords") rec.highlightWords = value === true;  // podkreślanie zapisanych słów, domyślnie wyłączone
+    if (key === "selectionMenu") rec.selectionMenu = value !== false;   // menu on text selection (My words), on by default
+    if (key === "highlightWords") rec.highlightWords = value === true;  // underlining saved words, off by default
     save("prefs");
   }
 
   // =====================================================================
-  // AUTOMATYCZNE WPISY DZIENNIKA BŁĘDÓW (spec 03, pkt 2)
+  // AUTOMATIC MISTAKE LOG ENTRIES (spec 03, point 2)
   // =====================================================================
 
   function autoMeta() { return record("autojournal", activeId()).items; }
 
-  /** Wpis dziennika powstały z zadania (pole ref = "ex:<idZadania>") albo null. */
+  /** A log entry made from an item (field ref = "ex:<itemId>") or null. */
   function entryForItem(itemId) {
     const ref = "ex:" + itemId;
     return entries().find(function (e) { return e.ref === ref; }) || null;
@@ -809,8 +809,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Błędna odpowiedź → wpis w dzienniku (bez duplikatów). fields — pola wpisu (kontekst, odpowiedzi, reguła…).
-   * Zwraca { action, entry, undo } albo null (wyłączone w ustawieniach / brak profilu).
+   * Wrong answer → an entry in the log (no duplicates). fields — entry fields (context, answers, rule…).
+   * Returns { action, entry, undo } or null (turned off in the settings / no profile).
    */
   function recordWrong(itemId, fields) {
     const pid = activeId();
@@ -827,7 +827,7 @@ window.LM = window.LM || {};
       save("autojournal");
       return { action: "create", entry: entry, undo: { kind: "create", itemId: itemId, entryId: entry.id } };
     }
-    // update / reopen: bez nowego wpisu; zapamiętujemy stan do „Cofnij”
+    // update / reopen: no new entry; we remember the state for “Undo”
     const before = { review: Object.assign({}, existing.review), meta: meta[itemId] ? Object.assign({}, meta[itemId]) : null };
     existing.review = plan.review;
     const m = meta[itemId] || { entryId: existing.id, created: existing.createdAt, wrongCount: 0, lastWrongAt: null, returned: false };
@@ -837,18 +837,18 @@ window.LM = window.LM || {};
     meta[itemId] = m;
     save("journal");
     save("autojournal");
-    if (LM.cards) LM.cards.journalWrong(existing); // karta wraca na jutro
+    if (LM.cards) LM.cards.journalWrong(existing); // the card comes back tomorrow
     return { action: plan.action, entry: existing, undo: { kind: "update", itemId: itemId, entryId: existing.id, before: before } };
   }
 
-  /** Poprawna odpowiedź: karta wpisu tego zadania, jeśli jest na dziś lub zaległa, dostaje „Dobrze” (harmonogram fiszek). */
+  /** Correct answer: the card of this item's entry, if due today or overdue, gets “Good” (flashcard schedule). */
   function recordCorrect(itemId) {
     const entry = activeId() ? entryForItem(itemId) : null;
     if (!entry || !LM.cards || !LM.cards.journalCorrect(entry)) return null;
     return { action: "review", entry: entry };
   }
 
-  /** „Cofnij” dla wyniku recordWrong (pojedynczo albo listy). */
+  /** “Undo” for a recordWrong result (one or a list). */
   function undoAuto(undo) {
     if (!undo) return;
     const meta = autoMeta();
@@ -864,7 +864,7 @@ window.LM = window.LM || {};
     save("autojournal");
   }
 
-  /** „Usuń wszystkie automatyczne”: usuwa wpisy dodane automatycznie (ręczne zostają). Zwraca liczbę. */
+  /** “Delete all automatic ones”: deletes entries added automatically (manual ones stay). Returns the count. */
   function removeAllAuto() {
     const meta = autoMeta();
     const ids = new Set(Object.keys(meta).map(function (k) { return meta[k].entryId; }));
@@ -885,10 +885,10 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // EGZAMINY (spec 05) — dane aktywnego profilu dla egzaminu
+  // EXAMS (spec 05) — the active profile's data for an exam
   // =====================================================================
 
-  /** Obiekt egzaminu { examDate, drafts, tasks, choices } (tworzony, gdy brak; bez profilu — tymczasowy). */
+  /** Exam object { examDate, drafts, tasks, choices } (created when missing; without a profile — temporary). */
   function examData(examId) {
     const pid = activeId();
     if (!pid || !EX_ID.test(examId)) return normalizeExam(null);
@@ -899,14 +899,14 @@ window.LM = window.LM || {};
 
   function saveExams() { save("exams"); }
 
-  /** Ręczne przypięcia egzaminów aktywnego profilu: { id: "pinned" | "hidden" } (kopia; brak pola = pusto). */
+  /** Manual exam pins of the active profile: { id: "pinned" | "hidden" } (a copy; missing field = empty). */
   function examMy() {
     const pid = activeId();
     if (!pid) return {};
     return Object.assign({}, record("exams", pid).my || {});
   }
 
-  /** value: "pinned" | "hidden" | null (powrót do automatu). */
+  /** value: "pinned" | "hidden" | null (back to automatic). */
   function setExamMy(examId, value) {
     const pid = activeId();
     if (!pid || !EX_ID.test(examId)) return false;
@@ -919,23 +919,23 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // TRENER SPEAKING (spec 09, sekcja 5) — historia sesji z samooceną
+  // SPEAKING TRAINER (spec 09, section 5) — session history with self-assessment
   // =====================================================================
 
-  /** Sesje aktywnego profilu dla egzaminu (najnowsze na końcu). */
+  /** The active profile's sessions for an exam (newest last). */
   function speakingSessions(examId) {
     if (!activeId()) return [];
     return record("speaking", activeId()).sessions.filter(function (s) { return s.exam === examId; });
   }
 
-  /** Id kart widzianych w bieżącym cyklu losowania dla klucza „<egzamin>:<część>” (kopia; brak pola = pusto). */
+  /** Ids of cards seen in the current drawing cycle for the key “<exam>:<part>” (a copy; missing field = empty). */
   function speakingSeen(key) {
     if (!activeId() || !SEEN_KEY.test(key || "")) return [];
     const seen = record("speaking", activeId()).seen;
     return seen && seen[key] ? seen[key].slice() : [];
   }
 
-  /** Zapamiętuje kartę jako widzianą (ids = null czyści cykl). Zwraca false bez profilu albo przy złym kluczu. */
+  /** Remembers a card as seen (ids = null clears the cycle). Returns false without a profile or for a wrong key. */
   function markSpeakingSeen(key, id) {
     if (!activeId() || !SEEN_KEY.test(key || "")) return false;
     const rec = record("speaking", activeId());
@@ -952,7 +952,7 @@ window.LM = window.LM || {};
     return true;
   }
 
-  /** Zapisuje sesję { exam, part, scores }. Zwraca zapisaną sesję albo null (brak profilu / zły format). */
+  /** Saves a session { exam, part, scores }. Returns the saved session or null (no profile / wrong format). */
   function addSpeakingSession(fields) {
     if (!activeId()) return null;
     const s = normalizeSpeakingSession(Object.assign({}, fields, { day: learn().today() }));
@@ -966,14 +966,14 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // NOTATKI (spec 04, część B)
+  // NOTES (spec 04, part B)
   // =====================================================================
 
   function notes() { return record("notes", activeId()).items; }
 
   function getNote(key) { return activeId() && notes()[key] ? Object.assign({}, notes()[key]) : null; }
 
-  /** Zapisuje notatkę strony; pusta treść = usunięcie. */
+  /** Saves a page's note; empty text = delete. */
   function setNote(key, value, meta) {
     const pid = activeId();
     if (!pid || !NOTE_KEY.test(key)) return null;
@@ -988,14 +988,14 @@ window.LM = window.LM || {};
 
   function removeNote(key) { setNote(key, ""); }
 
-  /** Lista notatek [{ key, text, updatedAt, title, route }] od ostatnio zmienianych. */
+  /** List of notes [{ key, text, updatedAt, title, route }], most recently changed first. */
   function noteList() {
     const items = activeId() ? notes() : {};
     return Object.keys(items).map(function (k) { return Object.assign({ key: k }, items[k]); })
       .sort(function (a, b) { return a.updatedAt < b.updatedAt ? 1 : a.updatedAt > b.updatedAt ? -1 : 0; });
   }
 
-  /** Liczba zestawów (i mixów) z zapisanym wynikiem aktywnego profilu. */
+  /** Number of sets (and mixes) with a saved result for the active profile. */
   function solvedSetCount() {
     const pid = activeId();
     const rec = pid ? load("exercises").profiles[pid] : null;
@@ -1016,10 +1016,10 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
-  // PROFILE, EKSPORT, IMPORT, RESET
+  // PROFILES, EXPORT, IMPORT, RESET
   // =====================================================================
 
-  /** Usuwa dane nauki usuniętego profilu. */
+  /** Deletes the learning data of a deleted profile. */
   function removeProfile(pid) {
     Object.keys(KEYS).forEach(function (kind) {
       const store = load(kind);
@@ -1027,7 +1027,7 @@ window.LM = window.LM || {};
     });
   }
 
-  /** Zostawia dane tylko dla podanych profili (po imporcie). */
+  /** Keeps data only for the given profiles (after an import). */
   function prune(profileIds) {
     const keep = new Set(profileIds);
     Object.keys(KEYS).forEach(function (kind) {
@@ -1040,7 +1040,7 @@ window.LM = window.LM || {};
     });
   }
 
-  /** Część „learning” pliku eksportu (wszystkie profile). */
+  /** The “learning” part of the export file (all profiles). */
   function exportData() {
     const out = {};
     Object.keys(KEYS).forEach(function (kind) { out[kind] = JSON.parse(JSON.stringify(load(kind))); });
@@ -1066,7 +1066,7 @@ window.LM = window.LM || {};
     prune(profileIds);
   }
 
-  /** Statystyka do okna potwierdzenia importu. */
+  /** Numbers for the import confirmation dialog. */
   function summarizeImport(parsed) {
     if (!parsed || !parsed.journal) return null;
     let n = 0;
@@ -1074,11 +1074,11 @@ window.LM = window.LM || {};
     return { journalEntries: n };
   }
 
-  /** „Resetuj dane”: usuwa wszystkie klucze danych nauki. */
+  /** “Reset data”: deletes all learning data keys. */
   function clearAll() {
     Object.keys(KEYS).forEach(function (kind) {
       memory[kind] = { version: VERSION, profiles: {} };
-      try { window.localStorage.removeItem(KEYS[kind]); window.localStorage.removeItem(KEYS[kind] + BACKUP); } catch (e) { /* brak dostępu */ }
+      try { window.localStorage.removeItem(KEYS[kind]); window.localStorage.removeItem(KEYS[kind] + BACKUP); } catch (e) { /* no access */ }
     });
   }
 
@@ -1124,7 +1124,7 @@ window.LM = window.LM || {};
     setLastMix: setLastMix,
     umiemDismissed: umiemDismissed,
     solvedSetCount: solvedSetCount,
-    dismissUmiem: dismissUmiem,
+    dismissKnown: dismissKnown,
     attempts: attempts,
     addAttempt: addAttempt,
     prefs: prefs,
@@ -1159,6 +1159,6 @@ window.LM = window.LM || {};
     clearAll: clearAll
   };
 
-  // Jedna funkcja do zaznaczania dnia nauki, dostępna w całej aplikacji
+  // One function to mark a learning day, available in the whole app
   LM.markActivity = markActivity;
 })(window.LM);

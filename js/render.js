@@ -1,9 +1,9 @@
 /*
- * render.js — rysowanie widoków: lewy panel (poziomy), nagłówek poziomu,
- * kategorie, lista essentials z polem „Umiem” i podsumowanie poziomu.
+ * render.js — drawing the views: the sidebar (levels), the level header,
+ * categories, the topic list with the “I know this” box and the level summary.
  *
- * Treść listy jest tylko do odczytu (dawny „Tryb edycji” został usunięty).
- * Każdy tekst trafia do DOM jako tekst (textContent), nigdy jako HTML.
+ * The list is read-only (the old “Edit mode” was removed).
+ * Every text goes into the DOM as text (textContent), never as HTML.
  */
 window.LM = window.LM || {};
 
@@ -13,19 +13,19 @@ window.LM = window.LM || {};
   const U = LM.utils;
   const el = U.el;
 
-  // Skróty do innych części aplikacji (ładowane później, używane w trakcie działania)
+  // Shortcuts to other parts of the app (loaded later, used at run time)
   function app() { return LM.app; }
 
   // =====================================================================
-  // ELEMENTY WSPÓLNE
+  // SHARED PIECES
   // =====================================================================
 
-  /** Wypełnienie paska jako transform: scaleX (animuje się płynnie, bez przeliczania układu). */
+  /** Bar fill as transform: scaleX (animates smoothly, no layout recalculation). */
   function fillStyle(percent) {
     return "transform:scaleX(" + Math.max(0, Math.min(100, percent)) / 100 + ")";
   }
 
-  /** Pasek postępu. percent: 0–100. */
+  /** Progress bar. percent: 0–100. */
   function progressBar(percent, small, label) {
     return el("div", {
       class: "progress" + (small ? " is-small" : ""),
@@ -33,11 +33,11 @@ window.LM = window.LM || {};
       "aria-valuemin": "0",
       "aria-valuemax": "100",
       "aria-valuenow": String(percent),
-      "aria-label": label || "Postęp"
+      "aria-label": label || "Progress"
     }, el("div", { class: "progress-fill", style: fillStyle(percent) }));
   }
 
-  /** Okrągły przycisk z symbolem i czytelną etykietą dla czytników ekranu. */
+  /** Round button with a symbol and a clear label for screen readers. */
   function iconBtn(symbol, label, onClick, opts) {
     opts = opts || {};
     return el("button", {
@@ -50,19 +50,19 @@ window.LM = window.LM || {};
     }, LM.ICON_NODES && LM.ICON_NODES[symbol] ? LM.icon(symbol, { size: 18 }) : el("span", { "aria-hidden": "true", text: symbol }));
   }
 
-  /** Pusty stan z komunikatem. */
+  /** Empty state with a message. */
   function emptyState(message) {
     return el("div", { class: "empty-state" }, el("p", { class: "empty-state-text", text: message }));
   }
 
   // =====================================================================
-  // LEWY PANEL
+  // SIDEBAR
   // =====================================================================
 
   /**
-   * Pozycja lewego panelu: ikona (zawsze widoczna, także w wąskim pasku)
-   * + etykieta (widoczna po rozwinięciu). Etykieta zostaje w DOM, więc
-   * czytniki ekranu zawsze znają nazwę pozycji.
+   * Sidebar item: an icon (always visible, also in the narrow rail)
+   * + a label (visible when expanded). The label stays in the DOM, so
+   * screen readers always know the item's name.
    */
   function sbItem(o) {
     return el("a", {
@@ -78,27 +78,27 @@ window.LM = window.LM || {};
     ]);
   }
 
-  /** Poziom, którego test końcowy jest na ekranie (#/a1/test → "A1") albo null — wtedy w panelu świeci poziom, a nie „Ćwiczenia”. */
+  /** The level whose final test is on screen (#/a1/test → "A1") or null — then the sidebar highlights the level, not “Practice”. */
   function finalTestLevel() {
     const m = /^#\/([abcABC][12])\/test\/?$/.exec(location.hash || "");
     return m ? m[1].toUpperCase() : null;
   }
 
-  /** Górna część lewego panelu: Dziś, Fiszki i błędy (jedna plakietka), Ćwiczenia, Lab czasów, Pisanie. */
+  /** Top part of the sidebar: Trail, Today, Review (one badge), Practice, the lab, Writing. */
   function renderToolsNav() {
     const box = document.getElementById("tools-nav");
     if (!box) return;
     const st = LM.state;
     const hasProfile = app().hasProfiles();
-    const reviews = hasProfile && LM.reviewQueue ? LM.reviewQueue.dueCount() : 0; // jedna liczba: DO POWTÓRKI (fiszki + Moje błędy + słabe punkty); nowe karty osobno (spec v7 14, P3)
+    const reviews = hasProfile && LM.reviewQueue ? LM.reviewQueue.dueCount() : 0; // one number: TO REVIEW (flashcards + My mistakes + weak spots); new cards separately (spec v7 14, P3)
     const items = [
-      { href: "#/trail", label: "Szlak", icon: "route", active: st.view === "trail" },
-      { href: "#/today", label: "Dziś", icon: "sunrise", active: st.view === "today" },
-      { href: "#/review", label: "Fiszki i błędy", icon: "layers", active: st.view === "review" || st.view === "cards" || st.view === "mistakes",
-        badge: reviews ? String(reviews) : null, badgeLabel: reviews ? reviews + " do powtórki" : null },
-      { href: "#/practice", label: "Ćwiczenia", icon: "dumbbell", active: st.view === "practice" && !finalTestLevel() },
-      { href: "#/lab", label: "Lab czasów", icon: "flask-conical", active: st.view === "lab" },
-      { href: "#/writing", label: "Pisanie", icon: "pencil", active: st.view === "writing" }
+      { href: "#/trail", label: "Trail", icon: "route", active: st.view === "trail" },
+      { href: "#/today", label: "Today", icon: "sunrise", active: st.view === "today" },
+      { href: "#/review", label: "Review", icon: "layers", active: st.view === "review" || st.view === "cards" || st.view === "mistakes",
+        badge: reviews ? String(reviews) : null, badgeLabel: reviews ? LM.plural(reviews, "item", "items") + " to review" : null },
+      { href: "#/practice", label: "Practice", icon: "dumbbell", active: st.view === "practice" && !finalTestLevel() },
+      { href: "#/lab", label: LM.APP.lab.title, icon: "flask-conical", active: st.view === "lab" },
+      { href: "#/writing", label: "Writing", icon: "pencil", active: st.view === "writing" }
     ];
     box.replaceChildren(el("ul", { class: "sb-list" }, items.map(function (it) {
       return el("li", null, sbItem({
@@ -288,7 +288,7 @@ window.LM = window.LM || {};
     const done = LM.state.progress[topic.id] === true;
     const textId = "ess-text-" + topic.id;
     let li = null;
-    const checkbox = el("label", { class: "umiem" }, [
+    const checkbox = el("label", { class: "know-toggle" }, [
       el("input", {
         type: "checkbox",
         checked: done,
@@ -297,7 +297,7 @@ window.LM = window.LM || {};
           if (!app().hasProfiles()) { // guest mode: profile first, then the tick (the list redraws itself)
             const input = e.target, on = input.checked;
             input.checked = !on;
-            app().withProfile("Your ticks are saved in your profile.", function () { app().setProgress(topic.id, on); app().renderAll(); });
+            app().withProfile("Your “I know this” marks are saved in your profile.", function () { app().setProgress(topic.id, on); app().renderAll(); });
             return;
           }
           app().setProgress(topic.id, e.target.checked);
