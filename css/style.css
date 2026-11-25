@@ -3896,3 +3896,38 @@ a.pw-row-label:hover { text-decoration: underline; }
 /* Trail: AA contrast in the land header (chips and links on the land colour) */
 .sz-level-sub .chip { background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); }
 .sz-level-links .btn-link { background: var(--surface); border: 1px solid var(--line-strong); }
+
+/* =====================================================================
+   LANGUAGE LAYER (stage 3): listen buttons, character bar, voice help, answer hints
+   ===================================================================== */
+
+/* Listen buttons (spec 06 E5): only with a target-language voice (<html data-voice="ready">, js/speech.js) */
+.listen-btn { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; min-height: 44px; margin-top: -10px; margin-bottom: -10px; padding: 0; margin-left: var(--space-2); border-radius: 50%; color: var(--accent); vertical-align: middle; }
+.listen-btn:hover { background: var(--accent-soft); }
+html:not([data-voice="ready"]) .listen-btn { display: none; }
+.md tr.has-listen td[lang] { white-space: normal; }
+.md blockquote.has-listen { position: relative; padding-right: 48px; }
+.md blockquote.has-listen > .listen-btn { position: absolute; top: var(--space-1); right: var(--space-1); margin: 0; }
+.md-gloss { color: var(--ink-muted); }
+
+/* Character bar (spec 06 E3, js/charbar.js) */
+.charbar { display: flex; flex-wrap: wrap; gap: var(--space-1); margin: var(--space-2) 0; }
+.charbar-key { min-width: 44px; height: 44px; padding: 0 var(--space-2); border: 1px solid var(--line-control); border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); font: inherit; font-size: var(--fs-md); cursor: pointer; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
+.charbar-key:hover { background: var(--hover); border-color: var(--accent); }
+.charbar-key:active { background: var(--accent-soft); }
+.charbar-key:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+.fc-type-row .charbar { margin-top: var(--space-2); }
+
+/* No voice: what is missing and how to add one (spec 05 §4) */
+.voice-help { margin: var(--space-2) 0; padding: var(--space-3); border: 1px solid var(--warning-border); border-radius: var(--radius); background: var(--warning-soft); color: var(--ink); font-size: var(--fs-sm); }
+.voice-help-title { display: flex; align-items: center; gap: var(--space-2); margin: 0; font-weight: 600; }
+.voice-help-more { margin-top: var(--space-2); }
+.voice-help-more summary { cursor: pointer; color: var(--accent); min-height: 44px; display: flex; align-items: center; }
+.voice-help-more ul { margin: var(--space-2) 0; padding-left: 1.2em; }
+.voice-help-more li { margin: var(--space-1) 0; }
+.profile-menu .voice-help, .menu .voice-help { margin: var(--space-2) var(--space-3); }
+
+/* Answer hints of LM.exLogic.match (spec 05 §2) */
+.ex-near strong { font-weight: 700; }
+.ex-near.is-lenient { color: var(--success); }
+.fc-result.is-accents, .fc-result.is-ending { color: var(--warning); }
