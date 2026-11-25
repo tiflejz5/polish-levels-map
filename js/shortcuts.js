@@ -67,6 +67,17 @@ window.LM = window.LM || {};
         ["?", "this list"]
       ]
     },
+    lab: {
+      title: "Shortcuts in the lab",
+      rows: [
+        ["← → ↑ ↓", "move between the case cards on the map"],
+        ["Home or End", "first or last case card"],
+        ["Enter", "open the focused card"],
+        ["Tab", "next button, chip or link"],
+        ["/", "search"],
+        ["?", "this list"]
+      ]
+    },
     general: {
       title: "Shortcuts",
       rows: [
@@ -83,6 +94,7 @@ window.LM = window.LM || {};
     const v = LM.state && LM.state.view;
     if (v === "exam") return "exam";
     if (v === "page") return "page";
+    if (v === "lab") return "lab";
     return "general";
   }
 

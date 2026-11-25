@@ -68,10 +68,17 @@
   --ink-muted: #545d6e;       /* secondary (≥ 4.5:1 on surface-2 too) */
   --ink-faint: #69707f;       /* placeholdery */
   --strike: rgba(29, 36, 51, 0.3);
-  /* Groups on the lab timeline (≥ 3:1 to the card): past / present / future */
-  --tense-past: #5b4bc4;
-  --tense-present: #2c55c4;
-  --tense-future: #0e7682;
+  /* Case Lab: seven case colours in the school order (CVD-validated, ≥ 3:1 to the card; DESIGN.md 3.10) and the
+     two aspects on the timeline (imperfective = a line, perfective = a diamond) */
+  --case-nom: #1c8cb4;
+  --case-gen: #9f7a23;
+  --case-dat: #89428f;
+  --case-acc: #1b7548;
+  --case-ins: #c1587d;
+  --case-loc: #547cd3;
+  --case-voc: #a33e23;
+  --aspect-impf: #2c55c4;
+  --aspect-perf: #0e7682;
 
   /* Lines: line = decorative, line-strong = clearer, line-control = fields and controls (≥ 3:1) */
   --line: #e6dfcf;
@@ -154,9 +161,15 @@
   --ink-muted: #a3aec2;
   --ink-faint: #8792a8;
   --strike: rgba(234, 240, 250, 0.32);
-  --tense-past: #b3a8ff;
-  --tense-present: #8db0ff;
-  --tense-future: #5fd3dc;
+  --case-nom: #1c8cb4;
+  --case-gen: #9f7a23;
+  --case-dat: #a860af;
+  --case-acc: #40aa70;
+  --case-ins: #b2466e;
+  --case-loc: #6992eb;
+  --case-voc: #c55d41;
+  --aspect-impf: #8db0ff;
+  --aspect-perf: #5fd3dc;
 
   --line: #27334f;
   --line-strong: #34426a;
@@ -2338,16 +2351,31 @@ html.focus-mode .c1-writing-area { box-shadow: 0 0 0 4px var(--accent-soft); }
   .ex-actions { position: sticky; bottom: 0; z-index: 2; margin: 0 -16px -18px; padding: 12px 16px; background: var(--sticky-bg); border-top: 1px solid var(--line); border-radius: 0 0 var(--radius-lg) var(--radius-lg); }
 }
 
-/* ===================== THE LAB (extension v2, DESIGN.md section 3.10) ===================== */
-.lab-group-past { --tense: var(--tense-past); }
-.lab-group-present { --tense: var(--tense-present); }
-.lab-group-future { --tense: var(--tense-future); }
+/* ===================== THE CASE LAB (DESIGN.md section 3.10) ===================== */
+/* Case colour: .case-<short> sets --case. Never the only carrier: the case name is always next to it. */
+.case-nom { --case: var(--case-nom); }
+.case-gen { --case: var(--case-gen); }
+.case-dat { --case: var(--case-dat); }
+.case-acc { --case: var(--case-acc); }
+.case-ins { --case: var(--case-ins); }
+.case-loc { --case: var(--case-loc); }
+.case-voc { --case: var(--case-voc); }
+.case-dot { display: inline-block; flex-shrink: 0; width: 12px; height: 12px; border-radius: 50%; background: var(--case, var(--line-control)); vertical-align: 0.05em; }
+.case-dot.is-big { width: 18px; height: 18px; }
+.case-badge { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; color: var(--ink); font-weight: 600; }
+.case-badge-q { font-weight: 500; color: var(--ink-muted); }
+a.case-badge.is-link { min-height: 44px; text-decoration: none; }
+a.case-badge.is-link .case-badge-name { text-decoration: underline; text-decoration-color: var(--line-control); text-underline-offset: 3px; }
+a.case-badge.is-link:hover .case-badge-name { text-decoration-color: var(--accent); }
+.lab-view .chip-btn { min-height: 44px; }
+.lab-view a.chip-btn { color: var(--ink); }
+.lab-view a.chip-btn.is-active { color: var(--accent); }
 
 /* Tabs (links with aria-current); a scrolling bar on a narrow screen */
 .lab-tabs { margin: 0 0 22px; border-bottom: 1px solid var(--line-strong); overflow-x: auto; scrollbar-width: thin; }
 .lab-tabs ul { list-style: none; display: flex; gap: 4px; margin: 0; padding: 0; min-width: max-content; }
 .lab-tab {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 14px;
   border-bottom: 3px solid transparent; margin-bottom: -1px; color: var(--ink-muted); font-weight: 600; text-decoration: none;
   border-radius: var(--radius-sm) var(--radius-sm) 0 0; transition: color var(--transition), background var(--transition), border-color var(--transition);
 }
@@ -2357,38 +2385,91 @@ html.focus-mode .c1-writing-area { box-shadow: 0 0 0 4px var(--accent-soft); }
 .lab-section { margin-bottom: 28px; }
 .lab-section > .tool-note { max-width: var(--measure); margin-bottom: 14px; }
 
-/* Map: 3 columns (Present / Past / Future) × 4 aspects */
-.lab-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-.lab-col-title { display: flex; align-items: baseline; gap: 6px; margin: 0 0 10px; padding-bottom: 8px; border-bottom: 3px solid var(--tense); font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; }
-.lab-col-pl { font-family: var(--font); font-size: var(--fs-sm); font-weight: 500; color: var(--ink-muted); }
-.lab-col-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-.lab-col-list > li { display: flex; flex-direction: column; gap: 4px; }
-.lab-aspect { font-size: var(--fs-xs); font-weight: 500; color: var(--ink-muted); }
+/* Map: seven case cards in the school order */
+.lab-case-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.lab-case-grid > li { display: flex; }
 .lab-tile {
-  display: flex; flex-direction: column; gap: 4px; min-height: 112px; padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none;
+  position: relative; display: flex; flex-direction: column; gap: 6px; width: 100%; min-height: 128px; padding: 16px 16px 14px 20px;
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); color: var(--ink); text-decoration: none;
   box-shadow: var(--shadow-sm); transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--transition), background var(--transition);
 }
+.lab-tile::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 5px; border-radius: 0 4px 4px 0; background: var(--case, var(--line-control)); }
 a.lab-tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow); background: var(--surface-raised); }
-.lab-tile.is-empty { border: 1px dashed var(--line-strong); border-left-width: 1px; background: transparent; box-shadow: none; color: var(--ink-muted); }
+a.lab-tile:focus-visible { outline: 3px solid var(--focus-color); outline-offset: 2px; }
+.lab-tile.is-empty { border-style: dashed; border-color: var(--line-strong); background: transparent; box-shadow: none; }
+.lab-tile.is-empty .lab-tile-ex { color: var(--ink-muted); font-style: italic; }
 .lab-tile-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
-.lab-tile-name { font-family: var(--font-display); font-size: var(--fs-md-plus); font-weight: 620; line-height: 1.25; }
-.lab-tile-pl { font-size: var(--fs-sm); color: var(--ink-muted); }
-.lab-tile-ex { margin-top: auto; font-size: var(--fs-sm-plus); font-style: italic; color: var(--ink); }
-.lab-forms { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.lab-tile-name { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 620; line-height: 1.25; }
+.lab-tile-pl { font-size: var(--fs-sm-plus); color: var(--ink-muted); }
+.lab-tile-ex { margin-top: auto; font-size: var(--fs-sm-plus); color: var(--ink); }
+.lab-more { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+.lab-more-link { display: flex; align-items: flex-start; gap: 12px; min-height: 44px; padding: 14px 16px; color: var(--ink); text-decoration: none; }
+.lab-more-link:hover { background: var(--surface-raised); border-color: var(--line-strong); }
+.lab-more-link strong { display: block; }
+.lab-more-text { display: block; font-size: var(--fs-sm-plus); color: var(--ink-muted); }
+.lab-more-icon { color: var(--accent); padding-top: 2px; }
 
-/* Card */
+/* Case card */
 .lab-card { display: flex; flex-direction: column; gap: 18px; }
-.lab-card-head { padding: 24px; border-bottom: 1px solid var(--line); background: var(--surface); }
-.lab-card-eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: var(--fs-sm); font-weight: 600; color: var(--ink-muted); }
-.lab-card-title { margin: 0; font-family: var(--font-display); font-size: var(--fs-3xl); font-weight: 640; letter-spacing: -0.02em; line-height: 1.1; }
-.lab-card-pl { margin: 4px 0 8px; color: var(--ink-muted); }
+.lab-card-head { position: relative; padding: 24px 24px 24px 30px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.lab-card-head::before { content: ""; position: absolute; left: 0; top: 16px; bottom: 16px; width: 6px; border-radius: 0 4px 4px 0; background: var(--case, var(--line-control)); }
+.lab-card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
+.lab-card-eyebrow { display: flex; align-items: center; gap: 10px; margin: 0; font-size: var(--fs-sm); font-weight: 600; color: var(--ink-muted); }
+.lab-card-title { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 8px 0 0; font-family: var(--font-display); font-size: var(--fs-3xl); font-weight: 640; letter-spacing: -0.02em; line-height: 1.1; }
+.lab-card-pl { margin: 4px 0 8px; color: var(--ink-muted); font-size: var(--fs-md); }
 .lab-card-summary { margin: 0; font-size: var(--fs-md-plus); }
 .lab-block { max-width: 860px; }
 .lab-block-title { margin: 0 0 10px; font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 600; }
+.lab-uses, .lab-contrasts, .lab-results { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.lab-use, .lab-contrast, .lab-result { padding: 14px 16px; }
+.lab-use p, .lab-contrast p, .lab-result p { margin: 0 0 6px; }
+.lab-use-label { font-size: var(--fs-xs-plus); font-weight: 600; color: var(--ink-muted); }
+.lab-use-en { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-display); font-size: var(--fs-md-plus); font-weight: 560; }
+.lab-use-pl { color: var(--ink-muted); font-size: var(--fs-sm-plus); }
+.lab-speak { flex-shrink: 0; width: 44px; height: 44px; min-height: 44px; padding: 0; justify-content: center; border-radius: 50%; }
+.lab-signals { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
+.lab-switch { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+.lab-triggers { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px 20px; }
+.lab-trigger-title { margin: 0 0 8px; font-size: var(--fs-sm); font-weight: 600; color: var(--ink-muted); }
+.lab-traps { max-width: 860px; }
+.lab-contrast-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: var(--fs-md); }
+.lab-contrast-ex { list-style: none; margin: 6px 0 10px; padding: 0; }
+.lab-contrast-ex li, .lab-diff-ex { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 2px; }
+.lab-contrast .btn, .lab-result .btn { min-height: 44px; }
+.lab-practice-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
 
-/* Timeline */
+/* Tables of the lab (endings, declension); up to 640 px a row becomes a card */
+.lab-view table { width: 100%; border-collapse: collapse; }
+.lab-view th, .lab-view td { padding: 8px 12px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+.lab-view thead th { font-size: var(--fs-sm); color: var(--ink-muted); font-weight: 600; border-bottom-color: var(--line-strong); }
+.lab-view tbody th { font-weight: 600; }
+.lab-end-table td { font-family: var(--font-display); font-size: var(--fs-md); }
+.lab-forms-table td > .lab-form { font-family: var(--font-display); font-size: var(--fs-md); }
+.lab-forms-table td { white-space: nowrap; }
+.lab-forms-table td .lab-speak { vertical-align: middle; margin-left: 4px; }
+.lab-forms-table tbody tr > th:first-child { box-shadow: inset 4px 0 0 var(--case, transparent); }
+.lab-end { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: var(--ink-muted); font-weight: 650; }
+.lab-forms { padding: 20px 24px; }
+.lab-forms .lab-card-title { font-size: var(--fs-2xl); margin: 0 0 4px; }
+.lab-forms-en { font-family: var(--font); font-size: var(--fs-md); font-weight: 500; color: var(--ink-muted); letter-spacing: 0; }
+.lab-model-pick, .lab-tree-pick { margin: 0 0 16px; }
+.case-chip .case-dot { width: 10px; height: 10px; }
+
+/* Aspect strip: one axis, five lanes; imperfective = a line, perfective = a diamond (shape + word, not colour alone) */
+.lab-aspect { padding: 20px 24px; }
+.lab-aspect .lab-card-title { font-size: var(--fs-2xl); margin: 0 0 6px; }
+.lab-aspect-pair { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 12px 0; font-size: var(--fs-sm-plus); }
+.aspect-key { display: inline-flex; align-items: center; gap: 6px; }
+.aspect-swatch { display: inline-block; width: 22px; height: 6px; border-radius: 3px; background: var(--aspect-impf); }
+.aspect-key.is-perf .aspect-swatch { width: 12px; height: 12px; border-radius: 2px; transform: rotate(45deg); background: none; border: 3px solid var(--aspect-perf); }
+.lab-aspect-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.lab-aspect-item { padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.lab-aspect-item p { margin: 0 0 6px; }
+.lab-aspect-form { font-family: var(--font-display); font-weight: 600; }
+.tl-lane-label { fill: var(--ink); font: 600 14px var(--font); }
+.tl-svg.is-compact .tl-lane-label { font-size: 17px; }
+
+/* Timeline (LM.labKit.timeline) */
 .tl-block { display: flex; flex-direction: column; gap: 10px; }
 .tl-scenes { display: flex; flex-wrap: wrap; gap: 8px; }
 .tl-figure { margin: 0; padding: 14px 16px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
@@ -2407,26 +2488,7 @@ a.lab-tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow); 
 .tl-svg.is-compact .tl-now-label { font-size: 17px; }
 .tl-svg.is-compact .tl-end { font-size: 15px; }
 
-/* Form, uses, signals, contrasts */
-.lab-formation th { width: 9.5em; color: var(--ink-muted); font-weight: 600; text-align: left; }
-.lab-key { padding: 0 3px; border-radius: var(--radius-xs); background: color-mix(in srgb, var(--tense, var(--accent)) 16%, transparent); color: var(--ink); font-weight: 600; }
-.lab-key.is-plus { background: none; color: var(--ink-muted); font-weight: 500; }
-.lab-uses, .lab-contrasts, .lab-results { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
-.lab-use, .lab-contrast, .lab-result { padding: 14px 16px; }
-.lab-use p, .lab-contrast p, .lab-result p { margin: 0 0 6px; }
-.lab-use-label { font-size: var(--fs-xs-plus); font-weight: 600; color: var(--lvl-ink, var(--ink-muted)); }
-.lab-use-en { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-family: var(--font-display); font-size: var(--fs-md-plus); font-weight: 560; }
-.lab-use-pl { color: var(--ink-muted); font-size: var(--fs-sm-plus); }
-.lab-speak { flex-shrink: 0; width: 44px; height: 44px; min-height: 44px; padding: 0; justify-content: center; border-radius: 50%; }
-.lab-signals { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; }
-.lab-signals .chip { font-size: var(--fs-sm); padding: 5px 12px; background: var(--lvl-soft, var(--surface-3)); color: var(--lvl-ink, var(--ink)); }
-.lab-traps { max-width: 860px; }
-.lab-contrast-head { font-size: var(--fs-md); }
-.lab-contrast-ex { margin: 6px 0 10px; padding-left: 18px; font-style: italic; }
-.lab-contrast .btn, .lab-result .btn { min-height: 44px; }
-.lab-practice-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 0; }
-
-/* Dobierz czas */
+/* Pick (decision tree) */
 .lab-pick { max-width: 760px; padding: 24px 28px; }
 .lab-path { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 6px; margin: 0 0 16px; padding: 0; font-size: var(--fs-sm); color: var(--ink-muted); }
 .lab-path li + li::before { content: "→"; margin-right: 6px; }
@@ -2444,8 +2506,9 @@ a.lab-tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow); 
 .lab-answer:active { transform: scale(0.99); }
 .lab-why { font-size: var(--fs-md); }
 .lab-results { margin: 14px 0 18px; }
-.lab-result { }
-.lab-result-name { display: flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: var(--fs-lg); }
+.lab-result { position: relative; padding-left: 20px; }
+.lab-result::before, .lab-compare-col::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 5px; border-radius: 0 4px 4px 0; background: var(--case, var(--line-control)); }
+.lab-result-name { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-family: var(--font-display); font-size: var(--fs-lg); }
 
 /* Compare */
 .lab-compare-pick { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 16px; margin-bottom: 16px; padding: 16px 20px; }
@@ -2453,21 +2516,37 @@ a.lab-tile:hover { border-color: var(--line-strong); box-shadow: var(--shadow); 
 .lab-select { min-height: 44px; }
 .lab-vs { display: grid; place-items: center; width: 44px; height: 44px; color: var(--ink-muted); }
 .lab-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
-.lab-compare-col { display: flex; flex-direction: column; gap: 10px; padding: 20px 24px; }
-.lab-compare-col .lab-card-title { font-size: var(--fs-2xl); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lab-compare-col { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 20px 24px 20px 28px; }
+.lab-compare-col .lab-card-title { font-size: var(--fs-2xl); margin: 0; }
+.lab-compare-col p { margin: 0; }
 .lab-compare-col .lab-block-title { margin-top: 6px; }
 .lab-when { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; }
+.lab-when li { overflow-wrap: anywhere; }
 .lab-diff { padding: 20px 24px; }
-.lab-diff-ex { margin: 0 0 4px; font-style: italic; }
 
 @media (max-width: 860px) {
-  .lab-grid, .lab-compare { grid-template-columns: 1fr; }
-  .lab-col + .lab-col { margin-top: 8px; }
+  .lab-compare { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
-  .lab-pick, .lab-card-head { padding: 18px 16px; }
+  .lab-pick, .lab-forms, .lab-aspect, .lab-diff, .lab-compare-col { padding: 18px 16px; }
+  .lab-card-head { padding: 18px 16px 18px 22px; }
+  .lab-compare-col { padding-left: 22px; }
   .lab-card-title { font-size: var(--fs-2xl); }
   .tl-figure { padding: 10px 8px; }
+}
+@media (max-width: 640px) {
+  /* phone: a table row = a card (the column label above each value), no horizontal scroll */
+  .lab-view .md-table-wrap { overflow: visible; }
+  .lab-view .md-table::before, .lab-view .md-table::after { display: none; }
+  .lab-view table, .lab-view tbody, .lab-view tr, .lab-view td, .lab-view tbody th { display: block; width: 100%; min-width: 0; }
+  .lab-view thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .lab-view tbody tr { margin: 0 0 10px; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+  .lab-view tbody tr > th:first-child { box-shadow: none; }
+  .lab-forms-table tbody tr { box-shadow: inset 5px 0 0 var(--case, transparent); padding-left: 16px; }
+  .lab-view td, .lab-view tbody th, .lab-view tbody tr:nth-child(even) td { padding: 4px 0; border: 0; background: none; white-space: normal; }
+  .lab-view td::before { content: attr(data-label); display: block; font-size: var(--fs-xs); font-weight: 600; color: var(--ink-muted); }
+  .lab-forms-table td { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+  .lab-forms-table td::before { flex-basis: 100%; }
 }
 
 /* ===================== PRACTICE HUB (extension v2, DESIGN.md section 3.9) ===================== */
@@ -2695,8 +2774,6 @@ a.st-bar-label:hover { text-decoration-color: currentColor; }
 .page-head .notes-btn + .know-toggle { margin-left: 8px; }
 .c1-page-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 14px; }
 
-.lab-card-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; }
-.lab-card-top .lab-card-eyebrow { margin: 0; }
 
 .notes-panel {
   position: fixed; top: 76px; right: 16px; bottom: 16px; z-index: 55; width: min(400px, calc(100vw - 32px));
