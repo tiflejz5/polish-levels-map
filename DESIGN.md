@@ -527,6 +527,14 @@ All on existing tokens (no new colours), with pairs checked by `node tools/contr
 - **My mistakes:** the entry state label comes from its card (“Due today”, “Learning”, “Review in N days”, “Mastered” at an interval ≥ 21 days, “Suspended”), the filters “Due today” / “All” / “Mastered” are computed from the card state; the “Add to flashcards” button is gone (every entry has a card).
 - Contrast: new pairs in `tools/contrast.js` (tabs, counter, card links, row markers).
 
+### 3.17 Language layer: listen buttons, character bar, voice help, answer hints (stage 3)
+
+- **Listen button** (`.listen-btn`): a 44 px round icon button (`volume-2`, accent colour, `--accent-soft` on hover) at the end of the Polish cell of an examples table and in the top-right corner of a blockquote. Hidden by CSS unless `<html data-voice="ready">` (`js/speech.js`), so a device without a Polish voice never shows a dead button. Accessible name "Listen to example 3" / "Listen to the text"; the tooltip names the S shortcut.
+- **Character bar** (`.charbar`, `.charbar-key`): one row of 44 × 44 px keys (`--surface`, `--line-control` border, `--radius-sm`), wraps on narrow screens; `lang="pl"` on each key; aria-label "Insert ą" (contains the visible letter, WCAG 2.5.3). One bar per item under its fields; none after checking.
+- **Voice help** (`.voice-help`): a note box in `--warning-soft` with a `--warning-border` border: "No Polish voice found on this device." and a `<details>` "How to add one" (Windows, macOS, Android and iOS, Chrome). Used in Learning settings, listening items and dictation.
+- **Answer hints** (`.ex-near.is-accents | is-ending | is-typo`): the existing `.ex-spelling` style (warning colour, 600) with the closest answer in bold and `lang="pl"`; `.is-lenient` (accepted without accents) uses `--success`. Flashcards: `.fc-result.is-accents` and `.is-ending` in the warning colour like `.is-typo`. Colour is never alone: the text names the kind of mistake.
+- **Gloss** (`.md-gloss`): an English gloss in parentheses at the end of a blockquote line, in `--ink-muted`, outside the `lang` span.
+
 ## 4. Motion
 
 - **Simple things in CSS only.** Hover, focus, appearing and colour transitions are done in CSS. We animate `opacity` and `transform`. The exception is a short colour transition when the theme changes (the class `html.theme-anim`).
@@ -773,3 +781,4 @@ Limitation: an automatic audit does not replace a test with a screen reader (NVD
   - Lesson: “Notes” and “I know this” 40 px and `--radius-sm`; the marker in the table of contents sits on the list's line.
   - Writing: “Phrase bank” as one paragraph; more even spacing around “Your exams” and the “Streak” card.
 - **Stage 2 of Polish Levels Map (English UI).** The interface, comments and this file in English (spec 04); `LM.plural` and `LM.fmt`; `npm run check:lang` and `tools/extract-strings.js`; callouts keyed on the English headings of spec 07; classes renamed (`.know-toggle`, `.ex-known`, `.cards-view`, `.st-cards`); the trail step label in CSS says “Step”.
+- **Stage 3 of Polish Levels Map (language layer).** Listen buttons, the character bar, the voice help box and answer hints (section 3.17); `lang` markup for Polish italics, the Polish table column and blockquotes.
