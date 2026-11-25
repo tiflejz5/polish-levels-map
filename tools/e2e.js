@@ -113,7 +113,7 @@ async function main() {
     }
     for (const r of ["#/today", "#/review", "#/stats", "#/notes"]) {
       await visit(s.page, r, 600);
-      ok(/Ta strona potrzebuje profilu/.test(await viewText(s.page)), r + ": no welcome card");
+      ok(/This page needs a profile/.test(await viewText(s.page)), r + ": no welcome card");
     }
     ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
@@ -139,7 +139,7 @@ async function main() {
     ok(groups.length >= 4 && groups.indexOf("Cases") !== -1, "groups: " + groups.join(", "));
     ok(await s.page.locator('.ess-item[data-topic="a1-cases-accusative"] a[href="#/a1/cases-accusative"]').count() === 1, "topic link");
     ok(await s.page.locator(".ess-item.is-pending").count() === 24, "\"Being written\" rows");
-    await s.page.click('.ess-item[data-topic="a1-cases-accusative"] label.umiem input', { force: true });
+    await s.page.click('.ess-item[data-topic="a1-cases-accusative"] label.know-toggle input', { force: true });
     await s.page.waitForTimeout(300);
     const progress = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress; });
     ok(progress["a1-cases-accusative"] === true && Object.keys(progress).length === 1, "progress: " + JSON.stringify(progress));
@@ -169,14 +169,14 @@ async function main() {
     ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });
-  await test("\"I know this\" without a profile: dialog; \"Nie teraz\" changes nothing; a new profile gets the tick on the same page", async function () {
+  await test("\"I know this\" without a profile: dialog; \"Not now\" changes nothing; a new profile gets the tick on the same page", async function () {
     const s = await session();
     await visit(s.page, "#/a1/cases-accusative");
-    await s.page.click("label.umiem input", { force: true });
+    await s.page.click("label.know-toggle input", { force: true });
     await s.page.waitForSelector("dialog[open]");
-    await s.page.click("button:has-text('Nie teraz')");
-    ok(!(await s.page.evaluate(function () { return document.querySelector("label.umiem input").checked; })), "ticked after cancel");
-    await s.page.click("label.umiem input", { force: true });
+    await s.page.click("button:has-text('Not now')");
+    ok(!(await s.page.evaluate(function () { return document.querySelector("label.know-toggle input").checked; })), "ticked after cancel");
+    await s.page.click("label.know-toggle input", { force: true });
     await s.page.fill("#guest-name", "Ola");
     await s.page.keyboard.press("Enter");
     await s.page.waitForTimeout(700);
@@ -208,7 +208,7 @@ async function main() {
     const s = await session(1280, 900, true);
     await visit(s.page, "#/trail", 1500);
     await s.page.evaluate(function () { LM.trail.openSheet("a1-cases-accusative", { force: true }); });
-    await s.page.click("dialog[open] button:has-text('Quiz (4 pytania)')");
+    await s.page.click("dialog[open] button:has-text('Quiz (4 questions)')");
     for (let i = 0; i < 4; i++) {
       await s.page.waitForSelector(".ex-card .ex-option");
       const idx = await s.page.evaluate(function () {
@@ -222,8 +222,8 @@ async function main() {
       await s.page.waitForTimeout(200);
     }
     await s.page.waitForSelector(".sz-result");
-    ok(/Przystanek zaliczony/.test(await viewText(s.page)), "not passed");
-    ok(await s.page.locator("button:has-text('Zaznacz „Umiem”')").count() === 1, "no \"I know this\" offer");
+    ok(/Stop done/.test(await viewText(s.page)), "not passed");
+    ok(await s.page.locator("button:has-text('Mark “I know this”')").count() === 1, "no \"I know this\" offer");
     const progress = await s.page.evaluate(function () { return Object.keys(JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress).length; });
     ok(progress === 0, "ticked automatically");
     const st = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.trail.p_e2e")); });

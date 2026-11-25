@@ -18,5 +18,20 @@
     "file": "js/cards-logic.js",
     "contains": "typ|type|przód|przod|front",
     "reason": "import compatibility: column header of decks exported by the original app"
+  },
+  {
+    "file": "js/trail.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "js/trail-logic.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
+  },
+  {
+    "file": "js/trail-store.js",
+    "contains": "\"umiem\"",
+    "reason": "stored value of via in plm.trail (a stop done because every topic is marked “I know this”); kept so saved data stays valid"
   }
 ]
