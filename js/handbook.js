@@ -17,7 +17,7 @@ window.LM = window.LM || {};
   const S = function () { return LM.syllabus; };
 
   // Sections (## headings) hidden behind "Show answers"
-  const HIDDEN_SECTIONS = ["Odpowiedzi", "Przykładowe odpowiedzi", "Answers", "Sample answers"];
+  const HIDDEN_SECTIONS = ["Answers", "Sample answers"];
   const APP_TITLE = function () { return LM.APP.appTitle; };
 
   function data() { return LM.PAGES || null; }

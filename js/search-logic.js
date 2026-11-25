@@ -1,15 +1,15 @@
 /*
- * search-logic.js — silnik wyszukiwarki bez DOM (spec 04, A.2; testy w tools/tests.js).
+ * search-logic.js — the search engine without DOM (spec 04, A.2; tests in tools/tests.js).
  *
- *   fold(str)               małe litery bez polskich znaków (ą→a, ł→l…), ta sama długość co wejście
+ *   fold(str)               lower case without diacritics (á→a; special letters from LM.lang.foldChars), the same length as the input
  *   tokenize(str)           wyrazy po fold()
- *   prepare(records)        indeks: rekordy + zbiory tokenów pól
+ *   prepare(records)        index: records + token sets of the fields
  *   search(index, query)    { groups: [{ group, results: [{ record, score, anchor }] }], total }
- *   snippet(text, query)    fragment z podświetleniem: [{ text, hit }] (podział tekstu, bez HTML)
+ *   snippet(text, query)    a fragment with highlights: [{ text, hit }] (text split, no HTML)
  *
- * Dopasowanie: dokładne > prefiksowe (wpisujesz „pres” → „Present”) > literówka
- * (tylko wyrazy zapytania ≥ 5 znaków, odległość ≤ 20% długości). Wszystkie wyrazy
- * zapytania muszą się gdzieś dopasować. Wagi pól: tytuł > nagłówki > summary > treść.
+ * Matching: exact > prefix (you type “pres” → “Present”) > typo
+ * (only query words ≥ 5 characters, distance ≤ 20% of the length). Every query word
+ * must match somewhere. Field weights: title > headings > summary > text.
  */
 window.LM = window.LM || {};
 
@@ -18,9 +18,10 @@ window.LM = window.LM || {};
 
   const WEIGHTS = { title: 10, headings: 5, summary: 3, text: 1 };
   const MATCH = { exact: 3, prefix: 2, fuzzy: 1 };
-  const FOLD = { "ł": "l", "Ł": "l", "ß": "s", "ø": "o", "Ø": "o", "’": "'", "‘": "'" };
+  // Characters NFD does not split; the language's own ones come from LM.lang (js/lang.js)
+  const FOLD = Object.assign({ "ß": "s", "ø": "o", "Ø": "o", "’": "'", "‘": "'" }, (LM.lang && LM.lang.foldChars) || {});
 
-  /** Znak po znaku (długość bez zmian — indeksy pasują do oryginału przy podświetlaniu). */
+  /** Character by character (length unchanged — indexes match the original for highlighting). */
   function fold(str) {
     const s = String(str == null ? "" : str);
     let out = "";
@@ -45,7 +46,7 @@ window.LM = window.LM || {};
       const cur = [i];
       for (let j = 1; j <= b.length; j++) {
         cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
-        // przestawienie sąsiednich liter („presnet” → „present”) = jedna literówka
+        // swapped neighbouring letters (“presnet” → “present”) = one typo
         if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) cur[j] = Math.min(cur[j], prevprev[j - 2] + 1);
       }
       prevprev = prev;
@@ -66,7 +67,7 @@ window.LM = window.LM || {};
     });
   }
 
-  /** Najlepsze dopasowanie wyrazu zapytania do zbioru tokenów: 3 / 2 / 1 / 0. */
+  /** Best match of a query word against a token set: 3 / 2 / 1 / 0. */
   function matchSet(q, set) {
     if (set.has(q)) return MATCH.exact;
     let best = 0;
@@ -80,8 +81,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * opts: { groups: kolejność grup, limit: wyniki na grupę (5), expanded: { grupa: true } }.
-   * Wynik w grupie: posortowany wg trafności; anchor = nagłówek, gdy to on najlepiej pasował.
+   * opts: { groups: order of the groups, limit: results per group (5), expanded: { group: true } }.
+   * A result in a group: sorted by relevance; anchor = the heading, when that matched best.
    */
   function search(index, query, opts) {
     opts = opts || {};
@@ -104,10 +105,10 @@ window.LM = window.LM || {};
         if (su > best) best = su;
         const tx = matchSet(tok, e.text) * WEIGHTS.text;
         if (tx > best) best = tx;
-        if (!best) return; // każdy wyraz zapytania musi się dopasować
+        if (!best) return; // every query word must match
         score += best;
       }
-      // Cała fraza w tytule — mocny bonus
+      // The whole phrase in the title — a strong bonus
       if (fold(e.record.title).indexOf(fold(query).trim()) !== -1) score += 15;
       hits.push({ record: e.record, score: score, anchor: score >= WEIGHTS.title * MATCH.prefix ? null : anchor });
     });
@@ -127,8 +128,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Fragment tekstu wokół pierwszego dopasowania (± ok. 70 znaków), podzielony na części
-   * z flagą hit — do wyświetlenia przez textContent / <mark>, nigdy przez innerHTML.
+   * A text fragment around the first match (± about 70 characters), split into parts
+   * with a hit flag — to show through textContent / <mark>, never through innerHTML.
    */
   function snippet(text, query, radius) {
     radius = radius || 70;
@@ -136,7 +137,7 @@ window.LM = window.LM || {};
     const f = fold(src);
     const q = tokenize(query).filter(function (t) { return t.length > 1; });
     if (!src || !q.length) return [{ text: src.slice(0, radius * 2), hit: false }];
-    // Pozycje wyrazów tekstu pasujących (prefiks) do któregoś z wyrazów zapytania
+    // Positions of text words that match (prefix) one of the query words
     const ranges = [];
     const re = /[a-z0-9']+/g;
     let m;
@@ -164,7 +165,7 @@ window.LM = window.LM || {};
     return parts;
   }
 
-  /** Podświetlenie w krótkim tekście (tytuł): te same części co snippet, bez skracania. */
+  /** Highlighting in a short text (title): the same parts as snippet, no shortening. */
   function highlight(text, query) {
     const src = String(text || "");
     const f = fold(src);

@@ -49,7 +49,25 @@ window.LM = window.LM || {};
     return words.filter(function (w) { return FUNCTION_WORDS.indexOf(w) !== -1; }).length >= 2;
   }
 
+  /**
+   * Voices of the target language, best first (order of LM.APP.speech.voices: "pl-PL", then any "pl").
+   * TODO stage 3: replaced by LM.speech (spec 05 §4). Until then the engine's speech places (shortcuts, exercises,
+   * lab, speaking trainer) call this instead of their own English (en-GB / en-US) voice choice.
+   */
+  function targetVoices(all) {
+    const wanted = (LM.APP && LM.APP.speech && LM.APP.speech.voices) || [];
+    const out = [];
+    wanted.forEach(function (code) {
+      const re = new RegExp("^" + code.replace("-", "[-_]") + (code.indexOf("-") === -1 ? "(?:[-_]|$)" : "$"), "i");
+      (all || []).forEach(function (v) { if (re.test(v.lang) && out.indexOf(v) === -1) out.push(v); });
+    });
+    return out;
+  }
+
   LM.lang = {
+    targetVoices: targetVoices,
+    /** Fallback utterance language when no voice is found (TODO stage 3: LM.speech). */
+    speechLang: function () { return ((LM.APP && LM.APP.speech && LM.APP.speech.voices) || [""])[0]; },
     stripMarks: stripMarks,
     fold: fold,
     wordPattern: "[A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+(?:[-'][A-Za-zĄĆĘŁŃÓŚŹŻąćęłńóśźż]+)*",
@@ -58,6 +76,9 @@ window.LM = window.LM || {};
     variants: function (str) { return [str]; },
     countWords: countWords,
     isTarget: isTarget,
+    // Characters that NFD does not split into base + mark; the search folds them by hand (moved from search-logic.js).
+    // TODO stage 3: fold() above becomes the only folding (spec 05), and search-logic.js calls it.
+    foldChars: { "ł": "l", "Ł": "l" },
     abbreviations: ["np.", "tzn.", "tj.", "m.in.", "itd.", "itp.", "dr", "prof.", "ul.", "godz.", "ok."],
     functionWords: FUNCTION_WORDS
   };
