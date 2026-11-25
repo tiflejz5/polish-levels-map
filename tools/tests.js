@@ -915,12 +915,12 @@ test("poprawna odpowiedź zalicza powtórkę tylko, gdy przypada (dziś lub zale
 });
 
 test("sugestia „Umiem”: dwa ostatnie ≥ 80%, nie gdy już Umiem, przerwa 14 dni po odmowie", function () {
-  const o = { isUmiem: false, dismissedDay: null, today: "2026-10-20" };
+  const o = { isKnown: false, dismissedDay: null, today: "2026-10-20" };
   assert.strictEqual(T.suggestUmiem([0.9], o), false);
   assert.strictEqual(T.suggestUmiem([0.8, 0.9], o), true);
   assert.strictEqual(T.suggestUmiem([1, 0.7, 0.9], o), false);
   assert.strictEqual(T.suggestUmiem([0.5, 0.8, 1], o), true);
-  assert.strictEqual(T.suggestUmiem([0.9, 0.9], Object.assign({}, o, { isUmiem: true })), false);
+  assert.strictEqual(T.suggestUmiem([0.9, 0.9], Object.assign({}, o, { isKnown: true })), false);
   assert.strictEqual(T.suggestUmiem([0.9, 0.9], Object.assign({}, o, { dismissedDay: "2026-10-10" })), false);
   assert.strictEqual(T.suggestUmiem([0.9, 0.9], Object.assign({}, o, { dismissedDay: "2026-10-06" })), true);
 });
@@ -1222,7 +1222,7 @@ console.log("\nSzlak: logika (spec v7 13)");
     ] }
   ] };
   const umiem = {}, setPct = {};
-  const env = { isUmiem: function (id) { return umiem[id] === true; }, setPercent: function (id) { return id in setPct ? setPct[id] : null; } };
+  const env = { isKnown: function (id) { return umiem[id] === true; }, setPercent: function (id) { return id in setPct ? setPct[id] : null; } };
   const reset = function () { Object.keys(umiem).forEach(function (k) { delete umiem[k]; }); Object.keys(setPct).forEach(function (k) { delete setPct[k]; }); };
   const stopOf = function (id) { let f = null; data.levels.forEach(function (l) { l.units.forEach(function (u) { u.stops.forEach(function (s) { if (s.id === id) f = s; }); }); }); return f; };
 
@@ -1392,7 +1392,7 @@ console.log("\nTrail generated from the syllabus (spec 06 E9)");
   });
   test("trail: ticking a topic passes its stop; quiz never ticks; soon levels are never current", function () {
     const progress = {};
-    const env = { isUmiem: function (id) { return progress[id] === true; }, setPercent: function () { return null; } };
+    const env = { isKnown: function (id) { return progress[id] === true; }, setPercent: function () { return null; } };
     let tr = SL.buildTrail(T, SL.emptyState(), env);
     assert.strictEqual(tr.current.id, a1.units[0].stops[0].id);
     progress[a1.units[0].stops[0].id] = true;

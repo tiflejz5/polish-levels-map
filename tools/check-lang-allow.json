@@ -1,3 +1,4 @@
 [
-  { "file": "js/profile-data.js", "contains": "\"first-umiem\"", "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid" }
+  { "file": "js/profile-data.js", "contains": "first-umiem", "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid" },
+  { "file": "js/celebrate.js", "contains": "first-umiem", "reason": "stored milestone id in plm.celebrated; kept so saved data stays valid" }
 ]

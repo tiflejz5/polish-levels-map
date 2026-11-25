@@ -1340,7 +1340,7 @@ window.LM = window.LM || {};
     if (run.retry || run.isMix || !run.topic || !run.saved || !LM.handbook) return null;
     const es = LM.handbook.checkItem(run.topic);
     if (!es) return null;
-    const ok = LM.stats.suggestUmiem(run.saved.recent, { isUmiem: es.done, dismissedDay: pd().umiemDismissed(run.saveId), today: LM.learn.today() });
+    const ok = LM.stats.suggestUmiem(run.saved.recent, { isKnown: es.done, dismissedDay: pd().umiemDismissed(run.saveId), today: LM.learn.today() });
     return ok ? { essential: es, state: "ask" } : null;
   }
 

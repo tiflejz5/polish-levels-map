@@ -1,22 +1,22 @@
 /*
- * celebrate.js — celebracje TYLKO przy kamieniach milowych (DESIGN.md, sekcja 3.3).
+ * celebrate.js — celebrations ONLY at milestones (DESIGN.md, section 3.3).
  *
  * Kamienie milowe (id):
- *   first-umiem, total-10/25/50/100      — liczba „Umiem” w sumie
- *   lvl-a1-25 … lvl-c2-100               — postęp poziomu 25/50/75/100% (wszystkie kategorie)
- *   lvl-a1-passed … lvl-c2-passed        — zaliczony test końcowy poziomu (js/final.js, stan z plm.finals)
- *   streak-3/7/14/30                     — seria dni nauki
- *   first-review                         — pierwsza ukończona sesja powtórek (zdarzenie)
- *   level-test                           — ukończony test poziomu (zdarzenie)
- * Każdy pokazujemy RAZ na profil (plm.celebrated, js/profile-data.js).
- * Przy pierwszym uruchomieniu u profilu z postępem już osiągnięte kamienie
- * zapisujemy bez pokazywania (żeby nie wyskoczyła seria starych gratulacji).
+ *   first-umiem, total-10/25/50/100      — number of “I know this” marks in total (the stored ids keep their old names)
+ *   lvl-a1-25 … lvl-c2-100               — level progress 25/50/75/100% (all categories)
+ *   lvl-a1-passed … lvl-c2-passed        — level final test passed (js/final.js, state from plm.finals)
+ *   streak-3/7/14/30                     — streak of learning days
+ *   first-review                         — first finished review session (event)
+ *   level-test                           — placement test finished (event)
+ * Each one is shown ONCE per profile (plm.celebrated, js/profile-data.js).
+ * On the first start for a profile that already has progress, milestones already reached
+ * are saved without showing them (so no burst of old congratulations appears).
  *
- * Forma: karta „toast” na dole ekranu (2,8 s, zamykana kliknięciem lub Esc,
- * nie blokuje interfejsu, jedna naraz — kolejka). Kamienie poziomu pokazują fragment Szlaku:
- * kółko krainy z symbolem i pierścieniem postępu animowanym od poprzedniej do nowej wartości
- * (przejście CSS ≤ 600 ms), a przy zaliczonym teście końcowym — pieczątkę. Przy
- * prefers-reduced-motion od razu stan końcowy (paczka v7, C5; konfetti usunięte).
+ * Form: a “toast” card at the bottom of the screen (2.8 s, closed by a click or Esc,
+ * it does not block the interface, one at a time — a queue). Level milestones show a piece of the Trail:
+ * the land circle with its symbol and a progress ring animated from the previous to the new value
+ * (CSS transition ≤ 600 ms), and for a passed final test — a stamp. With
+ * prefers-reduced-motion the final state at once (pack v7, C5; confetti removed).
  */
 window.LM = window.LM || {};
 
@@ -42,46 +42,46 @@ window.LM = window.LM || {};
     return level ? level.land : "";
   }
 
-  // ---------- Teksty (krótko, konkretnie, bez przesady) ----------
+  // ---------- Texts (short, concrete, no hype) ----------
 
   function copy(id, info) {
-    if (id === "first-umiem") return { title: "Pierwsze „Umiem” na mapie", text: "Dobry początek. Każdy kolejny punkt przybliża Cię do celu.", icon: "flag" };
+    if (id === "first-umiem") return { title: "Your first “I know this” on the map", text: "A good start. Every new topic brings you closer to your goal.", icon: "flag" };
     if (/^total-/.test(id)) {
       const n = Number(id.slice(6));
-      const text = { 10: "Pierwsza dziesiątka za Tobą.", 25: "Ćwierć setki opanowanych punktów.", 50: "Pół setki. Widać, że to działa.", 100: "Setka. To już spory kawał mapy." }[n];
-      return { title: n + " punktów „Umiem”", text: text, icon: "sparkles" };
+      const text = { 10: "Your first ten are done.", 25: "25 topics mastered.", 50: "50 topics. It is working.", 100: "100 topics. That is a big part of the map." }[n];
+      return { title: n + " topics marked “I know this”", text: text, icon: "sparkles" };
     }
     if (/^lvl-..-passed$/.test(id)) {
       const lvl = id.slice(4, 6).toUpperCase();
       const r = pd().finalResult(lvl);
-      return { title: lvl + " zaliczony", text: "Test końcowy zaliczony" + (r ? " (" + r.best.score + "/" + r.best.total + " pkt)" : "") + ". Znaczek czeka na Szlaku.", icon: "award", level: lvl };
+      return { title: lvl + " passed", text: "Final test passed" + (r ? " (" + r.best.score + "/" + r.best.total + " points)" : "") + ". Your badge is waiting on the Trail.", icon: "award", level: lvl };
     }
     if (/^lvl-/.test(id)) {
       const lvl = id.slice(4, 6).toUpperCase(), step = Number(id.slice(7));
       const name = levelName(lvl);
       if (step === 100) {
         const next = LM.LEVEL_IDS[LM.LEVEL_IDS.indexOf(lvl) + 1];
-        return { title: lvl + " ukończony", text: "Cały poziom " + (name ? name + " " : "") + "ma „Umiem”." + (next ? " Następny przystanek: " + next + "." : " To koniec szlaku."), icon: "flag", level: lvl };
+        return { title: lvl + " complete", text: "Every topic of " + (name ? name + " " : "") + "is marked “I know this”." + (next ? " Next stop: " + next + "." : " This is the end of the trail."), icon: "flag", level: lvl };
       }
-      const label = { 25: "ćwierć drogi", 50: "połowa drogi", 75: "trzy czwarte drogi" }[step];
-      return { title: lvl + ": " + label, text: step + "% punktów poziomu " + (name || lvl) + " ma „Umiem”.", icon: "map-pin", level: lvl };
+      const label = { 25: "a quarter of the way", 50: "halfway", 75: "three quarters of the way" }[step];
+      return { title: lvl + ": " + label, text: step + "% of the topics of " + (name || lvl) + " are marked “I know this”.", icon: "map-pin", level: lvl };
     }
     if (/^streak-/.test(id)) {
       const n = Number(id.slice(7));
-      const t = { 3: ["3 dni z rzędu", "Rytm się zaczyna."], 7: ["Tydzień z rzędu", "Siedem dni nauki bez przerwy."], 14: ["Dwa tygodnie z rzędu", "Nauka weszła w nawyk."], 30: ["30 dni z rzędu", "Miesiąc codziennej nauki."] }[n];
+      const t = { 3: ["3 days in a row", "A rhythm is starting."], 7: ["A week in a row", "Seven days of learning without a break."], 14: ["Two weeks in a row", "Learning has become a habit."], 30: ["30 days in a row", "A month of daily learning."] }[n];
       return { title: t[0], text: t[1], icon: "flame" };
     }
-    if (id === "first-review") return { title: "Pierwsza sesja powtórek", text: "Błędy, które wracają, zostają w pamięci na dłużej.", icon: "rotate-ccw" };
+    if (id === "first-review") return { title: "Your first review session", text: "Mistakes that come back stay in your memory longer.", icon: "rotate-ccw" };
     if (id === "level-test") {
       const lvl = info && info.level;
-      return { title: "Test poziomu ukończony", text: lvl ? "Wynik orientacyjny: " + lvl + ". Od tej krainy warto zacząć." : "Wynik znajdziesz poniżej.", icon: "target", level: lvl };
+      return { title: "Placement test finished", text: lvl ? "Approximate result: " + lvl + ". This is a good land to start in." : "You can see your result below.", icon: "target", level: lvl };
     }
     return null;
   }
 
-  // ---------- Co jest osiągnięte ----------
+  // ---------- What has been reached ----------
 
-  /** Kamienie wynikające ze stanu (bez zdarzeń). */
+  /** Milestones that follow from the state (no events). */
   function fromState() {
     const ids = [];
     if (!LM.app.getActiveProfile()) return ids;
@@ -93,21 +93,21 @@ window.LM = window.LM || {};
     });
     const streak = LM.learn.streak(pd().activityDays(), LM.learn.today()).current;
     STREAKS.forEach(function (n) { if (streak >= n) ids.push("streak-" + n); });
-    // Zaliczone testy końcowe poziomów (paczka v6): lvl-<poziom>-passed
+    // Passed level final tests (pack v6): lvl-<level>-passed
     Object.keys(pd().passedLevels()).forEach(function (lvl) { ids.push("lvl-" + lvl.toLowerCase() + "-passed"); });
     return ids;
   }
 
   /**
-   * Sprawdza kamienie milowe po zdarzeniu. evt: { event: "review" } albo
-   * { event: "test", level: "B1" }. Nowe kamienie trafiają do kolejki.
+   * Checks milestones after an event. evt: { event: "review" } or
+   * { event: "test", level: "B1" }. New milestones go into the queue.
    */
   function check(evt) {
     if (!LM.app || !LM.app.getActiveProfile() || !pd()) return;
     const known = pd().celebrated();
     const now = fromState();
     if (known === null) {
-      // Pierwsze uruchomienie dla profilu: zapisz bez pokazywania to, co już jest
+      // First start for the profile: save what is already reached without showing it
       pd().addCelebrated(now);
       if (!evt) return;
     }
@@ -117,18 +117,18 @@ window.LM = window.LM || {};
     if (evt && evt.event === "test" && !seen.has("level-test")) fresh.push("level-test");
     if (!fresh.length) return;
     pd().addCelebrated(fresh);
-    // Przy kilku naraz pokazujemy najważniejsze (ostatnie progi) — maks. 2 w kolejce
+    // With several at once we show the most important ones (the latest thresholds) — max. 2 in the queue
     const items = fresh.map(function (id) { return { id: id, c: copy(id, evt) }; }).filter(function (x) { return x.c; });
     pickImportant(items).forEach(function (x) { queue.push(x); });
     next();
   }
 
-  /** Z kilku nowych kamieni wybiera do 2: najwyższy próg każdego rodzaju, ważniejsze najpierw. */
+  /** From several new milestones picks up to 2: the highest threshold of each kind, more important first. */
   function pickImportant(items) {
     const byKind = {};
     items.forEach(function (x) {
       const kind = /^lvl-..-passed$/.test(x.id) ? "passed" : x.id.replace(/-\d+$/, "").replace(/^lvl-..$/, "lvl").replace(/^first-umiem$/, "total");
-      byKind[kind] = x; // późniejszy = wyższy próg (kolejność z fromState)
+      byKind[kind] = x; // later = higher threshold (order from fromState)
     });
     const order = ["passed", "level-test", "first-review", "lvl", "total", "streak"];
     return Object.keys(byKind).sort(function (a, b) {
@@ -136,7 +136,7 @@ window.LM = window.LM || {};
     }).map(function (k) { return byKind[k]; }).slice(0, 2);
   }
 
-  // ---------- Karta ----------
+  // ---------- Card ----------
 
   function container() {
     let box = document.getElementById("celebrations");
@@ -164,7 +164,7 @@ window.LM = window.LM || {};
 
   function onKey(e) { if (e.key === "Escape") hide(); }
 
-  /** Fragment Szlaku na karcie: kółko krainy z pierścieniem (od poprzedniego progu do nowego) i pieczątką po teście końcowym. */
+  /** A piece of the Trail on the card: the land circle with a ring (from the previous threshold to the new one) and a stamp after a final test. */
   function trailLead(item, level) {
     const passed = /^lvl-..-passed$/.test(item.id);
     const m = /^lvl-..-(\d+)$/.exec(item.id);
@@ -178,11 +178,11 @@ window.LM = window.LM || {};
     }
     const reduce = LM.reducedMotion();
     const ring = LM.ui.progressRing(reduce ? to : from, {
-      size: 56, stroke: 5, node: LM.ui.landIcon(level, { size: 26 }), label: "Postęp poziomu " + level + ": " + to + "%"
+      size: 56, stroke: 5, node: LM.ui.landIcon(level, { size: 26 }), label: "Progress of level " + level + ": " + to + "%"
     });
     ring.removeAttribute("role");
     ring.setAttribute("aria-hidden", "true");
-    // Przejście od poprzedniej do nowej wartości (CSS na stroke-dashoffset, ≤ 600 ms)
+    // Transition from the previous to the new value (CSS on stroke-dashoffset, ≤ 600 ms)
     if (!reduce && to !== from) setTimeout(function () { LM.ui.setRing(ring, to); }, 250);
     return el("span", { class: "celebration-trail" }, [ring, passed ? LM.ui.stamp(level, { size: 22, fresh: !reduce }) : null]);
   }
@@ -197,10 +197,10 @@ window.LM = window.LM || {};
         el("p", { class: "celebration-title", text: c.title }),
         el("p", { class: "celebration-text", text: c.text })
       ]),
-      el("button", { type: "button", class: "icon-btn celebration-close", "aria-label": "Zamknij gratulacje", onclick: hide }, LM.icon("x", { size: 18 }))
+      el("button", { type: "button", class: "icon-btn celebration-close", "aria-label": "Close the message", onclick: hide }, LM.icon("x", { size: 18 }))
     ]);
     card.addEventListener("click", function (e) { if (!e.target.closest(".celebration-close")) hide(); });
-    // Pauza, gdy kursor albo fokus jest na karcie
+    // Pause while the cursor or focus is on the card
     card.addEventListener("mouseenter", function () { clearTimeout(hideTimer); });
     card.addEventListener("mouseleave", function () { hideTimer = setTimeout(hide, 1200); });
     container().appendChild(card);
@@ -210,8 +210,8 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Przy starcie aplikacji i zmianie profilu: profil bez zapisu kamieni milowych
-   * dostaje zapis tego, co już osiągnął (bez pokazywania). Nowy profil — pusty zbiór.
+   * At app start and on a profile change: a profile with no milestone record
+   * gets a record of what it has already reached (without showing it). A new profile — an empty set.
    */
   function baseline() {
     if (!LM.app || !LM.app.getActiveProfile() || !pd() || !LM.state.ready) return;

@@ -44,7 +44,7 @@ window.LM = window.LM || {};
 
   function env() {
     return {
-      isUmiem: function (id) { return LM.state.progress[id] === true; },
+      isKnown: function (id) { return LM.state.progress[id] === true; },
       setPercent: function (setId) { const r = pd() ? pd().setScore(setId) : null; return r && r.best.total ? Math.round(100 * r.best.score / r.best.total) : null; }
     };
   }
@@ -105,7 +105,7 @@ window.LM = window.LM || {};
     LM.TRAIL.levels.forEach(function (lv) { lv.units.forEach(function (u) { u.stops.forEach(function (s) { if (s.type === "lesson" && s.id === topicId) found = s.id; }); }); });
     if (!found) return null;
     const guest = !hasProfile();
-    const tr = guest ? SL().buildTrail(LM.TRAIL, SL().emptyState(), { isUmiem: function () { return false; }, setPercent: function () { return null; } }, "A1") : trail();
+    const tr = guest ? SL().buildTrail(LM.TRAIL, SL().emptyState(), { isKnown: function () { return false; }, setPercent: function () { return null; } }, "A1") : trail();
     const n = nodeById(tr, found);
     if (!n) return null;
     const lessons = tr.nodes.filter(function (x) { return x.type === "lesson"; });
