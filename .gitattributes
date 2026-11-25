@@ -1,0 +1,6 @@
+# Line endings: LF in the repository and in every checkout (also on Windows),
+# so files written by tools/build.js match the checked-out copies and a build leaves the tree clean.
+* text=auto eol=lf
+
+*.png binary
+*.woff2 binary
