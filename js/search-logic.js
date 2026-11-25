@@ -1,8 +1,8 @@
 /*
  * search-logic.js — the search engine without DOM (spec 04, A.2; tests in tools/tests.js).
  *
- *   fold(str)               lower case without diacritics (á→a; special letters from LM.lang.foldChars), the same length as the input
- *   tokenize(str)           words after fold()
+ *   fold(str)               LM.lang.fold: lower case, no Polish marks (also the stroked l, which NFD does not split), quotes unified; the same length as the input
+ *   tokenize(str)           words after fold(): LM.lang.wordPattern or a number; a hyphenated word also gives its parts
  *   prepare(records)        index: records + token sets of the fields
  *   search(index, query)    { groups: [{ group, results: [{ record, score, anchor }] }], total }
  *   snippet(text, query)    a fragment with highlights: [{ text, hit }] (text split, no HTML)
@@ -18,24 +18,36 @@ window.LM = window.LM || {};
 
   const WEIGHTS = { title: 10, headings: 5, summary: 3, text: 1 };
   const MATCH = { exact: 3, prefix: 2, fuzzy: 1 };
-  // Characters NFD does not split; the language's own ones come from LM.lang (js/lang.js)
-  const FOLD = Object.assign({ "ß": "s", "ø": "o", "Ø": "o", "’": "'", "‘": "'" }, (LM.lang && LM.lang.foldChars) || {});
+  /** LM.lang.fold (js/lang.js): character by character, so indexes match the original text for highlighting. */
+  function fold(str) { return LM.lang.fold(str); }
 
-  /** Character by character (length unchanged — indexes match the original for highlighting). */
-  function fold(str) {
-    const s = String(str == null ? "" : str);
-    let out = "";
-    for (let i = 0; i < s.length; i++) {
-      const c = s[i];
-      if (FOLD[c]) { out += FOLD[c]; continue; }
-      const base = c.normalize("NFD")[0];
-      out += base.toLowerCase().length === 1 ? base.toLowerCase() : c.toLowerCase().slice(0, 1);
-    }
+  /** Words of folded text: the language's word pattern (inner hyphen or apostrophe) or a run of digits ("a1"). */
+  let wordRe = null;
+  function words() {
+    if (!wordRe) wordRe = new RegExp("(?:" + LM.lang.wordPattern + "|[0-9])+", "gu");
+    wordRe.lastIndex = 0;
+    return wordRe;
+  }
+
+  /** Matches of words in a folded string: [{ index, text }]. */
+  function scan(folded) {
+    const out = [];
+    const re = words();
+    let m;
+    while ((m = re.exec(folded))) out.push({ index: m.index, text: m[0] });
     return out;
   }
 
   function tokenize(str) {
-    return fold(str).split(/[^a-z0-9']+/).map(function (t) { return t.replace(/^'+|'+$/g, ""); }).filter(Boolean);
+    const out = [];
+    scan(fold(str)).forEach(function (m) {
+      const t = m.text.replace(/^'+|'+$/g, "");
+      if (!t) return;
+      out.push(t);
+      // a hyphenated word is found by each of its parts too
+      if (t.indexOf("-") !== -1) t.split("-").forEach(function (part) { if (part) out.push(part); });
+    });
+    return out;
   }
 
   function distance(a, b) {
@@ -139,14 +151,12 @@ window.LM = window.LM || {};
     if (!src || !q.length) return [{ text: src.slice(0, radius * 2), hit: false }];
     // Positions of text words that match (prefix) one of the query words
     const ranges = [];
-    const re = /[a-z0-9']+/g;
-    let m;
-    while ((m = re.exec(f))) {
-      const w = m[0];
+    scan(f).forEach(function (m) {
+      const w = m.text;
       if (q.some(function (t) { return w.indexOf(t) === 0 || (t.length >= 5 && Math.abs(w.length - t.length) <= 1 && distance(w, t) <= Math.floor(t.length * 0.2)); })) {
         ranges.push([m.index, m.index + w.length]);
       }
-    }
+    });
     if (!ranges.length) return [{ text: src.slice(0, radius * 2) + (src.length > radius * 2 ? "…" : ""), hit: false }];
     let start = Math.max(0, ranges[0][0] - radius);
     let end = Math.min(src.length, ranges[0][1] + radius * 1.4);
@@ -172,16 +182,14 @@ window.LM = window.LM || {};
     const q = tokenize(query).filter(function (t) { return t.length > 0; });
     const parts = [];
     let pos = 0;
-    const re = /[a-z0-9']+/g;
-    let m;
-    while ((m = re.exec(f))) {
-      const w = m[0];
+    scan(f).forEach(function (m) {
+      const w = m.text;
       if (q.some(function (t) { return w.indexOf(t) === 0; })) {
         if (m.index > pos) parts.push({ text: src.slice(pos, m.index), hit: false });
         parts.push({ text: src.slice(m.index, m.index + w.length), hit: true });
         pos = m.index + w.length;
       }
-    }
+    });
     if (pos < src.length) parts.push({ text: src.slice(pos), hit: false });
     return parts;
   }
