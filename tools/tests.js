@@ -2361,6 +2361,49 @@ test("LM.lang stub: full interface; stripMarks and fold keep the length", functi
   assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę");
 });
 
+console.log("\nEnglish UI helpers: LM.plural and LM.fmt (spec 04 §1)");
+require(path.join(__dirname, "..", "js", "utils.js"));
+test("LM.plural: two English forms, only exactly 1 is singular, number formatted", function () {
+  const P = global.LM.plural;
+  assert.strictEqual(P(1, "day", "days"), "1 day");
+  assert.strictEqual(P(0, "day", "days"), "0 days");
+  assert.strictEqual(P(2, "day", "days"), "2 days");
+  assert.strictEqual(P(5, "day", "days"), "5 days");
+  assert.strictEqual(P(11, "day", "days"), "11 days");
+  assert.strictEqual(P(21, "day", "days"), "21 days");
+  assert.strictEqual(P(22, "card", "cards"), "22 cards");
+  assert.strictEqual(P(1250, "card", "cards"), "1,250 cards");
+  assert.strictEqual(global.LM.pluralWord(1, "mistake", "mistakes"), "mistake");
+  assert.strictEqual(global.LM.pluralWord(3, "mistake", "mistakes"), "mistakes");
+});
+test("LM.fmt dates in en-US; YYYY-MM-DD read as a local day", function () {
+  const F = global.LM.fmt;
+  assert.strictEqual(F.date("2026-11-12"), "Nov 12, 2026");
+  assert.strictEqual(F.date("2026-01-01"), "Jan 1, 2026", "no time-zone shift to Dec 31");
+  assert.strictEqual(F.longDate("2026-11-12"), "November 12, 2026");
+  assert.strictEqual(F.dayMonth("2026-11-12"), "Nov 12");
+  assert.strictEqual(F.weekday("2026-11-12"), "Thursday");
+  assert.strictEqual(F.weekday("2026-11-12", "short"), "Thu");
+  const d = new Date(2026, 10, 12, 15, 5);
+  assert.strictEqual(F.date(d), "Nov 12, 2026");
+  assert.strictEqual(F.date(d.getTime()), "Nov 12, 2026");
+  assert.match(F.time(d), /^3:05\s?PM$/u);
+  assert.match(F.dateTime(d), /^Nov 12, 2026, 3:05\s?PM$/u);
+  ["", "tomorrow", null, undefined].forEach(function (v) { assert.strictEqual(F.date(v), "", String(v)); });
+});
+test("LM.fmt numbers and percents in en-US", function () {
+  const F = global.LM.fmt;
+  assert.strictEqual(F.number(0), "0");
+  assert.strictEqual(F.number(1234), "1,234");
+  assert.strictEqual(F.number(1234567), "1,234,567");
+  assert.strictEqual(F.number(2.345, 1), "2.3");
+  assert.strictEqual(F.number(NaN), "");
+  assert.strictEqual(F.percent(42), "42%");
+  assert.strictEqual(F.percent(12.5, 1), "12.5%");
+  assert.strictEqual(F.percent(100), "100%");
+  assert.strictEqual(F.percent(undefined), "");
+});
+
 console.log("\nSyllabus: the only list of levels, units, categories and topics (spec 06 E1, E2)");
 (function () {
   const fs = require("fs");

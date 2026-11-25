@@ -15,6 +15,7 @@ LM.APP = {
   language: "Polish", nativeName: "polski",
   appTitle: "Polish Levels Map", tagline: "Your map of Polish, A1–C2",
   targetLang: "pl",
+  uiLocale: "en-US",            // LM.fmt dates and numbers (spec 04 §1)
   storagePrefix: "plm.",
   exportName: "polish-levels-map",
   speech: { voices: ["pl-PL", "pl"], rate: 0.9 },
