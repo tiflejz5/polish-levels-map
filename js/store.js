@@ -4,7 +4,7 @@
  *   plm.profiles  { version: 1, activeId | null, profiles: [{ id, name, progress: { <topic id>: true } }] }
  *   plm.ui        { levelId } — convenience only, errors are ignored
  * Keys come from LM.APP.storagePrefix; the full key list is the registry in js/profile-data.js.
- * All schemas are version 1. There are no migrations: data of the original app (elm_* keys) is never read.
+ * All schemas are version 1. There are no migrations: data of the original app (its old storage keys) is never read.
  *
  * Content (the checklist) is never stored (spec 01 D8): the topics come from the syllabus in data/.
  *

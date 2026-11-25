@@ -260,8 +260,8 @@ window.LM = window.LM || {};
   // ---------- Automatyczny dziennik błędów (spec 03, pkt 2) ----------
 
   // Mistake-log category of a syllabus category (cases and verbs count as grammar, spec 06 E10)
-  const JOURNAL_CATEGORY = { cases: "Gramatyka", verbs: "Gramatyka", grammar: "Gramatyka", vocabulary: "Słownictwo" };
-  function journalCategoryOf(category) { return JOURNAL_CATEGORY[category] || "Inne"; }
+  const JOURNAL_CATEGORY = { cases: "Grammar", verbs: "Grammar", grammar: "Grammar", vocabulary: "Vocabulary" };
+  function journalCategoryOf(category) { return JOURNAL_CATEGORY[category] || "Other"; }
 
   function journalCategory(topic) {
     const t = topic ? LM.syllabus.topic(topic) : null;
@@ -1347,15 +1347,15 @@ window.LM = window.LM || {};
   function umiemBanner() {
     const s = run.suggest;
     if (!s) return null;
-    if (s.state === "done") return el("div", { class: "ex-umiem is-done", role: "status" }, [LM.icon("check", { size: 18 }), el("p", { text: "Zaznaczono „Umiem”. Brawo!" })]);
-    if (s.state === "later") return el("div", { class: "ex-umiem", role: "status" }, el("p", { class: "tool-note", text: "W porządku – nie zapytam o ten punkt przez 14 dni." }));
-    return el("div", { class: "ex-umiem", role: "status" }, [
-      el("span", { class: "ex-umiem-icon", "aria-hidden": "true" }, LM.icon("sparkles", { size: 20 })),
-      el("div", { class: "ex-umiem-body" }, [
+    if (s.state === "done") return el("div", { class: "ex-known is-done", role: "status" }, [LM.icon("check", { size: 18 }), el("p", { text: "Zaznaczono „Umiem”. Brawo!" })]);
+    if (s.state === "later") return el("div", { class: "ex-known", role: "status" }, el("p", { class: "tool-note", text: "W porządku – nie zapytam o ten punkt przez 14 dni." }));
+    return el("div", { class: "ex-known", role: "status" }, [
+      el("span", { class: "ex-known-icon", "aria-hidden": "true" }, LM.icon("sparkles", { size: 20 })),
+      el("div", { class: "ex-known-body" }, [
         el("p", null, [el("strong", { text: "Dobry wynik! " }), "Dwa ostatnie podejścia to co najmniej 80%. Chcesz zaznaczyć ten punkt jako „Umiem”?"]),
-        el("p", { class: "ex-umiem-item", text: s.essential.text }),
+        el("p", { class: "ex-known-item", text: s.essential.text }),
         el("p", { class: "ex-journal-actions" }, [
-          el("button", { type: "button", class: "btn btn-primary btn-small ex-umiem-yes", onclick: function () {
+          el("button", { type: "button", class: "btn btn-primary btn-small ex-known-yes", onclick: function () {
             LM.app.setProgress(s.essential.id, true);
             s.state = "done";
             repaint(null);

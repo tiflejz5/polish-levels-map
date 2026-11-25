@@ -799,8 +799,8 @@ test("import: a kind missing from the learning part is an empty store (no migrat
 });
 test("import: uszkodzony albo zbyt nowy klucz plm.finals → błąd, śmieci w danych odfiltrowane", function () {
   freshPD();
-  assert.throws(function () { PD.parseImport({ levelTests: { version: 99, profiles: {} } }); }, /Nieobsługiwana wersja/);
-  assert.throws(function () { PD.parseImport({ levelTests: { version: 1 } }); }, /Nieprawidłowy format/);
+  assert.throws(function () { PD.parseImport({ levelTests: { version: 99, profiles: {} } }); }, /Unsupported data version/);
+  assert.throws(function () { PD.parseImport({ levelTests: { version: 1 } }); }, /Wrong data format/);
   const parsed = PD.parseImport({ levelTests: { version: 1, profiles: { p1: { levels: {
     A1: { passedAt: "kiedyś", best: { score: 30, total: 20, date: "2026-01-01" }, last: { score: 15, total: 20, date: "2026-01-02" } }, // zły dzień, zły best
     A2: { passedAt: "2026-02-03", best: { score: 16, total: 20, date: "2026-02-03" } },                                               // brak last
@@ -1509,7 +1509,7 @@ test("plm.phrases: eksport, import (z filtrowaniem śmieci i duplikatów), usuni
   assert.deepStrictEqual(exp.phrases.profiles.p1.starred, ["opinia-01"]);
   const parsed = PD.parseImport({ phrases: { version: 1, profiles: { p1: { starred: ["a-01", "a-01", "ŹLE", 5, "b-02"] } } } });
   assert.deepStrictEqual(parsed.phrases.profiles.p1.starred, ["a-01", "b-02"]);
-  assert.throws(function () { PD.parseImport({ phrases: { version: 99, profiles: {} } }); }, /Nieobsługiwana wersja/);
+  assert.throws(function () { PD.parseImport({ phrases: { version: 99, profiles: {} } }); }, /Unsupported data version/);
   PD.applyImport(parsed, ["p1"]);
   assert.deepStrictEqual(PD.starredPhrases(), ["a-01", "b-02"]);
   PD.applyImport(parsed, ["inny"]);

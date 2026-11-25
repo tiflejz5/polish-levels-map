@@ -90,7 +90,7 @@ window.LM = window.LM || {};
         }).then(function () { return null; });
       }
     }
-    const v = Object.assign({ context: "", myAnswer: "", correct: "", rule: "", source: "", category: "Inne", itemId: "", ref: "" },
+    const v = Object.assign({ context: "", myAnswer: "", correct: "", rule: "", source: "", category: "Other", itemId: "", ref: "" },
       editing || opts.prefill || {});
     const L = pd().LIMITS;
     const n = ++formCounter;
@@ -241,7 +241,7 @@ window.LM = window.LM || {};
 
   /** Klasa paska kategorii (kolor tylko jako dodatek — nazwa kategorii jest w chipie). */
   function catClass(category) {
-    const map = { "Use of English": "uoe", "Reading": "reading", "Writing": "writing", "Listening": "listening", "Speaking": "speaking", "Gramatyka": "grammar", "Słownictwo": "vocab", "Inne": "other" };
+    const map = { "Use of English": "uoe", "Reading": "reading", "Writing": "writing", "Listening": "listening", "Speaking": "speaking", "Grammar": "grammar", "Vocabulary": "vocab", "Other": "other" };
     return " cat-" + (map[category] || "other");
   }
 

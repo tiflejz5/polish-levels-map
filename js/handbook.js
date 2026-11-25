@@ -310,7 +310,7 @@ window.LM = window.LM || {};
   /** The page's "I know this" switch: the same state as the checkbox on the level page (active profile). */
   function knowToggle(topic) {
     const done = LM.state.progress[topic.id] === true;
-    const label = el("label", { class: "umiem umiem-lg" + (done ? " is-done" : "") }, [
+    const label = el("label", { class: "know-toggle know-toggle-lg" + (done ? " is-done" : "") }, [
       el("input", {
         type: "checkbox",
         checked: done,

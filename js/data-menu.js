@@ -25,7 +25,7 @@ window.LM = window.LM || {};
 
   // ---------- Import ----------
 
-  /** Otwiera okno wyboru pliku i zwraca jego tekst (Promise). */
+  /** Opens the file picker and returns the file's text (Promise). */
   function pickFileText() {
     return new Promise(function (resolve) {
       const input = el("input", { type: "file", accept: ".json,application/json" });
@@ -33,7 +33,7 @@ window.LM = window.LM || {};
         const file = input.files && input.files[0];
         if (!file) return;
         file.text().then(resolve, function () {
-          LM.dialogs.alert({ title: "Błąd odczytu", message: "Nie udało się odczytać pliku." });
+          LM.dialogs.alert({ title: "Could not read the file", message: "The file could not be read. Choose the file again." });
         });
       });
       input.click();
@@ -51,39 +51,39 @@ window.LM = window.LM || {};
       parsed = LM.profileData.parseAll(LM.store.parseBackup(text));
       profiles = parsed.profiles;
     } catch (e) {
-      return LM.dialogs.alert({ title: "Nie można zaimportować danych", message: e.message });
+      return LM.dialogs.alert({ title: "Cannot import the data", message: e.message });
     }
     const ls = LM.profileData.summarizeImport(parsed.learning);
     return LM.dialogs.confirm({
-      title: "Zastąpić dane w tej przeglądarce?",
-      message: "Plik zawiera profile (" + profiles.profiles.length + "): " + (profiles.profiles.map(function (p) { return p.name; }).join(", ") || "brak") +
-        (ls ? ", wpisy w dzienniku błędów: " + ls.journalEntries : "") +
-        ".\n\nObecne profile, ich postęp i dane nauki w tej przeglądarce zostaną zastąpione.",
-      confirmLabel: "Importuj i nadpisz"
+      title: "Replace the data in this browser?",
+      message: "The file has " + LM.plural(profiles.profiles.length, "profile", "profiles") + ": " + (profiles.profiles.map(function (p) { return p.name; }).join(", ") || "none") +
+        (ls ? "; entries in the mistake log: " + ls.journalEntries : "") +
+        ".\n\nThe profiles, their progress and learning data in this browser will be replaced.",
+      confirmLabel: "Import and replace"
     }).then(function (ok) {
       if (!ok) return false;
       app().replaceProfiles(profiles, parsed);
-      LM.dialogs.alert({ title: "Gotowe", message: "Dane zostały zaimportowane." });
+      LM.dialogs.alert({ title: "Data imported", message: "The data was imported." });
       return true;
     });
   }
 
   // ---------- Reset ----------
 
-  /** Reset danych — podwójne potwierdzenie z zaleceniem eksportu. */
+  /** Data reset — double confirmation that recommends an export first. */
   function resetAll() {
     LM.dialogs.confirm({
-      title: "Zresetować dane?",
-      message: "Zostaną usunięte wszystkie profile z ich postępem „Umiem”, dziennikiem błędów, serią nauki, wynikami testu poziomu, fiszkami, Szlakiem i notatkami. " +
-        "Aplikacja wróci do stanu jak przy pierwszym otwarciu, bez żadnych profili. Motyw i układ panelu zostają.\n\n" +
-        "Zalecenie: najpierw zrób „Eksportuj dane”, żeby mieć kopię.",
-      confirmLabel: "Dalej"
+      title: "Reset the data?",
+      message: "All profiles will be deleted with their “I know this” progress, mistake log, streak, placement test results, flashcards, Trail and notes. " +
+        "The app goes back to how it was when you first opened it, with no profiles. The theme and the sidebar layout stay.\n\n" +
+        "Tip: first use “Export data” to keep a copy.",
+      confirmLabel: "Continue"
     }).then(function (ok) {
       if (!ok) return false;
       return LM.dialogs.confirm({
-        title: "Na pewno?",
-        message: "To ostatnie ostrzeżenie. Tej operacji nie można cofnąć. Jeśli nie masz kopii, anuluj i najpierw zrób eksport.",
-        confirmLabel: "Tak, usuń dane"
+        title: "Are you sure?",
+        message: "This is the last warning. This cannot be undone. If you have no copy, cancel and export first.",
+        confirmLabel: "Yes, delete the data"
       });
     }).then(function (ok) {
       if (!ok) return;

@@ -281,7 +281,7 @@ window.LM = window.LM || {};
     ]));
   }
 
-  const SKILLS = [["grammar", "Gramatyka"], ["vocabulary", "Słownictwo"], ["reading", "Czytanie"]];
+  const SKILLS = [["grammar", "Grammar"], ["vocabulary", "Vocabulary"], ["reading", "Czytanie"]];
 
   /** Podział wyniku: „Gramatyka 5/7 (71%) · Słownictwo 2/3 · Czytanie 1/2” — procent dopiero od 3 pytań. */
   function skillBreakdown(answers) {
@@ -312,7 +312,7 @@ window.LM = window.LM || {};
   /** Kategoria wpisu w dzienniku na podstawie punktu niezbędnika pytania. */
   function categoryOf(q) {
     const t = q.itemId ? LM.syllabus.topic(q.itemId) : null;
-    return LM.exercises ? LM.exercises.journalCategoryOf(t ? t.category : null) : "Inne";
+    return LM.exercises ? LM.exercises.journalCategoryOf(t ? t.category : null) : "Other";
   }
 
   /** Dodaje błędne pytania do dziennika (bez duplikatów: to samo pytanie + ta sama odpowiedź). */
