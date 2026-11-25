@@ -2977,5 +2977,45 @@ console.log("Validators (E11)");
   });
 })();
 
+// ---------- Stage 4: tools/strip-keys.js (spec 10 §4, step 4) ----------
+console.log("strip-keys");
+(function () {
+  const SK = require(path.join(__dirname, "strip-keys.js"));
+  const dirs = ["exercises", "quizzes", "tests"].map(function (d) { return path.join(__dirname, "..", "content", d); });
+  function filesOf(dir) {
+    let out = [];
+    fs.readdirSync(dir).forEach(function (f) {
+      const full = path.join(dir, f);
+      if (fs.statSync(full).isDirectory()) out = out.concat(filesOf(full));
+      else if (/\.json$/.test(f) && f !== "topics.json" && f !== "mixes.json") out.push(full);
+    });
+    return out;
+  }
+  const files = [].concat.apply([], dirs.map(filesOf));
+  const tasks = SK.stripFiles(files);
+  const KEYS = ["correct", "accepted", "answers", "explanation", "optionNotes", "trap", "tags", "fixes", "errorRange", "noError", "parts"];
+
+  test("strip-keys: no key field anywhere in the output, every item is there", function () {
+    const text = JSON.stringify(tasks);
+    KEYS.forEach(function (k) { assert.ok(text.indexOf("\"" + k + "\"") === -1, k); });
+    const n = files.reduce(function (s, f) { const d = JSON.parse(fs.readFileSync(f, "utf8")); return s + (d.items || d.questions || []).length; }, 0);
+    assert.strictEqual(tasks.length, n);
+    assert.ok(tasks.every(function (t) { return t.id && t.type && t.task && !t.unknown; }));
+  });
+  test("strip-keys: reorder tiles are not the solution, paradigm keeps only given forms, the same output every run", function () {
+    const sets = files.filter(function (f) { return /exercises/.test(f); }).map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); });
+    const items = [].concat.apply([], sets.map(function (s) { return s.items; }));
+    tasks.filter(function (t) { return t.type === "reorder"; }).forEach(function (t) {
+      const it = items.find(function (x) { return x.id === t.id; });
+      assert.ok(!X.evaluate(it, { words: t.words }).correct, t.id);
+    });
+    tasks.filter(function (t) { return t.type === "paradigm"; }).forEach(function (t) {
+      const it = items.find(function (x) { return x.id === t.id; });
+      t.cells.forEach(function (c, i) { assert.strictEqual(c.given, it.cells[i].given ? it.cells[i].accepted[0] : undefined); });
+    });
+    assert.deepStrictEqual(SK.stripFiles(files), tasks);
+  });
+})();
+
 console.log("\nResult: " + passed + " ok, " + failures.length + " failed");
 if (failures.length) process.exit(1);
