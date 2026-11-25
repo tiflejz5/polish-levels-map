@@ -1,8 +1,8 @@
 /*
  * writing.js — sekcja „Pisanie” (paczka v6, spec 17, sekcja 1): wzorcowe wypracowania z komentarzami.
  *
- *   #/pisanie                              lista wzorców pogrupowana po egzaminie i gatunku
- *   #/pisanie/wzorce/<egzamin>/<id>        wzorzec z komentarzami (widok: js/writing-model.js)
+ *   #/writing                              lista wzorców pogrupowana po egzaminie i gatunku
+ *   #/writing/models/<egzamin>/<id>        wzorzec z komentarzami (widok: js/writing-model.js)
  *
  * Data: tasks with modelNotes in content/exams/<exam>/training/writing.json (the exam's writing trainer,
  * LM.exams.trainerData). The `model` texts are not changed; the notes point at exact fragments (anchors).
@@ -17,7 +17,7 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
-  const HASH = "#/pisanie";
+  const HASH = "#/writing";
 
   const GENRES = { essay: "Rozprawka / essay", email: "E-mail", letter: "List", blog: "Wpis na blogu", forum: "Wpis na forum",
     article: "Artykuł", review: "Recenzja", report: "Raport", proposal: "Propozycja", story: "Opowiadanie" };
@@ -35,7 +35,7 @@ window.LM = window.LM || {};
   function reg() { return LM.EXAM_REGISTRY || { exams: [] }; }
   function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
   function genreLabel(g) { return GENRES[g] || g; }
-  function hrefModel(examId, taskId) { return HASH + "/wzorce/" + examId + "/" + taskId; }
+  function hrefModel(examId, taskId) { return HASH + "/models/" + examId + "/" + taskId; }
 
   /** Words of a model answer, counted as the writing trainer counts them (without the given opening). */
   function wordCount(examId, task) {
@@ -78,12 +78,13 @@ window.LM = window.LM || {};
   // =====================================================================
 
   function parseRoute(hash) {
-    const m = /^#\/pisanie(?:\/(.*))?$/.exec(hash || "");
+    const m = /^#\/writing(?:\/(.*))?$/.exec(hash || "");
     if (!m) return null;
     const p = (m[1] || "").replace(/\/+$/, "").split("/").filter(Boolean).map(function (x) { try { return decodeURIComponent(x); } catch (e) { return x; } });
-    if (p[0] === "wzorce" && p[1] && p[2]) return { kind: "model", exam: p[1], task: p[2] };
-    if (p[0] === "zwroty") return { kind: "phrases", group: p[1] || "" };
-    return { kind: "list" };
+    if (!p.length) return { kind: "list" };
+    if (p[0] === "models" && p[1] && p[2] && !p[3]) return { kind: "model", exam: p[1], task: p[2] };
+    if (p[0] === "phrases" && p.length <= 2) return { kind: "phrases", group: p[1] || "" };
+    return null;
   }
 
   // =====================================================================
@@ -113,7 +114,7 @@ window.LM = window.LM || {};
   function renderList(view) {
     view.appendChild(head("Pisanie – wzorcowe wypracowania", "Teksty modelowe z komentarzami na marginesie: co realizuje polecenie, jak działają łączniki i rejestr, co podnosi zakres językowy i co można zrobić lepiej."));
     view.appendChild(el("p", { class: "card wz-phrases-link" }, [
-      el("a", { href: HASH + "/zwroty", class: "wz-card-title", text: "Bank zwrotów do pisania" }),
+      el("a", { href: HASH + "/phrases", class: "wz-card-title", text: "Bank zwrotów do pisania" }),
       el("span", { class: "tool-note", text: " – zwroty według funkcji (opinia, kontrargument, prośby…), z filtrem poziomu, rejestru i gatunku." })
     ]));
     const body = el("div", { class: "wz-list", "aria-live": "polite" }, el("p", { class: "tool-note", role: "status", text: "Wczytuję wzorce…" }));

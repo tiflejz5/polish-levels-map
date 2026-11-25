@@ -217,7 +217,7 @@ window.LM = window.LM || {};
     const actions = el("div", { class: "tool-actions" }, [
       el("button", { type: "button", class: "btn " + (passed ? "btn-secondary" : "btn-primary"), "data-fk": "again", onclick: function () { start(level, set); } }, LM.ui.withIcon("rotate-ccw", "Zrób test jeszcze raz")),
       el("a", { class: "btn btn-secondary", href: levelHash(level) }, "Wróć do poziomu " + level),
-      passed ? el("a", { class: "btn btn-link", href: "#/dzis" }, LM.ui.withIcon("arrow-right", "Zobacz Szlak")) : null
+      passed ? el("a", { class: "btn btn-link", href: "#/today" }, LM.ui.withIcon("arrow-right", "Zobacz Szlak")) : null
     ]);
 
     view.appendChild(el("section", { class: "card ex-result lf-result " + (passed ? "is-passed" : "is-failed"), "aria-live": "polite" }, [
@@ -261,9 +261,9 @@ window.LM = window.LM || {};
       sets.replaceChildren(el("span", { class: "review-label", text: "Zestawy do tych tematów: " }));
       found.slice(0, 4).forEach(function (id, k) {
         if (k) sets.appendChild(document.createTextNode(", "));
-        sets.appendChild(el("a", { href: "#/cwiczenia/zestaw/" + id, text: index.sets[id].title }));
+        sets.appendChild(el("a", { href: "#/practice/set/" + id, text: index.sets[id].title }));
       });
-      actions.insertBefore(el("a", { class: "btn btn-secondary", href: "#/cwiczenia/zestaw/" + found[0] }, "Zestawy do tych tematów"), actions.children[1]);
+      actions.insertBefore(el("a", { class: "btn btn-secondary", href: "#/practice/set/" + found[0] }, "Zestawy do tych tematów"), actions.children[1]);
     });
 
     view.appendChild(el("section", { class: "card ex-review" }, [

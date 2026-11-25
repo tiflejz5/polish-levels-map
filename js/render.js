@@ -92,13 +92,13 @@ window.LM = window.LM || {};
     const hasProfile = app().hasProfiles();
     const reviews = hasProfile && LM.reviewQueue ? LM.reviewQueue.dueCount() : 0; // jedna liczba: DO POWTÓRKI (fiszki + Moje błędy + słabe punkty); nowe karty osobno (spec v7 14, P3)
     const items = [
-      { href: "#/szlak", label: "Szlak", icon: "route", active: st.view === "szlak" },
-      { href: "#/dzis", label: "Dziś", icon: "sunrise", active: st.view === "today" },
-      { href: "#/powtorki", label: "Fiszki i błędy", icon: "layers", active: st.view === "powtorki" || st.view === "fiszki" || st.view === "journal",
+      { href: "#/trail", label: "Szlak", icon: "route", active: st.view === "trail" },
+      { href: "#/today", label: "Dziś", icon: "sunrise", active: st.view === "today" },
+      { href: "#/review", label: "Fiszki i błędy", icon: "layers", active: st.view === "review" || st.view === "cards" || st.view === "mistakes",
         badge: reviews ? String(reviews) : null, badgeLabel: reviews ? reviews + " do powtórki" : null },
-      { href: "#/cwiczenia", label: "Ćwiczenia", icon: "dumbbell", active: st.view === "exercises" && !finalTestLevel() },
-      { href: "#/laboratorium-czasow", label: "Lab czasów", icon: "flask-conical", active: st.view === "lab" },
-      { href: "#/pisanie", label: "Pisanie", icon: "pencil", active: st.view === "pisanie" }
+      { href: "#/practice", label: "Ćwiczenia", icon: "dumbbell", active: st.view === "practice" && !finalTestLevel() },
+      { href: "#/lab", label: "Lab czasów", icon: "flask-conical", active: st.view === "lab" },
+      { href: "#/writing", label: "Pisanie", icon: "pencil", active: st.view === "writing" }
     ];
     box.replaceChildren(el("ul", { class: "sb-list" }, items.map(function (it) {
       return el("li", null, sbItem({

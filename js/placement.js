@@ -1,5 +1,5 @@
 /*
- * placement.js — szybki test poziomu (#/test-poziomu).
+ * placement.js — szybki test poziomu (#/placement).
  *
  * Pytania: LM.PLACEMENT z pliku niezbednik/test-poziomu-dane.js
  * (źródło: niezbednik/test-poziomu/pytania.json, generuje
@@ -26,7 +26,7 @@ window.LM = window.LM || {};
   const U = LM.utils;
   const el = U.el;
 
-  const HASH = "#/test-poziomu";
+  const HASH = "#/placement";
   const LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
   function learn() { return LM.learn; }
@@ -48,7 +48,7 @@ window.LM = window.LM || {};
   }
 
   function parseRoute(hash) {
-    return /^#\/test-poziomu\/?$/.test(hash || "") ? { kind: "test" } : null;
+    return /^#\/placement\/?$/.test(hash || "") ? { kind: "test" } : null;
   }
 
   // Stan bieżącego podejścia (w pamięci karty)
@@ -337,7 +337,7 @@ window.LM = window.LM || {};
   function render() {
     const view = document.getElementById("view");
     if (!LM.PLACEMENT) {
-      // 60 pytań ładuje się dopiero po wejściu na #/test-poziomu
+      // 60 pytań ładuje się dopiero po wejściu na #/placement
       view.className = "view tool-view lt-view";
       view.replaceChildren(el("p", { class: "tool-note", role: "status", text: "Wczytuję pytania…" }));
       LM.loadModule("data/placement.js").then(function () {

@@ -1,5 +1,5 @@
 /*
- * today.js — strona „Dziś” (#/dzis) jako kokpit (układ bento, DESIGN.md sekcja 3.2):
+ * today.js — strona „Dziś” (#/today) jako kokpit (układ bento, DESIGN.md sekcja 3.2):
  *   hero (powitanie, pierścień „Twoja mapa”, jedna propozycja), powtórki,
  *   seria (płomień + ostatnie 7 dni), egzamin C1 (gdy data jest ustawiona),
  *   szlak A1→C2 (SVG ze stacjami-linkami i znacznikiem „Tu jesteś”),
@@ -21,7 +21,7 @@ window.LM = window.LM || {};
   const el = U.el;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
-  const HASH = "#/dzis";
+  const HASH = "#/today";
   const DAY_NAMES = ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"];
   const DAY_SHORT = ["Nd", "Pn", "Wt", "Śr", "Cz", "Pt", "So"];
   const MONTHS = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
@@ -34,7 +34,7 @@ window.LM = window.LM || {};
   function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
 
   function parseRoute(hash) {
-    return /^#\/dzis\/?$/.test(hash || "") ? { kind: "today" } : null;
+    return /^#\/today\/?$/.test(hash || "") ? { kind: "today" } : null;
   }
 
   function svgEl(tag, attrs) {
@@ -224,7 +224,7 @@ window.LM = window.LM || {};
   function shortcutsTile() {
     const rows = [];
     if (LM.placement) rows.push(shortcutRow("a", { href: LM.placement.HASH }, "target", "Test poziomu", "12 pytań, ok. 6 minut – sprawdź, od czego zacząć."));
-    rows.push(shortcutRow("a", { href: "#/statystyki" }, "chart-column", "Statystyki", "Trafność, najsłabsze tematy i aktywność."));
+    rows.push(shortcutRow("a", { href: "#/stats" }, "chart-column", "Statystyki", "Trafność, najsłabsze tematy i aktywność."));
     return tile("bento-shortcuts", "Na skróty", [
       el("h2", { class: "tile-title" }, ["Na skróty"]),
       el("ul", { class: "row-list" }, rows)

@@ -1,6 +1,6 @@
 /*
  * writing-model.js — widok wzorca z komentarzami (paczka v6, spec 17, sekcja 1.3):
- * #/pisanie/wzorce/<egzamin>/<id zadania>.
+ * #/writing/models/<egzamin>/<id zadania>.
  *
  *   - komputer (≥ 1024 px): tekst w kolumnie ~65 znaków, komentarze w prawym marginesie na wysokości kotwic
  *     (przy kolizji przesuwają się w dół, cienka linia łączy je z kotwicą),

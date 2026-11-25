@@ -1,5 +1,5 @@
 /*
- * mistakes.js — zakładka „Moje błędy” (#/powtorki/moje-bledy); sesja powtórek jest wspólna (#/powtorki/sesja, js/cards.js).
+ * mistakes.js — zakładka „Moje błędy” (#/review/mistakes); sesja powtórek jest wspólna (#/review/session, js/cards.js).
  *
  * Dane: LM.profileData (klucz plm.journal, osobno dla każdego profilu).
  * Harmonogram: schedule() z js/cards-schedule.js — każdy wpis ma kartę w talii „Moje błędy” (paczka v8).
@@ -13,8 +13,8 @@ window.LM = window.LM || {};
   const U = LM.utils;
   const el = U.el;
 
-  const BASE = "#/powtorki/moje-bledy";                 // zakładka „Moje błędy” (wcześniej #/bledy)
-  const REVIEW = "#/powtorki/sesja?tylko=bledy";         // sesja tylko z błędami (wcześniej #/bledy/powtorki)
+  const BASE = "#/review/mistakes";                 // zakładka „Moje błędy” (wcześniej #/bledy)
+  const REVIEW = "#/review/session?only=mistakes";         // sesja tylko z błędami (wcześniej #/bledy/powtorki)
 
   function pd() { return LM.profileData; }
   function learn() { return LM.learn; }
@@ -27,7 +27,7 @@ window.LM = window.LM || {};
   // =====================================================================
 
   function parseRoute(hash) {
-    return /^#[/]powtorki[/]moje-bledy[/]?$/.test(hash || "") ? { kind: "list" } : null;
+    return /^#\/review\/mistakes\/?$/.test(hash || "") ? { kind: "list" } : null;
   }
 
   // =====================================================================
