@@ -3,8 +3,9 @@
  * reviews (no DOM and no localStorage; tests in tools/tests.js).
  * Specyfikacja: docs/rozbudowa-v2/spec/03-powtorki-i-statystyki.md.
  *
- * A profile's attempt record: { items: [attempt…], aggregates: { <itemId>: { n, ok, topic, type, level } } }
- * Attempt: { t, day, itemId, setId, topic, level, type, tags, correct, mode, answer }
+ * A profile's attempt record: { items: [attempt…], aggregates: { <itemId>: { n, ok, lenient?, topic, type, level } } }
+ * Attempt: { t, day, itemId, setId, topic, level, type, tags, correct, mode, answer, lenient? }
+ *   lenient: true — counted correct only because of the lenient-accents preference (spec 05 §2)
  *
  * “Today” and the current time are passed in as arguments (easy tests):
  * only view code calls LM.learn.today().
@@ -38,6 +39,7 @@ window.LM = window.LM || {};
     const g = agg[a.itemId] || (agg[a.itemId] = { n: 0, ok: 0, topic: a.topic || null, type: a.type || null, level: a.level || null });
     g.n++;
     if (a.correct) g.ok++;
+    if (a.lenient) g.lenient = (g.lenient || 0) + 1;
   }
 
   /** All data as rows { itemId, topic, type, level, n, ok } (attempts + aggregates). */
@@ -94,13 +96,15 @@ window.LM = window.LM || {};
   /** Summary: answers in 7 / 30 days / in total, overall accuracy and in 7 days. */
   function summary(rec, today) {
     const d7 = learn().addDays(today, -6), d30 = learn().addDays(today, -29);
-    let n7 = 0, ok7 = 0, n30 = 0, n = 0, ok = 0;
+    let n7 = 0, ok7 = 0, n30 = 0, n = 0, ok = 0, lenient = 0;
     rows(rec).forEach(function (r) { n += r.n; ok += r.ok; });
+    Object.keys(rec.aggregates || {}).forEach(function (id) { lenient += rec.aggregates[id].lenient || 0; });
+    (rec.items || []).forEach(function (a) { if (a.lenient) lenient++; });
     (rec.items || []).forEach(function (a) {
       if (a.day >= d7 && a.day <= today) { n7++; if (a.correct) ok7++; }
       if (a.day >= d30 && a.day <= today) n30++;
     });
-    return { n7: n7, n30: n30, n: n, acc: accuracy({ n: n, ok: ok }), acc7: accuracy({ n: n7, ok: ok7 }) };
+    return { n7: n7, n30: n30, n: n, acc: accuracy({ n: n, ok: ok }), acc7: accuracy({ n: n7, ok: ok7 }), lenient: lenient };
   }
 
   /** Monday of the week that contains the day. */

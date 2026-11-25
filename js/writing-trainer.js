@@ -225,6 +225,8 @@ window.LM = window.LM || {};
         autocapitalize: "off",
         autocomplete: "off",
         "aria-label": "Your text",
+        lang: LM.APP.targetLang,
+        "data-charbar": "",
         value: drafts[task.id] || "",
         oninput: function () {
           paintCounter(area.value);
@@ -254,6 +256,7 @@ window.LM = window.LM || {};
         view.appendChild(el("p", { class: "wt-opening" }, [el("span", { class: "review-label", text: "Given opening (does not count for the limit): " }), el("strong", { text: task.opening })]));
       }
       view.appendChild(area);
+      if (LM.charbar) view.appendChild(LM.charbar.bar());
 
       // The “Phrases” panel: phrases from the bank for the task's text type and the exam level; “Insert” at the cursor
       let panel = null;
@@ -286,7 +289,7 @@ window.LM = window.LM || {};
           body.appendChild(el("ul", { class: "zw-panel-list" }, r.phrases.map(function (p) {
             return el("li", { class: "zw-panel-item" }, [
               el("div", null, [
-                el("p", { class: "zw-panel-en", lang: "en", text: p.en }),
+                el("p", { class: "zw-panel-en", lang: LM.APP.targetLang, text: p.en }),
                 el("p", { class: "zw-panel-pl", text: p.pl + " · " + p.level })
               ]),
               el("button", { type: "button", class: "btn btn-secondary btn-small", "aria-label": "Insert: " + LM.writingPhrases.plain(p.en), onclick: function () { insertPhrase(p.en); } }, "Insert")
@@ -413,8 +416,8 @@ window.LM = window.LM || {};
       return el("div", { class: "c1-check-group wt-compare" }, [
         el("h3", { class: "c1-check-title", text: "Compare with the model" }),
         el("div", { class: "wt-compare-cols" }, [
-          el("figure", { class: "wt-col" }, [el("figcaption", { text: "Your text" }), el("p", { class: "wt-text", lang: "en", text: (task.opening ? task.opening + "\n" : "") + (text || "(empty)") })]),
-          el("figure", { class: "wt-col is-model" }, [el("figcaption", { text: "Sample answer (" + cfg.wordsLabel(cfg.countWords(task.model, task)) + ")" }), el("p", { class: "wt-text", lang: "en", text: task.model })])
+          el("figure", { class: "wt-col" }, [el("figcaption", { text: "Your text" }), el("p", { class: "wt-text", lang: LM.APP.targetLang, text: (task.opening ? task.opening + "\n" : "") + (text || "(empty)") })]),
+          el("figure", { class: "wt-col is-model" }, [el("figcaption", { text: "Sample answer (" + cfg.wordsLabel(cfg.countWords(task.model, task)) + ")" }), el("p", { class: "wt-text", lang: LM.APP.targetLang, text: task.model })])
         ]),
         el("p", { class: "tool-note", text: "The model is one of many possible answers. Check that your text covers all " + (task.bullets && task.bullets.length ? "points of the task" : "parts of the task") + " and has a similar length." })
       ]);

@@ -105,6 +105,8 @@ window.LM = window.LM || {};
     const context = area("context", L.context, 3);
     const myAnswer = area("myAnswer", L.myAnswer, 2);
     const correct = area("correct", L.correct, 2);
+    // Answer fields are in the target language: the character bar serves both (spec 06 E3)
+    [myAnswer, correct].forEach(function (t) { t.setAttribute("data-charbar", ""); t.setAttribute("lang", LM.APP.targetLang); });
     const rule = area("rule", L.rule, 2);
     const source = el("input", { id: ids("source"), class: "field", type: "text", maxlength: String(L.source), value: v.source, placeholder: "e.g. a mock exam, part 2, question 4", autocomplete: "off" });
     const category = el("select", { id: ids("category"), class: "field" }, pd().CATEGORIES.map(function (c) {
@@ -133,6 +135,7 @@ window.LM = window.LM || {};
       field(ids("context"), "Context / question", context, null, true),
       field(ids("myAnswer"), "My answer", myAnswer),
       field(ids("correct"), "Correct answer", correct, null, true),
+      LM.charbar ? LM.charbar.bar() : null,
       field(ids("rule"), "Rule / why", rule),
       el("div", { class: "form-row" }, [
         field(ids("category"), "Category", category),

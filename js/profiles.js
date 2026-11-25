@@ -221,7 +221,9 @@ window.LM = window.LM || {};
       [
         ["autoJournal", "Add mistakes from sets to the mistake log automatically"],
         ["selectionMenu", "Show a menu when you select text (My words, flashcards)"],
-        ["highlightWords", "Underline my words in texts"]
+        ["highlightWords", "Underline my words in texts"],
+        ["lenientAccents", "Accept answers without accents – you still see the correct spelling"],
+        ["autoplayCards", "Read the " + LM.APP.language + " side of flashcards aloud"]
       ].forEach(function (sw) {
         const on = !!prefs[sw[0]];
         parts.push(el("button", {
@@ -242,6 +244,12 @@ window.LM = window.LM || {};
           el("span", { class: "switch-track", "aria-hidden": "true" }, el("span", { class: "switch-thumb" }))
         ]));
       });
+    }
+
+    // Speech: without a target-language voice, say so and how to add one (spec 05 §4)
+    if (activeId && LM.speech) {
+      const st = LM.speech.status();
+      if (st === "none" || st === "unsupported") parts.push(LM.speech.helpNode());
     }
 
     // The “My” section: pages taken out of the sidebar (routes unchanged)
