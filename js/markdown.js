@@ -212,12 +212,13 @@ window.LM = window.LM || {};
       if (!m) { if (part) appendLinks(parent, part); return; }
       const target = resolver(m[1]);
       if (target) {
-        // Link [[id]] jako mały chip w kolorze poziomu strony docelowej (zestaw C1: granat i złoto)
-        const cls = "wiki-link wiki-chip" + (target.kind === "c1" ? " is-c1" : target.level ? " lvl-" + target.level : "");
-        parent.appendChild(el("a", { href: target.href, class: cls }, [
-          LM.icon ? LM.icon(target.kind === "c1" ? "award" : "notebook-text", { size: 14 }) : null,
+        // [[id]] as a small chip in the colour of the target's level; no href (topic of a "soon" level) → a chip without a link
+        const cls = "wiki-link wiki-chip" + (target.level ? " lvl-" + target.level : "") + (target.href ? "" : " is-soon");
+        parent.appendChild(el(target.href ? "a" : "span", { href: target.href || null, class: cls }, [
+          LM.icon ? LM.icon("notebook-text", { size: 14 }) : null,
           target.level ? el("span", { class: "wiki-chip-level", text: target.level }) : null,
-          el("span", { class: "wiki-chip-text", text: target.text })
+          el("span", { class: "wiki-chip-text", text: target.text }),
+          target.href ? null : el("span", { class: "wiki-chip-soon", text: "soon" })
         ]));
       } else {
         console.warn("Nieznany link [[" + m[1] + "]] — wyświetlony jako zwykły tekst.");

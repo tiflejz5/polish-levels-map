@@ -122,7 +122,18 @@ window.LM = window.LM || {};
     window.scrollTo(0, y);
   }
 
+  /**
+   * Three-form plural of the inherited Polish UI strings (1 / 2–4 / 5+), moved here from the old C1 module so the
+   * remaining Polish UI keeps working until stage 2, which replaces it with the English two-form LM.plural (spec 04 §1).
+   */
+  function plural(n, one, few, many) {
+    if (n === 1) return one;
+    const d = n % 10, t = n % 100;
+    return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
+  }
+
   LM.utils = {
+    plural: plural,
     getScroll: getScroll,
     setScroll: setScroll,
     el: el,

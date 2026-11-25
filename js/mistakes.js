@@ -39,21 +39,9 @@ window.LM = window.LM || {};
   /** Wszystkie punkty niezbędnika: [{ id, level, title, label, href }]. */
   function allItems() {
     if (itemCache) return itemCache;
-    const N = LM.PAGES;
-    itemCache = [];
-    if (!N) return itemCache;
-    N.index.levels.forEach(function (lvl) {
-      lvl.items.forEach(function (item) {
-        const md = N.pages[item.file];
-        const title = md ? LM.markdown.parseFrontmatter(md).meta.title : null;
-        itemCache.push({
-          id: item.id,
-          level: lvl.level,
-          title: title || item.label,
-          label: lvl.level + " · " + (title || item.label),
-          href: LM.handbook.routeOf(item)
-        });
-      });
+    itemCache = LM.syllabus.allTopics().filter(function (t) { return LM.syllabus.isAvailable(t.level); }).map(function (t) {
+      const title = LM.handbook.titleOf(t.id);
+      return { id: t.id, level: t.level, title: title, label: t.level + " · " + title, href: LM.handbook.routeOf(t.id) };
     });
     return itemCache;
   }
@@ -221,7 +209,7 @@ window.LM = window.LM || {};
   // LISTA
   // =====================================================================
 
-  function plural(n, one, few, many) { return LM.c1 ? LM.c1.plural(n, one, few, many) : many; }
+  function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
 
   /** Stan karty wpisu (talia „Moje błędy”, harmonogram fiszek) zamiast etapu 1/3/7. */
   function reviewLabel(e) {

@@ -1494,14 +1494,15 @@ test("plm.speaking: stary zapis bez seen działa, seen jest opcjonalne, toleranc
 });
 
 console.log("\nEgzaminy z tagów karty (paczka v6, spec 15)");
-test("examsOf: e8, mp, mr, b2, c1; matura = MP + MR; bez powtórzeń, stała kolejność, wielkość liter bez znaczenia", function () {
-  const codes = function (tags) { return FL.examsOf({ tags: tags }).map(function (e) { return e.code; }); };
-  assert.deepStrictEqual(codes(["slownictwo", "e8", "matura"]), ["e8", "mp", "mr"]);
-  assert.deepStrictEqual(codes(["MR", "matura", "B2"]), ["mp", "mr", "b2"]);
-  assert.deepStrictEqual(codes(["c1", "kolokacje"]), ["c1"]);
-  assert.deepStrictEqual(codes([]), []);
-  assert.deepStrictEqual(FL.examsOf({}), []);
-  assert.deepStrictEqual(FL.examsOf(null), []);
+test("examsOf: exam codes come from the registry (no list in code); registry order, case does not matter", function () {
+  const reg = { exams: [{ id: "exam-demo", code: "DEMO", label: "Demo exam" }, { id: "exam-two", code: "TWO", label: "Second exam" }] };
+  const codes = function (tags) { return FL.examsOf({ tags: tags }, reg).map(function (e) { return e.code; }); };
+  assert.deepStrictEqual(codes(["vocabulary", "two", "Demo"]), ["demo", "two"]);
+  assert.deepStrictEqual(codes(["e8", "matura"]), [], "codes of the original app mean nothing without a registry entry");
+  assert.deepStrictEqual(FL.examsOf({ tags: ["demo"] }, reg)[0], { code: "demo", short: "DEMO", name: "Demo exam", id: "exam-demo" });
+  assert.deepStrictEqual(FL.examsOf({ tags: ["demo"] }, { exams: [] }), []);
+  assert.deepStrictEqual(FL.examsOf({}, reg), []);
+  assert.deepStrictEqual(FL.examsOf(null, null), []);
 });
 
 console.log("\nMoje słowa (paczka v6, spec 14)");
@@ -1609,36 +1610,42 @@ test("exportWordsCsv: słowo; znaczenie; zdanie; źródło, cudzysłowy i średn
   assert.strictEqual(csv[2], 'ephemeral;;"He said ""hi"".";');
 });
 
-test("examBoxAnchor: ramki egzaminów przed „Życie i egzamin” na 3 podstronach (A1, B2, C2) i warianty skrajne", function () {
+test("examBoxAnchor: exam boxes go after the explanation of a topic page (spec 07 §1 headings)", function () {
   const EL = global.LM.examLogic;
-  // "## " headings of three pages of the original app (english-levels-map@275be9f), inlined
-  const TITLES = {
-    "a1/czasy-present-simple.md": ["Kiedy używamy", "Budowa", "Przykłady", "Życie i egzamin", "Typowe błędy Polaków", "Ćwiczenie", "Odpowiedzi"],
-    "b2/czasy-future-continuous-perfect.md": ["Future Continuous – będzie w trakcie", "Future Perfect – będzie już zrobione", "Future Perfect Continuous – jak długo do tego momentu", "12 czasów w pigułce", "Przykłady", "Życie i egzamin", "Typowe błędy Polaków", "Ćwiczenie", "Odpowiedzi"],
-    "c2/funkcje-humor-ironia-understatement.md": ["Understatement – niedopowiedzenie (bardzo brytyjskie)", "Życie i egzamin", "Inne rodzaje humoru", "Ironia i sarkazm – rola intonacji", "Kiedy uważać", "Typowe błędy Polaków", "Ćwiczenie", "Odpowiedzi"]
-  };
-  Object.keys(TITLES).forEach(function (f) {
-    const t = TITLES[f];
-    const i = EL.examBoxAnchorIndex(t);
-    assert.strictEqual(t[i], "Życie i egzamin", f);
-    assert.ok(i > 0, f + ": ramki po wyjaśnieniu, nie na początku");
-  });
-  assert.strictEqual(EL.examBoxAnchorIndex(["Budowa", "Typowe błędy Polaków", "Ćwiczenie"]), 1);
-  assert.strictEqual(EL.examBoxAnchorIndex(["Budowa", "Przykłady", "Odpowiedzi"]), 2);
-  assert.strictEqual(EL.examBoxAnchorIndex(["Budowa", "Przykłady"]), -1);
+  const fs = require("fs");
+  const MIST = global.LM.APP.mistakesHeading;
+  // the ## headings of the example page content/pages/a1/cases-accusative.md
+  const page = fs.readFileSync(path.join(__dirname, "..", "content", "pages", "a1", "cases-accusative.md"), "utf8");
+  const titles = (page.match(/^## .+$/gm) || []).map(function (h) { return h.slice(3).trim(); });
+  const i = EL.examBoxAnchorIndex(titles, MIST);
+  assert.strictEqual(titles[i], MIST, JSON.stringify(titles));
+  assert.ok(i > 0, "after the explanation, not at the top");
+  assert.strictEqual(EL.examBoxAnchorIndex(["How it works", "Real life vs exam", MIST, "Practice"], MIST), 1);
+  assert.strictEqual(EL.examBoxAnchorIndex(["How it works", "Examples", "Practice", "Answers"], MIST), 2);
+  assert.strictEqual(EL.examBoxAnchorIndex(["How it works", "Examples", "Answers"], MIST), 2);
+  assert.strictEqual(EL.examBoxAnchorIndex(["How it works", "Examples"], MIST), -1);
 });
 
-test("myExams: data, zestaw, odpięty, przypięty, data w przeszłości, C1 z elm_c1_v1", function () {
+test("countWritingWords: the language counter, without the given opening when it was copied", function () {
+  const EL = global.LM.examLogic;
+  const count = function (t) { return t ? t.split(/\s+/).length : 0; };
+  assert.strictEqual(EL.countWritingWords("Dear Anna, thanks for the letter.", "", count), 6);
+  assert.strictEqual(EL.countWritingWords("Dear Anna, thanks for the letter.", "Dear Anna,", count), 4);
+  assert.strictEqual(EL.countWritingWords("  ", "", count), 0);
+  assert.strictEqual(EL.countWritingWords("Cześć :) ---", ""), 1, "default count skips tokens without letters or digits");
+});
+
+test("myExams: date, finished set, unpinned, pinned, date in the past (all exams alike, no special C1 store)", function () {
   const EL = global.LM.examLogic;
   const registry = { exams: [
     { id: "e8", status: "active", setIds: ["e8-1", "e8-2"] },
     { id: "mp", status: "active", setIds: ["mp-1"] },
     { id: "mr", status: "active", setIds: [] },
     { id: "soon", status: "soon", setIds: [] },
-    { id: "c1", status: "active", existing: true, setIds: ["c1-a", "c1-b"] }
+    { id: "c1", status: "active", setIds: ["c1-a", "c1-b"] }
   ] };
   const today = "2026-10-30";
-  function run(input) { return EL.myExams(EL.examMyState(Object.assign({ registry: registry, examsRecord: { exams: {} }, c1: {}, isSetDone: function () { return false; } }, input)), registry, today); }
+  function run(input) { return EL.myExams(EL.examMyState(Object.assign({ registry: registry, examsRecord: { exams: {} }, isSetDone: function () { return false; } }, input)), registry, today); }
   assert.deepStrictEqual(run({}), [], "bez danych nic nie jest moje");
   // data
   assert.deepStrictEqual(run({ examsRecord: { exams: { mp: { examDate: "2027-05-06" } } } }), [{ id: "mp", reason: "date", days: 188 }]);
@@ -1650,14 +1657,12 @@ test("myExams: data, zestaw, odpięty, przypięty, data w przeszłości, C1 z el
   assert.deepStrictEqual(run({ examsRecord: { exams: {}, my: { mr: "pinned", soon: "pinned" } } }), [{ id: "mr", reason: "pinned", days: null }]);
   // data w przeszłości: nadal moje, po przyszłych, przed egzaminami bez daty
   const mixed = run({
-    examsRecord: { exams: { e8: { examDate: "2026-10-27" }, mp: { examDate: "2027-05-06" } }, my: { mr: "pinned" } },
-    c1: { examDate: "2027-01-10" }
+    examsRecord: { exams: { e8: { examDate: "2026-10-27" }, mp: { examDate: "2027-05-06" }, c1: { examDate: "2027-01-10" } }, my: { mr: "pinned" } }
   });
   assert.deepStrictEqual(mixed.map(function (x) { return x.id; }), ["c1", "mp", "e8", "mr"]);
   assert.strictEqual(mixed[2].days, -3);
-  // C1: data z elm_c1_v1 albo najlepszy wynik zestawu
-  assert.deepStrictEqual(run({ c1: { examDate: "2026-10-31" } }), [{ id: "c1", reason: "date", days: 1 }]);
-  assert.deepStrictEqual(run({ c1: { best: { "c1-b": 7 } } }), [{ id: "c1", reason: "sets", days: null }]);
+  assert.deepStrictEqual(run({ examsRecord: { exams: { c1: { examDate: "2026-10-31" } } } }), [{ id: "c1", reason: "date", days: 1 }]);
+  assert.deepStrictEqual(run({ isSetDone: function (id) { return id === "c1-b"; } }), [{ id: "c1", reason: "sets", days: null }]);
 });
 
 test("formatDatePl i daysBetween", function () {
@@ -2063,46 +2068,18 @@ require(path.join(__dirname, "..", "js", "mistake-task.js"));
     assert.strictEqual(c.note, "reguła");
   });
 
-  test("mistakeTask.parseRef / viewFor: wpis z ref do zadania → widok zadania, bez ref albo nieznany ref → karta", function () {
+  test("mistakeTask.parseRef / viewFor: entry with an ex: ref → task view; no ref, unknown or old exam ref → card", function () {
     assert.deepStrictEqual(MT.parseRef("ex:a1-czasy-present-simple-1-05"), { kind: "ex", itemId: "a1-czasy-present-simple-1-05" });
-    assert.deepStrictEqual(MT.parseRef("c1:uoe-p1-4:3"), { kind: "set", prefix: "c1", setId: "uoe-p1-4", n: 3 });
-    assert.deepStrictEqual(MT.parseRef("b2:b2-uoe-p1-1:8"), { kind: "set", prefix: "b2", setId: "b2-uoe-p1-1", n: 8 });
+    assert.strictEqual(MT.parseRef("c1:uoe-p1-4:3"), null, "lettered exam refs were removed with the C1 module (E8)");
     assert.strictEqual(MT.parseRef("journal:err-1"), null);
     assert.strictEqual(MT.parseRef(""), null);
-    assert.strictEqual(MT.viewFor(wf), "task");
+    assert.strictEqual(MT.viewFor(wf), "card");
     assert.strictEqual(MT.viewFor(tr), "task");
     assert.strictEqual(MT.viewFor(manual), "card");
     assert.strictEqual(MT.viewFor(entry("x", { ref: "coś-ręcznego" })), "card");
     assert.strictEqual(MT.viewFor(null), "card");
   });
-  test("mistakeTask.singleExercise: cloze — tylko zdanie z tą luką, jej podpowiedź zostaje; transformacja — jedno zdanie", function () {
-    const ex = { id: "s", type: "word-formation", maxScore: 8, instructions: "i", text: "First {{1}} sentence. Many teachers welcome the {{2}} in time and the {{3}} too. Last {{4}}.", gaps: [1, 2, 3, 4].map(function (n) { return { n: n, stem: "STEM" + n, accept: ["a" + n] }; }) };
-    const one = MT.singleExercise(ex, 2);
-    assert.strictEqual(one.text, "Many teachers welcome the {{2}} in time and the … too.");
-    assert.strictEqual(one.gaps.length, 1);
-    assert.strictEqual(one.gaps[0].stem, "STEM2");
-    assert.strictEqual(one.maxScore, 1);
-    assert.strictEqual(ex.gaps.length, 4, "oryginał bez zmian");
-    assert.strictEqual(MT.singleExercise(ex, 9), null);
-    const tex = { id: "t", type: "transformation", wordLimit: [2, 5], items: [{ n: 1, first: "a", keyword: "K1", parts: ["x"] }, { n: 2, first: "b", keyword: "K2", parts: ["y"] }] };
-    const t2 = MT.singleExercise(tex, 2);
-    assert.strictEqual(t2.items.length, 1);
-    assert.strictEqual(t2.items[0].keyword, "K2");
-    assert.deepStrictEqual(t2.wordLimit, [2, 5]);
-  });
 })();
-
-test("mistakeTask: wyjaśnienie nie dubluje się (ta sama treść reguły i wyjaśnienia zadania = raz), widok dla zadań bez ref bez zmian", function () {
-  const MT = global.LM.mistakeTask;
-  assert.ok(MT.sameText("A proven track record = osiągnięcia.", "  a proven  track record = osiągnięcia. "));
-  assert.ok(!MT.sameText("inna reguła", "wyjaśnienie zadania"));
-  assert.ok(!MT.sameText("", ""), "puste teksty nie są „takie same” (nic do ukrycia)");
-  assert.strictEqual(MT.explanationOf({ type: "word-formation", gaps: [{ n: 2, explanation: "E1" }] }), "E1");
-  assert.strictEqual(MT.explanationOf({ type: "transformation", items: [{ n: 1, explanation: "E2" }] }), "E2");
-  assert.strictEqual(MT.explanationOf(null), "");
-  assert.strictEqual(MT.viewFor({ context: "x", correct: "y" }), "card", "wpis bez ref: karta, mount nie jest wołany");
-  assert.strictEqual(MT.viewFor({ ref: "ex:a1-x-1-01" }), "task");
-});
 
 console.log("\nFiszki: harmonogram i zapis (poprawka fix/fiszki-harmonogram)");
 (function () {
@@ -2200,8 +2177,7 @@ console.log("\nStorage key registry (spec 02 §5)");
 (function () {
   const fs = require("fs");
   const ROOT = path.join(__dirname, "..");
-  global.LM.LEVEL_IDS = global.LM.LEVEL_IDS || ["A1", "A2", "B1", "B2", "C1", "C2"];
-  require(path.join(ROOT, "js", "default-data.js"));
+  require(path.join(ROOT, "js", "syllabus.js"));
   require(path.join(ROOT, "js", "store.js"));
   const pdFile = path.join(ROOT, "js", "profile-data.js");
   const REG = global.LM.profileData.REGISTRY;
@@ -2338,6 +2314,60 @@ test("LM.lang stub: full interface; stripMarks and fold keep the length", functi
   assert.deepStrictEqual(LG.variants("kawę"), ["kawę"]);
   assert.strictEqual(LG.normalizeAnswer("  Kawę  proszę. "), "kawę proszę");
 });
+
+console.log("\nSyllabus: the only list of levels, units, categories and topics (spec 06 E1, E2)");
+(function () {
+  const fs = require("fs");
+  const ROOT = path.join(__dirname, "..");
+  require(path.join(ROOT, "js", "syllabus.js"));
+  const SY = global.LM.syllabus;
+  const saved = global.LM.SYLLABUS;
+  const real = JSON.parse(fs.readFileSync(path.join(ROOT, "content", "syllabus.json"), "utf8"));
+  const status = JSON.parse(fs.readFileSync(path.join(ROOT, "content", "levels.json"), "utf8"));
+  global.LM.SYLLABUS = Object.assign({}, real, { levels: real.levels.map(function (l) { return Object.assign({}, l, { status: status[l.id] }); }) });
+  try {
+    test("syllabus: six levels in CEFR order, A1 has 25 topics in 5 units, ids unique", function () {
+      assert.deepStrictEqual(SY.levelIds(), global.LM.LEVEL_IDS);
+      assert.strictEqual(SY.topics("A1").length, 25);
+      assert.strictEqual(SY.units("A1").length, 5);
+      const ids = SY.allTopics().map(function (t) { return t.id; });
+      assert.strictEqual(new Set(ids).size, ids.length);
+      assert.strictEqual(SY.topic("a1-cases-accusative").level, "A1");
+      assert.strictEqual(SY.topic("a1-cases-accusative").unit.indexOf("a1-u"), 0);
+    });
+    test("syllabus: groups by category in order of first appearance, topics keep unit order", function () {
+      const g = SY.groups("A1");
+      const firstSeen = [];
+      SY.topics("A1").forEach(function (t) { if (firstSeen.indexOf(t.category) === -1) firstSeen.push(t.category); });
+      assert.deepStrictEqual(g.map(function (x) { return x.id; }), firstSeen);
+      assert.strictEqual(g.reduce(function (n, x) { return n + x.topics.length; }, 0), 25);
+      g.forEach(function (x) { assert.strictEqual(x.name, real.categories[x.id]); });
+      const order = SY.topics("A1").map(function (t) { return t.id; });
+      g.forEach(function (x) { const idx = x.topics.map(function (t) { return order.indexOf(t.id); }); assert.deepStrictEqual(idx, idx.slice().sort(function (a, b) { return a - b; })); });
+    });
+    test("syllabus: routes and page files from the topic id; unknown slug → null", function () {
+      assert.strictEqual(SY.route("a1-cases-accusative"), "#/a1/cases-accusative");
+      assert.strictEqual(SY.pageFile("a1-cases-accusative"), "a1/cases-accusative.md");
+      assert.strictEqual(SY.slugOf("b2-cases-x-y"), "cases-x-y");
+      assert.strictEqual(SY.topicByRoute("A1", "cases-accusative").id, "a1-cases-accusative");
+      assert.strictEqual(SY.topicByRoute("A1", "no-such-topic"), null);
+    });
+    test("syllabus: level status from levels.json; stats and countDone use topic ids, soon levels do not count", function () {
+      assert.strictEqual(SY.isAvailable("A1"), true);
+      assert.strictEqual(SY.isAvailable("B1"), false);
+      assert.deepStrictEqual(SY.availableLevelIds(), ["A1"]);
+      const a2 = SY.topics("A2")[0].id;
+      const progress = { "a1-cases-accusative": true, "a1-verbs-byc": true, junk: true };
+      progress[a2] = true;
+      assert.deepStrictEqual(SY.stats(progress, "A1"), { done: 2, total: 25, percent: 8 });
+      assert.strictEqual(SY.countDone(progress), 2);
+      assert.deepStrictEqual(SY.stats({}, "C2").done, 0);
+      assert.strictEqual(SY.level("X9"), null);
+    });
+  } finally {
+    global.LM.SYLLABUS = saved;
+  }
+})();
 
 console.log("\nWynik: " + passed + " ok, " + failures.length + " błędów");
 if (failures.length) process.exit(1);

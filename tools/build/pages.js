@@ -3,10 +3,10 @@
  *
  * Sources: content/pages/<level>/<category>-<slug>.md, content/summaries/<level>.md,
  *          content/cheatsheets/<level>.md, content/home.md
- * LM.PAGES = { index, pages: { "<level>/<file>.md": markdown }, summaries: { A1: md }, cheatsheets: { A1: md }, home }
+ * LM.PAGES = { pages: { "<level>/<file>.md": markdown }, summaries: { A1: md }, cheatsheets: { A1: md }, home }
  *
- * `index` keeps the shape the handbook view reads today (levels → items { id, category, file, label }),
- * generated from the syllabus. Stage 1B (E2) moves the views to LM.SYLLABUS and drops it.
+ * The list of topics is not repeated here: the views read it from LM.SYLLABUS (spec 06 E2). A page whose file
+ * is not a syllabus topic is skipped with a warning.
  */
 "use strict";
 
@@ -16,18 +16,7 @@ const C = require("./common");
 module.exports = function buildPages(ctx) {
   const syllabus = ctx.syllabus;
   const known = {};
-  const index = { version: 2, categories: syllabus.categories, levels: [] };
-  syllabus.levels.forEach(function (l) {
-    const items = [];
-    l.units.forEach(function (u) {
-      u.topics.forEach(function (t) {
-        const file = C.pageFileOf(t.id);
-        known[file] = t.id;
-        items.push({ id: t.id, category: t.category, file: file, label: t.title });
-      });
-    });
-    index.levels.push({ level: l.id, items: items });
-  });
+  C.topicsOf(syllabus).forEach(function (t) { known[C.pageFileOf(t.id)] = t.id; });
 
   const pages = {};
   const dir = C.content("pages");
@@ -54,7 +43,7 @@ module.exports = function buildPages(ctx) {
   const home = C.exists(C.content("home.md")) ? C.read(C.content("home.md")) : null;
 
   C.writeData("pages.js", ["content/pages/", "content/summaries/", "content/cheatsheets/", "content/home.md", "content/syllabus.json"],
-    "LM.PAGES = " + JSON.stringify({ index: index, pages: pages, summaries: summaries, cheatsheets: cheatsheets, home: home }) + ";");
+    "LM.PAGES = " + JSON.stringify({ pages: pages, summaries: summaries, cheatsheets: cheatsheets, home: home }) + ";");
   return "pages: " + Object.keys(pages).length + ", summaries: " + (Object.keys(summaries).join(" ") || "none") +
     ", cheat sheets: " + (Object.keys(cheatsheets).join(" ") || "none") + ", home: " + (home ? "yes" : "none");
 };

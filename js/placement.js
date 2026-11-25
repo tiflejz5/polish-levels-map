@@ -226,8 +226,8 @@ window.LM = window.LM || {};
     const saved = run.saved;
     if (!saved) { run = null; return renderIntro(view); }
     const level = saved.level;
-    const levelData = LM.state.content.levels.find(function (l) { return l.id === level; });
-    const desc = levelData && levelData.description ? levelData.description.split("\n")[0] : "";
+    const levelData = LM.syllabus.level(level);
+    const desc = levelData ? levelData.land : "";
 
     // Błędne pytania (z wyniku zapisanego w profilu, więc działa także po odświeżeniu)
     const wrong = saved.answers.filter(function (a) { return !a.correct; })
@@ -306,13 +306,8 @@ window.LM = window.LM || {};
 
   /** Kategoria wpisu w dzienniku na podstawie punktu niezbędnika pytania. */
   function categoryOf(q) {
-    const N = LM.PAGES;
-    if (!N || !q.itemId) return "Inne";
-    for (const lvl of N.index.levels) {
-      const item = lvl.items.find(function (it) { return it.id === q.itemId; });
-      if (item) return item.category === "slownictwo" ? "Słownictwo" : item.category === "czasy" || item.category === "gramatyka" ? "Gramatyka" : "Inne";
-    }
-    return "Inne";
+    const t = q.itemId ? LM.syllabus.topic(q.itemId) : null;
+    return LM.exercises ? LM.exercises.journalCategoryOf(t ? t.category : null) : "Inne";
   }
 
   /** Dodaje błędne pytania do dziennika (bez duplikatów: to samo pytanie + ta sama odpowiedź). */
@@ -346,8 +341,8 @@ window.LM = window.LM || {};
       view.className = "view tool-view lt-view";
       view.replaceChildren(el("p", { class: "tool-note", role: "status", text: "Wczytuję pytania…" }));
       LM.loadModule("data/placement.js").then(function () {
-        if (LM.state.view === "leveltest") render();
-      }, function (err) { console.warn(err.message + " — uruchom: npm run build"); LM.PLACEMENT = { version: 1, questions: [] }; if (LM.state.view === "leveltest") render(); });
+        if (LM.state.view === "placement") render();
+      }, function (err) { console.warn(err.message + " — uruchom: npm run build"); LM.PLACEMENT = { version: 1, questions: [] }; if (LM.state.view === "placement") render(); });
       return;
     }
     const profile = LM.app.getActiveProfile();

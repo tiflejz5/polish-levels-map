@@ -31,7 +31,7 @@ window.LM = window.LM || {};
 
   function pd() { return LM.profileData; }
   function learn() { return LM.learn; }
-  function plural(n, one, few, many) { return LM.c1 ? LM.c1.plural(n, one, few, many) : many; }
+  function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
 
   function parseRoute(hash) {
     return /^#\/dzis\/?$/.test(hash || "") ? { kind: "today" } : null;
@@ -66,7 +66,7 @@ window.LM = window.LM || {};
    */
   function levelStats() {
     return LM.LEVEL_IDS.map(function (id) {
-      const s = Object.assign({ id: id }, LM.app.getLevelStats(id));
+      const s = Object.assign({ id: id, soon: !LM.syllabus.isAvailable(id) }, LM.app.getLevelStats(id));
       const li = LM.trail && LM.trail.ready() ? LM.trail.levelInfo(id) : null;
       return li ? Object.assign(s, { done: li.done, total: li.total, percent: li.percent, skipped: li.skipped, szlak: true }) : s;
     });
@@ -81,26 +81,15 @@ window.LM = window.LM || {};
   }
 
   function levelName(id) {
-    const level = LM.state.content.levels.find(function (l) { return l.id === id; });
-    const m = level && /^\*\*(.+?)\*\*\s*$/.exec(String(level.description || "").split("\n")[0]);
-    return m ? m[1] : "";
+    const level = LM.syllabus.level(id);
+    return level ? level.land : "";
   }
 
-  /** Następny nieodhaczony punkt na poziomie (z podstroną, jeśli istnieje). */
+  /** The next unticked topic of an available level (syllabus order), or null. */
   function nextItem(levelId) {
-    const level = LM.state.content.levels.find(function (l) { return l.id === levelId; });
-    if (!level) return null;
-    LM.handbook.computeLinks();
-    for (const cat of LM.state.content.categories) {
-      const bucket = level.content[cat.id];
-      if (!bucket) continue;
-      for (const e of bucket.essentials) {
-        if (U.isBlank(e.text) || LM.state.progress[e.id] === true) continue;
-        const info = LM.handbook.linkForEssential(e.id);
-        return { text: e.text.replace(/\s*\(.*\)\s*$/, ""), href: info ? LM.handbook.routeOf(info.item) : LM.app.levelHash(levelId) };
-      }
-    }
-    return null;
+    if (!LM.syllabus.isAvailable(levelId)) return null;
+    const t = LM.syllabus.topics(levelId).find(function (x) { return LM.state.progress[x.id] !== true; });
+    return t ? { text: LM.handbook.titleOf(t.id), href: LM.handbook.routeOf(t.id) } : null;
   }
 
   function greetingWord() {

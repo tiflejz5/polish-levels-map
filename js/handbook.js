@@ -1,17 +1,11 @@
 /*
- * handbook.js — podstrony „Niezbędnika” (folder niezbednik/).
+ * handbook.js — topic pages, level summaries, cheat sheets and the home page (data/pages.js → LM.PAGES).
  *
- * Dane: LM.PAGES z pliku niezbednik/niezbednik-dane.js
- * (generowanego przez: node tools/zbuduj-niezbednik.js).
- *
- * Adresy podstron: index.html#/a1/czasy-present-simple
- * (ścieżka pliku .md bez rozszerzenia). Routing przez „#”, bo strona
- * działa z dysku (file://) i na GitHub Pages, gdzie nie ma serwera.
- *
- * Dopasowanie punktu listy do podstrony:
- *   1. dokładnie po tekście (pole „label” z index.json = tekst punktu),
- *   2. jeśli brak — po kolejności w obrębie kategorii (pole „order”).
- * Dopasowanie liczone jest na bieżąco, więc działa też po edycji listy.
+ * Every topic comes from the syllabus (LM.syllabus, spec 06 E2); there is no label matching any more.
+ *   #/a1/<category>-<slug>   topic page (topic id without the level prefix), LM.PAGES.pages["a1/<…>.md"]
+ *   #/a1/cheatsheet          the level cheat sheet, LM.PAGES.cheatsheets.A1
+ * A syllabus topic without a page shows "This topic is being written" (spec 06 E1); a slug that is not in the
+ * syllabus is not a topic route (the app shows "Page not found").
  */
 window.LM = window.LM || {};
 
@@ -20,250 +14,133 @@ window.LM = window.LM || {};
 
   const U = LM.utils;
   const el = U.el;
+  const S = function () { return LM.syllabus; };
 
-  // Kategorie z index.json → kategorie aplikacji
-  const CATEGORY_MAP = {
-    czasy: "cat_grammar",
-    gramatyka: "cat_grammar",
-    funkcje: "cat_functions",
-    slownictwo: "cat_vocabulary"
-  };
-
-  // Sekcje (nagłówki ##) ukryte pod przyciskiem „Pokaż odpowiedzi”
-  const HIDDEN_SECTIONS = ["Odpowiedzi", "Przykładowe odpowiedzi"];
-
-  let links = { byEssential: {}, byFile: {}, report: [] };
-  const metaCache = {};
+  // Sections (## headings) hidden behind "Show answers"
+  const HIDDEN_SECTIONS = ["Odpowiedzi", "Przykładowe odpowiedzi", "Answers", "Sample answers"];
+  const APP_TITLE = function () { return LM.APP.appTitle; };
 
   function data() { return LM.PAGES || null; }
 
   // =====================================================================
-  // ADRESY
+  // ROUTES
   // =====================================================================
 
-  function routeOf(item) {
-    return "#/" + item.file.replace(/\.md$/i, "");
-  }
+  function routeOf(topicId) { return S().route(topicId); }
 
-  /** "#/a1/czasy-present-simple" → { file: "a1/czasy-present-simple.md" } */
+  /**
+   * "#/a1/cases-accusative" → { level: "A1", topicId } · "#/a1/cheatsheet" → { level, cheatsheet: true }.
+   * null when the hash is not a topic route of a known syllabus topic.
+   */
   function parseRoute(hash) {
-    const m = /^#\/(.+)$/.exec(hash || "");
+    const m = /^#\/([abc][12])\/([a-z0-9-]+)\/?$/.exec(hash || "");
     if (!m) return null;
-    let path;
-    try { path = decodeURIComponent(m[1]); } catch (e) { path = m[1]; }
-    path = path.replace(/\/+$/, "");
-    // Ściąga poziomu: #/a2/sciaga (niezbednik/sciagi/a2.md)
-    const sc = /^([abc][12])\/sciaga$/i.exec(path);
-    if (sc) return { file: "sciagi/" + sc[1].toLowerCase() + ".md", sciaga: sc[1].toUpperCase() };
-    return { file: path + ".md" };
+    const level = m[1].toUpperCase();
+    if (m[2] === "cheatsheet") return { level: level, cheatsheet: true };
+    const t = S().topicByRoute(level, m[2]);
+    return t ? { level: level, topicId: t.id } : null;
   }
 
-  /** Szuka wpisu index.json po ścieżce pliku. */
-  function findItem(file) {
+  function hasPage(topicId) {
     const d = data();
-    if (!d) return null;
-    for (let i = 0; i < d.index.levels.length; i++) {
-      const lvl = d.index.levels[i];
-      const item = lvl.items.find(function (it) { return it.file === file; });
-      if (item) return { item: item, level: lvl.level };
-    }
-    return null;
+    return !!(d && d.pages[S().pageFile(topicId)]);
   }
 
-  function hasPage(item) {
-    const d = data();
-    return !!(d && d.pages[item.file]);
-  }
+  function pageText(topicId) { return hasPage(topicId) ? data().pages[S().pageFile(topicId)] : null; }
 
-  function metaOf(item) {
-    if (!hasPage(item)) return {};
-    if (!metaCache[item.file]) metaCache[item.file] = LM.markdown.parseFrontmatter(data().pages[item.file]).meta;
-    return metaCache[item.file];
+  /** Title of a topic: the page's front matter title, else the syllabus title. */
+  function titleOf(topicId) {
+    const text = pageText(topicId);
+    const meta = text ? LM.markdown.parseFrontmatter(text).meta : {};
+    const t = S().topic(topicId);
+    return meta.title || (t ? t.title : topicId);
   }
 
   // =====================================================================
-  // DOPASOWANIE PUNKTÓW LISTY DO PODSTRON
+  // TOPIC PAGE
   // =====================================================================
 
-  function norm(s) {
-    return String(s || "").replace(/\s+/g, " ").trim();
-  }
-
-  /** Przelicza dopasowania dla bieżącej treści. Wynik trzymamy w „links”. */
-  function computeLinks() {
-    const result = { byEssential: {}, byFile: {}, report: [] };
-    const d = data();
-    const content = LM.state.content;
-    if (!d || !content) { links = result; return result; }
-
-    const catOrder = Object.keys(d.index.categories);
-
-    d.index.levels.forEach(function (lvl) {
-      const level = content.levels.find(function (l) { return l.id === lvl.level; });
-      if (!level) return;
-
-      const used = new Set();
-      const all = [];
-      Object.keys(level.content).forEach(function (catId) {
-        level.content[catId].essentials.forEach(function (e) {
-          if (!U.isBlank(e.text)) all.push(e);
-        });
-      });
-
-      function link(item, essential, how) {
-        used.add(essential.id);
-        const info = { item: item, essential: essential, how: how, available: hasPage(item), level: lvl.level };
-        result.byEssential[essential.id] = info;
-        result.byFile[item.file] = info;
-        result.report.push({ level: lvl.level, id: item.id, label: item.label, essential: essential.text, how: how, available: info.available });
-      }
-
-      // 1. Dokładne dopasowanie po tekście
-      const pending = [];
-      lvl.items.forEach(function (item) {
-        const hit = all.find(function (e) { return !used.has(e.id) && norm(e.text) === norm(item.label); });
-        if (hit) link(item, hit, "exact");
-        else pending.push(item);
-      });
-
-      // 2. Zapasowo: ta sama pozycja w obrębie kategorii
-      pending.forEach(function (item) {
-        const catId = CATEGORY_MAP[item.category];
-        const bucket = catId && level.content[catId];
-        let candidate = null;
-        if (bucket) {
-          const group = lvl.items
-            .filter(function (it) { return CATEGORY_MAP[it.category] === catId; })
-            .map(function (it, idx) { return { it: it, idx: idx }; })
-            .sort(function (a, b) {
-              const ca = catOrder.indexOf(a.it.category), cb = catOrder.indexOf(b.it.category);
-              if (ca !== cb) return ca - cb;
-              const oa = Number(metaOf(a.it).order) || a.idx + 1, ob = Number(metaOf(b.it).order) || b.idx + 1;
-              return oa - ob;
-            })
-            .map(function (x) { return x.it; });
-          const pos = group.indexOf(item);
-          const essentials = bucket.essentials.filter(function (e) { return !U.isBlank(e.text); });
-          candidate = essentials[pos] && !used.has(essentials[pos].id) ? essentials[pos] : null;
-        }
-        if (candidate) link(item, candidate, "order");
-        else result.report.push({ level: lvl.level, id: item.id, label: item.label, essential: null, how: "none", available: hasPage(item) });
-      });
-    });
-
-    links = result;
-    return result;
-  }
-
-  /** Informacja o podstronie dla punktu essentials (albo null). Tylko istniejące podstrony. */
-  function linkForEssential(essentialId) {
-    const info = links.byEssential[essentialId];
-    return info && info.available ? info : null;
-  }
-
-  /** Raport dopasowania (np. do sprawdzenia w konsoli: LM.handbook.report()). */
-  function report() {
-    return computeLinks().report;
-  }
-
-  // =====================================================================
-  // WIDOK PODSTRONY
-  // =====================================================================
+  function levelCrumb(levelId) { return { label: "Level " + levelId, href: LM.app.levelHash(levelId), onclick: function () { LM.app.goToList({ levelId: levelId }); } }; }
 
   function renderPage(route) {
-    if (route.sciaga) return renderSciaga(route);
+    if (route.cheatsheet) return renderCheatsheet(route);
     const view = document.getElementById("view");
-    computeLinks();
-
-    const found = findItem(route.file);
-    const levelId = found ? found.level : LM.state.ui.levelId;
-    // Ta sama podstrona przerysowana (np. zmiana profilu) → zostaw przewinięcie
-    const keepScroll = view.dataset.file === route.file ? U.getScroll() : 0;
+    const topic = S().topic(route.topicId);
+    const levelId = topic.level;
+    // The same page drawn again (e.g. profile switch) keeps its scroll position
+    const keepScroll = view.dataset.file === topic.id ? U.getScroll() : 0;
     view.className = "view page-view lvl-" + levelId;
-    view.dataset.file = route.file;
+    view.dataset.file = topic.id;
     view.replaceChildren();
+    const crumbs = [levelCrumb(levelId), { label: S().categoryName(topic.category), href: LM.app.levelHash(levelId), onclick: levelCrumb(levelId).onclick }];
 
-    // Okruszki: „Poziom A1 › Czasy › Present Simple” (poziom i kategoria wracają do listy, z jej przewinięciem)
-    const levelCrumb = { label: "Poziom " + levelId, href: "#/" + levelId.toLowerCase(), onclick: function () { goBack(found); } };
-
-    if (!found || !hasPage(found.item)) {
+    if (!hasPage(topic.id)) {
       U.setScroll(0);
-      view.appendChild(el("div", { class: "page-head" }, LM.ui.breadcrumbs([levelCrumb, { label: found ? found.item.label : "Brak podstrony" }])));
-      view.appendChild(el("div", { class: "empty-state" }, [
-        el("p", { class: "empty-state-text", text: found ? "Brak pliku z treścią tej podstrony." : "Nie znaleziono takiej podstrony." }),
-        found ? el("p", { class: "empty-state-hint", text: found.item.label }) : null
+      view.appendChild(el("div", { class: "page-head" }, LM.ui.breadcrumbs(crumbs.concat([{ label: topic.title }]))));
+      view.appendChild(el("section", { class: "card page-pending", "aria-labelledby": "page-pending-title" }, [
+        el("h1", { class: "page-pending-title", id: "page-pending-title", text: topic.title }),
+        el("p", { class: "page-pending-lead", text: S().isAvailable(levelId) ? "This topic is being written." : levelId + " is on its way. This topic is being written." }),
+        topic.example ? el("p", { class: "page-pending-example", lang: LM.APP.targetLang, text: topic.example }) : null,
+        el("p", null, el("a", { class: "btn btn-secondary", href: LM.app.levelHash(levelId) }, LM.ui.withIcon("chevron-left", "Back to level " + levelId)))
       ]));
-      document.title = "English Levels Map (A1–C2)";
+      document.title = topic.title + " · " + APP_TITLE();
       return;
     }
 
-    const doc = LM.markdown.parse(data().pages[found.item.file]);
-    const info = links.byFile[found.item.file];
-    // Nazwa kategorii: najpierw własna nazwa poziomu (categoryLabels), potem ogólna
-    const levelEntry = data().index.levels.find(function (l) { return l.level === found.level; }) || {};
-    const categoryName = (levelEntry.categoryLabels || {})[found.item.category] ||
-      data().index.categories[found.item.category] || "";
-
-    const pageTitle = doc.meta.title || found.item.label;
+    const doc = LM.markdown.parse(pageText(topic.id));
+    const pageTitle = doc.meta.title || topic.title;
     view.appendChild(el("div", { class: "page-head" }, [
-      LM.ui.breadcrumbs([levelCrumb].concat(categoryName ? [{ label: categoryName, href: levelCrumb.href, onclick: levelCrumb.onclick }] : [], [{ label: pageTitle }])),
-      LM.notes ? LM.notes.button(found.item.id, { title: found.level + " · " + (doc.meta.title || found.item.label), route: location.hash }) : null,
-      info ? umiemToggle(info.essential) : null
+      LM.ui.breadcrumbs(crumbs.concat([{ label: pageTitle }])),
+      LM.notes ? LM.notes.button(topic.id, { title: levelId + " · " + pageTitle, route: location.hash }) : null,
+      S().isAvailable(levelId) ? knowToggle(topic) : null
     ]));
 
     const article = el("article", { class: "md" }, LM.markdown.render(doc.blocks, { hiddenSections: HIDDEN_SECTIONS }));
-    // Ramki „Na egzaminie …” po wyjaśnieniu, przed „Życie i egzamin” (A8; dane: powiazania.json)
-    if (LM.c1) LM.c1.insertExamBoxes(article, LM.exams ? LM.exams.examBoxesFor(found.item.id) : LM.c1.examBoxFor(found.item.id));
-    if (LM.callouts) LM.callouts.apply(article); // wyróżnione sekcje i tabele (js/callouts.js)
-    view.appendChild(LM.toc ? LM.toc.wrap(article) : article); // spis treści przy ≥ 4 sekcjach (js/toc.js)
-    // „Sprawdź się”: zestawy zadań tematu i link do Laboratorium czasów (indeks wczytywany na żądanie)
-    if (LM.exercises) view.appendChild(LM.exercises.topicSection(found.item.id));
-    const szBar = LM.trail ? LM.trail.barFor(String(found.item.file).replace(/\.md$/, "")) : null; // „Przystanek N z M” (Szlak)
-    if (szBar) view.appendChild(szBar);
-    view.appendChild(topicNav(found));
-    document.title = (doc.meta.title || found.item.label) + " · English Levels Map";
-    if (LM.profileData) LM.profileData.setLastPage(location.hash, found.level + " · " + (doc.meta.title || found.item.label));
+    // Exam boxes after the explanation (from the exam registry; none until stage E)
+    if (LM.exams && LM.exams.insertExamBoxes) LM.exams.insertExamBoxes(article, LM.exams.examBoxesFor(topic.id));
+    if (LM.callouts) LM.callouts.apply(article); // highlighted sections and tables (js/callouts.js)
+    view.appendChild(LM.toc ? LM.toc.wrap(article) : article); // table of contents at ≥ 4 sections (js/toc.js)
+    // "Check yourself": the topic's exercise sets (index loaded on demand)
+    if (LM.exercises) view.appendChild(LM.exercises.topicSection(topic.id));
+    const trailBar = LM.trail ? LM.trail.barFor(topic.id) : null; // "Stop N of M" (Trail)
+    if (trailBar) view.appendChild(trailBar);
+    view.appendChild(topicNav(topic));
+    document.title = pageTitle + " · " + APP_TITLE();
+    if (LM.profileData) LM.profileData.setLastPage(location.hash, levelId + " · " + pageTitle);
     U.setScroll(keepScroll);
   }
 
   // =====================================================================
-  // POPRZEDNI / NASTĘPNY TEMAT (paczka v8, S2)
+  // PREVIOUS / NEXT TOPIC
   // =====================================================================
 
-  let topicLinks = null; // { prev, next } dla bieżącej podstrony: { href, label } — dla skrótów [ i ]
+  let topicLinks = null; // { prev, next } for the open page: { href, label } — for the [ and ] shortcuts
 
-  function shortLabel(item) {
-    const t = metaOf(item).title;
-    return t || String(item.label).replace(/\s*\(.*\)\s*$/, "");
-  }
-
-  /** Nawigacja na końcu podstrony: „‹ Poprzedni: …” i „Następny temat: … ›”; na końcu poziomu „Zacznij krainę A2 ›”. */
-  function topicNav(found) {
-    const lvl = data().index.levels.find(function (l) { return l.level === found.level; });
-    const avail = lvl ? lvl.items.filter(hasPage) : [];
-    const n = LM.learn.topicNeighbors(avail.map(function (i) { return i.id; }), found.item.id);
-    const byId = function (id) { return id ? avail.find(function (i) { return i.id === id; }) : null; };
-    const prev = byId(n.prev), next = byId(n.next);
-    const nextLevel = LM.LEVEL_IDS[LM.LEVEL_IDS.indexOf(found.level) + 1] || null;
+  /** Footer of a topic page: "‹ Previous: …" and "Next topic: … ›"; at the end of a level "Start A2 ›". */
+  function topicNav(topic) {
+    const ids = S().topics(topic.level).map(function (t) { return t.id; }).filter(function (id) { return id === topic.id || hasPage(id); });
+    const n = LM.learn.topicNeighbors(ids, topic.id);
+    const ids6 = LM.LEVEL_IDS;
+    const nextLevel = ids6[ids6.indexOf(topic.level) + 1] || null;
     topicLinks = {
-      prev: prev ? { href: routeOf(prev), label: shortLabel(prev) } : null,
-      next: next ? { href: routeOf(next), label: shortLabel(next) }
-        : nextLevel ? { href: LM.app.levelHash(nextLevel), label: "Zacznij krainę " + nextLevel } : null
+      prev: n.prev ? { href: routeOf(n.prev), label: titleOf(n.prev) } : null,
+      next: n.next ? { href: routeOf(n.next), label: titleOf(n.next) }
+        : nextLevel ? { href: LM.app.levelHash(nextLevel), label: "Start " + nextLevel } : null
     };
     const items = [];
     items.push(topicLinks.prev
-      ? el("a", { class: "topic-nav-link is-prev", href: topicLinks.prev.href, rel: "prev" }, [LM.icon("chevron-left", { size: 18 }), el("span", null, [el("span", { class: "topic-nav-kicker", text: "Poprzedni" }), el("span", { class: "topic-nav-title", text: topicLinks.prev.label })])])
+      ? el("a", { class: "topic-nav-link is-prev", href: topicLinks.prev.href, rel: "prev" }, [LM.icon("chevron-left", { size: 18 }), el("span", null, [el("span", { class: "topic-nav-kicker", text: "Previous" }), el("span", { class: "topic-nav-title", text: topicLinks.prev.label })])])
       : el("span", { class: "topic-nav-gap" }));
     if (topicLinks.next) {
       items.push(el("a", { class: "topic-nav-link is-next", href: topicLinks.next.href, rel: "next" }, [
-        el("span", null, [el("span", { class: "topic-nav-kicker", text: next ? "Następny temat" : "Koniec poziomu " + found.level }), el("span", { class: "topic-nav-title", text: topicLinks.next.label })]),
+        el("span", null, [el("span", { class: "topic-nav-kicker", text: n.next ? "Next topic" : "End of " + topic.level }), el("span", { class: "topic-nav-title", text: topicLinks.next.label })]),
         LM.icon("chevron-right", { size: 18 })
       ]));
     }
-    return el("nav", { class: "page-foot topic-nav", "aria-label": "Poprzedni i następny temat" }, items);
+    return el("nav", { class: "page-foot topic-nav", "aria-label": "Previous and next topic" }, items);
   }
 
-  // Skróty: [ poprzedni temat, ] następny temat (poza polami tekstowymi)
+  // Shortcuts: [ previous topic, ] next topic (outside text fields)
   document.addEventListener("keydown", function (e) {
     if (!LM.state || LM.state.view !== "page" || !topicLinks || e.ctrlKey || e.metaKey || e.altKey) return;
     const t = e.target;
@@ -274,106 +151,118 @@ window.LM = window.LM || {};
   });
 
   // =====================================================================
-  // ŚCIĄGA POZIOMU (niezbednik/sciagi/<poziom>.md), adres #/a2/sciaga (spec v6 16, sekcja 1)
+  // CHEAT SHEET (content/cheatsheets/<level>.md), route #/a2/cheatsheet
   // =====================================================================
 
   let printPending = false;
 
-  function sciagaRoute(levelId) { return "#/" + levelId.toLowerCase() + "/sciaga"; }
+  function cheatsheetRoute(levelId) { return "#/" + levelId.toLowerCase() + "/cheatsheet"; }
 
-  function sciagaText(levelId) {
+  function cheatsheetText(levelId) {
     const d = data();
-    return (d && d.sciagi && d.sciagi[levelId]) || null;
+    return (d && d.cheatsheets && d.cheatsheets[levelId]) || null;
   }
 
-  function printSciaga() { if (LM.print) LM.print.now(); else window.print(); }
+  function printCheatsheet() { if (LM.print) LM.print.now(); else window.print(); }
 
-  /** Strona ściągi: na ekranie zwykła strona treści z przyciskiem „Drukuj”, w druku jedna kartka A4 w dwóch kolumnach. */
-  function renderSciaga(route) {
+  /** On screen a normal content page with a Print button; in print one A4 sheet in two columns. */
+  function renderCheatsheet(route) {
     const view = document.getElementById("view");
-    const levelId = route.sciaga;
-    const text = sciagaText(levelId);
-    const keepScroll = view.dataset.file === route.file ? U.getScroll() : 0;
+    const levelId = route.level;
+    const text = S().isAvailable(levelId) ? cheatsheetText(levelId) : null;
+    const key = "#cheatsheet:" + levelId;
+    const keepScroll = view.dataset.file === key ? U.getScroll() : 0;
     view.className = "view page-view sciaga-view lvl-" + levelId;
-    view.dataset.file = route.file;
+    view.dataset.file = key;
     view.replaceChildren();
-    const levelCrumb = { label: "Poziom " + levelId, href: "#/" + levelId.toLowerCase() };
+    const crumb = levelCrumb(levelId);
     if (!text) {
-      view.appendChild(el("div", { class: "page-head" }, LM.ui.breadcrumbs([levelCrumb, { label: "Ściąga" }])));
-      view.appendChild(el("div", { class: "empty-state" }, el("p", { class: "empty-state-text", text: "Nie ma jeszcze ściągi dla poziomu " + levelId + "." })));
-      document.title = "English Levels Map (A1–C2)";
+      view.appendChild(el("div", { class: "page-head" }, LM.ui.breadcrumbs([crumb, { label: "Cheat sheet" }])));
+      view.appendChild(el("div", { class: "empty-state" }, el("p", { class: "empty-state-text", text: "There is no cheat sheet for " + levelId + " yet." })));
+      document.title = "Cheat sheet " + levelId + " · " + APP_TITLE();
       return;
     }
     const doc = LM.markdown.parse(text);
-    const title = doc.meta.title || "Ściąga " + levelId;
+    const title = doc.meta.title || "Cheat sheet " + levelId;
     view.appendChild(el("div", { class: "page-head sciaga-tools" }, [
-      LM.ui.breadcrumbs([levelCrumb, { label: "Ściąga" }]),
-      el("button", { type: "button", class: "btn btn-primary sciaga-print", onclick: printSciaga }, LM.ui.withIcon("download", "Drukuj"))
+      LM.ui.breadcrumbs([crumb, { label: "Cheat sheet" }]),
+      el("button", { type: "button", class: "btn btn-primary sciaga-print", onclick: printCheatsheet }, LM.ui.withIcon("download", "Print"))
     ]));
     view.appendChild(el("header", { class: "sciaga-head" }, [
       el("span", { class: "sciaga-code", "aria-hidden": "true", text: levelId }),
       el("div", { class: "sciaga-head-text" }, [
         el("p", { class: "sciaga-title", text: title }),
-        el("p", { class: "sciaga-sub", text: "Poziom " + levelId + " · English Levels Map" })
+        el("p", { class: "sciaga-sub", text: "Level " + levelId + " · " + APP_TITLE() })
       ])
     ]));
-    // Nagłówek # z pliku zastępuje powyższy nagłówek strony — nie powtarzamy go w treści
+    // The file's first # heading is replaced by the header above
     const blocks = doc.blocks.filter(function (b, i) { return !(b.type === "heading" && b.level === 1 && i === 0); });
-    const article = el("article", { class: "md sciaga" }, LM.markdown.render(blocks));
-    view.appendChild(article);
-    document.title = title + " · English Levels Map";
+    view.appendChild(el("article", { class: "md sciaga" }, LM.markdown.render(blocks)));
+    document.title = title + " · " + APP_TITLE();
     if (LM.profileData) LM.profileData.setLastPage(location.hash, title);
     U.setScroll(keepScroll);
-    if (printPending) { printPending = false; setTimeout(printSciaga, 300); }
+    if (printPending) { printPending = false; setTimeout(printCheatsheet, 300); }
   }
 
-  /** Karta „Ściąga A2 – jedna strona do druku” na stronie poziomu (Otwórz / Drukuj) albo null, gdy poziom nie ma ściągi. */
-  function sciagaCard(levelId) {
-    const text = sciagaText(levelId);
+  /** "Cheat sheet A2" card on the level page (Open / Print), or null when the level has none. */
+  function cheatsheetCard(levelId) {
+    const text = S().isAvailable(levelId) ? cheatsheetText(levelId) : null;
     if (!text) return null;
     const meta = LM.markdown.parseFrontmatter(text).meta;
     return el("section", { class: "card lf-level-card sciaga-card lvl-" + levelId, "aria-labelledby": "sciaga-card-title" }, [
       el("div", { class: "lf-level-card-body" }, [
-        el("h2", { class: "section-title", id: "sciaga-card-title" }, [el("span", { class: "callout-icon", "aria-hidden": "true" }, LM.icon("file-text", { size: 20 })), "Ściąga " + levelId + " – jedna strona do druku"]),
-        el("p", { text: meta.summary || "Najważniejsze wzory, zwroty i pułapki poziomu na jednej kartce A4." })
+        el("h2", { class: "section-title", id: "sciaga-card-title" }, [el("span", { class: "callout-icon", "aria-hidden": "true" }, LM.icon("file-text", { size: 20 })), "Cheat sheet " + levelId + ": one page to print"]),
+        el("p", { text: meta.summary || "The key forms, phrases and traps of the level on one A4 page." })
       ]),
       el("div", { class: "sciaga-card-actions" }, [
-        el("a", { class: "btn btn-primary", href: sciagaRoute(levelId) }, LM.ui.withIcon("file-text", "Otwórz")),
-        el("button", { type: "button", class: "btn btn-secondary", onclick: function () { printPending = true; location.hash = sciagaRoute(levelId); } }, LM.ui.withIcon("download", "Drukuj"))
+        el("a", { class: "btn btn-primary", href: cheatsheetRoute(levelId) }, LM.ui.withIcon("file-text", "Open")),
+        el("button", { type: "button", class: "btn btn-secondary", onclick: function () { printPending = true; location.hash = cheatsheetRoute(levelId); } }, LM.ui.withIcon("download", "Print"))
       ])
     ]);
   }
 
   // =====================================================================
-  // PODSUMOWANIE POZIOMU (niezbednik/podsumowania/<poziom>.md)
+  // LEVEL SUMMARY (content/summaries/<level>.md)
   // =====================================================================
 
-  /** Karta z podsumowaniem poziomu albo null, gdy nie ma pliku. */
   function renderSummary(levelId) {
     const d = data();
-    const text = d && d.summaries && d.summaries[levelId];
+    const text = S().isAvailable(levelId) && d && d.summaries && d.summaries[levelId];
     if (!text) return null;
     const doc = LM.markdown.parse(text);
-    const section = el("section", { class: "card level-summary md", "aria-labelledby": "summary-title" },
-      LM.markdown.render(doc.blocks));
-    // Nagłówek z pliku („## Podsumowanie poziomu A1”) jest tytułem sekcji
+    const section = el("section", { class: "card level-summary md", "aria-labelledby": "summary-title" }, LM.markdown.render(doc.blocks));
     const h2 = section.querySelector("h2");
     if (h2) { h2.id = "summary-title"; h2.classList.add("section-title"); }
-    markSubheads(section);
+    // Paragraphs that are only bold text become subheadings
+    section.querySelectorAll("p").forEach(function (p) {
+      if (p.childNodes.length === 1 && p.firstChild.nodeName === "STRONG") p.classList.add("md-subhead");
+    });
     if (LM.callouts) LM.callouts.apply(section);
     return section;
   }
 
-  /** Akapity złożone z samego pogrubienia (np. „**Kluczowe myśli**”) → śródtytuły. */
-  function markSubheads(root) {
-    root.querySelectorAll("p").forEach(function (p) {
-      if (p.childNodes.length === 1 && p.firstChild.nodeName === "STRONG") p.classList.add("md-subhead");
-    });
-  }
+  // =====================================================================
+  // HOME (content/home.md), route #/
+  // =====================================================================
 
-  // =====================================================================
-  // STRONA GŁÓWNA (niezbednik/strona-glowna.md), adres #/
-  // =====================================================================
+  /** The six levels with their land and status, linked to the level pages (used when home.md has no level table). */
+  function levelOverview() {
+    return el("section", { class: "card home-levels", "aria-labelledby": "home-levels-title" }, [
+      el("h2", { class: "section-title", id: "home-levels-title", text: "Levels" }),
+      el("ul", { class: "home-level-list" }, S().levelIds().map(function (id) {
+        const l = S().level(id);
+        const soon = !S().isAvailable(id);
+        return el("li", { class: "home-level lvl-" + id + (soon ? " is-soon" : "") }, el("a", { class: "home-level-link", href: LM.app.levelHash(id) }, [
+          el("span", { class: "home-level-icon", "aria-hidden": "true" }, LM.ui.landIcon(id, { size: 28 })),
+          el("span", { class: "home-level-text" }, [
+            el("strong", { text: id + " · " + l.land }),
+            el("span", { class: "home-level-goal", text: l.goal })
+          ]),
+          soon ? el("span", { class: "chip home-level-soon", text: "Soon" }) : null
+        ]));
+      }))
+    ]);
+  }
 
   function renderHome() {
     const view = document.getElementById("view");
@@ -381,115 +270,91 @@ window.LM = window.LM || {};
     view.className = "view home-view";
     view.dataset.file = "#home";
     view.replaceChildren();
-    document.title = "English Levels Map (A1–C2)";
+    document.title = APP_TITLE();
 
     const d = data();
     if (!d || !d.home) {
-      view.appendChild(el("div", { class: "empty-state" },
-        el("p", { class: "empty-state-text", text: "Wybierz poziom z listy po lewej." })));
+      view.appendChild(LM.ui.pageHead({ title: APP_TITLE(), lead: LM.APP.tagline }));
+      if (LM.today && LM.today.compactTrail) view.appendChild(LM.today.compactTrail());
+      view.appendChild(levelOverview());
       return;
     }
     const doc = LM.markdown.parse(d.home);
     const article = el("article", { class: "md home" }, LM.markdown.render(doc.blocks));
     linkLevelTable(article);
     if (LM.callouts) LM.callouts.apply(article);
-    // Szlak w wariancie kompaktowym nad tabelą „Poziomy w skrócie” (mapa krain, spec 19 C2)
     if (LM.today && LM.today.compactTrail) {
-      const levels = Array.prototype.find.call(article.querySelectorAll(".md-section"), function (s) {
-        const h = s.querySelector("h2");
-        return h && h.textContent.trim().toLowerCase() === "poziomy w skrócie";
-      });
-      if (levels) article.insertBefore(LM.today.compactTrail(), levels);
+      const first = article.querySelector(".md-section");
+      if (first) article.insertBefore(LM.today.compactTrail(), first); else article.appendChild(LM.today.compactTrail());
     }
-    // Sekcja „Twoje egzaminy” (kafle-okładki moich egzaminów) pod wstępem strony głównej
-    if (LM.c1 && LM.examCover) LM.c1.insertAfterIntro(article, LM.examCover.homeSection());
+    if (LM.exams && LM.exams.insertAfterIntro && LM.examCover) LM.exams.insertAfterIntro(article, LM.examCover.homeSection());
     view.appendChild(article);
     U.setScroll(keepScroll);
   }
 
-  /** W tabeli „Poziomy w skrócie” kody A1…C2 w 1. kolumnie stają się linkami do poziomów. */
+  /** In home.md tables the level codes A1…C2 of the first column become links to the level pages. */
   function linkLevelTable(root) {
-    root.querySelectorAll(".md-section").forEach(function (section) {
-      const h2 = section.querySelector("h2");
-      if (!h2 || h2.textContent.trim().toLowerCase() !== "poziomy w skrócie") return;
-      section.querySelectorAll("tbody tr").forEach(function (tr) {
-        const cell = tr.cells[0];
-        const code = cell ? cell.textContent.trim().toUpperCase() : "";
-        if (LM.LEVEL_IDS.indexOf(code) === -1) return;
-        tr.classList.add("lvl-row", "lvl-" + code); // pasek i tło wiersza w kolorze krainy
-        cell.replaceChildren(el("a", {
-          class: "level-link lvl-" + code,
-          href: LM.app.levelHash(code),
-          "aria-label": "Przejdź do poziomu " + code
-        }, [el("span", { class: "level-dot", "aria-hidden": "true" }), code]));
-      });
+    root.querySelectorAll("tbody tr").forEach(function (tr) {
+      const cell = tr.cells[0];
+      const code = cell ? cell.textContent.trim().toUpperCase() : "";
+      if (LM.LEVEL_IDS.indexOf(code) === -1) return;
+      tr.classList.add("lvl-row", "lvl-" + code);
+      cell.replaceChildren(el("a", { class: "level-link lvl-" + code, href: LM.app.levelHash(code), "aria-label": "Go to level " + code }, [el("span", { class: "level-dot", "aria-hidden": "true" }), code]));
     });
   }
 
-  /** Przełącznik „Umiem” — ten sam stan co checkbox na liście (aktywny profil). */
-  function umiemToggle(essential) {
-    const done = LM.state.progress[essential.id] === true;
+  // =====================================================================
+  // "I KNOW THIS"
+  // =====================================================================
+
+  /** The page's "I know this" switch: the same state as the checkbox on the level page (active profile). */
+  function knowToggle(topic) {
+    const done = LM.state.progress[topic.id] === true;
     const label = el("label", { class: "umiem umiem-lg" + (done ? " is-done" : "") }, [
       el("input", {
         type: "checkbox",
         checked: done,
-        "aria-label": "Umiem: " + essential.text,
+        "aria-label": "I know this: " + topic.title,
         onchange: function (e) {
-          if (!LM.app.hasProfiles()) { // tryb gościa: najpierw profil, potem zaznaczenie (strona przerysuje się sama)
+          if (!LM.app.hasProfiles()) { // guest mode: profile first, then the tick (the page redraws itself)
             const input = e.target, on = input.checked;
             input.checked = !on;
-            LM.app.withProfile("Zaznaczenia „Umiem” zapisują się w profilu.", function () { LM.app.setProgress(essential.id, on); LM.app.renderAll(); });
+            LM.app.withProfile("Your ticks are saved in your profile.", function () { LM.app.setProgress(topic.id, on); LM.app.renderAll(); });
             return;
           }
-          LM.app.setProgress(essential.id, e.target.checked);
-          label.classList.toggle("is-fresh", e.target.checked); // pieczątka „odbija się” tylko przy zaznaczeniu
+          LM.app.setProgress(topic.id, e.target.checked);
+          label.classList.toggle("is-fresh", e.target.checked);
         }
       }),
-      el("span", { text: "Umiem" })
+      el("span", { text: "I know this" })
     ]);
     return label;
   }
 
-  /** Punkt listy („Umiem”) powiązany z tematem niezbędnika: { id, text, done } albo null. */
-  function essentialForTopic(topicId) {
-    computeLinks();
-    const files = Object.keys(links.byFile);
-    for (let i = 0; i < files.length; i++) {
-      const info = links.byFile[files[i]];
-      if (info.item.id === topicId) return { id: info.essential.id, text: info.essential.text, done: LM.state.progress[info.essential.id] === true };
-    }
-    return null;
+  /** Checklist entry of a topic: { id, text, done } or null (topic of a "soon" level or unknown). */
+  function checkItem(topicId) {
+    const t = S().topic(topicId);
+    if (!t || !S().isAvailable(t.level)) return null;
+    return { id: t.id, text: t.title, done: LM.state.progress[t.id] === true };
   }
 
-  function goBack(found) {
-    const target = { levelId: found ? found.level : LM.state.ui.levelId, categoryId: null };
-    if (found) {
-      const info = links.byFile[found.item.file];
-      // Wracamy do kategorii, w której jest punkt
-      if (info) {
-        const level = LM.state.content.levels.find(function (l) { return l.id === found.level; });
-        Object.keys(level.content).forEach(function (catId) {
-          if (level.content[catId].essentials.indexOf(info.essential) !== -1) target.categoryId = catId;
-        });
-      } else {
-        target.categoryId = CATEGORY_MAP[found.item.category] || null;
-      }
-    }
-    LM.app.goToList(target);
-  }
+  // [[topic id]] links in Markdown: the topic page (its title); a topic of a "soon" level is shown without a link (E1)
+  LM.markdown.resolveWiki = function (id) {
+    const t = S().topic(id);
+    if (!t) return null;
+    return { href: S().isAvailable(t.level) ? routeOf(id) : null, text: titleOf(id), level: t.level, kind: "page" };
+  };
 
   LM.handbook = {
     routeOf: routeOf,
     parseRoute: parseRoute,
-    findItem: findItem,
-    computeLinks: computeLinks,
-    linkForEssential: linkForEssential,
-    essentialForTopic: essentialForTopic,
+    hasPage: hasPage,
+    titleOf: titleOf,
+    checkItem: checkItem,
     renderPage: renderPage,
     renderSummary: renderSummary,
-    sciagaCard: sciagaCard,
-    sciagaRoute: sciagaRoute,
-    renderHome: renderHome,
-    report: report
+    cheatsheetCard: cheatsheetCard,
+    cheatsheetRoute: cheatsheetRoute,
+    renderHome: renderHome
   };
 })(window.LM);

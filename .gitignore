@@ -11,3 +11,6 @@ polish-levels-map-*.json
 # OS / editor
 .DS_Store
 Thumbs.db
+
+# Source materials shared by the learner (reference only, never published: content is original, CLAUDE.md rule 8)
+*.pdf

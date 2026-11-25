@@ -27,21 +27,14 @@ window.LM = window.LM || {};
   const filter = { level: "" };
   const gen = { from: "A1", to: "C2", topics: null, types: null, count: 10, mode: "learn", message: "" };
 
-  /** Kategorie z niezbednik/index.json ({ czasy: "Czasy", … }). */
-  function categories() { return (LM.PAGES && LM.PAGES.index.categories) || {}; }
+  /** Syllabus categories ({ cases: "Cases", … }). */
+  function categories() { return LM.syllabus.categories(); }
 
-  /** Punkt niezbędnika po id: { id, level, category, title, href }. */
+  /** A syllabus topic by id: { id, level, category, title, href }. */
   function topicMeta(id) {
-    const N = LM.PAGES;
-    if (!N) return null;
-    for (const lvl of N.index.levels) {
-      const item = lvl.items.find(function (it) { return it.id === id; });
-      if (item) {
-        const info = ex().topicInfo(id);
-        return { id: id, level: lvl.level, category: item.category, title: info ? info.title : item.label, href: info ? info.href : null };
-      }
-    }
-    return null;
+    const t = LM.syllabus.topic(id);
+    if (!t) return null;
+    return { id: id, level: t.level, category: t.category, title: LM.handbook.titleOf(id), href: LM.handbook.routeOf(id) };
   }
 
   function levelIn(level, from, to) {
@@ -105,9 +98,8 @@ window.LM = window.LM || {};
   }
 
   function levelName(id) {
-    const level = LM.state.content.levels.find(function (l) { return l.id === id; });
-    const m = level && /^\*\*(.+?)\*\*/.exec(String(level.description || ""));
-    return m ? m[1] : "";
+    const level = LM.syllabus.level(id);
+    return level ? level.land : "";
   }
 
   // =====================================================================

@@ -106,7 +106,7 @@ window.LM = window.LM || {};
     const sel = el("select", { id: "fc-status", class: "field", onchange: function () { filter.status = sel.value; paint(); } },
       statuses.map(function (x) { return el("option", { value: x[0], selected: filter.status === x[0], text: x[1] }); }));
     // filtr „Egzamin” — tylko gdy talia ma karty z tagami egzaminów (też starsze karty z tagami e8 / matura)
-    const present = L().EXAMS.filter(function (e) { return cards.some(function (c) { return L().examsOf(c).some(function (x) { return x.code === e.code; }); }); });
+    const present = L().examList(LM.EXAM_REGISTRY).filter(function (e) { return cards.some(function (c) { return L().examsOf(c, LM.EXAM_REGISTRY).some(function (x) { return x.code === e.code; }); }); });
     const examSel = present.length ? el("select", { id: "fc-exam", class: "field", onchange: function () { filter.exam = examSel.value; paint(); } },
       [el("option", { value: "all", selected: filter.exam === "all", text: "Wszystkie" })].concat(present.map(function (e) { return el("option", { value: e.code, selected: filter.exam === e.code, text: e.short + " – " + e.name }); }))) : null;
     view.appendChild(el("div", { class: "journal-filters fc-filters", role: "search" }, [
@@ -124,7 +124,7 @@ window.LM = window.LM || {};
       const q = fold(filter.query.trim());
       const shown = cards.filter(function (c) {
         if (filter.status !== "all" && statusOf(st().cards[c.id]).id !== filter.status) return false;
-        if (filter.exam !== "all" && !L().examsOf(c).some(function (e) { return e.code === filter.exam; })) return false;
+        if (filter.exam !== "all" && !L().examsOf(c, LM.EXAM_REGISTRY).some(function (e) { return e.code === filter.exam; })) return false;
         return !q || fold(L().frontText(c) + " " + backText(c) + " " + (c.hint || "") + " " + (c.note || "")).indexOf(q) !== -1;
       });
       count.textContent = "Karty: " + shown.length + " z " + cards.length;
@@ -339,7 +339,7 @@ window.LM = window.LM || {};
     if (i !== -1) s.userCards.splice(i, 1);
     delete s.cards[id];
     F().saveState();
-    if (LM.state && LM.state.view === "fiszki") LM.cards.render();
+    if (LM.state && LM.state.view === "cards") LM.cards.render();
   }
 
   // =====================================================================

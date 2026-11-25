@@ -259,16 +259,13 @@ window.LM = window.LM || {};
 
   // ---------- Automatyczny dziennik błędów (spec 03, pkt 2) ----------
 
-  const JOURNAL_CATEGORY = { czasy: "Gramatyka", gramatyka: "Gramatyka", slownictwo: "Słownictwo" };
+  // Mistake-log category of a syllabus category (cases and verbs count as grammar, spec 06 E10)
+  const JOURNAL_CATEGORY = { cases: "Gramatyka", verbs: "Gramatyka", grammar: "Gramatyka", vocabulary: "Słownictwo" };
+  function journalCategoryOf(category) { return JOURNAL_CATEGORY[category] || "Inne"; }
 
   function journalCategory(topic) {
-    const N = LM.PAGES;
-    if (!N || !topic) return "Inne";
-    for (const lvl of N.index.levels) {
-      const it = lvl.items.find(function (x) { return x.id === topic; });
-      if (it) return JOURNAL_CATEGORY[it.category] || "Inne";
-    }
-    return "Inne";
+    const t = topic ? LM.syllabus.topic(topic) : null;
+    return journalCategoryOf(t ? t.category : null);
   }
 
   /** Treść wpisu dziennika dla zadania (kontekst wg typu, wzorcowa odpowiedź, reguła z pułapką). */
@@ -1336,12 +1333,12 @@ window.LM = window.LM || {};
     ]));
   }
 
-  function plural(n, one, few, many) { return LM.c1 ? LM.c1.plural(n, one, few, many) : many; }
+  function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
 
   /** Sugestia „Umiem” (spec 03, pkt 4): dwa ostatnie podejścia do zestawu ≥ 80%; nigdy nie zaznaczamy sami. */
   function umiemSuggestion() {
     if (run.retry || run.isMix || !run.topic || !run.saved || !LM.handbook) return null;
-    const es = LM.handbook.essentialForTopic(run.topic);
+    const es = LM.handbook.checkItem(run.topic);
     if (!es) return null;
     const ok = LM.stats.suggestUmiem(run.saved.recent, { isUmiem: es.done, dismissedDay: pd().umiemDismissed(run.saveId), today: LM.learn.today() });
     return ok ? { essential: es, state: "ask" } : null;
@@ -1783,6 +1780,7 @@ window.LM = window.LM || {};
     setLabels: setLabels,
     setCard: setCard,
     typesText: typesText,
-    topicInfo: topicInfo
+    topicInfo: topicInfo,
+    journalCategoryOf: journalCategoryOf
   };
 })(window.LM);

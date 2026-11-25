@@ -115,7 +115,7 @@ window.LM = window.LM || {};
   // DODAWANIE
   // =====================================================================
 
-  function refreshOpenView() { if (LM.state && LM.state.view === "fiszki" && LM.cards.render) LM.cards.render(); }
+  function refreshOpenView() { if (LM.state && LM.state.view === "cards" && LM.cards.render) LM.cards.render(); }
 
   /** „Dodaj znaczenie”: małe okno z jednym polem, Enter zapisuje (wypełnia hint karty). */
   function addMeaning(id, word) {

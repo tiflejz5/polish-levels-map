@@ -41,7 +41,7 @@ window.LM = window.LM || {};
     return d >= 2 && d <= 4 && (t < 12 || t > 14) ? few : many;
   }
 
-  function categories() { return (LM.PAGES && LM.PAGES.index.categories) || {}; }
+  function categories() { return LM.syllabus.categories(); }
   function categoryLabel(key) { return categories()[key] || key; }
   function categoryOf(item) { return item.category || "gramatyka"; }
 

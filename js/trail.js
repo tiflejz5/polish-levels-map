@@ -41,7 +41,7 @@ window.LM = window.LM || {};
   /** Dane szlaku są wczytane (skrypt startowy), a logika i magazyn gotowe. */
   function loaded() { return !!(LM.TRAIL && LM.trailLogic && LM.trailStore); }
   /** Szlak da się policzyć dla aktywnego profilu. */
-  function ready() { return loaded() && hasProfile() && !!(LM.state && LM.state.content); }
+  function ready() { return loaded() && hasProfile() && !!(LM.state && LM.state.ready); }
 
   function env() {
     return {
@@ -321,9 +321,7 @@ window.LM = window.LM || {};
     }
 
     // punkty checklisty z „Umiem”
-    const content = LM.state.content;
-    const textOf = {};
-    content.levels.forEach(function (lv) { Object.keys(lv.content).forEach(function (cat) { lv.content[cat].essentials.forEach(function (e) { textOf[e.id] = e.text; }); }); });
+    const textOf = function (topicId) { const t = LM.syllabus.topic(topicId); return t ? t.title : topicId; };
     parts.push(el("h3", { class: "sz-sheet-h", text: "Czego się tu uczysz" }));
     parts.push(el("ul", { class: "sz-items" }, (n.stop.items || []).map(function (itemId) {
       const done = LM.state.progress[itemId] === true;
@@ -334,7 +332,7 @@ window.LM = window.LM || {};
           paintSheet(body, id, Object.assign({}, opts, { force: true }));
           refreshView();
         } }),
-        el("span", { text: String(textOf[itemId] || itemId).replace(/\s*\(.*\)\s*$/, "") })
+        el("span", { text: textOf(itemId) })
       ]));
     })));
 
@@ -421,7 +419,7 @@ window.LM = window.LM || {};
     return m ? { kind: "trail", open: m[1] || null } : null;
   }
 
-  function refreshView() { if (LM.state.view === "szlak") render({ kind: "trail", open: null }, { keepScroll: true }); }
+  function refreshView() { if (LM.state.view === "trail") render({ kind: "trail", open: null }, { keepScroll: true }); }
 
   function nodeButton(n, geo) {
     const st = n.current ? "current" : n.status;

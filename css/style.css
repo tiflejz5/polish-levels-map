@@ -2291,6 +2291,34 @@ textarea.field { overflow: auto; }
 .essentials .umiem input { width: 24px; height: 24px; }
 .essentials .ess-link { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .essentials .ess-link-arrow { margin-left: 0; flex-shrink: 0; }
+.wiki-chip.is-soon { cursor: default; text-decoration: none; }
+.wiki-chip-soon { font-size: var(--fs-2xs); font-style: italic; color: var(--ink-muted); }
+/* Topic row: title, the syllabus example in Polish under it, "Being written" when the page is missing */
+.ess-title { display: flex; flex-direction: column; gap: 2px; min-width: 0; white-space: normal; }
+.ess-name { font-weight: 560; }
+.ess-example { font-size: var(--fs-sm); color: var(--ink-muted); overflow-wrap: anywhere; }
+.ess-pending { align-self: flex-start; margin-top: 4px; padding: 1px 8px; border: 1px dashed var(--line-strong); border-radius: var(--radius-pill); font-size: var(--fs-xs); color: var(--ink-muted); }
+/* "Soon" level: planned topics without checkboxes or links (spec 06 E1) */
+.essentials .ess-item.is-planned { grid-template-columns: minmax(0, 1fr); padding-left: 12px; }
+.essentials .ess-item.is-planned:hover { background: none; }
+.essentials.is-planned .section-sub { margin: 0; }
+.level-hero.is-soon .level-hero-ring { align-self: center; }
+.level-soon-chip { font-size: var(--fs-sm); padding: 6px 14px; }
+.sb-item.is-soon .sb-label-sub { font-style: italic; }
+.sb-item.is-soon .sb-ring-wrap { opacity: 0.6; }
+/* Topic page of a syllabus topic without a page yet, and the "Page not found" view */
+.page-pending, .notfound { max-width: 640px; padding: 28px 32px; }
+.page-pending-title, .notfound-title { margin: 0 0 8px; font-size: var(--fs-xl); }
+.page-pending-lead { font-size: var(--fs-md); }
+.page-pending-example { color: var(--ink-muted); }
+/* Home without content/home.md: the six levels */
+.home-levels { padding: 24px 28px; margin-top: var(--space-6); }
+.home-level-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 8px; }
+.home-level-link { display: flex; align-items: center; gap: 14px; min-height: 56px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; box-shadow: inset 4px 0 0 var(--lvl); }
+.home-level-link:hover { background: var(--row-hover); }
+.home-level-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.home-level-goal { font-size: var(--fs-sm); color: var(--ink-muted); }
+.home-level.is-soon .home-level-icon { opacity: 0.6; }
 
 /* Strona główna: wiersze tabeli poziomów w kolorach krain */
 .md tr.lvl-row td:first-child { box-shadow: inset 4px 0 0 var(--lvl); }
