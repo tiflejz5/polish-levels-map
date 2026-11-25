@@ -3003,7 +3003,8 @@ console.log("strip-keys");
     assert.ok(tasks.every(function (t) { return t.id && t.type && t.task && !t.unknown; }));
   });
   test("strip-keys: reorder tiles are not the solution, paradigm keeps only given forms, the same output every run", function () {
-    const sets = files.filter(function (f) { return /exercises/.test(f); }).map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); });
+    // Every set-shaped file (exercise sets, quizzes, final tests); the placement file has questions, not items
+    const sets = files.map(function (f) { return JSON.parse(fs.readFileSync(f, "utf8")); }).filter(function (s) { return Array.isArray(s.items); });
     const items = [].concat.apply([], sets.map(function (s) { return s.items; }));
     tasks.filter(function (t) { return t.type === "reorder"; }).forEach(function (t) {
       const it = items.find(function (x) { return x.id === t.id; });
