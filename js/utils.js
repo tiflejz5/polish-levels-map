@@ -84,11 +84,6 @@ window.LM = window.LM || {};
     return prefix + "_" + Date.now().toString(36) + rand.slice(0, 8);
   }
 
-  /** true, jeśli tekst jest pusty lub zawiera same spacje. */
-  function isBlank(text) {
-    return !text || !String(text).trim();
-  }
-
   /** Dopasowuje wysokość pola tekstowego do treści. */
   function autoGrow(textarea) {
     textarea.style.height = "auto";
@@ -140,7 +135,6 @@ window.LM = window.LM || {};
     appendChildren: appendChildren,
     formatText: formatText,
     uid: uid,
-    isBlank: isBlank,
     autoGrow: autoGrow,
     dateStamp: dateStamp,
     isPlainObject: isPlainObject

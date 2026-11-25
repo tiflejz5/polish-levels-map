@@ -9,7 +9,7 @@
       "status": "active",
       "order": 1,
       "accent": "#2f6f8f",
-      "accent2": "#1f4f66",
+      "accent2": "#7cc4e4",
       "subtitle": "Test fixture of the exams module",
       "description": "A made-up exam that keeps the generic exam code under test. Not real content.",
       "checkedOn": "November 2026",
