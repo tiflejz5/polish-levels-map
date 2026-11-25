@@ -17,7 +17,7 @@
  *   listTitle, listLead(T)  nagłówek i wstęp listy zadań
  *   chips(task, T)          etykiety zadania (Part, gatunek, zakres słów)
  *   genrePage(task)         { href, label } strony o gatunku albo null
- *   timerKey(task)          klucz timera (LM.c1.timer — wspólny dla trenerów)
+ *   timerKey(task)          key of the timer (LM.timer, js/timer.js)
  *   timerNote               opcjonalna wskazówka przy timerze
  *   examExtras              true → egzaminy z rejestru: podany początek, podpunkty do odhaczenia,
  *                           samoocena wg kryteriów (rubric), wzorcowa odpowiedź obok tekstu
@@ -243,7 +243,7 @@ window.LM = window.LM || {};
       const phrasesBtn = task.genre ? el("button", { type: "button", class: "btn btn-secondary btn-small zw-open", "aria-expanded": "false", "aria-controls": "zw-panel",
         onclick: function () { togglePhrases(); } }, LM.ui.withIcon("notebook-text", "Zwroty")) : null;
       view.appendChild(el("div", { class: "c1-writing-bar" }, [
-        LM.c1.timer({ key: cfg.timerKey(task), seconds: T.timeMinutes * 60, label: "Czas", exam: true }),
+        LM.timer({ key: cfg.timerKey(task), seconds: T.timeMinutes * 60, label: "Czas", exam: true }),
         counter,
         phrasesBtn
       ]));

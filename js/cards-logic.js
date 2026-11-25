@@ -616,19 +616,17 @@ window.LM = window.LM || {};
   // EGZAMINY Z TAGÓW KARTY (paczka v6, spec 15, sekcja 3) — bez nowego pola
   // =====================================================================
 
-  const EXAMS = [
-    { code: "e8", short: "E8", name: "egzamin ósmoklasisty" },
-    { code: "mp", short: "MP", name: "matura podstawowa" },
-    { code: "mr", short: "MR", name: "matura rozszerzona" },
-    { code: "b2", short: "B2", name: "egzamin B2 First" },
-    { code: "c1", short: "C1", name: "egzamin C1 Advanced" }
-  ];
+  /** Exams of the registry as chip data: [{ code (lower case tag), short (code), name (label), id }] in registry order. */
+  function examList(registry) {
+    return ((registry && registry.exams) || []).map(function (e) {
+      return { code: String(e.code).toLowerCase(), short: e.code, name: e.label, id: e.id };
+    });
+  }
 
-  /** Kody egzaminów z tagów karty: e8, mp, mr, b2, c1; „matura” = mp + mr. Kolejność stała, bez powtórzeń. */
-  function examsOf(card) {
+  /** Exams whose code is a tag of the card (case does not matter), in registry order. No exam names in code (spec 06 E8). */
+  function examsOf(card, registry) {
     const tags = ((card && card.tags) || []).map(function (t) { return String(t).toLowerCase(); });
-    const has = function (c) { return tags.indexOf(c) !== -1 || (/^m[pr]$/.test(c) && tags.indexOf("matura") !== -1); };
-    return EXAMS.filter(function (e) { return has(e.code); });
+    return examList(registry).filter(function (e) { return tags.indexOf(e.code) !== -1; });
   }
 
   // =====================================================================
@@ -745,7 +743,7 @@ window.LM = window.LM || {};
     MISTAKES_DECK: MISTAKES_DECK, journalSource: journalSource, journalCardId: journalCardId, journalCard: journalCard,
     newJournalState: newJournalState, ensureMistakesDeck: ensureMistakesDeck,
     hasJournalCard: hasJournalCard, gapAnswers: gapAnswers,
-    EXAMS: EXAMS, examsOf: examsOf,
+    examList: examList, examsOf: examsOf,
     VERSION: VERSION, MAX_FIELD: MAX_FIELD, MAX_IMPORT: MAX_IMPORT, DAY_HOUR: DAY_HOUR, TYPES: TYPES, DEFAULT_SETTINGS: DEFAULT_SETTINGS,
     normalize: normalize, levenshtein: levenshtein, checkAnswer: checkAnswer,
     parseCloze: parseCloze, fromAnki: fromAnki, toAnki: toAnki, answersOf: answersOf, frontText: frontText,

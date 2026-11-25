@@ -4,9 +4,8 @@
  *   #/pisanie                              lista wzorców pogrupowana po egzaminie i gatunku
  *   #/pisanie/wzorce/<egzamin>/<id>        wzorzec z komentarzami (widok: js/writing-model.js)
  *
- * Dane: zadania z polem modelNotes w niezbednik/<egzamin>/trening/writing.json (LM.EXAMS[id].trainers
- * dla egzaminów z rejestru, LM.C1.trainers dla Certyfikatu C1). Tekstów `model` nie zmieniamy — komentarze
- * wskazują dokładne fragmenty (kotwice).
+ * Data: tasks with modelNotes in content/exams/<exam>/training/writing.json (the exam's writing trainer,
+ * LM.exams.trainerData). The `model` texts are not changed; the notes point at exact fragments (anchors).
  *
  *   LM.writing.parseRoute(hash), render(), examList() → Promise z [{ exam, T, tasks }]
  *   LM.writing.hrefModel(examId, taskId), LM.writing.pageSection(examId) — sekcja z linkami na stronach „Writing”
@@ -34,16 +33,13 @@ window.LM = window.LM || {};
   const TYPE_ORDER = ["punkty", "lacznik", "rejestr", "struktura", "zakres", "uwaga"];
 
   function reg() { return LM.EXAM_REGISTRY || { exams: [] }; }
-  function plural(n, one, few, many) { return LM.c1 ? LM.c1.plural(n, one, few, many) : many; }
+  function plural(n, one, few, many) { return LM.utils.plural(n, one, few, many); }
   function genreLabel(g) { return GENRES[g] || g; }
   function hrefModel(examId, taskId) { return HASH + "/wzorce/" + examId + "/" + taskId; }
 
-  /** Liczba słów wzorca tak, jak liczy trener danego egzaminu (E8 i matury: bez podanego początku). */
+  /** Words of a model answer, counted as the writing trainer counts them (without the given opening). */
   function wordCount(examId, task) {
-    const text = String(task.model || "");
-    if (!/^certyfikat-/.test(examId) && LM.examLogic && LM.examLogic.countWordsE8) return LM.examLogic.countWordsE8(text, task.opening);
-    const t = text.trim();
-    return t ? t.split(/\s+/).length : 0;
+    return LM.examLogic.countWritingWords(String(task.model || ""), task.opening, LM.lang && LM.lang.countWords);
   }
 
   // =====================================================================
@@ -57,9 +53,7 @@ window.LM = window.LM || {};
     if (cache) return Promise.resolve(cache);
     const list = reg().exams.filter(function (e) { return e.status === "active"; });
     return Promise.all(list.map(function (e) {
-      const load = e.existing
-        ? Promise.resolve(LM.C1 && LM.C1.trainers && LM.C1.trainers["trening-pisanie"])
-        : (LM.exams ? LM.exams.load(e).then(function (d) { return d && d.trainers && d.trainers["trening-pisanie"]; }) : Promise.resolve(null));
+      const load = LM.exams ? LM.exams.load(e).then(function (d) { return d ? LM.exams.trainerData(e, "writing") : null; }) : Promise.resolve(null);
       return load.then(function (T) {
         const tasks = T && T.tasks ? T.tasks.filter(function (t) { return t.model && t.modelNotes; }) : [];
         return tasks.length ? { exam: e, T: T, tasks: tasks } : null;
@@ -72,7 +66,7 @@ window.LM = window.LM || {};
 
   /** Chip egzaminu: skrót + pełna nazwa dla czytników; kolor z rejestru jako dodatek. */
   function examChip(e) {
-    const accent = e.accent || "var(--c1-gold)";
+    const accent = e.accent || "var(--accent)";
     return el("span", { class: "chip wz-exam", style: "--exam: " + accent }, [
       el("span", { "aria-hidden": "true", text: e.code }),
       el("span", { class: "visually-hidden", text: e.label })
@@ -185,7 +179,7 @@ window.LM = window.LM || {};
       if (LM[lazy[0]]) { draw(); return; }
       view.appendChild(el("p", { class: "tool-note", role: "status", text: "Wczytuję…" }));
       LM.loadModule(lazy[1]).then(function () {
-        if (view.isConnected && LM.state.view === "pisanie" && !view.querySelector(".tool-head")) { view.replaceChildren(); draw(); }
+        if (view.isConnected && LM.state.view === "writing" && !view.querySelector(".tool-head")) { view.replaceChildren(); draw(); }
       }, function (err) { console.warn(err.message); view.replaceChildren(el("p", { class: "tool-note", text: "Nie udało się wczytać widoku. Odśwież stronę." })); });
       return;
     }

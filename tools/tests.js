@@ -2010,19 +2010,6 @@ test("interleave: losowe listy — gdy rozdzielenie tematów jest możliwe (żad
   }
 });
 
-console.log("\nRozkład poprawnych liter w zestawach A–D (tools/rozklad-regula.js)");
-test("rozklad-regula: ≤ 50% jednej litery i ≤ 2 z rzędu; dane w repozytorium spełniają regułę", function () {
-  const R = require(path.join(__dirname, "build", "answer-distribution.js"));
-  const mk = function (seq) { return { gaps: seq.split("").map(function (a, i) { return { n: i + 1, options: { A: "a", B: "b", C: "c", D: "d" }, answer: a }; }) }; };
-  assert.strictEqual(R.check(mk("BDAADCCB")), null);
-  assert.ok(/8 z 8/.test(R.check(mk("AAAAAAAA"))));
-  assert.ok(/5 z 8/.test(R.check(mk("AABBBAAA")) || ""), "A5 z 8 przekracza 50%");
-  assert.ok(/z rzędu/.test(R.check(mk("AAABCDBC"))));
-  assert.strictEqual(R.check(mk("AA")), null, "za mało luk, by reguła miała sens");
-  assert.strictEqual(R.check({ items: [] }), null);
-  assert.deepStrictEqual(R.checkAll(), []);
-});
-
 console.log("\nKarty „Moje błędy”: pełny kontekst i podpowiedź zadania (poprawka po v8)");
 require(path.join(__dirname, "..", "js", "mistake-task.js"));
 (function () {
@@ -2366,6 +2353,78 @@ console.log("\nSyllabus: the only list of levels, units, categories and topics (
     });
   } finally {
     global.LM.SYLLABUS = saved;
+  }
+})();
+
+console.log("\nExams: generic module with the fixture exam (spec 06 E8, tools/fixtures/exam-demo)");
+(function () {
+  const fs = require("fs");
+  const os = require("os");
+  const ROOT = path.join(__dirname, "..");
+  const C = require(path.join(__dirname, "build", "common.js"));
+  const FIX = path.join(__dirname, "fixtures", "exam-demo");
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "plm-exam-"));
+  const saved = { reg: global.LM.EXAM_REGISTRY, exams: global.LM.EXAMS, sets: global.LM.SETS_INDEX };
+  const load = function (rel) { const f = path.join(tmp, rel); delete require.cache[f]; require(f); };
+  try {
+    C.useExamsDir(FIX);
+    C.useDataDir(tmp);
+    const report = require(path.join(__dirname, "build", "exams.js"))();
+    require(path.join(__dirname, "build", "exercises.js"))();
+    load("exams-registry.js");
+    load("exam-exam-demo.js");
+    load("sets-index.js");
+    const R = global.LM.EXAM_REGISTRY;
+
+    test("fixture build: registry in order, set ids, set metadata, exam data with pages and the writing trainer", function () {
+      assert.ok(/exam-demo/.test(report), report);
+      assert.deepStrictEqual(R.exams.map(function (e) { return e.id + ":" + e.status; }), ["exam-demo:active", "exam-soon:soon"]);
+      assert.deepStrictEqual(R.exams[0].setIds, ["exam-demo-reading-1"]);
+      assert.strictEqual(R.sets["exam-demo-reading-1"].href, "#/practice/set/exam-demo-reading-1");
+      const D = global.LM.EXAMS["exam-demo"];
+      assert.deepStrictEqual(Object.keys(D.pages).sort(), ["overview", "writing-part"]);
+      assert.deepStrictEqual(D.trainers.writing.wordRange, [40, 80]);
+      assert.strictEqual(global.LM.SETS_INDEX.sets["exam-demo-reading-1"].exam, "exam-demo");
+      assert.strictEqual(global.LM.SETS_INDEX.sets["exam-demo-reading-1"].count, 2);
+      assert.ok(!fs.existsSync(path.join(tmp, "exam-exam-soon.js")), "a soon exam has no data file");
+    });
+
+    test("exam routes: #/exams/<id>[/…]; unknown exam and routes of the original app are not exam routes", function () {
+      global.LM.markdown = global.LM.markdown || {};
+      require(path.join(ROOT, "js", "exam-core.js"));
+      const X = global.LM.exams;
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo"), { examId: "exam-demo", kind: "page", id: "overview" });
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo/writing-part"), { examId: "exam-demo", kind: "page", id: "writing-part" });
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo/practice"), { examId: "exam-demo", kind: "exercises" });
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo/writing/demo-email"), { examId: "exam-demo", kind: "writing", task: "demo-email" });
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-demo/speaking"), { examId: "exam-demo", kind: "speaking" });
+      assert.deepStrictEqual(X.parseRoute("#/exams/exam-soon/anything"), { examId: "exam-soon", kind: "soon" });
+      assert.strictEqual(X.parseRoute("#/exams/no-such-exam"), null);
+      assert.strictEqual(X.parseRoute("#/egzamin-osmoklasisty"), null);
+      assert.strictEqual(X.parseRoute("#/certyfikat-c1/cwiczenia"), null);
+      assert.strictEqual(X.href(R.exams[0]), "#/exams/exam-demo");
+    });
+
+    test("my exams with the fixture: date makes it mine, soon exam never", function () {
+      const EL = global.LM.examLogic;
+      const st = EL.examMyState({ registry: R, examsRecord: { exams: { "exam-demo": { examDate: "2026-12-01" } }, my: { "exam-soon": "pinned" } }, isSetDone: function () { return false; } });
+      assert.deepStrictEqual(EL.myExams(st, R, "2026-11-25"), [{ id: "exam-demo", reason: "date", days: 6 }]);
+      assert.deepStrictEqual(EL.navSplit(R, ["exam-demo"]), { shown: ["exam-demo"], hidden: ["exam-soon"] });
+    });
+
+    test("the real registry is empty until stage E (sidebar group hidden)", function () {
+      assert.ok(!fs.existsSync(path.join(ROOT, "content", "exams", "registry.json")) ||
+        JSON.parse(fs.readFileSync(path.join(ROOT, "content", "exams", "registry.json"), "utf8")).exams.length === 0);
+      const real = fs.readFileSync(path.join(ROOT, "data", "exams-registry.js"), "utf8");
+      assert.ok(/"exams":\[\]/.test(real), "data/exams-registry.js has exams");
+    });
+  } finally {
+    C.useExamsDir(null);
+    C.useDataDir(null);
+    global.LM.EXAM_REGISTRY = saved.reg;
+    global.LM.EXAMS = saved.exams;
+    global.LM.SETS_INDEX = saved.sets;
+    fs.rmSync(tmp, { recursive: true, force: true });
   }
 })();
 

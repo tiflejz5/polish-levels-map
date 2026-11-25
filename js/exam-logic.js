@@ -2,11 +2,9 @@
  * exam-logic.js — czysta logika egzaminów (bez DOM; testy w tools/tests.js).
  * Specyfikacja: docs/rozbudowa-v2/spec/05-egzaminy-i-egzamin-osmoklasisty.md, 5.1–5.2.
  *
- *   countWordsE8(text, opening)   liczba wyrazów wg reguł egzaminu ósmoklasisty:
- *       wyrazy oddzielone spacją; skróty (don't), wyrazy z dywizem, liczby, adresy e-mail,
- *       numery telefonów = 1 wyraz; emotikony i podpis „XYZ” się nie liczą; podany początek
- *       (opening) też nie, jeśli użytkownik go przepisał
- *   writingZone(n, T)             strefa licznika: low (< warnBelow), warn (< min), ok, over (> max)
+ *   countWritingWords(text, opening, count)  words of a writing task: count(text) from LM.lang, without the given
+ *                                 opening when the learner copied it (no exam-specific counting rules in code, spec 06 E8)
+ *   writingZone(n, T)             counter zone: low (< warnBelow), warn (< min), ok, over (> max)
  */
 window.LM = window.LM || {};
 
@@ -15,15 +13,14 @@ window.LM = window.LM || {};
 
   const HAS_WORD_CHAR = /[\p{L}\p{N}]/u;
 
-  function countWordsE8(text, opening) {
+  /** Default count when no counter is given: whitespace-separated tokens with a letter or digit. */
+  function plainCount(t) { return t.split(/\s+/).filter(function (w) { return w && HAS_WORD_CHAR.test(w); }).length; }
+
+  function countWritingWords(text, opening, count) {
     let t = String(text || "").replace(/\r\n/g, "\n").trim();
     const open = String(opening || "").trim();
     if (open && t.slice(0, open.length).toLowerCase() === open.toLowerCase()) t = t.slice(open.length);
-    return t.split(/\s+/).filter(function (w) {
-      if (!w || !HAS_WORD_CHAR.test(w)) return false;                      // emotikony, same znaki
-      if (w.replace(/[^\p{L}\p{N}]/gu, "") === "XYZ") return false;        // podpis
-      return true;
-    }).length;
+    return (typeof count === "function" ? count : plainCount)(t.trim());
   }
 
   /** T: { wordRange: [min, max], warnBelow }. */
@@ -36,15 +33,15 @@ window.LM = window.LM || {};
   }
 
   /**
-   * A8: przed którą sekcją artykułu wstawić ramki „Na egzaminie …”. titles = nagłówki ## po kolei.
-   * Pierwsza z: Życie i egzamin, Typowe błędy Polaków, Ćwiczenie; gdy żadnej nie ma — przed sekcją
-   * z odpowiedziami; gdy i jej nie ma — -1 (na koniec artykułu).
+   * Before which section of a topic page the exam boxes go. titles = the ## headings in order (spec 07 §1).
+   * The first of: "Real life vs exam", the common-mistakes heading (LM.APP.mistakesHeading), "Practice"; else before
+   * "Answers"; else -1 (end of the article).
    */
-  function examBoxAnchorIndex(titles) {
+  function examBoxAnchorIndex(titles, mistakesHeading) {
     const norm = titles.map(function (s) { return String(s || "").trim().toLowerCase(); });
-    const before = ["życie i egzamin", "typowe błędy polaków", "ćwiczenie"];
+    const before = ["real life vs exam", String(mistakesHeading || "").trim().toLowerCase(), "practice"].filter(Boolean);
     for (let i = 0; i < norm.length; i++) if (before.indexOf(norm[i]) !== -1) return i;
-    for (let i = 0; i < norm.length; i++) if (norm[i] === "odpowiedzi" || norm[i] === "przykładowe odpowiedzi") return i;
+    for (let i = 0; i < norm.length; i++) if (norm[i] === "answers" || norm[i] === "sample answers") return i;
     return -1;
   }
 
@@ -79,25 +76,18 @@ window.LM = window.LM || {};
   }
 
   /**
-   * Stan potrzebny do myExams z surowych danych: input = { registry, examsRecord: { exams: {id: {examDate}}, my },
-   * c1: { examDate, best }, isSetDone(setId) }. Egzamin „existing” (C1) bierze datę i wyniki z LM.c1 (usuwane w etapie 1B).
-   * Zwraca { dates, doneSets, totalSets, my }.
+   * State for myExams from raw data: input = { registry, examsRecord: { exams: { id: { examDate } }, my }, isSetDone(setId) }.
+   * Returns { dates, doneSets, totalSets, my }.
    */
   function examMyState(input) {
     const rec = input.examsRecord || {};
-    const c1 = input.c1 || {};
     const out = { dates: {}, doneSets: {}, totalSets: {}, my: (rec.my && typeof rec.my === "object") ? rec.my : {} };
     ((input.registry && input.registry.exams) || []).forEach(function (e) {
       const ids = e.setIds || [];
+      const x = rec.exams && rec.exams[e.id];
       out.totalSets[e.id] = ids.length;
-      if (e.existing) {
-        out.dates[e.id] = typeof c1.examDate === "string" ? c1.examDate : "";
-        out.doneSets[e.id] = ids.filter(function (id) { return c1.best && typeof c1.best[id] === "number"; }).length;
-      } else {
-        const x = rec.exams && rec.exams[e.id];
-        out.dates[e.id] = x && typeof x.examDate === "string" ? x.examDate : "";
-        out.doneSets[e.id] = ids.filter(function (id) { return input.isSetDone && input.isSetDone(id); }).length;
-      }
+      out.dates[e.id] = x && typeof x.examDate === "string" ? x.examDate : "";
+      out.doneSets[e.id] = ids.filter(function (id) { return input.isSetDone && input.isSetDone(id); }).length;
     });
     return out;
   }
@@ -148,7 +138,7 @@ window.LM = window.LM || {};
 
   LM.examLogic = {
     navSplit: navSplit,
-    countWordsE8: countWordsE8, writingZone: writingZone, examBoxAnchorIndex: examBoxAnchorIndex,
+    countWritingWords: countWritingWords, writingZone: writingZone, examBoxAnchorIndex: examBoxAnchorIndex,
     daysBetween: daysBetween, formatDatePl: formatDatePl, localToday: localToday, examMyState: examMyState, myExams: myExams
   };
 })(window.LM);

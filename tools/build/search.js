@@ -90,10 +90,10 @@ module.exports = function buildSearch(ctx) {
   });
 
   // ---------- Exams from the registry ----------
-  const regFile = C.content("exams", "registry.json");
+  const regFile = path.join(C.examsDir(), "registry.json");
   const exams = C.exists(regFile) ? (C.readJson(regFile).exams || []) : [];
   exams.forEach(function (exam) {
-    const dir = C.content("exams", exam.id);
+    const dir = path.join(C.examsDir(), exam.id);
     if (exam.status !== "active" || !C.exists(path.join(dir, "manifest.json"))) return;
     C.readJson(path.join(dir, "manifest.json")).sections.forEach(function (sec) {
       (sec.pages || []).forEach(function (pg) {

@@ -13,8 +13,6 @@
 const path = require("path");
 const C = require("./common");
 
-const C1_TYPES = ["multiple-choice-cloze", "word-formation", "open-cloze", "transformation"];
-
 function typeCounts(items) {
   const out = {};
   items.forEach(function (it) { out[it.type] = (out[it.type] || 0) + 1; });
@@ -55,10 +53,10 @@ module.exports = function buildExercises() {
   });
 
   // Item-format sets of active exams (spec 12); the exam's own data is built by build/exams.js
-  const regFile = C.content("exams", "registry.json");
+  const regFile = path.join(C.examsDir(), "registry.json");
   const exams = C.exists(regFile) ? (C.readJson(regFile).exams || []) : [];
   exams.forEach(function (exam) {
-    const dir = C.content("exams", exam.id);
+    const dir = path.join(C.examsDir(), exam.id);
     if (exam.status !== "active" || !C.exists(path.join(dir, "manifest.json"))) return;
     C.readJson(path.join(dir, "manifest.json")).sections.forEach(function (sec) {
       (sec.exerciseGroups || []).forEach(function (g) {
@@ -66,9 +64,9 @@ module.exports = function buildExercises() {
           const file = path.join(dir, meta.file);
           if (!C.exists(file)) { C.warn("exams/" + exam.id + ": no file " + meta.file + " (skipped)"); return; }
           const set = C.readJson(file);
-          if (!Array.isArray(set.items) || C1_TYPES.indexOf(set.type) !== -1) return;
+          if (!Array.isArray(set.items)) { C.warn("exams/" + exam.id + ": " + meta.file + " has no items (skipped)"); return; }
           set.items = set.items.map(function (it) { return Object.assign({ topic: set.topic || null, level: set.level || null, tags: [], setId: meta.id }, it); });
-          const out = writeSet(meta.id, set, "content/exams/" + exam.id + "/" + meta.file);
+          const out = writeSet(meta.id, set, C.examsSource() + "/" + exam.id + "/" + meta.file);
           sets[meta.id] = {
             id: meta.id, topic: null, level: set.level || null, title: set.title || meta.label, intro: set.intro || "",
             count: set.items.length, points: pointsOf(set.items), types: typeCounts(set.items),

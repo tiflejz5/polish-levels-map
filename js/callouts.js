@@ -16,7 +16,6 @@ window.LM = window.LM || {};
   // Kolejność ma znaczenie: pierwsza pasująca reguła wygrywa.
   const CALLOUT_RULES = [
     { match: /^(najczęstsza pułapka|typowe błędy|pułapka)/i, type: "trap", icon: "triangle-alert", label: "Uwaga" },
-    { match: /^na egzaminie c1/i, type: "exam", icon: "award", label: "Egzamin C1" },
     { match: /^życie i egzamin/i, type: "real-exam", icon: "arrow-left-right", label: "Życie i egzamin" },
     { match: /^(kluczowe myśli|co umiesz)/i, type: "key", icon: "sparkles", label: "Najważniejsze" },
     { match: /^(jesteś gotow|co dalej)/i, type: "next", icon: "map-pin", label: "Dalej" },
@@ -64,19 +63,10 @@ window.LM = window.LM || {};
     root.querySelectorAll(".callout-real-exam").forEach(enhanceRealExam);
   }
 
-  // Egzaminy z kolumny „Egzamin”: kod → { nazwa, adres strony egzaminu }
-  const EXAM_LINKS = {
-    E8: { name: "egzamin ósmoklasisty", id: "egzamin-osmoklasisty", route: "#/egzamin-osmoklasisty" },
-    MP: { name: "matura podstawowa", id: "matura-podstawowa", route: "#/matura-podstawowa" },
-    MR: { name: "matura rozszerzona", id: "matura-rozszerzona", route: "#/matura-rozszerzona" },
-    B2: { name: "egzamin B2 First", id: "certyfikat-b2", route: "#/certyfikat-b2" },
-    C1: { name: "egzamin C1 Advanced", id: "certyfikat-c1", route: "#/certyfikat-c1" }
-  };
-
-  /** Kolor egzaminu z rejestru (dane/egzaminy-rejestr.js); C1 i brak rejestru → złoto Certyfikatu. */
-  function examAccent(info) {
-    const reg = LM.EXAM_REGISTRY && LM.EXAM_REGISTRY.exams && LM.EXAM_REGISTRY.exams.find(function (e) { return e.id === info.id; });
-    return reg && reg.accent ? reg.accent : "var(--c1-gold)";
+  /** Exam codes of the "Exam" column → the registry entry (code, label, accent); unknown code → null. */
+  function examByCode(code) {
+    const list = (LM.EXAM_REGISTRY && LM.EXAM_REGISTRY.exams) || [];
+    return list.find(function (e) { return String(e.code).toUpperCase() === String(code).toUpperCase(); }) || null;
   }
 
   /**
@@ -93,13 +83,13 @@ window.LM = window.LM || {};
       const last = cells[2];
       if (!last || last.querySelector(".exam-chip")) return;
       const codes = last.textContent.split("·").map(function (c) { return c.trim(); }).filter(Boolean);
-      if (!codes.length || !codes.every(function (c) { return EXAM_LINKS[c]; })) return;
+      if (!codes.length || !codes.every(examByCode)) return;
       last.classList.add("exam-chips");
       last.replaceChildren.apply(last, codes.map(function (code) {
-        const info = EXAM_LINKS[code];
-        const chip = LM.utils.el("a", { class: "exam-chip", href: info.route, style: "--exam: " + examAccent(info), title: "Przydatne na: " + info.name }, [
-          LM.utils.el("span", { "aria-hidden": "true", text: code }),
-          LM.utils.el("span", { class: "visually-hidden", text: info.name })
+        const e = examByCode(code);
+        const chip = LM.utils.el("a", { class: "exam-chip", href: "#/exams/" + e.id, style: "--exam: " + (e.accent || "var(--accent)"), title: "Useful for: " + e.label }, [
+          LM.utils.el("span", { "aria-hidden": "true", text: e.code }),
+          LM.utils.el("span", { class: "visually-hidden", text: e.label })
         ]);
         return chip;
       }));

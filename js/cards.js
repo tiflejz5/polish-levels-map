@@ -146,7 +146,7 @@ window.LM = window.LM || {};
 
   /** Chipy egzaminów z tagów karty: skrót widoczny, pełny opis dla czytników i w podpowiedzi (spec 15, sekcja 3). */
   function examChips(card) {
-    const ex = L().examsOf(card);
+    const ex = L().examsOf(card, LM.EXAM_REGISTRY);
     if (!ex.length) return null;
     const hint = "Wyrażenia typowe dla zadań tego egzaminu. Oryginalne zdania, nie z arkuszy.";
     return el("p", { class: "fc-exams" }, [
@@ -593,7 +593,7 @@ window.LM = window.LM || {};
     return LM.profileData.entries().find(function (e) { return L().journalSource(e) === card.sourceItemId || L().journalCardId(e) === card.id; }) || null;
   }
 
-  /** Pozycja „błąd” z ref: oryginalne zadanie (silnik ćwiczeń albo widok luki C1 / egzaminu), ocena automatyczna jak dla zadań. */
+  /** A "mistake" item with a ref: the original exercise item, scored automatically like any item. */
   function paintMistakeTask(root, card, entry) {
     const id = card.id;
     root.appendChild(el("div", { class: "fc-session-top" }, [
@@ -605,15 +605,7 @@ window.LM = window.LM || {};
       if (!session || session.current !== id) return;
       if (!desc) { session.taskFallback[id] = true; paintSession(); return; } // zadania nie ma (usunięty zestaw): karta z pełnym kontekstem
       const done = function (res) { finishExercise(id, res); };
-      if (desc.kind === "engine") {
-        LM.exercises.startSingle({ item: desc.item, back: { href: HOME, label: "Fiszki i błędy" }, progress: progressBlock, noJournal: true, onDone: done });
-      } else {
-        root.replaceChildren(el("div", { class: "fc-session-top" }, [
-          el("a", { class: "c1-back fc-back", href: HOME }, LM.ui.withIcon("chevron-left", "Fiszki i błędy")),
-          progressBlock()
-        ]));
-        LM.mistakeTask.mount(root, desc, entry, done);
-      }
+      LM.exercises.startSingle({ item: desc.item, back: { href: HOME, label: "Fiszki i błędy" }, progress: progressBlock, noJournal: true, onDone: done });
     }, function () { session.taskFallback[id] = true; paintSession(); });
   }
 
@@ -993,17 +985,10 @@ window.LM = window.LM || {};
 
   // ---------- Kafelek „Fiszki do egzaminu” na stronach egzaminów (paczka v6, spec 15, sekcja 4) ----------
 
-  const EXAM_DECKS = {
-    "egzamin-osmoklasisty": ["egz-e8"],
-    "matura-podstawowa": ["egz-matura"],
-    "matura-rozszerzona": ["egz-matura"],
-    "certyfikat-b2": ["egz-b2-first"],
-    "certyfikat-c1": ["czasowniki-frazowe", "kolokacje"]
-  };
-
-  /** Kafelek talii pod dany egzamin (id z rejestru egzaminów): nazwa, liczba kart, stan i „Włącz i ucz się” / „Ucz się”. */
+  /** Exam deck tile on an exam's overview: the decks listed in the exam's registry entry ("decks": [deck ids]). */
   function examTile(examId) {
-    const ids = (EXAM_DECKS[examId] || []).filter(function (id) { return index().some(function (d) { return d.id === id; }); });
+    const exam = LM.exams ? LM.exams.byId(examId) : null;
+    const ids = ((exam && exam.decks) || []).filter(function (id) { return index().some(function (d) { return d.id === id; }); });
     if (!ids.length) return null;
     const decks = ids.map(function (id) { return index().find(function (d) { return d.id === id; }); });
     const box = el("section", { class: "card fc-exam-tile", "aria-labelledby": "fc-exam-title-" + examId });

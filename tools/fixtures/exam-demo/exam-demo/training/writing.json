@@ -1,0 +1,26 @@
+{
+  "id": "writing",
+  "timeMinutes": 20,
+  "wordRange": [40, 80],
+  "warnBelow": 30,
+  "genres": { "email": "Email" },
+  "genrePages": { "email": "writing-part" },
+  "messages": { "low": "too short: only content is marked", "over": "longer than the range" },
+  "lowScope": "content",
+  "rubric": [
+    { "id": "content", "label": "Content", "max": 2 },
+    { "id": "language", "label": "Language", "max": 2 }
+  ],
+  "genericChecklist": ["Did I answer every point?"],
+  "tasks": [
+    {
+      "id": "demo-email",
+      "genre": "email",
+      "title": "Fixture email",
+      "prompt": "Write an email of 40–80 words (test fixture task).",
+      "bullets": ["say hello", "ask a question", "say goodbye"],
+      "genreChecklist": ["Did I start and end like an email?"],
+      "points": 4
+    }
+  ]
+}

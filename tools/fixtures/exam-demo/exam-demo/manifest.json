@@ -1,0 +1,23 @@
+{
+  "id": "exam-demo",
+  "sections": [
+    {
+      "id": "start",
+      "label": "Start",
+      "pages": [
+        { "id": "overview", "label": "Overview", "file": "pages/overview.md" },
+        { "id": "writing-part", "label": "Writing part", "file": "pages/writing-part.md", "models": true }
+      ]
+    },
+    {
+      "id": "practice",
+      "label": "Practice",
+      "exerciseGroups": [
+        { "label": "Reading", "sets": [{ "id": "exam-demo-reading-1", "label": "Short texts", "file": "sets/reading-1.json" }] }
+      ],
+      "trainers": [
+        { "id": "writing", "type": "writing", "label": "Writing trainer", "file": "training/writing.json" }
+      ]
+    }
+  ]
+}
