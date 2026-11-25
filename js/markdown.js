@@ -11,6 +11,12 @@
  *   - [[id]] links (resolved by LM.markdown.resolveWiki),
  *   - task lists “- [ ] …” as checkboxes (input.md-task).
  *
+ * Target-language markup (spec 05 §5): *italics* = Polish (lang attribute), every cell of a table column whose
+ * header is the language name ("Polish"), and blockquotes (a final English gloss in parentheses stays outside the
+ * lang span). Rows of such a table and blockquotes get a listen button (spec 06 E5; hidden by CSS without a voice):
+ *   LM.markdown.listenFor(node)  the example (row / blockquote) that contains the node, or null
+ *   LM.markdown.listen(host)     reads it with LM.speech (a dialogue with speaker labels as a script)
+ *
  * SECURITY: the output is built from DOM elements and text nodes.
  * Raw HTML in a .md file is NOT interpreted (it shows as text).
  */
@@ -26,6 +32,8 @@ window.LM = window.LM || {};
   const RE_QUOTE = /^\s*>\s?(.*)$/;
   const RE_TABLE_SEP = /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/;
   const RE_HR = /^\s*([-*_])(\s*\1){2,}\s*$/;
+  // A final English gloss in parentheses at the end of a blockquote line: "… (Good morning.)"
+  const RE_GLOSS = /^(.*\S)\s+(\([^()]+\))\s*$/;
 
   // =====================================================================
   // FRONT MATTER
@@ -330,7 +338,8 @@ window.LM = window.LM || {};
 
   function toDom(nd) {
     if (nd.t === "text") return document.createTextNode(nd.v);
-    const node = el(nd.t);
+    // Italics are reserved for the target language (spec 05 §5); English emphasis is **bold**
+    const node = el(nd.t, nd.t === "em" ? { lang: LM.APP.targetLang } : null);
     nd.children.forEach(function (ch) { node.appendChild(toDom(ch)); });
     return node;
   }
@@ -346,6 +355,53 @@ window.LM = window.LM || {};
   }
 
   // =====================================================================
+  // LISTENING TO EXAMPLES (spec 06 E5)
+  // =====================================================================
+
+  const listenTexts = new WeakMap(); // host (tr / blockquote) → { text } or { lines }
+
+  function listenButton(host, label) {
+    return el("button", {
+      type: "button", class: "btn btn-link listen-btn", lang: LM.APP.uiLocale, "aria-label": label, title: label + " (S)",
+      onclick: function () { listen(host); }
+    }, LM.icon ? LM.icon("volume-2", { size: 16 }) : "▶");
+  }
+
+  let lastHost = null;
+
+  function listen(host) {
+    const t = listenTexts.get(host);
+    if (!t || !LM.speech) return false;
+    if (LM.speech.speaking() && lastHost === host) { LM.speech.stop(); lastHost = null; return false; }
+    lastHost = host;
+    return t.lines ? LM.speech.speakScript(t.lines) : LM.speech.speak(t.text);
+  }
+
+  function listenFor(node) {
+    let n = node && (node.nodeType === 1 ? node : node.parentElement);
+    while (n && n !== document.body) {
+      if (listenTexts.has(n)) return n;
+      n = n.parentElement;
+    }
+    return null;
+  }
+
+  /** Is the table column header the target language's name ("Polish")? */
+  function isTargetColumn(header) {
+    return String(header || "").replace(/[*_`]/g, "").trim().toLowerCase() === String(LM.APP.language).toLowerCase();
+  }
+
+  /** One blockquote line: the Polish text in a lang span, a final gloss "(…)" outside it. */
+  function quoteLine(line) {
+    const m = RE_GLOSS.exec(line);
+    const main = m ? m[1] : line;
+    return {
+      text: main,
+      nodes: [el("span", { lang: LM.APP.targetLang }, inline(main)), m ? el("span", { class: "md-gloss" }, [" ", inline(m[2])]) : null]
+    };
+  }
+
+  // =====================================================================
   // DRAWING BLOCKS
   // =====================================================================
 
@@ -355,8 +411,21 @@ window.LM = window.LM || {};
         return el("h" + b.level, null, inline(b.text));
       case "paragraph":
         return el("p", null, inlineLines(b.lines));
-      case "quote":
-        return el("blockquote", null, el("p", null, inlineLines(b.lines)));
+      case "quote": {
+        const parts = b.lines.map(quoteLine);
+        const p = el("p");
+        parts.forEach(function (part, i) {
+          if (i > 0) p.appendChild(el("br"));
+          part.nodes.forEach(function (n) { if (n) p.appendChild(n); });
+        });
+        const quote = el("blockquote", { class: "has-listen" }, p);
+        const plain = parts.map(function (part) { return plainText(part.nodes[0]); }).filter(Boolean);
+        if (plain.length) {
+          listenTexts.set(quote, { lines: plain });
+          quote.insertBefore(listenButton(quote, "Listen to the text"), p);
+        }
+        return quote;
+      }
       case "hr":
         return el("hr");
       case "list": {
@@ -384,8 +453,22 @@ window.LM = window.LM || {};
           el("thead", null, el("tr", null, b.header.map(function (h, i) {
             return el("th", cellAttrs(i), inline(h));
           }))),
-          el("tbody", null, b.rows.map(function (row) {
-            return el("tr", null, row.map(function (c, i) { return el("td", cellAttrs(i), inline(c)); }));
+          el("tbody", null, b.rows.map(function (row, r) {
+            const tr = el("tr");
+            let said = "";
+            row.forEach(function (c, i) {
+              const target = isTargetColumn(b.header[i]);
+              const td = el("td", Object.assign({}, cellAttrs(i), target ? { lang: LM.APP.targetLang } : null), inline(c));
+              if (target && !said) said = plainText(td);
+              tr.appendChild(td);
+            });
+            if (said) {
+              tr.classList.add("has-listen");
+              listenTexts.set(tr, { text: said });
+              const cell = Array.prototype.find.call(tr.cells, function (td) { return td.getAttribute("lang") === LM.APP.targetLang; });
+              cell.appendChild(listenButton(tr, "Listen to example " + (r + 1)));
+            }
+            return tr;
           }))
         ]));
       }
@@ -436,6 +519,8 @@ window.LM = window.LM || {};
     return root;
   }
 
+  function plainText(node) { return node ? String(node.textContent || "").replace(/\s+/g, " ").trim() : ""; }
+
   /** Full processing of a .md file: { meta, blocks }. */
   function parse(text) {
     const fm = parseFrontmatter(text);
@@ -446,6 +531,8 @@ window.LM = window.LM || {};
     parse: parse,
     parseFrontmatter: parseFrontmatter,
     render: render,
-    inline: inline
+    inline: inline,
+    listen: listen,
+    listenFor: listenFor
   };
 })(window.LM);
