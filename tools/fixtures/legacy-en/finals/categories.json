@@ -1,0 +1,26 @@
+{
+  "note": "topic id -> category of the original app (english-levels-map@275be9f niezbednik/index.json), only topics used by a1.json",
+  "categories": {
+    "a1-czasy-present-simple": "czasy",
+    "a1-czasy-present-continuous": "czasy",
+    "a1-czasy-was-were": "czasy",
+    "a1-czasy-going-to": "czasy",
+    "a1-gramatyka-to-be-have-got": "gramatyka",
+    "a1-gramatyka-zaimki": "gramatyka",
+    "a1-gramatyka-przedimki": "gramatyka",
+    "a1-gramatyka-liczba-mnoga": "gramatyka",
+    "a1-gramatyka-there-is-there-are": "gramatyka",
+    "a1-gramatyka-this-that-these-those": "gramatyka",
+    "a1-gramatyka-can-cant": "gramatyka",
+    "a1-gramatyka-pytania-wh": "gramatyka",
+    "a1-gramatyka-przyimki-miejsca-czasu": "gramatyka",
+    "a1-gramatyka-szyk-zdania": "gramatyka",
+    "a1-funkcje-przedstawianie-sie": "funkcje",
+    "a1-funkcje-dane-osobowe": "funkcje",
+    "a1-funkcje-liczby-godzina-data": "funkcje",
+    "a1-funkcje-zamawianie": "funkcje",
+    "a1-funkcje-prosba-o-powtorzenie": "funkcje",
+    "a1-funkcje-lubie-nie-lubie": "funkcje",
+    "a1-slownictwo": "slownictwo"
+  }
+}
