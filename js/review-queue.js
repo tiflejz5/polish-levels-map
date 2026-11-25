@@ -203,7 +203,7 @@ window.LM = window.LM || {};
   function active() { return !!(LM.app && LM.app.getActiveProfile() && F() && LM.profileData); }
   function now() { return Date.now(); }
 
-  function noVoice() { return !!(LM.exercises && LM.exercises.noEnglishVoice && LM.exercises.noEnglishVoice()); }
+  function noVoice() { return !!(LM.exercises && LM.exercises.noTargetVoice && LM.exercises.noTargetVoice()); }
 
   function weakNow() {
     return LM.stats && LM.profileData ? weakTasks(LM.profileData.attempts(), LM.learn.today(), { noVoice: noVoice() }) : [];

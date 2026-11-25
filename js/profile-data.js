@@ -741,7 +741,7 @@ window.LM = window.LM || {};
     return rec && rec.dismissed ? rec.dismissed[setId] || null : null;
   }
 
-  function dismissUmiem(setId) {
+  function dismissKnown(setId) {
     const pid = activeId();
     if (!pid || !EX_ID.test(setId)) return;
     const rec = record("exercises", pid);
@@ -1124,7 +1124,7 @@ window.LM = window.LM || {};
     setLastMix: setLastMix,
     umiemDismissed: umiemDismissed,
     solvedSetCount: solvedSetCount,
-    dismissUmiem: dismissUmiem,
+    dismissKnown: dismissKnown,
     attempts: attempts,
     addAttempt: addAttempt,
     prefs: prefs,

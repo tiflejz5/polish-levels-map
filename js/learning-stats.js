@@ -172,7 +172,7 @@ window.LM = window.LM || {};
    * recent: the set's results, oldest first [fraction 0–1]; opts: { isKnown, dismissedDay, today }.
    * The last two ≥ 80%, the topic is not marked “I know this”, not declined in the last 14 days.
    */
-  function suggestUmiem(recent, opts) {
+  function suggestKnown(recent, opts) {
     if (!recent || recent.length < 2 || opts.isKnown) return false;
     const last = recent.slice(-2);
     if (!last.every(function (r) { return r >= KNOWN_THRESHOLD; })) return false;
@@ -223,7 +223,7 @@ window.LM = window.LM || {};
     activityGrid: activityGrid,
     mixWeight: mixWeight,
     weakWeight: weakWeight,
-    suggestUmiem: suggestUmiem,
+    suggestKnown: suggestKnown,
     planWrong: planWrong,
     planCorrect: planCorrect
   };
