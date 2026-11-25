@@ -2885,5 +2885,97 @@ console.log("Exercises with Polish data (stage 4)");
   });
 })();
 
+// ---------- Stage 4: validators (E11), Node and Python agree ----------
+console.log("Validators (E11)");
+(function () {
+  const cp = require("child_process");
+  const os = require("os");
+  const REPO = path.join(__dirname, "..");
+  const PY = path.join(REPO, "docs", "plan", "scripts", "validate_plan.py");
+
+  /** A working Python 3 (python3, python, py -3) or null; on Windows "python3" may be a Store shortcut, so each is tried. */
+  function findPython() {
+    const cands = [["python3"], ["python"], ["py", "-3"]];
+    for (let i = 0; i < cands.length; i++) {
+      const r = cp.spawnSync(cands[i][0], cands[i].slice(1).concat(["-c", "import sys; print(sys.version_info[0])"]), { encoding: "utf8" });
+      if (r.status === 0 && /^3/.test(String(r.stdout).trim())) return cands[i];
+    }
+    return null;
+  }
+  function node(root) {
+    const r = cp.spawnSync(process.execPath, [path.join(__dirname, "validate.js"), "--root", root, "--json"], { encoding: "utf8" });
+    return JSON.parse(r.stdout);
+  }
+  function python(py, root) {
+    const r = cp.spawnSync(py[0], py.slice(1).concat(["-X", "utf8", PY, "."]), { cwd: root, encoding: "utf8", env: Object.assign({}, process.env, { PYTHONIOENCODING: "utf-8" }) });
+    const lines = String(r.stdout).split(/\r?\n/);
+    return { errors: lines.filter(function (l) { return /^ERROR /.test(l); }), warnings: lines.filter(function (l) { return /^warn /.test(l); }) };
+  }
+  /** "examples/exercises/x.json #3" from a message of either validator (the place, not the wording). */
+  function place(line) {
+    const m = /(examples[\\/][^\s:]+(?: #\d+)?)/.exec(line.replace(/\\/g, "/"));
+    return m ? m[1].replace(/\\/g, "/") : line;
+  }
+  function tree(examples) {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "plm-val-"));
+    fs.copyFileSync(path.join(REPO, "docs", "plan", "syllabus.json"), path.join(tmp, "syllabus.json"));
+    fs.cpSync(examples, path.join(tmp, "examples"), { recursive: true });
+    return tmp;
+  }
+  const py = findPython();
+
+  test("node validators: the plan examples have 0 errors and 0 warnings", function () {
+    const r = node(path.join(REPO, "docs", "plan"));
+    assert.deepStrictEqual(r.errors, []);
+    assert.deepStrictEqual(r.warnings, []);
+  });
+  test("node validators: content/ has 0 errors", function () {
+    assert.deepStrictEqual(node(path.join(REPO, "content")).errors, []);
+  });
+  test("node validators: the broken fixture fails in the expected places, E11 heuristics warn", function () {
+    const tmp = tree(path.join(__dirname, "fixtures", "validate", "examples"));
+    try {
+      const r = node(tmp);
+      const set = "examples/exercises/a1-cases-accusative-1.json";
+      [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].forEach(function (n) {
+        assert.ok(r.errors.some(function (e) { return place(e) === set + " #" + n; }), "no error at item #" + n);
+      });
+      assert.ok(!r.errors.some(function (e) { return place(e) === set + " #7"; }), "#7 has only warnings");
+      const w7 = r.warnings.filter(function (w) { return place(w) === set + " #7"; }).join("\n");
+      assert.match(w7, /subject pronoun/);
+      assert.match(w7, /only the masculine form/);
+      const two = r.warnings.filter(function (w) { return place(w).indexOf("a1-cases-accusative-2.json") !== -1; });
+      assert.ok(two.some(function (w) { return /without any diacritics/.test(w); }), "no-diacritics warning");
+      assert.ok(!two.some(function (w) { return /form .* is accepted/.test(w); }), "both genders accepted: no warning");
+      assert.ok(r.errors.some(function (e) { return /pages\/a1\/cases-accusative\.md/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /placement\.sample\.json #1/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /lab\/cases\.sample\.json/.test(e) && /7 cases/.test(e); }));
+      assert.ok(r.errors.some(function (e) { return /decks\/case-accusative\.sample\.json #1/.test(e); }));
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  });
+
+  if (!py) {
+    console.log("  skip Python agreement (no Python 3 found)");
+    return;
+  }
+  test("Python and Node agree on the plan examples: 0 errors each", function () {
+    assert.deepStrictEqual(python(py, path.join(REPO, "docs", "plan")).errors, []);
+    assert.deepStrictEqual(node(path.join(REPO, "docs", "plan")).errors, []);
+  });
+  test("Python and Node agree on the broken fixture: the same places have errors (Node may add its own)", function () {
+    const tmp = tree(path.join(__dirname, "fixtures", "validate", "examples"));
+    try {
+      const p = python(py, tmp), n = node(tmp);
+      const pPlaces = Array.from(new Set(p.errors.map(place))).sort();
+      const nPlaces = Array.from(new Set(n.errors.map(place))).sort();
+      assert.ok(pPlaces.length >= 15, "the fixture should break many rules (" + pPlaces.length + ")");
+      pPlaces.forEach(function (x) { assert.ok(nPlaces.indexOf(x) !== -1, "Python flags " + x + ", Node does not"); });
+      assert.strictEqual(n.errors.length >= p.errors.length, true);
+      // Every Python warning place is a Node warning place too
+      p.warnings.map(place).forEach(function (x) { assert.ok(n.warnings.map(place).indexOf(x) !== -1, "Python warns at " + x + ", Node does not"); });
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  });
+})();
+
 console.log("\nResult: " + passed + " ok, " + failures.length + " failed");
 if (failures.length) process.exit(1);

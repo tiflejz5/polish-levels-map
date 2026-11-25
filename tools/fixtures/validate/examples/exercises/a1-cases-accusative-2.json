@@ -1,0 +1,243 @@
+{
+ "version": 1,
+ "id": "a1-cases-accusative-2",
+ "topic": "a1-cases-accusative",
+ "level": "A1",
+ "title": "Accusative: check yourself",
+ "intro": "10 tasks: choose the form, fill the gaps, find the mistake and translate.",
+ "passage": null,
+ "items": [
+  {
+   "id": "a1-cases-accusative-2-01",
+   "type": "multiple-choice",
+   "kind": "form",
+   "tags": [
+    "accusative",
+    "masculine-animate"
+   ],
+   "prompt": "Anna ma ___.",
+   "options": [
+    "mały pies",
+    "małego pies",
+    "małym psem",
+    "małego psa"
+   ],
+   "correct": 3,
+   "explanation": "Pies is an animal: adjective -ego, noun -a (and the e drops out: psa).",
+   "optionNotes": [
+    "Nominative.",
+    "The noun must change too.",
+    "Instrumental.",
+    null
+   ]
+  },
+  {
+   "id": "a1-cases-accusative-2-02",
+   "type": "multiple-choice",
+   "kind": "function",
+   "tags": [
+    "accusative",
+    "feminine",
+    "ordering"
+   ],
+   "prompt": "In a café: Poproszę ___.",
+   "options": [
+    "wodę mineralną",
+    "woda mineralna",
+    "wodą mineralną",
+    "wodę mineralna"
+   ],
+   "correct": 0,
+   "explanation": "Poproszę takes the accusative: wodę (-ę) mineralną (-ą).",
+   "optionNotes": [
+    null,
+    "Nominative.",
+    "Instrumental: both words end in -ą.",
+    "The adjective must change too."
+   ]
+  },
+  {
+   "id": "a1-cases-accusative-2-03",
+   "type": "gap-fill",
+   "tags": [
+    "accusative",
+    "family"
+   ],
+   "text": "Mam {{1}} (brat) i {{2}} (siostra), a moja mama ma dom w Krakowie i lubi tam mieszkac z nami cala rodzina tak.",
+   "gaps": [
+    {
+     "accepted": [
+      "brata"
+     ]
+    },
+    {
+     "accepted": [
+      "siostrę"
+     ]
+    }
+   ],
+   "explanation": "Masculine person: -a. Feminine: -a → -ę."
+  },
+  {
+   "id": "a1-cases-accusative-2-04",
+   "type": "gap-fill",
+   "tags": [
+    "accusative",
+    "masculine-inanimate"
+   ],
+   "text": "Wieczorem oglądam {{1}} (nowy film).",
+   "gaps": [
+    {
+     "accepted": [
+      "nowy film"
+     ]
+    }
+   ],
+   "explanation": "Film is a masculine thing, so the accusative is the same as the nominative."
+  },
+  {
+   "id": "a1-cases-accusative-2-05",
+   "type": "find-error",
+   "tags": [
+    "accusative",
+    "adjectives"
+   ],
+   "tokens": [
+    "Lubię",
+    "polska",
+    "kuchnię."
+   ],
+   "errorRange": [
+    1,
+    1
+   ],
+   "fixes": [
+    "polską"
+   ],
+   "explanation": "The adjective agrees with the noun: polską kuchnię."
+  },
+  {
+   "id": "a1-cases-accusative-2-06",
+   "type": "reorder",
+   "tags": [
+    "accusative",
+    "word-order"
+   ],
+   "context": "Tomek is reading an interesting book.",
+   "answers": [
+    "Tomek czyta ciekawą książkę.",
+    "Ciekawą książkę czyta Tomek."
+   ],
+   "explanation": "The neutral order is subject, verb, object. The endings -ą and -ę show that the book is the object."
+  },
+  {
+   "id": "a1-cases-accusative-2-07",
+   "type": "translate",
+   "tags": [
+    "accusative",
+    "family"
+   ],
+   "source": "I was at home.",
+   "accepted": [
+    "Byłem w domu.",
+    "Byłam w domu."
+   ],
+   "explanation": "Mieć + accusative: siostra → siostrę. The pronoun ja is usually left out."
+  },
+  {
+   "id": "a1-cases-accusative-2-08",
+   "type": "translate",
+   "tags": [
+    "accusative",
+    "adjectives"
+   ],
+   "source": "I like Polish music.",
+   "accepted": [
+    "Lubię polską muzykę.",
+    "Ja lubię polską muzykę."
+   ],
+   "hint": "music = muzyka",
+   "explanation": "Both words change: polska → polską, muzyka → muzykę."
+  },
+  {
+   "id": "a1-cases-accusative-2-09",
+   "type": "paradigm",
+   "tags": [
+    "accusative",
+    "all-genders"
+   ],
+   "prompt": "Finish the sentence “Mam …” with each phrase in the accusative.",
+   "lemma": "Mam …",
+   "gloss": "I have …",
+   "cells": [
+    {
+     "label": "nowy dom",
+     "accepted": [
+      "nowy dom"
+     ]
+    },
+    {
+     "label": "dobry lekarz",
+     "accepted": [
+      "dobrego lekarza"
+     ]
+    },
+    {
+     "label": "mały kot",
+     "accepted": [
+      "małego kota"
+     ]
+    },
+    {
+     "label": "dobra praca",
+     "accepted": [
+      "dobrą pracę"
+     ]
+    },
+    {
+     "label": "nowa lampa",
+     "accepted": [
+      "nową lampę"
+     ]
+    },
+    {
+     "label": "małe dziecko",
+     "accepted": [
+      "małe dziecko"
+     ]
+    }
+   ],
+   "explanation": "Things (dom) and neuter nouns (dziecko) do not change. People and animals: -ego, -a. Feminine: -ą, -ę."
+  },
+  {
+   "id": "a1-cases-accusative-2-10",
+   "type": "match",
+   "tags": [
+    "accusative",
+    "nominative",
+    "instrumental"
+   ],
+   "mode": "halves",
+   "prompt": "Match the beginnings with the endings.",
+   "pairs": [
+    [
+     "Na śniadanie jem",
+     "kanapkę z serem."
+    ],
+    [
+     "To jest",
+     "moja siostra."
+    ],
+    [
+     "Jestem",
+     "nauczycielką."
+    ],
+    [
+     "Często odwiedzam",
+     "starszą siostrę."
+    ]
+   ],
+   "explanation": "To jest + nominative. Jestem + instrumental (-ą). Jem and odwiedzam + accusative (-ę)."
+  }
+ ]
+}
