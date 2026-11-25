@@ -38,5 +38,10 @@
     "file": "tools/tests.js",
     "contains": "// pl-fixture",
     "reason": "target-language (Polish) test data, or fixtures of the language check itself; marked line by line"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "// pl-fixture",
+    "reason": "routes of the original app used as test input (they must show Page not found)"
   }
 ]
