@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "id": "a1-cases-accusative-3",
+  "topic": "a1-cases-accusative",
+  "level": "A1",
+  "title": "Accusative: listen, rewrite, fill the table",
+  "intro": "10 tasks: two dictations, short answers, rewriting, a table of forms, pairs and a translation.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-cases-accusative-3-01",
+      "type": "dictation",
+      "tags": [
+        "accusative",
+        "days",
+        "spelling"
+      ],
+      "text": "W sobotę kupuję nowy telefon i ładną torbę.",
+      "explanation": "W sobotę: a day after w takes -ę. Telefon is a thing and does not change; torba is feminine: ładną torbę."
+    },
+    {
+      "id": "a1-cases-accusative-3-02",
+      "type": "dictation",
+      "tags": [
+        "accusative",
+        "family",
+        "spelling"
+      ],
+      "text": "Mój tata czyta gazetę, a mama ogląda film.",
+      "explanation": "Gazeta → gazetę after czytać. Film is a thing and does not change. Mój tata is the subject, so it stays in the nominative."
+    },
+    {
+      "id": "a1-cases-accusative-3-03",
+      "type": "short-answer",
+      "tags": [
+        "accusative",
+        "masculine-inanimate",
+        "ordering"
+      ],
+      "prompt": "In a café: Poproszę ___. (sok pomarańczowy)",
+      "accepted": [
+        "sok pomarańczowy",
+        "pomarańczowy sok",
+        "soku pomarańczowego"
+      ],
+      "explanation": "Sok is a masculine thing, so the accusative is the same as the nominative. You will also hear Poproszę soku pomarańczowego (the genitive for \"some\"), which is correct too."
+    },
+    {
+      "id": "a1-cases-accusative-3-04",
+      "type": "short-answer",
+      "tags": [
+        "accusative",
+        "family",
+        "feminine"
+      ],
+      "prompt": "Kocham ___. (moja mama)",
+      "accepted": [
+        "moją mamę"
+      ],
+      "explanation": "Kochać takes the accusative. Feminine: moja → moją, mama → mamę."
+    },
+    {
+      "id": "a1-cases-accusative-3-05",
+      "type": "transformation",
+      "tags": [
+        "accusative",
+        "ordering",
+        "feminine"
+      ],
+      "source": "Dla mnie kawa z mlekiem, proszę.",
+      "keyword": "poproszę",
+      "before": "",
+      "after": "z mlekiem.",
+      "answers": [
+        "Poproszę kawę"
+      ],
+      "explanation": "Poproszę takes the accusative: kawa → kawę."
+    },
+    {
+      "id": "a1-cases-accusative-3-06",
+      "type": "transformation",
+      "tags": [
+        "accusative",
+        "masculine-animate",
+        "adjectives"
+      ],
+      "source": "Mamy psa. Pies jest mały.",
+      "keyword": "małego",
+      "before": "Mamy",
+      "after": ".",
+      "answers": [
+        "małego psa",
+        "małego pieska"
+      ],
+      "explanation": "An animal after mieć: the adjective takes -ego and the noun -a. Pies loses its e: psa."
+    },
+    {
+      "id": "a1-cases-accusative-3-07",
+      "type": "paradigm",
+      "tags": [
+        "accusative",
+        "instrumental",
+        "masculine-a"
+      ],
+      "prompt": "Fill in the forms of “nowy kolega”.",
+      "lemma": "nowy kolega",
+      "gloss": "a new friend (a man)",
+      "cells": [
+        {
+          "label": "nominative",
+          "accepted": [
+            "nowy kolega"
+          ],
+          "given": true
+        },
+        {
+          "label": "accusative",
+          "accepted": [
+            "nowego kolegę"
+          ]
+        },
+        {
+          "label": "instrumental",
+          "accepted": [
+            "nowym kolegą"
+          ]
+        }
+      ],
+      "explanation": "Kolega is a man, so the adjective has masculine endings (nowym, nowego), but the noun ends in -a and changes like a feminine noun (kolegą, kolegę)."
+    },
+    {
+      "id": "a1-cases-accusative-3-08",
+      "type": "match",
+      "tags": [
+        "accusative",
+        "daily-life"
+      ],
+      "mode": "halves",
+      "prompt": "Match the beginnings with the endings.",
+      "pairs": [
+        [
+          "Na obiad jem",
+          "zupę pomidorową."
+        ],
+        [
+          "Wieczorem oglądam",
+          "nowy serial."
+        ],
+        [
+          "W niedzielę odwiedzam",
+          "babcię i dziadka."
+        ],
+        [
+          "Rano piję",
+          "mocną kawę."
+        ]
+      ],
+      "explanation": "Every ending is an object in the accusative: zupę, kawę and babcię (-ę), dziadka (a man: -a), serial (a thing: no change)."
+    },
+    {
+      "id": "a1-cases-accusative-3-09",
+      "type": "multiple-choice",
+      "kind": "function",
+      "tags": [
+        "accusative",
+        "masculine-inanimate",
+        "ordering"
+      ],
+      "prompt": "At the cinema: Poproszę ___.",
+      "options": [
+        "bilet",
+        "bileta",
+        "biletem",
+        "biletę"
+      ],
+      "correct": 0,
+      "explanation": "Bilet is a masculine thing, so the accusative is the same as the nominative.",
+      "optionNotes": [
+        null,
+        "-a is only for masculine people and animals.",
+        "Instrumental, used after jestem and z.",
+        "-ę is the ending of feminine nouns."
+      ]
+    },
+    {
+      "id": "a1-cases-accusative-3-10",
+      "type": "translate",
+      "tags": [
+        "accusative",
+        "food",
+        "shopping"
+      ],
+      "source": "I'm buying bread and milk.",
+      "accepted": [
+        "Kupuję chleb i mleko.",
+        "Kupuję mleko i chleb.",
+        "Ja kupuję chleb i mleko.",
+        "Ja kupuję mleko i chleb."
+      ],
+      "explanation": "Chleb (a masculine thing) and mleko (neuter) do not change in the accusative. The pronoun ja is usually left out."
+    }
+  ]
+}

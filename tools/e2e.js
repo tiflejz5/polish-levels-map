@@ -443,6 +443,147 @@ async function main() {
     await s.ctx.close();
   });
 
+  console.log("\nExercises with Polish data (stage 4)");
+  const SETS4 = ["a1-cases-accusative-1", "a1-cases-accusative-2", "a1-cases-accusative-3"];
+  /** Items of the content sets, loaded in the page (data/sets/*.js). */
+  async function setItems(page) {
+    return page.evaluate(function (ids) {
+      return LM.exercises.loadSets(ids).then(function (sets) { return [].concat.apply([], sets.map(function (s) { return s.items; })); });
+    }, SETS4);
+  }
+  /** A fake Polish voice: the engine then shows dictation and listen controls (headless browsers have no voices). */
+  async function fakeVoice(page) {
+    await page.evaluate(function () {
+      LM.speech.status = function () { return "ready"; };
+      LM.speech.available = function () { return true; };
+      LM.speech.speak = function (t, o) { setTimeout(function () { if (o && o.onend) o.onend(); }, 30); return true; };
+    });
+  }
+  /** Answers the item on screen through the UI: right = the model answer, otherwise a wrong one. */
+  async function answer(page, it, right) {
+    await page.evaluate(function (a) {
+      const it = a.it, right = a.right, X = LM.exLogic;
+      const fill = function (el, v) { el.value = v; el.dispatchEvent(new Event("input", { bubbles: true })); };
+      const q = function (s) { return document.querySelector(".ex-card " + s); };
+      const qa = function (s) { return Array.prototype.slice.call(document.querySelectorAll(".ex-card " + s)); };
+      if (it.type === "multiple-choice") {
+        const want = right ? it.options[it.correct] : it.options[(it.correct + 1) % it.options.length];
+        qa(".ex-option").find(function (l) { return l.querySelector(".ex-option-text").textContent === want; }).querySelector("input").click();
+      } else if (it.type === "reorder") {
+        const words = right ? X.answerTokens(it.answers[0], it) : null;
+        if (!words) { while (q(".ex-pool .ex-token")) q(".ex-pool .ex-token").click(); return; }
+        words.forEach(function (w) { qa(".ex-pool .ex-token").find(function (b) { return b.textContent === w; }).click(); });
+      } else if (it.type === "find-error") {
+        qa(".ex-word")[right ? it.errorRange[0] : (it.errorRange[0] + 1) % it.tokens.length].click();
+        if (right && it.errorRange[1] !== it.errorRange[0]) qa(".ex-word")[it.errorRange[1]].click();
+        fill(q("#ex-fix"), right ? it.fixes[0] : "x");
+      } else if (it.type === "short-answer") fill(q(".ex-gap-input"), right ? it.accepted[0] : "x");
+      else if (it.type === "gap-fill") qa(".ex-gap-input").forEach(function (el, i) { fill(el, right || i ? it.gaps[i].accepted[0] : "x"); });
+      else if (it.type === "match") {
+        it.pairs.forEach(function (p, i) {
+          qa(".ex-match-list")[0].querySelectorAll("button")[i].click();
+          const target = right ? p[1] : it.pairs[(i + 1) % it.pairs.length][1];
+          Array.prototype.slice.call(document.querySelectorAll(".ex-card .ex-match-list")[1].querySelectorAll("button"))
+            .find(function (b) { return b.querySelector(".ex-match-text").textContent === target; }).click();
+        });
+      } else if (it.type === "transformation") fill(q(".ex-tr-input"), right ? it.answers[0] : "x y");
+      else if (it.type === "translate") fill(q("#ex-answer"), right ? it.accepted[0] : it.accepted[0].split(" ").slice(1).join(" "));
+      else if (it.type === "dictation") fill(q("#ex-answer"), right ? it.text : it.text.split(" ").slice(0, -1).join(" "));
+      else if (it.type === "paradigm") qa(".ex-par-input:not(.is-given)").forEach(function (el, i) {
+        const open = it.cells.filter(function (c) { return !c.given; });
+        fill(el, right || i ? open[i].accepted[0] : "x");
+      });
+    }, { it: it, right: right });
+    await page.waitForTimeout(80);
+  }
+  async function check(page) { await page.click(".ex-card .ex-check"); await page.waitForTimeout(250); }
+
+  await test("every item type of the Polish sets renders, checks right and wrong answers, and scores in points", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, SINGLE_HOST);
+    await fakeVoice(s.page);
+    const items = await setItems(s.page);
+    const types = {};
+    for (const it of items) {
+      for (const right of [true, false]) {
+        await single(s.page, it);
+        if (it.type === "dictation") await s.page.click(".ex-card button:has-text('Play')");
+        await answer(s.page, it, right);
+        await check(s.page);
+        const verdict = await s.page.innerText(".ex-card .lt-verdict");
+        ok(right ? /^Correct!/.test(verdict) : !/^Correct!/.test(verdict), it.id + (right ? " right: " : " wrong: ") + verdict);
+      }
+      types[it.type] = true;
+    }
+    ok(Object.keys(types).length === 10, "types: " + Object.keys(types).join(", "));
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("paradigm: case labels with questions, Tab goes down the column, Enter checks, wrong cells show the right form", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, SINGLE_HOST);
+    const items = await setItems(s.page);
+    const cases = items.find(function (it) { return it.type === "paradigm" && it.cells.some(function (c) { return c.given; }); });
+    await single(s.page, cases);
+    const labels = await s.page.locator(".ex-par-label").allInnerTexts();
+    ok(/^Nominative \(.+\?\)$/.test(labels[0]) && /^Accusative \(/.test(labels[1]), "labels: " + labels.join(" | "));
+    ok(await s.page.locator(".ex-par-input.is-given[readonly]").count() === 1, "given cell");
+    const six = items.find(function (it) { return it.type === "paradigm" && it.cells.length === 6; });
+    await single(s.page, six);
+    const pos = await s.page.evaluate(function () { return Array.prototype.map.call(document.querySelectorAll(".ex-par-cell"), function (c) { const r = c.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.top)]; }); });
+    ok(pos[0][0] === pos[1][0] && pos[1][1] > pos[0][1] && pos[3][0] > pos[0][0], "two columns filled top to bottom: " + JSON.stringify(pos));
+    await s.page.focus(".ex-par-input >> nth=0");
+    await s.page.keyboard.press("Tab");
+    ok(await s.page.evaluate(function () { return document.activeElement.id; }) === "ex-par-1", "Tab goes to the cell below");
+    await s.page.keyboard.type("dobrego lekarzem"); // pl-fixture: a wrong ending in one cell
+    await s.page.keyboard.press("Enter");
+    await s.page.waitForTimeout(250);
+    ok(await s.page.locator(".ex-par-model").count() === 6, "every unanswered or wrong cell shows the right form");
+    ok(/0 \/ 6 points/.test(await s.page.innerText(".ex-status")), "points in the live status");
+    ok(await s.page.locator(".ex-status[aria-live=polite]").count() === 1, "aria-live");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("paradigm on a 320 px phone: one column, no horizontal scroll, 44 px fields", async function () {
+    const s = await session(320, 700, true);
+    await visit(s.page, SINGLE_HOST);
+    const items = await setItems(s.page);
+    await single(s.page, items.find(function (it) { return it.type === "paradigm" && it.cells.length === 6; }));
+    const d = await s.page.evaluate(function () {
+      const xs = Array.prototype.map.call(document.querySelectorAll(".ex-par-cell"), function (c) { return Math.round(c.getBoundingClientRect().left); });
+      return { one: xs.every(function (x) { return x === xs[0]; }), sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
+        h: Math.min.apply(null, Array.prototype.map.call(document.querySelectorAll(".ex-par-input"), function (i) { return i.getBoundingClientRect().height; })) };
+    });
+    ok(d.one, "one column");
+    ok(d.sw <= d.cw, "horizontal scroll " + d.sw + ">" + d.cw);
+    ok(d.h >= 44, "field height " + d.h);
+    await s.ctx.close();
+  });
+  await test("a whole set ends with the result in points (gap-fill, match and paradigm count a point per part)", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/practice/set/a1-cases-accusative-1", 900);
+    await s.page.click("button:has-text('Start')");
+    const items = await setItems(s.page);
+    for (let i = 0; i < 10; i++) {
+      const id = await s.page.evaluate(function () { return LM.exercises.currentItem().id; });
+      await answer(s.page, items.find(function (it) { return it.id === id; }), i % 3 !== 0);
+      await check(s.page);
+      await s.page.click(".ex-next");
+      await s.page.waitForTimeout(150);
+    }
+    const score = await s.page.innerText(".ex-result-score");
+    ok(/\d+\/19 points/.test(score), "result: " + score);
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("practice hub: the generator lists the new item type", async function () {
+    const s = await session(1280, 900, true);
+    await visit(s.page, "#/practice", 900);
+    ok(await s.page.locator("[data-type='paradigm']").count() === 1, "no paradigm chip");
+    ok(await s.page.locator("[data-type='transformation']").count() === 1 && await s.page.locator("[data-type='short-answer']").count() === 1, "chips");
+    await s.ctx.close();
+  });
+
   console.log("\nPhones");
   await test("no horizontal scroll at 320, 360 and 375 px", async function () {
     const s = await session(375, 812, true);
