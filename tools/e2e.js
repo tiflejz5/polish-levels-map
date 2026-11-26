@@ -130,7 +130,7 @@ async function main() {
   });
   await test("unknown and old routes: \"Page not found\" with a link home, no redirect", async function () {
     const s = await session();
-    for (const r of ["#/nope", "#/a1/no-such-topic", "#/dzis", "#/powtorki", "#/cwiczenia", "#/szlak", "#/certyfikat-c1", "#/egzamin-osmoklasisty", "#/exams/nope", "#/a1/cheatsheet"]) { // pl-fixture: routes of the original app must not exist
+    for (const r of ["#/nope", "#/a1/no-such-topic", "#/dzis", "#/powtorki", "#/cwiczenia", "#/szlak", "#/certyfikat-c1", "#/egzamin-osmoklasisty", "#/exams/nope", "#/a1/sciaga"]) { // pl-fixture: routes of the original app must not exist
       await visit(s.page, r, 500);
       ok(/Page not found/.test(await viewText(s.page)), r + ": no \"Page not found\"");
       ok(await s.page.evaluate(function () { return location.hash; }) === r, r + ": address changed");
