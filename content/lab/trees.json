@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "note": "Engine stage: the Pick the case tree (spec 09 §1). Results for cases without a card yet are shown as being written. The trees Imperfective or perfective?, w or na? and iść, jechać or a prefixed verb? are written in level extras.",
+  "trees": [
+    {
+      "id": "pick-case",
+      "title": "Pick the case",
+      "intro": "Think of one noun in your sentence and answer the questions about it.",
+      "start": "start",
+      "nodes": {
+        "start": {
+          "question": "Is there a preposition right before the noun (or before its adjective)?",
+          "help": "Prepositions are short words such as do, z, w, na, bez, dla, u.",
+          "options": [
+            { "label": "Yes, there is a preposition", "next": "preposition" },
+            { "label": "No preposition", "next": "role" }
+          ]
+        },
+        "preposition": {
+          "question": "Which preposition is it?",
+          "options": [
+            {
+              "label": "do, od, bez, dla, u, obok, koło",
+              "result": ["genitive"],
+              "why": "These prepositions always take the genitive.",
+              "example": { "pl": "Idę do sklepu.", "en": "I'm going to the shop." }
+            },
+            { "label": "z", "next": "z" },
+            { "label": "na", "next": "na" },
+            { "label": "w", "next": "w" },
+            {
+              "label": "przez, or za meaning in … time (za tydzień)",
+              "result": ["accusative"],
+              "why": "przez and za meaning in … time take the accusative. (za meaning behind takes the instrumental: za domem.)",
+              "example": { "pl": "Wracam za tydzień.", "en": "I'm coming back in a week." }
+            },
+            {
+              "label": "o, po, przy (about, after, next to)",
+              "result": ["locative"],
+              "why": "o, po and przy usually take the locative: mówić o filmie, po lekcji, przy oknie. (o meaning for, as in prosić o, takes the accusative, and so does po meaning to fetch: Idę po chleb.)",
+              "example": { "pl": "Rozmawiamy o pracy.", "en": "We're talking about work." }
+            },
+            {
+              "label": "przed, pod, nad, między (in front of, under, above, between)",
+              "result": ["instrumental"],
+              "why": "When they say where something is, these prepositions take the instrumental. (Going under or in front of something takes the accusative: Kot wchodzi pod stół.)",
+              "example": { "pl": "Czekam przed domem.", "en": "I'm waiting in front of the house." }
+            }
+          ]
+        },
+        "z": {
+          "question": "What does z mean here?",
+          "options": [
+            {
+              "label": "from, out of (Where from?)",
+              "result": ["genitive"],
+              "why": "z meaning from takes the genitive.",
+              "example": { "pl": "Jestem z Polski.", "en": "I'm from Poland." }
+            },
+            {
+              "label": "with, together with (With whom? With what?)",
+              "result": ["instrumental"],
+              "why": "z meaning with takes the instrumental.",
+              "example": { "pl": "Piję kawę z mlekiem.", "en": "I drink coffee with milk." }
+            }
+          ]
+        },
+        "na": {
+          "question": "Does na say where something goes, or where it is?",
+          "options": [
+            {
+              "label": "Where it goes (Where to?)",
+              "result": ["accusative"],
+              "why": "na + accusative = where to.",
+              "example": { "pl": "Idę na koncert.", "en": "I'm going to a concert." }
+            },
+            {
+              "label": "Where it is (Where?)",
+              "result": ["locative"],
+              "why": "na + locative = where.",
+              "example": { "pl": "Jestem na koncercie.", "en": "I'm at a concert." }
+            }
+          ]
+        },
+        "w": {
+          "question": "What does w say here?",
+          "options": [
+            {
+              "label": "Where something is (Where?)",
+              "result": ["locative"],
+              "why": "w + locative = where: in a building, a town, a country.",
+              "example": { "pl": "Mieszkam w Krakowie.", "en": "I live in Kraków." }
+            },
+            {
+              "label": "Where someone goes: into a building, a town, a country",
+              "result": ["genitive"],
+              "why": "Going into a place usually takes do + genitive, not w: Idę do szkoły, not Idę w szkołę.",
+              "example": { "pl": "Jadę do Warszawy.", "en": "I'm going to Warsaw." }
+            },
+            {
+              "label": "A day of the week (on Monday …)",
+              "result": ["accusative"],
+              "why": "w + a day of the week takes the accusative. (Months and years take the locative: w maju.)",
+              "example": { "pl": "Do zobaczenia w sobotę.", "en": "See you on Saturday." }
+            },
+            {
+              "label": "A month or a year (in May, in 2025)",
+              "result": ["locative"],
+              "why": "w + a month or a year takes the locative.",
+              "example": { "pl": "Mam urlop w maju.", "en": "I have a holiday in May." }
+            }
+          ]
+        },
+        "role": {
+          "question": "What does the noun do in the sentence?",
+          "options": [
+            {
+              "label": "It is the subject: the person or thing that does the action",
+              "result": ["nominative"],
+              "why": "The subject is in the nominative. (After quantity words like dużo or pięć it goes into the genitive: Pięć osób czeka.)",
+              "example": { "pl": "Mój brat pracuje w Warszawie.", "en": "My brother works in Warsaw." }
+            },
+            {
+              "label": "It comes after to jest or to są",
+              "result": ["nominative"],
+              "why": "After to jest / to są the noun stays in the nominative.",
+              "example": { "pl": "To jest moja siostra.", "en": "This is my sister." }
+            },
+            {
+              "label": "It is a noun after być saying who someone is (a job, a nationality, a role)",
+              "result": ["instrumental"],
+              "why": "być + noun takes the instrumental: Jestem lekarzem. With a first name in an introduction the nominative is usual: Jestem Tomek. An adjective after być stays in the nominative: Kawa jest gorąca.",
+              "example": { "pl": "Ona jest nauczycielką.", "en": "She is a teacher." }
+            },
+            { "label": "It is the object of the verb: the person or thing the action goes to", "next": "object" },
+            {
+              "label": "It says whose something is, or follows a quantity word (dużo, mało, pięć …)",
+              "result": ["genitive"],
+              "why": "Possession and quantities take the genitive.",
+              "example": { "pl": "Mam dużo pracy.", "en": "I have a lot of work." }
+            },
+            {
+              "label": "It is the person who receives something (To whom?)",
+              "result": ["dative"],
+              "why": "The receiver of a gift, a message or help is in the dative.",
+              "example": { "pl": "Daję mamie kwiaty.", "en": "I'm giving my mum flowers." }
+            },
+            {
+              "label": "It is a tool or a means of transport (With what? By what?)",
+              "result": ["instrumental"],
+              "why": "Tools and means of transport without a preposition take the instrumental.",
+              "example": { "pl": "Jadę autobusem.", "en": "I'm going by bus." }
+            },
+            {
+              "label": "You are speaking to someone directly",
+              "result": ["vocative"],
+              "why": "Addressing someone takes the vocative.",
+              "example": { "pl": "Dzień dobry, panie profesorze!", "en": "Good morning, professor!" }
+            }
+          ]
+        },
+        "object": {
+          "question": "Which kind of verb is it?",
+          "help": "A few verbs take another case for their object. Check them first.",
+          "options": [
+            {
+              "label": "szukać, słuchać, potrzebować, używać, bać się",
+              "result": ["genitive"],
+              "why": "These verbs take the genitive, also in a positive sentence.",
+              "example": { "pl": "Szukam klucza.", "en": "I'm looking for the key." }
+            },
+            {
+              "label": "pomagać, dziękować, or the person after dawać (komu?)",
+              "result": ["dative"],
+              "why": "The person you help, thank or give something to is in the dative, also after nie. The thing you give stays in the accusative: Daję mamie kwiaty.",
+              "example": { "pl": "Pomagam bratu.", "en": "I'm helping my brother." }
+            },
+            { "label": "Another verb (mieć, lubić, kupować, czytać …)", "next": "negation" }
+          ]
+        },
+        "negation": {
+          "question": "Is the verb negated with nie?",
+          "options": [
+            {
+              "label": "Yes, there is nie before the verb",
+              "result": ["genitive"],
+              "why": "After nie the direct object switches from the accusative to the genitive.",
+              "example": { "pl": "Nie lubię kawy.", "en": "I don't like coffee." }
+            },
+            {
+              "label": "No, the sentence is positive",
+              "result": ["accusative"],
+              "why": "Most verbs take a direct object in the accusative.",
+              "example": { "pl": "Kupuję gazetę i kawę.", "en": "I'm buying a newspaper and coffee." }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

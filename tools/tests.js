@@ -2938,6 +2938,46 @@ console.log("Validators (E11)");
   test("node validators: content/ has 0 errors", function () {
     assert.deepStrictEqual(node(path.join(REPO, "content")).errors, []);
   });
+  test("node validators: Case Lab data (14 forms, trees, aspect strip, case facts)", function () {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "plm-lab-"));
+    try {
+      fs.cpSync(path.join(REPO, "content"), tmp, { recursive: true });
+      const lab = path.join(tmp, "lab");
+      const rd = function (f) { return JSON.parse(fs.readFileSync(path.join(lab, f), "utf8")); };
+      const wr = function (f, d) { fs.writeFileSync(path.join(lab, f), JSON.stringify(d)); };
+      const models = rd("models.json");
+      delete models.models[0].plural.dative;
+      models.models[1].singular.genitive = "starego domñ";
+      wr("models.json", models);
+      const trees = rd("trees.json");
+      const n = trees.trees[0].nodes;
+      n.object.options[1].next = "role";            // cycle role → object → role
+      n.z.options[0] = { label: "x", next: "nowhere" };
+      n.lonely = { question: "?", options: [{ label: "a", result: ["genitive"], why: "w" }, { label: "b", result: ["ablative"], why: "w" }] };
+      wr("trees.json", trees);
+      const aspect = rd("aspect.json");
+      aspect.forms.pop();
+      aspect.forms[0].scene.elements[0].from = -2;
+      wr("aspect.json", aspect);
+      const cases = rd("cases.json");
+      cases.cases[0].questions = "kto?";
+      cases.cases[1].contrasts[0].with = "genitive";
+      cases.cases[2].topicIds.push("a1-no-such-topic");
+      wr("cases.json", cases);
+      const e = node(tmp).errors.join("\n");
+      assert.match(e, /model nowy-student: plural must have all 7 cases/);
+      assert.match(e, /alphabet: ñ/);
+      assert.match(e, /cycle: start → role → object → role|cycle: role → object → role/);
+      assert.match(e, /next "nowhere" does not exist/);
+      assert.match(e, /node lonely is not reachable/);
+      assert.match(e, /result "ablative" is not a case id/);
+      assert.match(e, /five forms \(spec 09 §1\), found 4/);
+      assert.match(e, /from must be a number in -1 … 1/);
+      assert.match(e, /nominative: questions "kto\?" ≠/);
+      assert.match(e, /genitive: contrast with "genitive": must be another case id/);
+      assert.match(e, /topicId "a1-no-such-topic" not in syllabus/);
+    } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
+  });
   test("node validators: the broken fixture fails in the expected places, E11 heuristics warn", function () {
     const tmp = tree(path.join(__dirname, "fixtures", "validate", "examples"));
     try {

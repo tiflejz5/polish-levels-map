@@ -390,27 +390,34 @@ Skipped. The app is not in React, and the brief allowed this step only for React
 - **Result:** a big number in the display face (`--fs-4xl`), a warm comment by percentage and a “To correct” list. A mixed session adds accuracy per topic.
 - **Set cards** (`.ex-set-card`): a top stripe in the level colour, the best and last score, a “Start” button. They look the same in “Check yourself”, in Practice and on the lab card.
 
-### 3.10 The lab (extension v2; the tense lab of the original app, rewritten as the Case Lab in stage 6)
+### 3.10 The Case Lab (stage 6, spec 09)
 
-- **Tense group tokens** (axis and accents, ≥ 3:1 to the card and the background, checked in `tools/contrast.js`):
+Route `#/lab`, `js/lab-cases.js` (LM.lab) on top of the shared lab parts in `js/lab.js` (LM.labKit: timeline, decision tree, compare picker, listen buttons, notes button, practice, lazy loader). Data `data/lab.js` (cases, models, trees, aspect) is loaded on demand and prefetched on idle time or when a pointer comes near a lab link.
 
-  | Token | Light | Dark |
-  |---|---|---|
-  | `--tense-past` | `#5b4bc4` (indigo) | `#b3a8ff` |
-  | `--tense-present` | `#2c55c4` (accent) | `#8db0ff` |
-  | `--tense-future` | `#0e7682` (sea green) | `#5fd3dc` |
+- **Case colour tokens** (stripes, dots, table row markers; never text):
 
-  The class `.lab-group-<group>` sets `--tense`. The group colour is only on the axis and in the map column underline. Tiles and cards have the **level** colour (as in the whole app).
-- **Map:** three columns (Present / Past / Future) and four aspects. On a narrow screen the columns are one under another. A tile has a left level stripe, the level code and an example in italics.
-- **Timeline** (SVG):
-  - `-1 … 0 … 1`, a dashed “now” line;
-  - points, 12 px segments with a rounded end, a “since long ago” gradient, an arrow into the future, a “result” diamond, a vertical reference marker;
-  - labels above the axis in rows without overlap;
-  - a compact version (440 units) on a phone and in the comparison columns, so labels are not smaller than about 12 px;
-  - a GSAP DrawSVG animation: the axis draws from the left, elements appear one after another. With `reduced-motion` the final state is shown at once;
-  - `role="img"` with a description of the scene and the same description as text under the axis.
-- **Tabs** are links with `aria-current="page"` (each has its own address). On a narrow screen the tab bar scrolls horizontally.
-- **Pick:** big answer buttons (56 px), the path of choices above the question, focus goes to the new question. The result is item cards with a reason and an example.
+  | Token | Case | Light | Dark |
+  |---|---|---|---|
+  | `--case-nom` | Nominative | `#1c8cb4` (sky) | `#1c8cb4` |
+  | `--case-gen` | Genitive | `#9f7a23` (ochre) | `#9f7a23` |
+  | `--case-dat` | Dative | `#89428f` (plum) | `#a860af` |
+  | `--case-acc` | Accusative | `#1b7548` (green) | `#40aa70` |
+  | `--case-ins` | Instrumental | `#c1587d` (rose) | `#b2466e` |
+  | `--case-loc` | Locative | `#547cd3` (blue) | `#6992eb` |
+  | `--case-voc` | Vocative | `#a33e23` (brick) | `#c55d41` |
+
+  The class `.case-nom` … `.case-voc` sets `--case`. **Computed, not picked by eye:** the same hue per case in both themes, checked with the `dataviz` palette validator against `#fffdf9` (light) and `#151e33` (dark): lightness band, chroma ≥ 0.10, contrast ≥ 3:1 (also in `tools/contrast.js`, on the card and the page background). Colour-blind separation (protanopia / deuteranopia, OKLab ΔE) on the adjacent pairs of the school order and on the pairs the lab shows together (nom–acc, gen–acc, acc–loc, nom–ins, gen–loc, nom–voc, dat–loc, gen–ins): light ≥ 7.6 (gen–acc; all others ≥ 8), dark ≥ 8.5; normal vision ΔE ≥ 14.9 on those pairs. Seven hues cannot all be apart from each other (no 7-colour set passes all 21 pairs), so **colour is never alone**: the case name is always next to it, on the map, the card, the tables and the tree results.
+- **Aspect tokens:** `--aspect-impf` (light `#2c55c4`, dark `#8db0ff`) and `--aspect-perf` (`#0e7682` / `#5fd3dc`), ≥ 3:1. The shape carries the meaning too: imperfective = a line (process), perfective = a diamond (result), and the word is written next to each form.
+- **Tabs:** Map, Case card, Pick the case, Compare, Declension, Aspect. Links with `aria-current="page"`, each view has its own address; on a narrow screen the bar scrolls horizontally.
+- **Map:** seven cards in the school order (Nominative → Vocative), a left stripe in the case colour, the English name with a colour dot, the Polish name and question words (`lang="pl"`), the one-line use and the level chip. A case without a card yet is a dashed card “Being written” (not a link). Arrow keys move between cards (up / down by the visual grid), Home / End, Enter opens. Below: three links to Pick the case, Declension and Aspect. While the data loads, the seven names draw at once in a skeleton grid.
+- **Case card:** a header with the stripe, “Case n of 7”, the notes button; uses (Polish with a listen button, English under it); endings table (Gender / Noun / Adjective) with a Singular / Plural switch (two buttons, `aria-pressed`); trigger chips grouped as prepositions, verbs, other (buttons that read the word aloud); traps (the “Common mistakes” callout); contrasts with an example pair and “Compare side by side”; “Model phrases in the …” and “Practice this case” (sets of its topics and sets whose items carry one of its `setTags`).
+- **Pick the case:** the decision tree view of the original lab: 56 px answer buttons, the path of choices above the question, focus moves to the new question or the result, Back and Start again. The result names the case, the reason and an example with a listen button, and links to the card (or says the card is being written). Several trees get chips above the card (`#/lab/pick/<tree>`).
+- **Compare:** two selects, two columns (stripe, name, uses, singular endings), and the “Differences” table from the contrasts of both cards. One column below 860 px.
+- **Declension viewer:** “One phrase, all forms” (rows = the seven cases with colour marker, name and question words; columns Singular / Plural) or “One case, all phrases”. What differs from the dictionary form is underlined (`.lab-end`, 2 px, not colour), every form has a listen button. Up to 640 px every table of the lab turns into cards (the column label above each value), so nothing scrolls sideways from 320 px.
+- **Aspect strip:** one SVG timeline (`LM.labKit.timeline` with five lanes sharing one axis and one dashed “now” line), the lane name above each line, element labels below; under it the five forms as cards with the example. `role="img"` with the whole description; GSAP DrawSVG on entry, none with reduced motion.
+- **Timeline function** (`LM.labKit.timeline({ lanes, compact, ariaLabel })`): `-1 … 0 … 1`; points, 12 px ranges with round ends, a fading “since long ago” start, an arrow into the future, a result diamond, repeats, a dashed marker; labels without overlap; a compact 440-unit version on phones so labels stay ≥ about 12 px.
+- **Keyboard:** `?` opens “Shortcuts in the lab”. All switches and chips are buttons or links, ≥ 44 px in the lab.
+- **Speed:** the map draws in about 120–170 ms after navigation start on a warm cache (e2e checks < 500 ms).
 
 ### 3.11 Stats and the automatic mistake log (extension v2, stage 2)
 
@@ -790,3 +797,4 @@ Limitation: an automatic audit does not replace a test with a screen reader (NVD
 - **Stage 3 of Polish Levels Map (language layer).** Listen buttons, the character bar, the voice help box and answer hints (section 3.17); `lang` markup for Polish italics, the Polish table column and blockquotes.
 - **Stage 4 of Polish Levels Map (exercises).** The “Fill the table” item (section 3.9); every item type checked with Polish data (quotes, dashes, names in Put in order); case labels with their question words.
 - **Stage 5 of Polish Levels Map (learning loop).** “Report a mistake” (`.report-link`: small, muted, underlined, 44 px tall, after the content; spec 06 E12); the home footer (`.home-foot`: version, privacy sentence, source link, muted on a hairline); the first-run card “Where do you want to start?” also on the home page (`.home-first`, the same `.sz-first` card as the Trail); a listen button in the top right corner of a flashcard (`.fc-card > .listen-btn`) and next to the correct answer in the mistake log; `lang` on placement questions and options, MC options and gap prompts of the exercise engine (an English gloss in brackets stays outside, `.ex-gloss`).
+- **Stage 6 of Polish Levels Map (Case Lab).** Section 3.10 rewritten: seven case colour tokens and two aspect tokens replace the tense tokens; the case colour returns as a left stripe on lab cards on purpose (it identifies the case, always with its name); the tense grid and the formula highlighter are gone; tables of the lab become cards below 640 px; chips in the lab are 44 px tall.

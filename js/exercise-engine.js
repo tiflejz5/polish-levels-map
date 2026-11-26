@@ -72,7 +72,7 @@ window.LM = window.LM || {};
     });
   }
 
-  function emptyIndex() { return { topics: {}, sets: {}, mixes: [], tenseByTopic: {} }; }
+  function emptyIndex() { return { topics: {}, sets: {}, mixes: [], caseByTopic: {} }; }
 
   /** Full sets with the given ids (skips missing files with a warning). */
   function loadSets(ids) {
@@ -1837,8 +1837,9 @@ window.LM = window.LM || {};
     const box = el("section", { class: "ex-topic", "aria-labelledby": "ex-topic-title", hidden: true });
     loadIndex().then(function (index) {
       const sets = (index.topics[topicId] || []).map(function (id) { return index.sets[id]; }).filter(Boolean);
-      const tense = index.tenseByTopic && index.tenseByTopic[topicId];
-      if (!sets.length && !tense) return;
+      const labCase = index.caseByTopic && index.caseByTopic[topicId];
+      const caseName = labCase && LM.lang.caseOf(labCase) ? LM.lang.caseOf(labCase).name : null;
+      if (!sets.length && !caseName) return;
       box.replaceChildren();
       U.appendChildren(box, [
         el("h2", { class: "ex-topic-title", id: "ex-topic-title" }, [
@@ -1846,7 +1847,7 @@ window.LM = window.LM || {};
           "Check yourself"
         ]),
         sets.length ? el("div", { class: "ex-set-grid" }, sets.map(setCard)) : null,
-        tense ? el("p", { class: "ex-topic-lab" }, el("a", { class: "btn btn-secondary", href: "#/lab/" + tense.id }, LM.ui.withIcon("flask-conical", "See it in the " + LM.APP.lab.title + ": " + tense.name))) : null
+        caseName ? el("p", { class: "ex-topic-lab" }, el("a", { class: "btn btn-secondary", href: "#/lab/" + labCase }, LM.ui.withIcon("flask-conical", "See it in the " + LM.APP.lab.title + ": " + caseName))) : null
       ]);
       box.hidden = false;
     });

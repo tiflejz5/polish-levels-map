@@ -4,7 +4,8 @@
  * Sources: content/exercises/topics.json (topic id → [set ids]), content/exercises/<set id>.json,
  *          content/exercises/mixes.json, and item-format sets of active exams (content/exams/<id>/manifest.json).
  * Output:  data/sets/<set id>.js   (LM.SETS = LM.SETS || {})[id] = full set   (lazy)
- *          data/sets-index.js      LM.SETS_INDEX = { version, topics, sets (cards without items), mixes, tenseByTopic }
+ *          data/sets-index.js      LM.SETS_INDEX = { version, topics, sets (cards without items, with the tags of their
+ *                                  items: the Case Lab finds sets by tag), mixes, caseByTopic (topic → Case Lab card) }
  *
  * A map entry without its file is skipped with a warning. Content rules: npm run validate.
  */
@@ -17,6 +18,13 @@ function typeCounts(items) {
   const out = {};
   items.forEach(function (it) { out[it.type] = (out[it.type] || 0) + 1; });
   return out;
+}
+
+/** Tags used by the items of a set (sorted, unique). */
+function tagsOf(items) {
+  const out = [];
+  items.forEach(function (it) { (it.tags || []).forEach(function (t) { if (out.indexOf(t) === -1) out.push(t); }); });
+  return out.sort();
 }
 
 module.exports = function buildExercises() {
@@ -47,7 +55,7 @@ module.exports = function buildExercises() {
       sets[setId] = {
         id: setId, topic: set.topic || topic, level: set.level || null, title: set.title || setId, intro: set.intro || "",
         count: set.items.length, points: pointsOf(set.items), types: typeCounts(set.items),
-        defaultMode: set.defaultMode === "exam" ? "exam" : "learn", file: out
+        defaultMode: set.defaultMode === "exam" ? "exam" : "learn", file: out, tags: tagsOf(set.items)
       };
     });
   });
@@ -81,9 +89,14 @@ module.exports = function buildExercises() {
   const mixFile = C.content("exercises", "mixes.json");
   const mixes = C.exists(mixFile) ? (C.readJson(mixFile).mixes || []) : [];
 
-  // tenseByTopic: link "See it on the timeline" of the tense lab; empty until the Case Lab (stage 6)
-  C.writeData("sets-index.js", ["content/exercises/", "content/exams/"],
-    "LM.SETS_INDEX = " + JSON.stringify({ version: 1, topics: topics, sets: sets, mixes: mixes, tenseByTopic: {} }) + ";");
+  // caseByTopic: the "See it in the Case Lab" link at the end of a topic page (the first card listing the topic)
+  const caseByTopic = {};
+  const casesFile = C.content("lab", "cases.json");
+  (C.exists(casesFile) ? (C.readJson(casesFile).cases || []) : []).forEach(function (c) {
+    (c.topicIds || []).forEach(function (t) { if (!caseByTopic[t]) caseByTopic[t] = c.id; });
+  });
+  C.writeData("sets-index.js", ["content/exercises/", "content/exams/", "content/lab/cases.json"],
+    "LM.SETS_INDEX = " + JSON.stringify({ version: 1, topics: topics, sets: sets, mixes: mixes, caseByTopic: caseByTopic }) + ";");
   const nItems = Object.keys(sets).reduce(function (s, k) { return s + sets[k].count; }, 0);
   return "exercises: " + Object.keys(sets).length + " sets, " + nItems + " items, " + mixes.length + " mixes";
 };

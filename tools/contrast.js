@@ -89,11 +89,10 @@ pairs.push(
   ["ink", "surface-3", null, 4.5, "exam chip on hover: text / background"],
   ["ink-muted", "surface", null, 4.5, "card on a phone: column label / background"],
   ["warning", "surface", null, 3, "trap icon / icon background"],
-  ["tense-past", "surface", null, 3, "timeline: past / card"],
-  ["tense-present", "surface", null, 3, "timeline: present / card"],
-  ["tense-future", "surface", null, 3, "timeline: future / card"],
-  ["tense-past", "bg", null, 3, "timeline: past / background"],
-  ["tense-future", "bg", null, 3, "timeline: future / background"],
+  ["aspect-impf", "surface", null, 3, "aspect strip: imperfective line / card"],
+  ["aspect-perf", "surface", null, 3, "aspect strip: perfective diamond / card"],
+  ["aspect-impf", "bg", null, 3, "aspect key: imperfective / background"],
+  ["aspect-perf", "bg", null, 3, "aspect key: perfective / background"],
   ["ink", "warning-soft", "surface", 4.5, "find the mistake: the wrong word / background"],
   ["accent", "accent-soft", "surface", 4.5, "chosen option / word: text / background"],
   ["danger", "danger-soft", "surface", 4.5, "wrong word / gap: text / background"],
@@ -122,6 +121,11 @@ pairs.push(
   ["lvl-b2", "surface", null, 3, "“Due today” card: mistake marker / card"],
   ["lvl-c1", "surface", null, 3, "“Due today” card: item marker / card"]
 );
+// Case Lab: the seven case colours (stripes, dots, table row markers) on the card and the page background;
+// their colour-blind separation is checked with the dataviz palette validator (DESIGN.md 3.10)
+["nom", "gen", "dat", "acc", "ins", "loc", "voc"].forEach(function (c) {
+  pairs.push(["case-" + c, "surface", null, 3, "case marker " + c + " / card"], ["case-" + c, "bg", null, 3, "case marker " + c + " / background"]);
+});
 ["a1", "a2", "b1", "b2", "c1", "c2"].forEach(function (l) {
   const L = l.toUpperCase();
   pairs.push(
