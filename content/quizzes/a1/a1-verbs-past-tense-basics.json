@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-past-tense-basics",
+  "topic": "a1-verbs-past-tense-basics",
+  "level": "A1",
+  "title": "Stop: past tense",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-past-tense-basics-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "(a woman speaking) Wczoraj ___ w kinie.",
+      "options": [
+        "byłem",
+        "byłam",
+        "była",
+        "jestem"
+      ],
+      "correct": 1,
+      "explanation": "A woman says byłam (I was); a man says byłem.",
+      "optionNotes": [
+        "A man's form.",
+        null,
+        "Była is \"she was\", not \"I was\".",
+        "Present tense; wczoraj needs the past."
+      ]
+    },
+    {
+      "id": "a1-verbs-past-tense-basics-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Gdzie ___ wczoraj, Tomek? (Where were you yesterday, Tomek?)",
+      "options": [
+        "byłeś",
+        "byłaś",
+        "byłem",
+        "jesteś"
+      ],
+      "correct": 0,
+      "explanation": "Talking to a man with ty: byłeś.",
+      "optionNotes": [
+        null,
+        "Byłaś is for a woman.",
+        "Byłem means \"I was\".",
+        "Present tense; wczoraj needs the past."
+      ]
+    },
+    {
+      "id": "a1-verbs-past-tense-basics-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Pan Adam ___ w banku. (Mr Adam worked in a bank.)",
+      "options": [
+        "pracował",
+        "pracowała",
+        "pracujał",
+        "pracowałem"
+      ],
+      "correct": 0,
+      "explanation": "He form: -ł. Verbs in -ować build the past from the infinitive: pracowa-ł.",
+      "optionNotes": [
+        null,
+        "Pracowała is for a woman.",
+        "The past comes from the infinitive (pracowa-), not the present (pracuj-).",
+        "Pracowałem means \"I worked\"."
+      ]
+    },
+    {
+      "id": "a1-verbs-past-tense-basics-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kasia says: \"I had a cat.\"",
+      "options": [
+        "Miałam kota.",
+        "Miełam kota.",
+        "Miałem kota.",
+        "Miała kota."
+      ],
+      "correct": 0,
+      "explanation": "Mieć: e changes to a in the past. A woman says miałam.",
+      "optionNotes": [
+        null,
+        "In -eć verbs the e becomes a: miałam.",
+        "Miałem is a man's form.",
+        "Miała means \"she had\"."
+      ]
+    }
+  ]
+}

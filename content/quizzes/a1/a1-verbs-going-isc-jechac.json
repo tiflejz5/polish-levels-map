@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-going-isc-jechac",
+  "topic": "a1-verbs-going-isc-jechac",
+  "level": "A1",
+  "title": "Stop: iść and jechać",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-going-isc-jechac-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jutro ___ do Gdańska pociągiem. (Tomorrow I'm going to Gdańsk by train.)",
+      "options": [
+        "idę",
+        "jadę",
+        "jedziesz",
+        "iść"
+      ],
+      "correct": 1,
+      "explanation": "By train, bus or car the verb is jechać: jadę.",
+      "optionNotes": [
+        "Iść is only on foot.",
+        null,
+        "Jedziesz is the ty form; the sentence is about \"I\".",
+        "The infinitive cannot be the main verb here."
+      ]
+    },
+    {
+      "id": "a1-verbs-going-isc-jechac-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Idę do ___. (I'm going to the shop.)",
+      "options": [
+        "sklep",
+        "sklepie",
+        "sklepu",
+        "sklepem"
+      ],
+      "correct": 2,
+      "explanation": "Do takes the genitive: sklep → do sklepu.",
+      "optionNotes": [
+        "The nominative: after do the noun must change.",
+        "The locative, for where you are: w sklepie.",
+        null,
+        "The instrumental."
+      ]
+    },
+    {
+      "id": "a1-verbs-going-isc-jechac-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which sentence means \"I'm going to a concert\"?",
+      "options": [
+        "Idę do koncertu.",
+        "Idę na koncert.",
+        "Idę na koncercie.",
+        "Idę w koncert."
+      ],
+      "correct": 1,
+      "explanation": "Events take na + accusative for \"where to\": na koncert.",
+      "optionNotes": [
+        "Events take na, not do.",
+        null,
+        "Na koncercie (locative) is where you are, not where you are going.",
+        "W is not used with koncert."
+      ]
+    },
+    {
+      "id": "a1-verbs-going-isc-jechac-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jadę do pracy ___. (I'm going to work by bus.)",
+      "options": [
+        "autobusem",
+        "z autobusem",
+        "w autobus",
+        "na autobusie"
+      ],
+      "correct": 0,
+      "explanation": "\"By bus\" is the plain form autobusem, with no preposition.",
+      "optionNotes": [
+        null,
+        "Z autobusem means \"together with a bus\".",
+        "Not used for \"by bus\"; w autobusie means \"in the bus\".",
+        "Na autobusie would mean \"on top of the bus\"."
+      ]
+    }
+  ]
+}

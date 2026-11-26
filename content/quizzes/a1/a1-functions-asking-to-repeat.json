@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-functions-asking-to-repeat",
+  "topic": "a1-functions-asking-to-repeat",
+  "level": "A1",
+  "title": "Stop: asking to repeat",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-functions-asking-to-repeat-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You didn't hear what a shop assistant said. What is the most natural thing to say?",
+      "options": [
+        "Słucham?",
+        "Co?",
+        "Powtórz!",
+        "Nie słucham."
+      ],
+      "correct": 0,
+      "explanation": "Słucham? (\"I'm listening\") is the polite way to say \"Sorry?\".",
+      "optionNotes": [
+        null,
+        "Co? is only for friends; to a stranger it sounds rude.",
+        "A command with ty is too blunt for a stranger.",
+        "Nie słucham means \"I'm not listening\"."
+      ]
+    },
+    {
+      "id": "a1-functions-asking-to-repeat-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "How do you ask a stranger to speak more slowly?",
+      "options": [
+        "Mów wolniej!",
+        "Proszę mów wolniej.",
+        "Proszę mówić wolniej.",
+        "Proszę mówić wolny."
+      ],
+      "correct": 2,
+      "explanation": "Proszę + infinitive: Proszę mówić wolniej.",
+      "optionNotes": [
+        "A command with ty is too blunt for a stranger.",
+        "To a stranger use proszę + infinitive: mówić. (Proszę, mów… is only for friends.)",
+        null,
+        "Wolny is an adjective; \"more slowly\" is wolniej."
+      ]
+    },
+    {
+      "id": "a1-functions-asking-to-repeat-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You want to know what \"dworzec\" means.",
+      "options": [
+        "Co jest „dworzec”?",
+        "Co znaczy „dworzec”?",
+        "Co to mówi „dworzec”?",
+        "Jak znaczy „dworzec”?"
+      ],
+      "correct": 1,
+      "explanation": "\"What does … mean?\" is Co znaczy …?",
+      "optionNotes": [
+        "A word-for-word copy of \"What is…\"; use znaczy.",
+        null,
+        "Mówić means \"say\", not \"mean\".",
+        "With znaczyć the question word is co, not jak."
+      ]
+    },
+    {
+      "id": "a1-functions-asking-to-repeat-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Do you speak English? (formal, to a man)",
+      "options": [
+        "Mówi pan w angielsku?",
+        "Mówisz po angielsku?",
+        "Mówi pan angielski?",
+        "Mówi pan po angielsku?"
+      ],
+      "correct": 3,
+      "explanation": "You speak po angielsku; to a stranger use pan + the \"he\" form.",
+      "optionNotes": [
+        "The phrase is po angielsku, not w.",
+        "Mówisz is informal.",
+        "With mówić you need po angielsku.",
+        null
+      ]
+    }
+  ]
+}
