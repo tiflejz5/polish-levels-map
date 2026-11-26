@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-vocabulary-home-city",
+  "topic": "a1-vocabulary-home-city",
+  "level": "A1",
+  "title": "Stop: home and town",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-vocabulary-home-city-q1",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Where do you buy medicine?",
+      "options": [
+        "w aptece",
+        "na poczcie",
+        "w kinie",
+        "na dworcu"
+      ],
+      "correct": 0,
+      "explanation": "Apteka is a pharmacy.",
+      "optionNotes": [
+        null,
+        "Poczta is the post office.",
+        "Kino is the cinema.",
+        "Dworzec is a station."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-home-city-q2",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Where do you wait for a tram in the street?",
+      "options": [
+        "na dworcu",
+        "na lotnisku",
+        "na przystanku",
+        "w windzie"
+      ],
+      "correct": 2,
+      "explanation": "Przystanek is a bus or tram stop.",
+      "optionNotes": [
+        "Dworzec is a station building.",
+        "Lotnisko is an airport.",
+        null,
+        "Winda is a lift."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-home-city-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Drzwi ___ otwarte. (The door is open.)",
+      "options": [
+        "jest",
+        "są",
+        "jesteś",
+        "jestem"
+      ],
+      "correct": 1,
+      "explanation": "Drzwi (door) is plural only, so it takes są.",
+      "optionNotes": [
+        "Drzwi is plural: są, not jest.",
+        null,
+        "Jesteś is the ty form.",
+        "Jestem is the ja form."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-home-city-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mam ___ mieszkanie.",
+      "options": [
+        "duży",
+        "duża",
+        "duże",
+        "dużego"
+      ],
+      "correct": 2,
+      "explanation": "Mieszkanie is neuter, so the adjective ends in -e.",
+      "optionNotes": [
+        "The masculine form.",
+        "The feminine form.",
+        null,
+        "-ego is for masculine people and animals in the accusative."
+      ]
+    }
+  ]
+}

@@ -21,7 +21,7 @@ Singular. The plural comes at A2: [[a2-cases-accusative-plural]].
 | feminine | **-a → -ę** | **-a → -ą** | *dobra kawa → Piję dobrą kawę.* |
 | neuter | no change | no change | *małe piwo → Poproszę małe piwo.* |
 
-So only two groups really change: masculine nouns for people and animals, and feminine nouns.
+So only two groups really change: masculine nouns for people and animals, and feminine nouns in *-a*. Feminine nouns without *-a* do not change: *Poproszę sól.*
 
 ## When to use it
 
@@ -48,6 +48,7 @@ So only two groups really change: masculine nouns for people and animals, and fe
 - Masculine nouns that end in **-a** (*kolega, tata, mężczyzna*) take **-ę** like feminine nouns, but their adjectives stay masculine: *Znam twojego tatę.*
 - *pani* becomes *panią*: *Przepraszam panią.* (Excuse me, ma'am.)
 - Some nouns lose an *e* before the ending: *pies → psa*, *ojciec → ojca*.
+- In everyday speech a few masculine things take *-a* like animals: *Jem banana.* *Piszę maila.*
 
 ## Common mistakes for English speakers
 

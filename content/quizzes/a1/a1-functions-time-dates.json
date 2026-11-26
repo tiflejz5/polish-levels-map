@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-functions-time-dates",
+  "topic": "a1-functions-time-dates",
+  "level": "A1",
+  "title": "Stop: time and when",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-functions-time-dates-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Która godzina? — Jest ___. (8:00)",
+      "options": [
+        "osiem",
+        "ósma",
+        "ósmej",
+        "ósmy"
+      ],
+      "correct": 1,
+      "explanation": "Hours use the feminine \"eighth\": Jest ósma.",
+      "optionNotes": [
+        "Hours do not use the plain number.",
+        null,
+        "Ósmej follows o: o ósmej.",
+        "The masculine form; godzina is feminine."
+      ]
+    },
+    {
+      "id": "a1-functions-time-dates-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Film jest o ___. (at seven)",
+      "options": [
+        "siódma",
+        "siedem",
+        "siódmej",
+        "siódmą"
+      ],
+      "correct": 2,
+      "explanation": "After o (at) the hour ends in -ej: o siódmej.",
+      "optionNotes": [
+        "After o the ending changes to -ej.",
+        "Hours do not use the plain number.",
+        null,
+        "The -ą ending is not used after o."
+      ]
+    },
+    {
+      "id": "a1-functions-time-dates-q3",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Jest wpół do dziewiątej. What time is it?",
+      "options": [
+        "9:30",
+        "8:30",
+        "9:00",
+        "8:00"
+      ],
+      "correct": 1,
+      "explanation": "Wpół do dziewiątej is \"half to nine\": 8:30.",
+      "optionNotes": [
+        "Polish counts half an hour to the next hour: 9:30 is wpół do dziesiątej.",
+        null,
+        "9:00 is dziewiąta.",
+        "8:00 is ósma."
+      ]
+    },
+    {
+      "id": "a1-functions-time-dates-q4",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "How do you say \"in the evening\"?",
+      "options": [
+        "w wieczór",
+        "wieczorem",
+        "w wieczorze",
+        "na wieczór"
+      ],
+      "correct": 1,
+      "explanation": "\"In the evening\" is one word: wieczorem.",
+      "optionNotes": [
+        "A word-for-word copy of the English.",
+        null,
+        "Not used for \"in the evening\".",
+        "Na wieczór means \"for the evening\"."
+      ]
+    }
+  ]
+}

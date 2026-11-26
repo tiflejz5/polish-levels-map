@@ -1,0 +1,196 @@
+{
+  "version": 1,
+  "id": "a1-grammar-questions-negation-1",
+  "topic": "a1-grammar-questions-negation",
+  "level": "A1",
+  "title": "Questions and negation: check yourself",
+  "intro": "10 tasks: czy, question words, nie and double negation.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-grammar-questions-negation-1-01",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "questions",
+        "question-words"
+      ],
+      "prompt": "___ mieszkasz? — W Łodzi.",
+      "options": [
+        "Skąd",
+        "Kiedy",
+        "Gdzie",
+        "Jak"
+      ],
+      "correct": 2,
+      "explanation": "The answer is a place: gdzie (where).",
+      "optionNotes": [
+        "Skąd means \"where from\": Z Łodzi.",
+        "Kiedy means \"when\".",
+        null,
+        "Jak means \"how\"."
+      ]
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "negation"
+      ],
+      "prompt": "Which sentence means \"Kuba isn't a doctor\"?",
+      "options": [
+        "Kuba jest nie lekarzem.",
+        "Kuba nie jest lekarzem.",
+        "Nie Kuba jest lekarzem.",
+        "Kuba nie jest nie lekarzem."
+      ],
+      "correct": 1,
+      "explanation": "Nie goes directly before the verb: nie jest.",
+      "optionNotes": [
+        "Nie goes before the verb, not after it.",
+        null,
+        "Nie Kuba means \"not Kuba\": someone else is a doctor.",
+        "One nie is enough here."
+      ]
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-03",
+      "type": "short-answer",
+      "tags": [
+        "negation",
+        "double-negation"
+      ],
+      "prompt": "Say the opposite of Rozumiem wszystko. (I understand everything.): ___ nie rozumiem.",
+      "accepted": [
+        "Nic"
+      ],
+      "explanation": "Nic (nothing) needs nie with the verb: Nic nie rozumiem."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-04",
+      "type": "reorder",
+      "tags": [
+        "questions",
+        "word-order"
+      ],
+      "context": "Where does Ola work?",
+      "answers": [
+        "Gdzie pracuje Ola?",
+        "Gdzie Ola pracuje?"
+      ],
+      "explanation": "The question word comes first. Both orders after it are natural."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-05",
+      "type": "find-error",
+      "tags": [
+        "negation",
+        "double-negation"
+      ],
+      "tokens": [
+        "Nikt",
+        "wie,",
+        "gdzie",
+        "jest",
+        "klucz."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "nie wie,"
+      ],
+      "explanation": "Nikt (nobody) needs nie with the verb: Nikt nie wie."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-06",
+      "type": "find-error",
+      "tags": [
+        "negation",
+        "word-order"
+      ],
+      "tokens": [
+        "Rozumiem",
+        "nie."
+      ],
+      "errorRange": [
+        0,
+        1
+      ],
+      "fixes": [
+        "Nie rozumiem."
+      ],
+      "explanation": "Nie goes before the verb: Nie rozumiem."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-07",
+      "type": "short-answer",
+      "tags": [
+        "questions",
+        "question-words"
+      ],
+      "prompt": "Complete the question: ___ jesteś? — Z Irlandii.",
+      "accepted": [
+        "Skąd"
+      ],
+      "explanation": "\"Where … from\" is one word: skąd."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-08",
+      "type": "gap-fill",
+      "tags": [
+        "questions",
+        "dlaczego"
+      ],
+      "context": "Why aren't you eating? — Because I'm not hungry.",
+      "text": "{{1}} nie jesz? — {{2}} nie jestem głodny.",
+      "gaps": [
+        {
+          "accepted": [
+            "Dlaczego",
+            "Czemu"
+          ]
+        },
+        {
+          "accepted": [
+            "Bo",
+            "Ponieważ"
+          ]
+        }
+      ],
+      "explanation": "Dlaczego (why; in speech also czemu) is answered with bo (because); ponieważ is more formal."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-09",
+      "type": "translate",
+      "tags": [
+        "negation",
+        "double-negation"
+      ],
+      "source": "Nobody knows.",
+      "accepted": [
+        "Nikt nie wie."
+      ],
+      "explanation": "Nikt + nie + verb: Polish needs both negative words."
+    },
+    {
+      "id": "a1-grammar-questions-negation-1-10",
+      "type": "translate",
+      "tags": [
+        "questions",
+        "formal",
+        "czy"
+      ],
+      "source": "Do you speak English? (formal, to a man)",
+      "accepted": [
+        "Czy pan mówi po angielsku?",
+        "Pan mówi po angielsku?",
+        "Mówi pan po angielsku?",
+        "Czy mówi pan po angielsku?"
+      ],
+      "explanation": "No helper verb: czy (or just intonation) + pan + the on form mówi."
+    }
+  ]
+}

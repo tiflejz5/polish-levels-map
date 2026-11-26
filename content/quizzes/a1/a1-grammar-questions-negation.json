@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-grammar-questions-negation",
+  "topic": "a1-grammar-questions-negation",
+  "level": "A1",
+  "title": "Stop: questions and negation",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-grammar-questions-negation-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "How do you say \"I don't understand\"?",
+      "options": [
+        "Rozumiem nie.",
+        "Nie rozumiem.",
+        "Ja nie rozumiem nie.",
+        "Nie robię rozumiem."
+      ],
+      "correct": 1,
+      "explanation": "Nie goes directly before the verb. There is no helper verb like \"do\".",
+      "optionNotes": [
+        "Nie goes before the verb, not after it.",
+        null,
+        "One nie before the verb is enough.",
+        "Polish has no helper verb: robić means \"do, make\"."
+      ]
+    },
+    {
+      "id": "a1-grammar-questions-negation-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nikt ___ wie.",
+      "options": [
+        "nie",
+        "nic",
+        "już",
+        "też"
+      ],
+      "correct": 0,
+      "explanation": "Nikt (nobody) needs nie with the verb: Nikt nie wie.",
+      "optionNotes": [
+        null,
+        "Nic means \"nothing\", and the verb still needs nie.",
+        "Już means \"already\"; the verb needs nie.",
+        "Też means \"too\"; the verb needs nie."
+      ]
+    },
+    {
+      "id": "a1-grammar-questions-negation-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You want to know where someone is from. You ask:",
+      "options": [
+        "Gdzie jesteś?",
+        "Skąd jesteś?",
+        "Gdzie jesteś z?",
+        "Kiedy jesteś?"
+      ],
+      "correct": 1,
+      "explanation": "\"Where … from\" is one word: skąd.",
+      "optionNotes": [
+        "Gdzie jesteś? means \"Where are you (now)?\"",
+        null,
+        "Polish does not put the preposition at the end: use skąd.",
+        "Kiedy means \"when\"."
+      ]
+    },
+    {
+      "id": "a1-grammar-questions-negation-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Czy mówisz po angielsku? — No, I don't.",
+      "options": [
+        "Nie, mówię.",
+        "Nie, nie mówię.",
+        "Tak, nie mówię.",
+        "Nie mówię nie."
+      ],
+      "correct": 1,
+      "explanation": "The first nie means \"no\", the second makes the verb negative.",
+      "optionNotes": [
+        "This means \"No, I do speak\": the verb needs its own nie.",
+        null,
+        "Tak means \"yes\".",
+        "Nie goes before the verb, not after it."
+      ]
+    }
+  ]
+}

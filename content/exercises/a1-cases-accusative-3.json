@@ -40,7 +40,6 @@
       "prompt": "In a café: Poproszę ___. (sok pomarańczowy)",
       "accepted": [
         "sok pomarańczowy",
-        "pomarańczowy sok",
         "soku pomarańczowego"
       ],
       "explanation": "Sok is a masculine thing, so the accusative is the same as the nominative. You will also hear Poproszę soku pomarańczowego (the genitive for \"some\"), which is correct too."

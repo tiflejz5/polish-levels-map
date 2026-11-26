@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-vocabulary-food-drink",
+  "topic": "a1-vocabulary-food-drink",
+  "level": "A1",
+  "title": "Stop: food and drink",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-vocabulary-food-drink-q1",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "What is obiad?",
+      "options": [
+        "breakfast",
+        "the main meal of the day",
+        "dessert",
+        "a drink"
+      ],
+      "correct": 1,
+      "explanation": "Obiad is the main hot meal, often eaten in the afternoon.",
+      "optionNotes": [
+        "Breakfast is śniadanie.",
+        null,
+        "Dessert is deser.",
+        "Obiad is a meal, not a drink."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-food-drink-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Poproszę ___ z cytryną. (A tea with lemon, please.)",
+      "options": [
+        "herbata",
+        "herbatę",
+        "jedna herbata",
+        "herbatą"
+      ],
+      "correct": 1,
+      "explanation": "After poproszę the feminine -a becomes -ę: herbatę.",
+      "optionNotes": [
+        "The dictionary form: after poproszę the noun changes.",
+        null,
+        "Polish has no \"a\"; jedna means \"one\".",
+        "-ą is the instrumental, used after z."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-food-drink-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Lody ___ zimne.",
+      "options": [
+        "są",
+        "jest",
+        "jesteś",
+        "jestem"
+      ],
+      "correct": 0,
+      "explanation": "Lody (ice cream) is plural in Polish, so it takes są.",
+      "optionNotes": [
+        null,
+        "Lody is plural: są, not jest.",
+        "Jesteś is the ty form.",
+        "Jestem is the ja form."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-food-drink-q4",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Which word is a vegetable?",
+      "options": [
+        "jabłko",
+        "truskawki",
+        "ciasto",
+        "ogórek"
+      ],
+      "correct": 3,
+      "explanation": "Ogórek is a cucumber.",
+      "optionNotes": [
+        "Jabłko is an apple: a fruit.",
+        "Truskawki are strawberries: a fruit.",
+        "Ciasto is cake.",
+        null
+      ]
+    }
+  ]
+}

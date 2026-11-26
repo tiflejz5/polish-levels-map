@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-modal-verbs-basics",
+  "topic": "a1-verbs-modal-verbs-basics",
+  "level": "A1",
+  "title": "Stop: like, want, can, must",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-modal-verbs-basics-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Lubię ___. (I like reading.)",
+      "options": [
+        "czytam",
+        "czytać",
+        "czytamy",
+        "czyta"
+      ],
+      "correct": 1,
+      "explanation": "After lubię the second verb is the infinitive: czytać.",
+      "optionNotes": [
+        "Only the first verb takes a person ending.",
+        null,
+        "Czytamy is the my form; only the first verb takes a person ending.",
+        "Czyta is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-q2",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "\"I can swim\" (I know how). Which verb?",
+      "options": [
+        "Mogę pływać.",
+        "Znam pływać.",
+        "Umiem pływać.",
+        "Wiem pływać."
+      ],
+      "correct": 2,
+      "explanation": "Skills you have learnt take umieć.",
+      "optionNotes": [
+        "Mogę means it is possible or allowed now.",
+        "Znać is for people and places.",
+        null,
+        "Wiedzieć is for facts."
+      ]
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ja ___ iść. (I have to go.)",
+      "options": [
+        "musę",
+        "muszę",
+        "musi",
+        "muszą"
+      ],
+      "correct": 1,
+      "explanation": "Musieć: s changes to sz in muszę and muszą.",
+      "optionNotes": [
+        "The s changes to sz: muszę.",
+        null,
+        "Musi is the on / ona form.",
+        "Muszą is the oni form."
+      ]
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-q4",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "What does Nie musisz czekać mean?",
+      "options": [
+        "You mustn't wait.",
+        "You can't wait.",
+        "You don't have to wait.",
+        "You don't want to wait."
+      ],
+      "correct": 2,
+      "explanation": "Nie musieć means \"not have to\". \"Mustn't\" is nie wolno.",
+      "optionNotes": [
+        "\"You mustn't\" is Nie wolno czekać.",
+        "\"You can't\" is Nie możesz.",
+        null,
+        "\"You don't want\" is Nie chcesz."
+      ]
+    }
+  ]
+}

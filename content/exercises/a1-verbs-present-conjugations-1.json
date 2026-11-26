@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "id": "a1-verbs-present-conjugations-1",
+  "topic": "a1-verbs-present-conjugations",
+  "level": "A1",
+  "title": "Present tense: check yourself",
+  "intro": "10 tasks: the three patterns, -ować verbs, mistakes and translations.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-verbs-present-conjugations-1-01",
+      "type": "paradigm",
+      "tags": [
+        "present",
+        "conjugation-3",
+        "owac"
+      ],
+      "prompt": "Give all six present forms of pracować.",
+      "lemma": "pracować",
+      "gloss": "to work",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "pracuję"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "pracujesz"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "pracuje"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "pracujemy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "pracujecie"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "pracują"
+          ]
+        }
+      ],
+      "explanation": "Verbs in -ować change -ow- to -uj-: pracuję, pracujesz… pracują."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "present",
+        "conjugation-3"
+      ],
+      "prompt": "Oni ___ e-mail. (They are writing an e-mail.)",
+      "options": [
+        "pisą",
+        "piszą",
+        "pisają",
+        "pisze"
+      ],
+      "correct": 1,
+      "explanation": "Pisać changes s to sz in every present form: oni piszą.",
+      "optionNotes": [
+        "The s changes to sz in every form.",
+        null,
+        "Pisać does not follow the -am pattern of czytać.",
+        "Pisze is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-03",
+      "type": "gap-fill",
+      "tags": [
+        "present",
+        "conjugation-1",
+        "conjugation-3"
+      ],
+      "context": "Kasia lives in Gdańsk and works at a school.",
+      "text": "Kasia {{1}} w Gdańsku i {{2}} w szkole.",
+      "gaps": [
+        {
+          "accepted": [
+            "mieszka"
+          ],
+          "hint": "(mieszkać)"
+        },
+        {
+          "accepted": [
+            "pracuje"
+          ],
+          "hint": "(pracować)"
+        }
+      ],
+      "explanation": "The on / ona form: mieszka (-am pattern), pracuje (-uję pattern)."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-04",
+      "type": "find-error",
+      "tags": [
+        "present",
+        "persons"
+      ],
+      "tokens": [
+        "Kasia",
+        "i",
+        "Marek",
+        "czyta",
+        "list."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "czytają"
+      ],
+      "explanation": "Kasia i Marek is \"they\", so the verb takes the oni ending: czytają."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-05",
+      "type": "find-error",
+      "tags": [
+        "present",
+        "owac"
+      ],
+      "tokens": [
+        "Pracowam",
+        "w",
+        "banku."
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Pracuję"
+      ],
+      "explanation": "Verbs in -ować change to -uję: pracuję."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-06",
+      "type": "reorder",
+      "tags": [
+        "present",
+        "word-order"
+      ],
+      "context": "We watch a film in the evening.",
+      "answers": [
+        "Wieczorem oglądamy film.",
+        "Oglądamy film wieczorem.",
+        "Oglądamy wieczorem film."
+      ],
+      "explanation": "The time word can open or close the sentence. The ending -my already means \"we\"."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-07",
+      "type": "match",
+      "tags": [
+        "present",
+        "conjugation-2",
+        "persons"
+      ],
+      "mode": "halves",
+      "prompt": "Match the person with the verb form.",
+      "pairs": [
+        [
+          "Ja",
+          "tańczę."
+        ],
+        [
+          "Ty",
+          "tańczysz."
+        ],
+        [
+          "Pani",
+          "tańczy."
+        ],
+        [
+          "My",
+          "tańczymy."
+        ],
+        [
+          "Wy",
+          "tańczycie."
+        ],
+        [
+          "Oni",
+          "tańczą."
+        ]
+      ],
+      "explanation": "Tańczyć: -ę, -ysz, -y, -ymy, -ycie, -ą. Pani takes the on / ona form."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-08",
+      "type": "short-answer",
+      "tags": [
+        "present",
+        "conjugation-2"
+      ],
+      "prompt": "Ona ___ po angielsku. (mówić)",
+      "accepted": [
+        "mówi"
+      ],
+      "explanation": "Mówić follows the -ę, -isz pattern: ona mówi."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-09",
+      "type": "translate",
+      "tags": [
+        "present",
+        "owac"
+      ],
+      "source": "I'm buying a new phone.",
+      "accepted": [
+        "Kupuję nowy telefon.",
+        "Ja kupuję nowy telefon."
+      ],
+      "hint": "phone = telefon",
+      "explanation": "Kupować → kupuję. \"I'm buying\" is one word in Polish."
+    },
+    {
+      "id": "a1-verbs-present-conjugations-1-10",
+      "type": "translate",
+      "tags": [
+        "present",
+        "formal",
+        "conjugation-1"
+      ],
+      "source": "Where do you live? (formal, to a woman)",
+      "accepted": [
+        "Gdzie pani mieszka?",
+        "Gdzie mieszka pani?"
+      ],
+      "explanation": "Pani takes the on / ona form: mieszka."
+    }
+  ]
+}
