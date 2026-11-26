@@ -1,9 +1,11 @@
 {
   "version": 1,
-  "note": "Engine stage: 4 of the 14 model phrases (spec 09 §4). One per main pattern: masculine personal, masculine inanimate, feminine, neuter. The rest are written in level extras.",
+  "note": "All 14 model phrases of spec 09 §4 (written in level extras A1).",
   "models": [
     {
-      "id": "nowy-student", "gender": "masculine personal", "en": "new student",
+      "id": "nowy-student",
+      "gender": "masculine personal",
+      "en": "new student",
       "singular": {
         "nominative": "nowy student",
         "genitive": "nowego studenta",
@@ -24,7 +26,55 @@
       }
     },
     {
-      "id": "stary-dom", "gender": "masculine inanimate", "en": "old house",
+      "id": "dobry-lekarz",
+      "gender": "masculine personal",
+      "en": "good doctor",
+      "singular": {
+        "nominative": "dobry lekarz",
+        "genitive": "dobrego lekarza",
+        "dative": "dobremu lekarzowi",
+        "accusative": "dobrego lekarza",
+        "instrumental": "dobrym lekarzem",
+        "locative": "dobrym lekarzu",
+        "vocative": "dobry lekarzu"
+      },
+      "plural": {
+        "nominative": "dobrzy lekarze",
+        "genitive": "dobrych lekarzy",
+        "dative": "dobrym lekarzom",
+        "accusative": "dobrych lekarzy",
+        "instrumental": "dobrymi lekarzami",
+        "locative": "dobrych lekarzach",
+        "vocative": "dobrzy lekarze"
+      }
+    },
+    {
+      "id": "maly-kot",
+      "gender": "masculine animate",
+      "en": "small cat",
+      "singular": {
+        "nominative": "mały kot",
+        "genitive": "małego kota",
+        "dative": "małemu kotu",
+        "accusative": "małego kota",
+        "instrumental": "małym kotem",
+        "locative": "małym kocie",
+        "vocative": "mały kocie"
+      },
+      "plural": {
+        "nominative": "małe koty",
+        "genitive": "małych kotów",
+        "dative": "małym kotom",
+        "accusative": "małe koty",
+        "instrumental": "małymi kotami",
+        "locative": "małych kotach",
+        "vocative": "małe koty"
+      }
+    },
+    {
+      "id": "stary-dom",
+      "gender": "masculine inanimate",
+      "en": "old house",
       "singular": {
         "nominative": "stary dom",
         "genitive": "starego domu",
@@ -45,7 +95,34 @@
       }
     },
     {
-      "id": "dobra-kawa", "gender": "feminine", "en": "good coffee", "note": "In the plural: cups or kinds of coffee (Poproszę dwie kawy).",
+      "id": "nowy-pokoj",
+      "gender": "masculine inanimate",
+      "en": "new room",
+      "note": "ó changes to o in every form except the nominative and accusative singular. Genitive plural: pokoi (also pokojów).",
+      "singular": {
+        "nominative": "nowy pokój",
+        "genitive": "nowego pokoju",
+        "dative": "nowemu pokojowi",
+        "accusative": "nowy pokój",
+        "instrumental": "nowym pokojem",
+        "locative": "nowym pokoju",
+        "vocative": "nowy pokoju"
+      },
+      "plural": {
+        "nominative": "nowe pokoje",
+        "genitive": "nowych pokoi",
+        "dative": "nowym pokojom",
+        "accusative": "nowe pokoje",
+        "instrumental": "nowymi pokojami",
+        "locative": "nowych pokojach",
+        "vocative": "nowe pokoje"
+      }
+    },
+    {
+      "id": "dobra-kawa",
+      "gender": "feminine",
+      "en": "good coffee",
+      "note": "In the plural: cups or kinds of coffee (Poproszę dwie kawy).",
       "singular": {
         "nominative": "dobra kawa",
         "genitive": "dobrej kawy",
@@ -66,7 +143,79 @@
       }
     },
     {
-      "id": "male-okno", "gender": "neuter", "en": "small window",
+      "id": "nowa-lekcja",
+      "gender": "feminine",
+      "en": "new lesson",
+      "singular": {
+        "nominative": "nowa lekcja",
+        "genitive": "nowej lekcji",
+        "dative": "nowej lekcji",
+        "accusative": "nową lekcję",
+        "instrumental": "nową lekcją",
+        "locative": "nowej lekcji",
+        "vocative": "nowa lekcjo"
+      },
+      "plural": {
+        "nominative": "nowe lekcje",
+        "genitive": "nowych lekcji",
+        "dative": "nowym lekcjom",
+        "accusative": "nowe lekcje",
+        "instrumental": "nowymi lekcjami",
+        "locative": "nowych lekcjach",
+        "vocative": "nowe lekcje"
+      }
+    },
+    {
+      "id": "mala-ulica",
+      "gender": "feminine",
+      "en": "small street",
+      "singular": {
+        "nominative": "mała ulica",
+        "genitive": "małej ulicy",
+        "dative": "małej ulicy",
+        "accusative": "małą ulicę",
+        "instrumental": "małą ulicą",
+        "locative": "małej ulicy",
+        "vocative": "mała ulico"
+      },
+      "plural": {
+        "nominative": "małe ulice",
+        "genitive": "małych ulic",
+        "dative": "małym ulicom",
+        "accusative": "małe ulice",
+        "instrumental": "małymi ulicami",
+        "locative": "małych ulicach",
+        "vocative": "małe ulice"
+      }
+    },
+    {
+      "id": "dluga-noc",
+      "gender": "feminine",
+      "en": "long night",
+      "note": "A feminine noun without -a: the noun does not change in the accusative singular; only the adjective does (długą noc).",
+      "singular": {
+        "nominative": "długa noc",
+        "genitive": "długiej nocy",
+        "dative": "długiej nocy",
+        "accusative": "długą noc",
+        "instrumental": "długą nocą",
+        "locative": "długiej nocy",
+        "vocative": "długa nocy"
+      },
+      "plural": {
+        "nominative": "długie noce",
+        "genitive": "długich nocy",
+        "dative": "długim nocom",
+        "accusative": "długie noce",
+        "instrumental": "długimi nocami",
+        "locative": "długich nocach",
+        "vocative": "długie noce"
+      }
+    },
+    {
+      "id": "male-okno",
+      "gender": "neuter",
+      "en": "small window",
       "singular": {
         "nominative": "małe okno",
         "genitive": "małego okna",
@@ -84,6 +233,100 @@
         "instrumental": "małymi oknami",
         "locative": "małych oknach",
         "vocative": "małe okna"
+      }
+    },
+    {
+      "id": "dobre-piwo",
+      "gender": "neuter",
+      "en": "good beer",
+      "singular": {
+        "nominative": "dobre piwo",
+        "genitive": "dobrego piwa",
+        "dative": "dobremu piwu",
+        "accusative": "dobre piwo",
+        "instrumental": "dobrym piwem",
+        "locative": "dobrym piwie",
+        "vocative": "dobre piwo"
+      },
+      "plural": {
+        "nominative": "dobre piwa",
+        "genitive": "dobrych piw",
+        "dative": "dobrym piwom",
+        "accusative": "dobre piwa",
+        "instrumental": "dobrymi piwami",
+        "locative": "dobrych piwach",
+        "vocative": "dobre piwa"
+      }
+    },
+    {
+      "id": "nowe-mieszkanie",
+      "gender": "neuter",
+      "en": "new flat",
+      "singular": {
+        "nominative": "nowe mieszkanie",
+        "genitive": "nowego mieszkania",
+        "dative": "nowemu mieszkaniu",
+        "accusative": "nowe mieszkanie",
+        "instrumental": "nowym mieszkaniem",
+        "locative": "nowym mieszkaniu",
+        "vocative": "nowe mieszkanie"
+      },
+      "plural": {
+        "nominative": "nowe mieszkania",
+        "genitive": "nowych mieszkań",
+        "dative": "nowym mieszkaniom",
+        "accusative": "nowe mieszkania",
+        "instrumental": "nowymi mieszkaniami",
+        "locative": "nowych mieszkaniach",
+        "vocative": "nowe mieszkania"
+      }
+    },
+    {
+      "id": "trudne-imie",
+      "gender": "neuter",
+      "en": "difficult name",
+      "note": "Nouns in -ę add -eni- (singular) or -on- (plural): imię → imienia, imiona.",
+      "singular": {
+        "nominative": "trudne imię",
+        "genitive": "trudnego imienia",
+        "dative": "trudnemu imieniu",
+        "accusative": "trudne imię",
+        "instrumental": "trudnym imieniem",
+        "locative": "trudnym imieniu",
+        "vocative": "trudne imię"
+      },
+      "plural": {
+        "nominative": "trudne imiona",
+        "genitive": "trudnych imion",
+        "dative": "trudnym imionom",
+        "accusative": "trudne imiona",
+        "instrumental": "trudnymi imionami",
+        "locative": "trudnych imionach",
+        "vocative": "trudne imiona"
+      }
+    },
+    {
+      "id": "male-muzeum",
+      "gender": "neuter",
+      "en": "small museum",
+      "note": "Nouns in -um do not change in the singular; only the adjective shows the case.",
+      "singular": {
+        "nominative": "małe muzeum",
+        "genitive": "małego muzeum",
+        "dative": "małemu muzeum",
+        "accusative": "małe muzeum",
+        "instrumental": "małym muzeum",
+        "locative": "małym muzeum",
+        "vocative": "małe muzeum"
+      },
+      "plural": {
+        "nominative": "małe muzea",
+        "genitive": "małych muzeów",
+        "dative": "małym muzeom",
+        "accusative": "małe muzea",
+        "instrumental": "małymi muzeami",
+        "locative": "małych muzeach",
+        "vocative": "małe muzea"
       }
     }
   ]
