@@ -2458,8 +2458,10 @@ a.lab-tile:focus-visible { outline: 3px solid var(--focus-color); outline-offset
 /* Aspect strip: one axis, five lanes; imperfective = a line, perfective = a diamond (shape + word, not colour alone) */
 .lab-aspect { padding: 20px 24px; }
 .lab-aspect .lab-card-title { font-size: var(--fs-2xl); margin: 0 0 6px; }
-.lab-aspect-pair { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 18px; margin: 12px 0; font-size: var(--fs-sm-plus); }
-.aspect-key { display: inline-flex; align-items: center; gap: 6px; }
+.lab-aspect-pair { list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 12px 0; padding: 0; font-size: var(--fs-sm-plus); }
+.aspect-key { display: flex; align-items: baseline; gap: 8px; }
+.aspect-key .aspect-swatch { flex-shrink: 0; align-self: center; }
+.aspect-key strong { font-family: var(--font-display); }
 .aspect-swatch { display: inline-block; width: 22px; height: 6px; border-radius: 3px; background: var(--aspect-impf); }
 .aspect-key.is-perf .aspect-swatch { width: 12px; height: 12px; border-radius: 2px; transform: rotate(45deg); background: none; border: 3px solid var(--aspect-perf); }
 .lab-aspect-list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
@@ -2505,6 +2507,9 @@ a.lab-tile:focus-visible { outline: 3px solid var(--focus-color); outline-offset
 .lab-answer:hover { background: var(--surface-2); border-color: var(--accent); }
 .lab-answer:active { transform: scale(0.99); }
 .lab-why { font-size: var(--fs-md); }
+.lab-example { margin: 0 0 12px; }
+.lab-example p { margin: 0; }
+.lab-example-pl { display: flex; align-items: center; gap: 4px; font-family: var(--font-display); font-size: var(--fs-md-plus); font-weight: 560; }
 .lab-results { margin: 14px 0 18px; }
 .lab-result { position: relative; padding-left: 20px; }
 .lab-result::before, .lab-compare-col::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 5px; border-radius: 0 4px 4px 0; background: var(--case, var(--line-control)); }

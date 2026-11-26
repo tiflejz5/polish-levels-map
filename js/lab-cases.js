@@ -299,13 +299,21 @@ window.LM = window.LM || {};
     view.appendChild(el("p", { class: "tool-note", text: "These are rules written in the data, not artificial intelligence – the same path always gives the same result." }));
   }
 
+  /** A Polish example with its listen button and the English under it. */
+  function exampleLine(x) {
+    return el("div", { class: "lab-example" }, [
+      el("p", { class: "lab-example-pl" }, [target(x.pl), K.speakButton(x.pl)]),
+      el("p", { class: "lab-use-pl", text: x.en })
+    ]);
+  }
+
   function pickResult(o) {
     const out = [];
     if (o.result && o.result.length) {
       const names = o.result.map(caseName);
       out.push(el("h2", { class: "lab-question lab-result-title", tabindex: "-1", text: o.result.length > 1 ? "These fit: " + names.join(", ") : "Use the " + names[0] }));
       if (o.why) out.push(el("p", { class: "lab-why", text: o.why }));
-      if (o.example) out.push(el("p", { class: "lab-use-en" }, [target(o.example.pl), K.speakButton(o.example.pl), el("span", { class: "lab-use-pl", text: " – " + o.example.en })]));
+      if (o.example) out.push(exampleLine(o.example));
       out.push(el("ul", { class: "lab-results" }, o.result.map(function (id) {
         const c = caseCard(id);
         return el("li", { class: "card lab-result " + caseClass(id) }, [
@@ -318,7 +326,7 @@ window.LM = window.LM || {};
       out.push(el("h2", { class: "lab-question lab-result-title", tabindex: "-1", text: o.answer.title }));
       if (o.answer.text) out.push(el("p", { class: "lab-why", text: o.answer.text }));
       (o.answer.examples || []).forEach(function (x) {
-        out.push(el("p", { class: "lab-use-en" }, [target(x.pl), K.speakButton(x.pl), el("span", { class: "lab-use-pl", text: " – " + x.en })]));
+        out.push(exampleLine(x));
       });
       if (o.answer.href) out.push(el("a", { class: "btn btn-primary btn-small", href: o.answer.href }, LM.ui.withIcon("arrow-right", o.answer.linkLabel || "Open")));
     }
@@ -363,7 +371,11 @@ window.LM = window.LM || {};
 
     const diffs = [];
     (a.contrasts || []).forEach(function (x) { if (x.with === b.id) diffs.push(x); });
-    (b.contrasts || []).forEach(function (x) { if (x.with === a.id) diffs.push(x); });
+    (b.contrasts || []).forEach(function (x) {
+      // The same example pair on both cards is one difference, not two
+      const same = diffs.some(function (d) { return (d.examples || []).join("|") === (x.examples || []).join("|"); });
+      if (x.with === a.id && !same) diffs.push(x);
+    });
     view.appendChild(el("section", { class: "card lab-diff", "aria-labelledby": "lab-diff-title" }, [
       el("h2", { class: "section-title", id: "lab-diff-title", text: "Differences" }),
       diffs.length ? el("div", { class: "md-table" }, el("div", { class: "md-table-wrap" }, el("table", null, [
@@ -481,17 +493,17 @@ window.LM = window.LM || {};
     const tl = K.timeline({
       compact: compact,
       lanes: a.forms.map(function (f) {
-        return { label: f.name + (compact ? "" : " · " + f.aspect), color: aspectColor(f.aspect), elements: f.scene.elements };
+        return { label: f.name + " · " + f.aspect, color: aspectColor(f.aspect), elements: f.scene.elements };
       }),
       ariaLabel: a.title + ". " + a.forms.map(function (f) { return f.name + ", " + f.aspect + ": " + f.scene.description; }).join(" ")
     });
     view.appendChild(el("section", { class: "card lab-aspect", "aria-labelledby": "lab-aspect-title" }, [
       el("h2", { class: "lab-card-title", id: "lab-aspect-title", text: a.title }),
       el("p", { class: "lab-card-summary", text: a.summary }),
-      el("p", { class: "lab-aspect-pair" }, [
-        el("span", { class: "aspect-key is-impf" }, [el("span", { class: "aspect-swatch", "aria-hidden": "true" }), "imperfective (a line: the process) ", target(a.verb.imperfective)]),
-        el("span", { class: "aspect-key is-perf" }, [el("span", { class: "aspect-swatch", "aria-hidden": "true" }), "perfective (a diamond: the result) ", target(a.verb.perfective)]),
-        el("span", { class: "lab-forms-en", text: " – " + a.verb.en })
+      el("p", { class: "tool-note" }, ["The pair on this strip: ", target(a.verb.imperfective), " / ", target(a.verb.perfective), " – " + a.verb.en + "."]),
+      el("ul", { class: "lab-aspect-pair", "aria-label": "Key" }, [
+        el("li", { class: "aspect-key is-impf" }, [el("span", { class: "aspect-swatch", "aria-hidden": "true" }), target(a.verb.imperfective, "strong"), el("span", { text: "imperfective: a line = the process" })]),
+        el("li", { class: "aspect-key is-perf" }, [el("span", { class: "aspect-swatch", "aria-hidden": "true" }), target(a.verb.perfective, "strong"), el("span", { text: "perfective: a diamond = the result" })])
       ]),
       el("figure", { class: "tl-figure" }, [tl.node, el("figcaption", { class: "visually-hidden", text: "The same forms as a list follow." })]),
       el("ol", { class: "lab-aspect-list" }, a.forms.map(function (f) {
