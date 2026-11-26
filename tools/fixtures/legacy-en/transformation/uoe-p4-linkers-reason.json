@@ -2,9 +2,9 @@
   "id": "uoe-p4-spojniki-przyczyna",
   "part": 4,
   "type": "transformation",
-  "title": "Spójniki, przyczyna i przeciwieństwo",
+  "title": "(title: test fixture text)",
   "focus": "In spite of, due to, as long as, in contrast to, as a result of, although",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -56,7 +56,7 @@
         ]
       ],
       "model": "AS LONG AS",
-      "explanation": "As long as = pod warunkiem, że."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -74,7 +74,7 @@
         ]
       ],
       "model": "CONTRAST TO HIS",
-      "explanation": "In contrast to = w przeciwieństwie do."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -108,7 +108,7 @@
         ]
       ],
       "model": "ALTHOUGH HE LACKED",
-      "explanation": "Although + zdanie, w miejsce despite + rzeczownik."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

@@ -4,7 +4,7 @@
  *
  *   node tools/check-lang.js          (or: npm run check:lang)
  *
- * Scanned: js/, css/, index.html, tools/ (comments included: comments must be English too).
+ * Scanned: js/, css/, index.html, tools/, assets/ (*.js, *.svg; not vendor/ or fonts/); comments included: comments must be English too.
  * Not scanned: js/lang.js and js/config.js (the only code files that may hold Polish), this file (it holds the
  * stop list), tools/fixtures/ (data, including the Polish test fixtures).
  *
@@ -14,7 +14,7 @@
  *   quote          the Polish opening quote (U+201E; the closing quote is also the English one, so it is allowed)
  *   stop-word      a frequent Polish UI word (whole word, any case)
  *   locale         the locale codes pl-PL, en-GB, en-US (locales come from LM.APP)
- *   legacy-name    names of the original app: ELM, elm_, niezbednik, szlak, fiszki
+ *   legacy-name    names of the original app: ELM, elm_, niezbednik, szlak, fiszki, kraina, sciaga, matura, u-moje-
  *   lang-code      js/: a hard-coded language code as a string ("pl", lang: "en"); use LM.APP.targetLang / uiLocale
  *   abbreviation   js/: a Polish abbreviation as a string ("np.", "m.in.", …); they are LM.lang.abbreviations
  *   function-word  js/: a Polish function word as a string ("jest", "nie", "ale"); they are LM.lang.functionWords
@@ -33,7 +33,7 @@ const ROOT = path.join(__dirname, "..");
 const ALLOW_FILE = path.join(__dirname, "check-lang-allow.json");
 
 const SKIP_FILES = ["js/lang.js", "js/config.js", "tools/check-lang.js"];
-const SKIP_DIRS = ["tools/fixtures", "node_modules"];
+const SKIP_DIRS = ["tools/fixtures", "node_modules", "assets/vendor", "assets/fonts"];
 
 const STOP_WORDS = ["Dodaj", "Zapisz", "Anuluj", "Usuń", "Dalej", "Wróć", "Wynik", "Poziom", "Zadanie",
   "Pokaż", "Ukryj", "Umiem", "Dziś", "Szlak", "Fiszki", "Zestaw", "Błąd", "Powtórka", "Egzamin",
@@ -46,7 +46,7 @@ const RULES = [
   { id: "quote", re: /\u201e/u },
   { id: "stop-word", re: new RegExp("(?<![\\p{L}\\p{N}_])(?:" + STOP_WORDS.join("|") + ")(?![\\p{L}\\p{N}_])", "iu") },
   { id: "locale", re: /\b(?:pl-PL|en-GB|en-US)\b/ },
-  { id: "legacy-name", re: /\bELM\b|\belm_|niezbednik|szlak|fiszki/i },
+  { id: "legacy-name", re: /\bELM\b|\belm_|niezbednik|szlak|fiszki|kraina|sciaga|\bmatura|u-moje-/i },
   { id: "lang-code", only: JS, re: /\blang\s*[:=]\s*["'][a-z]{2}(?:-[A-Za-z]{2})?["']|["'](?:pl|pl-pl|pl_PL)["']|\/\^pl\b/ },
   { id: "abbreviation", only: JS, re: /["'](?:np|tzn|tj|m\.in|itd|itp|godz|ul|prof|ok)\.["']/ },
   { id: "function-word", only: JS, re: /["'](?:jest|nie|ale|sie|ze)["']/i },
@@ -71,6 +71,7 @@ function listFiles() {
   walk(path.join(ROOT, "js"), [".js"]);
   walk(path.join(ROOT, "css"), [".css"]);
   walk(path.join(ROOT, "tools"), [".js"]);
+  walk(path.join(ROOT, "assets"), [".js", ".svg"]);
   out.push(path.join(ROOT, "index.html"));
   return out;
 }

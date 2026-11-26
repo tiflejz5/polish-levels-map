@@ -3,8 +3,8 @@
   "part": 4,
   "type": "transformation",
   "title": "Inwersja i emfaza",
-  "focus": "Inwersja po wyrażeniach przeczących i ograniczających, cleft sentences",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "focus": "(focus: test fixture text)",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -22,7 +22,7 @@
         ]
       ],
       "model": "HAD I SEEN",
-      "explanation": "Never before na początku → szyk pytający: had + podmiot + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -39,7 +39,7 @@
         ]
       ],
       "model": "SOONER HAD WE ARRIVED",
-      "explanation": "No sooner had + podmiot + 3. forma… than… = ledwie…, a już…"
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -57,7 +57,7 @@
         ]
       ],
       "model": "DID SHE REALISE",
-      "explanation": "Only when… → inwersja w drugiej części zdania: did + podmiot + bezokolicznik."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -75,7 +75,7 @@
         ]
       ],
       "model": "NO CIRCUMSTANCES MUST YOU OPEN",
-      "explanation": "Under no circumstances + szyk pytający."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -93,7 +93,7 @@
         ]
       ],
       "model": "WHAT REALLY ANNOYS ME IS",
-      "explanation": "Wh-cleft: What + zdanie + is + najważniejsza informacja."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,
@@ -110,7 +110,7 @@
         ]
       ],
       "model": "WAS TOM WHO SUGGESTED",
-      "explanation": "It-cleft: It was + osoba + who… – podkreśla, kto to zrobił."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

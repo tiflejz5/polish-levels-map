@@ -129,7 +129,7 @@ window.LM = window.LM || {};
       });
       count.textContent = "Cards: " + shown.length + " of " + cards.length;
       list.replaceChildren();
-      if (!shown.length) { list.appendChild(LM.ui.emptyState({ tag: "li", art: "brak-wynikow", title: cards.length ? "No cards match the filters." : "This deck has no cards yet." })); return; }
+      if (!shown.length) { list.appendChild(LM.ui.emptyState({ tag: "li", art: "no-results", title: cards.length ? "No cards match the filters." : "This deck has no cards yet." })); return; }
       shown.forEach(function (c) {
         const x = st().cards[c.id];
         const sts = statusOf(x);

@@ -6,7 +6,7 @@
  *   Where you can select    topic pages and level summaries, exam pages (.md),
  *                           lab cards, texts and transcripts of items AFTER the answer is checked,
  *                           elements with the data-fc-selectable attribute (model answers, phrase bank, cheat sheets)
- *   Card                    cloze with the context sentence (LM.cardsLogic.makeWordCard), deck u-moje-slowa (stored id)
+ *   Card                    cloze with the context sentence (LM.cardsLogic.makeWordCard), deck u-words (stored id)
  *
  * Logic without DOM (sentence, gap, language detection, deduplication, field normalization): js/cards-logic.js.
  * Adding a word is NOT a learning-day activity (too easy to pad the streak). User content only as text.
@@ -20,7 +20,7 @@ window.LM = window.LM || {};
   const el = U.el;
   const HASH = "#/review/decks";
   const WORDS_HASH = "#/review/words";
-  const WORDS_ID = "u-moje-slowa";
+  const WORDS_ID = "u-words";
   const WORDS_TITLE = "My words";
 
   function L() { return LM.cardsLogic; }
@@ -187,17 +187,17 @@ window.LM = window.LM || {};
     return added;
   }
 
-  /** “Add to My words” from the phrase bank: a basic card meaning → phrase ({ en, pl, example?, route, title }); a duplicate (the same phrase) → “Show”. */
+  /** “Add to My words” from the phrase bank: a basic card meaning → phrase ({ text: Polish phrase, meaning: English, example?, route, title }); a duplicate (the same phrase) → “Show”. */
   function addPhrase(p) {
     if (!hasProfile()) { LM.app.withProfile("Words are saved in your profile.", function () { addPhrase(p); }); return null; }
-    const phrase = String(p.en || "").replace(/\s*…\s*$/, "").replace(/\s+/g, " ").trim();
-    if (!phrase || !p.pl) return null;
+    const phrase = String(p.text || "").replace(/\s*…\s*$/, "").replace(/\s+/g, " ").trim();
+    if (!phrase || !p.meaning) return null;
     const dup = findByWord(phrase);
     if (dup) {
       say("“" + phrase + "” is already in My words.", { actions: [{ label: "Show", onClick: function () { showWord(wordOf(dup)); } }] });
       return dup;
     }
-    const res = L().makeCard({ type: "basic", front: p.pl, back: phrase, hint: "", example: p.example || "" });
+    const res = L().makeCard({ type: "basic", front: p.meaning, back: phrase, hint: "", example: p.example || "" });
     if (res.error) { say(res.error); return null; }
     Object.assign(res.card, L().sanitizeWordFields({ word: phrase, source: { route: p.route, title: p.title }, addedAt: LM.learn.today() }));
     LM.cardsBrowse.ensureDeck(WORDS_ID, WORDS_TITLE, "words");
@@ -326,7 +326,7 @@ window.LM = window.LM || {};
     root.appendChild(LM.review.header("words", "Words and phrases you selected in texts – each with the sentence it comes from."));
     if (!all.length) {
       root.appendChild(LM.ui.emptyState({
-        class: "fw-empty", art: "pusty-notes", title: "You have not saved any words yet.", hint: "Select a word or phrase in any text (a Handbook page, a summary, an exam, the lab), then choose “Add to My words” or press M. A card with a gap goes here and into your daily reviews."
+        class: "fw-empty", art: "empty-notes", title: "You have not saved any words yet.", hint: "Select a word or phrase in any text (a Handbook page, a summary, an exam, the lab), then choose “Add to My words” or press M. A card with a gap goes here and into your daily reviews."
       }));
       return;
     }
@@ -369,7 +369,7 @@ window.LM = window.LM || {};
       });
       count.textContent = "Words: " + shown.length + " of " + all.length;
       list.replaceChildren();
-      if (!shown.length) { list.appendChild(LM.ui.emptyState({ tag: "li", art: "brak-wynikow", title: "No words match the filters." })); return; }
+      if (!shown.length) { list.appendChild(LM.ui.emptyState({ tag: "li", art: "no-results", title: "No words match the filters." })); return; }
       shown.forEach(function (c) { list.appendChild(row(c)); });
       if (focusedWord) {
         const first = list.querySelector(".fw-row"); focusedWord = null;

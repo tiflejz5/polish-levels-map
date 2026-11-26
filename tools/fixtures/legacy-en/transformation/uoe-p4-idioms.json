@@ -2,9 +2,9 @@
   "id": "uoe-p4-wyrazenia-idiomatyczne",
   "part": 4,
   "type": "transformation",
-  "title": "Wyrażenia idiomatyczne",
+  "title": "(title: test fixture text)",
   "focus": "In charge of, take into account, at a loss for, out of the question, make sense of, on the verge of",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -22,7 +22,7 @@
         ]
       ],
       "model": "HAS BEEN IN CHARGE OF",
-      "explanation": "Be in charge of = odpowiadać za. Present Perfect z since."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -39,7 +39,7 @@
         ]
       ],
       "model": "THE COST INTO ACCOUNT",
-      "explanation": "Take something into account = wziąć coś pod uwagę. Akceptowane też: into account the cost."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -56,7 +56,7 @@
         ]
       ],
       "model": "WAS AT A LOSS FOR",
-      "explanation": "Be at a loss for words = nie wiedzieć, co powiedzieć."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -91,7 +91,7 @@
         ]
       ],
       "model": "MAKE ANY SENSE OF",
-      "explanation": "Make sense of = zrozumieć, połapać się w."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,

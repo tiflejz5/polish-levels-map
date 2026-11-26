@@ -3,8 +3,8 @@
   "id": "b1-slownictwo-1",
   "topic": "b1-slownictwo",
   "level": "B1",
-  "title": "Słownictwo B1 – sprawdź się",
-  "intro": "9 zadań: dopasowanie par (charakter, kolokacje, fałszywi przyjaciele, phrasal verbs, reakcje), luki, wybór formy, szukanie błędu i tłumaczenie. Każda para to punkt.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -37,7 +37,7 @@
       "extraRight": [
         "easily upset by criticism"
       ],
-      "explanation": "Przymiotniki charakteru przydają się w opisach osób na maturze i w B2 First. „Easily upset by criticism” to sensitive – nie ma go na liście."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-02",
@@ -48,7 +48,7 @@
         "phrasal-verbs"
       ],
       "mode": "halves",
-      "prompt": "Połącz początki zdań z zakończeniami.",
+      "prompt": "(prompt: test fixture text)",
       "pairs": [
         [
           "Can you do me",
@@ -74,8 +74,8 @@
       "extraRight": [
         "to see you soon."
       ],
-      "trap": "Look forward to + -ing: looking forward to seeing you, nie „to see you”.",
-      "explanation": "Stałe połączenia: do someone a favour, make a decision, run out of, look after, look forward to + -ing."
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-03",
@@ -84,7 +84,7 @@
         "false-friends"
       ],
       "mode": "translation",
-      "prompt": "Fałszywi przyjaciele: dopasuj polskie słowo do angielskiego odpowiednika.",
+      "prompt": "(prompt: test fixture text)",
       "pairs": [
         [
           "aktualny",
@@ -106,7 +106,7 @@
       "extraRight": [
         "eventually"
       ],
-      "explanation": "Actual = rzeczywisty, sympathetic = współczujący – wyglądają jak polskie słowa, ale znaczą co innego. Eventually = w końcu (nie „ewentualnie”)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-04",
@@ -141,7 +141,7 @@
       "extraRight": [
         "continue doing something"
       ],
-      "explanation": "Phrasal verbs B1 z jednym głównym znaczeniem. „Continue doing something” to carry on – nie ma go na liście."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-05",
@@ -151,7 +151,7 @@
         "responses"
       ],
       "mode": "response",
-      "prompt": "Dopasuj reakcję do wypowiedzi.",
+      "prompt": "(prompt: test fixture text)",
       "pairs": [
         [
           "I've just passed my driving test!",
@@ -173,7 +173,7 @@
       "extraRight": [
         "You're welcome."
       ],
-      "explanation": "„You're welcome” to odpowiedź na podziękowanie (Thank you), a tu nikt nie dziękuje."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-06",
@@ -194,11 +194,11 @@
           "accepted": [
             "to seeing"
           ],
-          "hint": "2 słowa"
+          "hint": "(hint: test fixture text)"
         }
       ],
-      "trap": "Make a mistake (nie „do a mistake”) i look forward to + -ing.",
-      "explanation": "Kolokacja make a mistake; po look forward to stoi forma -ing, bo to jest przyimek."
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-07",
@@ -218,10 +218,10 @@
       "optionNotes": [
         null,
         "Run off = uciec, odbiec.",
-        "Run over = przejechać (samochodem) albo przelać się.",
-        "Run away = uciec z domu, uciec przed kimś."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
-      "explanation": "Run out of something = skończyć się (zapasy)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-08",
@@ -246,7 +246,7 @@
       "fixes": [
         "seeing"
       ],
-      "explanation": "W look forward to słowo to jest przyimkiem, więc dalej forma -ing: looking forward to seeing you."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-slownictwo-1-09",
@@ -256,7 +256,7 @@
         "make-do",
         "prepositions"
       ],
-      "source": "Muszę podjąć decyzję do piątku.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "I have to make a decision by Friday.",
         "I need to make a decision by Friday.",
@@ -268,8 +268,8 @@
         "I've got to decide by Friday."
       ],
       "hint": "make + decision; termin: by",
-      "trap": "„Do piątku” jako termin to by Friday, nie until Friday (until = przez cały czas aż do).",
-      "explanation": "Podjąć decyzję = make a decision (albo po prostu decide). Termin, przed którym coś trzeba zrobić: by."
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

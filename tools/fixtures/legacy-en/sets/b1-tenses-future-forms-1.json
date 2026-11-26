@@ -3,8 +3,8 @@
   "id": "b1-czasy-wybor-formy-przyszlej-1",
   "topic": "b1-czasy-wybor-formy-przyszlej",
   "level": "B1",
-  "title": "Wybór formy przyszłej – sprawdź się",
-  "intro": "10 zadań: wybór formy, układanie zdań i szukanie błędów.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -18,12 +18,12 @@
         "is raining to"
       ],
       "correct": 1,
-      "explanation": "Przewidywanie na podstawie dowodów, które widzimy: is going to.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
-        "Will pasuje do przewidywań bez dowodów lub decyzji w chwili mówienia.",
+        "(optionNotes: test fixture text)",
         null,
-        "Present Simple nie pasuje.",
-        "Błędna konstrukcja."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "going-to"
@@ -41,12 +41,12 @@
         "am buying to"
       ],
       "correct": 0,
-      "explanation": "Decyzja podjęta w chwili mówienia: will.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         null,
-        "Going to oznacza plan z wcześniej.",
-        "Present Simple nie pasuje.",
-        "Błędna konstrukcja."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "will"
@@ -68,7 +68,7 @@
       "optionNotes": [
         "Will to decyzja spontaniczna.",
         null,
-        "Błędna konstrukcja.",
+        "(optionNotes: test fixture text)",
         "Brak am."
       ],
       "tags": [
@@ -87,12 +87,12 @@
         "is going to leave"
       ],
       "correct": 2,
-      "explanation": "Rozkłady jazdy i oficjalne plany: Present Simple.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
-        "Możliwe, ale nienaturalne dla rozkładu.",
-        "Możliwe dla osobistego planu.",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
         null,
-        "Nienaturalne dla rozkładu."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "present-simple"
@@ -101,7 +101,7 @@
     },
     {
       "type": "reorder",
-      "context": "Zamierzam zacząć uczyć się niemieckiego.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I am going to start learning German."
       ],
@@ -113,11 +113,11 @@
     },
     {
       "type": "reorder",
-      "context": "Myślę, że jutro będzie padać.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I think it will rain tomorrow."
       ],
-      "explanation": "Opinia o przyszłości: I think + will.",
+      "explanation": "(explanation: test fixture text)",
       "extraTokens": [
         "is"
       ],
@@ -128,7 +128,7 @@
     },
     {
       "type": "reorder",
-      "context": "Spotykamy się o ósmej.",
+      "context": "(context: test fixture text)",
       "answers": [
         "We are meeting at eight."
       ],
@@ -156,7 +156,7 @@
       "fixes": [
         "will go"
       ],
-      "explanation": "Decyzja w chwili mówienia: will go (lub I'll go).",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "will"
       ],
@@ -186,7 +186,7 @@
       "fixes": [
         "starts"
       ],
-      "explanation": "Rozkład (schedule) = Present Simple: starts.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "present-simple"
       ],

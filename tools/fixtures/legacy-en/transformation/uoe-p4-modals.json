@@ -2,9 +2,9 @@
   "id": "uoe-p4-modalne",
   "part": 4,
   "type": "transformation",
-  "title": "Modalne w przeszłości",
+  "title": "(title: test fixture text)",
   "focus": "Must have, can't have, might have, should(n't) have, needn't have, could have",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -22,7 +22,7 @@
         ]
       ],
       "model": "MUST HAVE FORGOTTEN",
-      "explanation": "Pewność dotycząca przeszłości: must have + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -39,7 +39,7 @@
         ]
       ],
       "model": "CAN'T HAVE SEEN",
-      "explanation": "Niemożliwość w przeszłości: can't have + 3. forma (nie mustn't!)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -56,7 +56,7 @@
         ]
       ],
       "model": "SHOULDN'T HAVE TOLD HIM",
-      "explanation": "Żal / krytyka: shouldn't have + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -73,7 +73,7 @@
         ]
       ],
       "model": "MIGHT HAVE TAKEN",
-      "explanation": "Możliwość w przeszłości: might have + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -90,7 +90,7 @@
         ]
       ],
       "model": "NEEDN'T HAVE BOUGHT",
-      "explanation": "Needn't have + 3. forma: zrobiłeś coś, co nie było konieczne."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,
@@ -107,7 +107,7 @@
         ]
       ],
       "model": "COULD HAVE TOLD",
-      "explanation": "Could have + 3. forma = mogłeś (a nie zrobiłeś) – lekka pretensja."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

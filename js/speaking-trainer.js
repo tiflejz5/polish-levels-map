@@ -2,7 +2,7 @@
  * speaking-trainer.js — the speaking trainer of exams from the registry (spec 09 section 5 and spec 18).
  * Data: the module's training/speaking.json. Three formats (the "format" field):
  *   (none)    four-part exam: { criteria, part1, part2, part3, part4 } — four Speaking parts,
- *   "matura"  oral exam: { criteria, intro, roleplay, picture, choice } — a warm-up conversation + tasks 1–3 (approximate times),
+ *   "oral"    oral exam: { criteria, intro, roleplay, picture, choice } — a warm-up conversation + tasks 1–3 (approximate times),
  *   "simple"  extra practice: { criteria, cards: [ { kind, task, questions, … } ] } — one list of cards.
  *
  *   LM.speakingTrainer.create(cfg) → { render(view) → title | null }
@@ -134,7 +134,7 @@ window.LM = window.LM || {};
 
     function unitsOf(D) {
       const fmt = D.format || "b2";
-      if (fmt === "matura") {
+      if (fmt === "oral") {
         return [
           { key: "intro", tab: "Warm-up", part: 1, P: D.intro, pool: D.intro.groups, type: "groups", lead: "The examiner asks short questions about you. Answer in 2–3 sentences: an answer, a reason, an example." },
           { key: "roleplay", tab: "Task 1", part: 2, P: D.roleplay, pool: D.roleplay.cards, type: "roleplay" },
@@ -206,10 +206,10 @@ window.LM = window.LM || {};
       const fmt = D.format || "b2";
       const units = unitsOf(D);
       const hasFull = fmt !== "simple";
-      const title = fmt === "matura" ? "Oral exam trainer" : fmt === "simple" ? "Speaking (extra practice)" : "Speaking trainer";
+      const title = fmt === "oral" ? "Oral exam trainer" : fmt === "simple" ? "Speaking (extra practice)" : "Speaking trainer";
       view.appendChild(cfg.crumb(found.label));
       view.appendChild(el("h1", { class: "c1-title", text: title }));
-      if (fmt === "matura") {
+      if (fmt === "oral") {
         view.appendChild(el("p", { class: "c1-lead", text: "A warm-up conversation and three tasks, as in the oral exam: you draw a card, speak against the clock, listen to yourself and assess yourself." }));
       } else if (fmt === "simple") {
         view.appendChild(el("p", { class: "sp-note-banner", role: "note", text: D.note }));
@@ -217,7 +217,7 @@ window.LM = window.LM || {};
       } else {
         view.appendChild(el("p", { class: "c1-lead", text: "Four parts as in the exam: you draw questions, a card or a task and speak against the clock. After the session, assess yourself by the four criteria – the result is saved in your profile's history." }));
       }
-      if (D.note && fmt === "matura") view.appendChild(el("p", { class: "tool-note", text: D.note }));
+      if (D.note && fmt === "oral") view.appendChild(el("p", { class: "tool-note", text: D.note }));
       view.appendChild(el("p", { class: "tool-note sp-privacy" }, [LM.icon("info", { size: 16 }), " The recording stays only in this browser tab – nothing is saved or sent."]));
 
       const tabDefs = units.map(function (u, i) { return { id: u.key, label: u.tab, unit: u, index: i }; });
@@ -235,7 +235,7 @@ window.LM = window.LM || {};
             onclick: function () { select(t.index, false); }
           }, t.label);
         });
-        const tablist = el("div", { class: "sp-tabs", role: "tablist", "aria-label": fmt === "matura" ? "Parts of the oral exam" : "Parts of the Speaking exam" }, tabs);
+        const tablist = el("div", { class: "sp-tabs", role: "tablist", "aria-label": fmt === "oral" ? "Parts of the oral exam" : "Parts of the Speaking exam" }, tabs);
         tablist.addEventListener("keydown", function (e) {
           let n = null;
           if (e.key === "ArrowRight") n = (ui.tab + 1) % tabDefs.length;

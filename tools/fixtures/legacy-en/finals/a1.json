@@ -3,8 +3,8 @@
   "id": "test-koncowy-a1",
   "kind": "level-test",
   "level": "A1",
-  "title": "Test końcowy A1",
-  "intro": "20 pytań z całego poziomu A1. Zaliczenie od 80%.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "draw": 20,
   "passPercent": 80,
   "defaultMode": "exam",
@@ -17,7 +17,7 @@
       "tags": [
         "present-simple"
       ],
-      "prompt": "My brother ___ in a shop in Poznań.",
+      "prompt": "(prompt: test fixture text)",
       "options": [
         "work",
         "works",
@@ -25,7 +25,7 @@
         "working"
       ],
       "correct": 1,
-      "explanation": "He/she/it w Present Simple: końcówka -s (works)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-02",
@@ -66,7 +66,7 @@
         "I'm a cheese sandwich."
       ],
       "correct": 0,
-      "explanation": "Zamawiamy: I'd like … please. „I like” to ogólne upodobanie, nie zamówienie."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-04",
@@ -75,12 +75,12 @@
       "tags": [
         "prepositions"
       ],
-      "context": "Moje urodziny są w maju.",
+      "context": "(context: test fixture text)",
       "prompt": "My birthday is ___ May.",
       "accepted": [
         "in"
       ],
-      "explanation": "Miesiące: in (in May). Dni: on (on Monday). Godziny: at (at 5)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-05",
@@ -90,7 +90,7 @@
         "family"
       ],
       "mode": "translation",
-      "prompt": "Dopasuj słowa.",
+      "prompt": "(prompt: test fixture text)",
       "pairs": [
         [
           "aunt",
@@ -109,7 +109,7 @@
           "wujek"
         ]
       ],
-      "explanation": "Cousin nie zmienia formy – to i kuzyn, i kuzynka."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-06",
@@ -118,7 +118,7 @@
       "tags": [
         "questions"
       ],
-      "context": "Gdzie mieszkają twoi rodzice?",
+      "context": "(context: test fixture text)",
       "answers": [
         "Where do your parents live?"
       ],
@@ -140,7 +140,7 @@
         "sleeping"
       ],
       "correct": 1,
-      "explanation": "Coś dzieje się teraz (Be quiet!): Present Continuous – is sleeping."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-08",
@@ -158,7 +158,7 @@
         "Does"
       ],
       "correct": 0,
-      "explanation": "Umiejętność: Can you swim? Po can czasownik bez to i bez -s."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-09",
@@ -173,7 +173,7 @@
         "be"
       ],
       "correct": 1,
-      "explanation": "Przeszła forma to be: po I stoi was (I was)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-10",
@@ -188,7 +188,7 @@
         "is going to"
       ],
       "correct": 3,
-      "explanation": "Plan albo pewność z dowodów: be going to + bezokolicznik. Po it stoi is going to."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-11",
@@ -209,19 +209,19 @@
         }
       ],
       "explanation": "3. osoba (he): works. Przeczenie: doesn't + czasownik bez -s.",
-      "trap": "Po doesn't czasownik jest bez -s: doesn't drive, nie „doesn't drives”."
+      "trap": "(trap: test fixture text)"
     },
     {
       "id": "tk-a1-12",
       "type": "short-answer",
       "topic": "a1-czasy-present-continuous",
-      "context": "Teraz Anna czyta książkę w pokoju.",
+      "context": "(context: test fixture text)",
       "prompt": "Anna ___ a book in her room now.",
       "accepted": [
         "is reading",
         "'s reading"
       ],
-      "explanation": "Now – czynność trwa w tej chwili: Present Continuous, czyli is + czasownik z -ing."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-13",
@@ -243,7 +243,7 @@
           ]
         }
       ],
-      "explanation": "Wiek z to be: is ten. Posiadanie: has got (albo has) – w liczbie pojedynczej has."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-14",
@@ -258,7 +258,7 @@
         "Her"
       ],
       "correct": 3,
-      "explanation": "Zaimek dzierżawczy przed rzeczownikiem: her name (jej imię). She to zaimek osobowy."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-15",
@@ -273,7 +273,7 @@
         "-"
       ],
       "correct": 1,
-      "explanation": "Przed samogłoską (engineer) stoi an. Zawód wymaga przedimka nieokreślonego: an engineer."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-16",
@@ -292,7 +292,7 @@
           ]
         }
       ],
-      "explanation": "Nieregularna liczba mnoga: child – children. Po -x dodajemy -es: box – boxes."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-17",
@@ -307,18 +307,18 @@
         "That"
       ],
       "correct": 1,
-      "explanation": "Blisko i liczba mnoga: these. This/that są w liczbie pojedynczej, those – daleko."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-18",
       "type": "reorder",
       "topic": "a1-gramatyka-szyk-zdania",
-      "context": "Mój brat gra w piłkę w soboty.",
+      "context": "(context: test fixture text)",
       "answers": [
         "My brother plays football on Saturdays.",
         "On Saturdays my brother plays football."
       ],
-      "explanation": "Szyk: podmiot + orzeczenie + dopełnienie, miejsce i czas na końcu (albo czas na początku)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-19",
@@ -333,7 +333,7 @@
         "When"
       ],
       "correct": 1,
-      "explanation": "Pytanie o wiek: How old …? (What old … nie istnieje)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-20",
@@ -348,20 +348,20 @@
         "on"
       ],
       "correct": 3,
-      "explanation": "Przedmiot na powierzchni ściany: on the wall (nie „in the wall”)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-21",
       "type": "short-answer",
       "topic": "a1-gramatyka-can-cant",
-      "context": "Nie umiem pływać.",
+      "context": "(context: test fixture text)",
       "prompt": "I ___ swim.",
       "accepted": [
         "can't",
         "cannot",
         "can not"
       ],
-      "explanation": "Brak umiejętności: can't (cannot). Po can czasownik bez to."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-22",
@@ -391,7 +391,7 @@
         "Good afternoon."
       ],
       "correct": 1,
-      "explanation": "Wieczorem witamy się Good evening. Good night mówimy na pożegnanie przed snem."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-24",
@@ -406,7 +406,7 @@
         "Nice to meet you, Anna."
       ],
       "correct": 3,
-      "explanation": "Poznajemy kogoś: Nice to meet you. I'm fine to odpowiedź na „How are you?”."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-25",
@@ -421,7 +421,7 @@
         "I'm fine."
       ],
       "correct": 1,
-      "explanation": "Pytanie o pochodzenie: I'm from + kraj. Wiek, zawód i samopoczucie to inne pytania."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-26",
@@ -436,18 +436,18 @@
         "It's the fifth of May."
       ],
       "correct": 3,
-      "explanation": "Data to dzień i miesiąc: the fifth of May. Five o'clock to godzina, Monday – dzień tygodnia."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-27",
       "type": "short-answer",
       "topic": "a1-funkcje-prosba-o-powtorzenie",
-      "context": "Nie usłyszałeś. Poproś o powtórzenie.",
+      "context": "(context: test fixture text)",
       "prompt": "Sorry, can you ___ that, please?",
       "accepted": [
         "repeat"
       ],
-      "explanation": "Prośba o powtórzenie: Sorry, can you repeat that, please? (albo: Can you say that again?)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-28",
@@ -462,13 +462,13 @@
         "No, I don't. I don't like it."
       ],
       "correct": 3,
-      "explanation": "Krótka odpowiedź do pytania z do: No, I don't. Nie mówimy „I not like” ani „I doesn't”."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-29",
       "type": "match",
       "topic": "a1-funkcje-zamawianie",
-      "prompt": "Dopasuj wypowiedź do odpowiedzi w kawiarni.",
+      "prompt": "(prompt: test fixture text)",
       "mode": "response",
       "pairs": [
         [
@@ -491,7 +491,7 @@
       "extraRight": [
         "You're welcome."
       ],
-      "explanation": "W kawiarni: zamówienie (a coffee, please), cena (It's … pounds), „Is that all?” sprawdza, czy to całe zamówienie. „You're welcome” odpowiada na podziękowanie, więc nie pasuje."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "tk-a1-30",
@@ -506,7 +506,7 @@
         "fridge"
       ],
       "correct": 3,
-      "explanation": "Lodówka (fridge) jest w kuchni. Łóżko jest w sypialni, prysznic w łazience, sofa w salonie."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

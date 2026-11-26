@@ -174,7 +174,7 @@ window.LM = window.LM || {};
     const text = S().isAvailable(levelId) ? cheatsheetText(levelId) : null;
     const key = "#cheatsheet:" + levelId;
     const keepScroll = view.dataset.file === key ? U.getScroll() : 0;
-    view.className = "view page-view sciaga-view lvl-" + levelId;
+    view.className = "view page-view cheatsheet-view lvl-" + levelId;
     view.dataset.file = key;
     view.replaceChildren();
     const crumb = levelCrumb(levelId);
@@ -186,20 +186,20 @@ window.LM = window.LM || {};
     }
     const doc = LM.markdown.parse(text);
     const title = doc.meta.title || "Cheat sheet " + levelId;
-    view.appendChild(el("div", { class: "page-head sciaga-tools" }, [
+    view.appendChild(el("div", { class: "page-head cheatsheet-tools" }, [
       LM.ui.breadcrumbs([crumb, { label: "Cheat sheet" }]),
-      el("button", { type: "button", class: "btn btn-primary sciaga-print", onclick: printCheatsheet }, LM.ui.withIcon("download", "Print"))
+      el("button", { type: "button", class: "btn btn-primary cheatsheet-print", onclick: printCheatsheet }, LM.ui.withIcon("download", "Print"))
     ]));
-    view.appendChild(el("header", { class: "sciaga-head" }, [
-      el("span", { class: "sciaga-code", "aria-hidden": "true", text: levelId }),
-      el("div", { class: "sciaga-head-text" }, [
-        el("p", { class: "sciaga-title", text: title }),
-        el("p", { class: "sciaga-sub", text: "Level " + levelId + " · " + APP_TITLE() })
+    view.appendChild(el("header", { class: "cheatsheet-head" }, [
+      el("span", { class: "cheatsheet-code", "aria-hidden": "true", text: levelId }),
+      el("div", { class: "cheatsheet-head-text" }, [
+        el("p", { class: "cheatsheet-title", text: title }),
+        el("p", { class: "cheatsheet-sub", text: "Level " + levelId + " · " + APP_TITLE() })
       ])
     ]));
     // The file's first # heading is replaced by the header above
     const blocks = doc.blocks.filter(function (b, i) { return !(b.type === "heading" && b.level === 1 && i === 0); });
-    view.appendChild(el("article", { class: "md sciaga" }, LM.markdown.render(blocks)));
+    view.appendChild(el("article", { class: "md cheatsheet" }, LM.markdown.render(blocks)));
     document.title = title + " · " + APP_TITLE();
     if (LM.profileData) LM.profileData.setLastPage(location.hash, title);
     U.setScroll(keepScroll);
@@ -211,12 +211,12 @@ window.LM = window.LM || {};
     const text = S().isAvailable(levelId) ? cheatsheetText(levelId) : null;
     if (!text) return null;
     const meta = LM.markdown.parseFrontmatter(text).meta;
-    return el("section", { class: "card lf-level-card sciaga-card lvl-" + levelId, "aria-labelledby": "sciaga-card-title" }, [
+    return el("section", { class: "card lf-level-card cheatsheet-card lvl-" + levelId, "aria-labelledby": "cheatsheet-card-title" }, [
       el("div", { class: "lf-level-card-body" }, [
-        el("h2", { class: "section-title", id: "sciaga-card-title" }, [el("span", { class: "callout-icon", "aria-hidden": "true" }, LM.icon("file-text", { size: 20 })), "Cheat sheet " + levelId + ": one page to print"]),
+        el("h2", { class: "section-title", id: "cheatsheet-card-title" }, [el("span", { class: "callout-icon", "aria-hidden": "true" }, LM.icon("file-text", { size: 20 })), "Cheat sheet " + levelId + ": one page to print"]),
         el("p", { text: meta.summary || "The key forms, phrases and traps of the level on one A4 page." })
       ]),
-      el("div", { class: "sciaga-card-actions" }, [
+      el("div", { class: "cheatsheet-card-actions" }, [
         el("a", { class: "btn btn-primary", href: cheatsheetRoute(levelId) }, LM.ui.withIcon("file-text", "Open")),
         el("button", { type: "button", class: "btn btn-secondary", onclick: function () { printPending = true; location.hash = cheatsheetRoute(levelId); } }, LM.ui.withIcon("download", "Print"))
       ])

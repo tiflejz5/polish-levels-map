@@ -245,7 +245,7 @@ window.LM = window.LM || {};
     return { w: 1000, h: 280, pts: pts };
   }
 
-  /** A closed, slightly irregular contour line (deterministic; a smooth curve through 12 points) — blob logic from gen_krainy.py. */
+  /** A closed, slightly irregular contour line (deterministic; a smooth curve through 12 points) (the blob logic of the land generator of the original app). */
   function blobPath(cx, cy, rx, ry, seed, k) {
     const pts = [];
     for (let i = 0; i < 12; i++) {

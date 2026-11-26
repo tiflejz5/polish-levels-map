@@ -79,16 +79,16 @@ async function main() {
     await page.waitForFunction("window.LM && LM.state && LM.state.ready && LM.print && LM.handbook", null, { timeout: 15000 });
     await page.evaluate("LM.app.addProfile && !LM.app.getActiveProfile() && LM.app.addProfile('PDF')");
     await page.goto(url + "#/" + level + "/cheatsheet");
-    await page.waitForSelector(".sciaga.md", { timeout: 15000 });
+    await page.waitForSelector(".cheatsheet.md", { timeout: 15000 });
     await page.evaluate("document.fonts && document.fonts.ready");
     await page.evaluate("LM.print.before()");
     await page.emulateMedia({ media: "print" });
-    const file = path.join(opts.out, "sciaga-" + level + ".pdf");
+    const file = path.join(opts.out, "cheatsheet-" + level + ".pdf");
     const pdf = await page.pdf({ path: file, format: "A4", margin: { top: "12mm", bottom: "12mm", left: "12mm", right: "12mm" }, printBackground: true, preferCSSPageSize: true });
     // the smallest text size in the cheat sheet (px → pt), only elements with their own text
     const minPt = await page.evaluate(function () {
       let min = Infinity;
-      const root = document.querySelector(".sciaga-view");
+      const root = document.querySelector(".cheatsheet-view");
       const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
       let n;
       while ((n = walker.nextNode())) {
