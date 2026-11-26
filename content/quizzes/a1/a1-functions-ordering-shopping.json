@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-functions-ordering-shopping",
+  "topic": "a1-functions-ordering-shopping",
+  "level": "A1",
+  "title": "Stop: ordering and shopping",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-functions-ordering-shopping-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You order a coffee in a cafe. What is the most natural thing to say?",
+      "options": [
+        "Chcę kawa.",
+        "Poproszę kawę.",
+        "Czy mogę mieć kawę?",
+        "Poproszę kawa."
+      ],
+      "correct": 1,
+      "explanation": "Poproszę + the accusative is the polite way to order.",
+      "optionNotes": [
+        "Chcę sounds blunt, and the object needs -ę.",
+        null,
+        "A word-for-word copy of \"Can I have…?\"",
+        "The thing you order takes the accusative: kawę."
+      ]
+    },
+    {
+      "id": "a1-functions-ordering-shopping-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Can I pay by card?",
+      "options": [
+        "Czy mogę zapłacić z kartą?",
+        "Czy mogę zapłacić karta?",
+        "Czy mogę zapłacić kartą?",
+        "Czy mogę płacić na kartę?"
+      ],
+      "correct": 2,
+      "explanation": "\"By card\" is the instrumental alone: kartą.",
+      "optionNotes": [
+        "No z: the instrumental alone means \"by\".",
+        "The nominative: \"by card\" needs kartą.",
+        null,
+        "Na kartę is not how you say \"by card\"."
+      ]
+    },
+    {
+      "id": "a1-functions-ordering-shopping-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To kosztuje dwadzieścia pięć ___.",
+      "options": [
+        "złoty",
+        "złote",
+        "złotych",
+        "złotego"
+      ],
+      "correct": 2,
+      "explanation": "After 25 (a number not ending in 2, 3, 4) say złotych.",
+      "optionNotes": [
+        "Złoty is for one: jeden złoty.",
+        "Złote follows 2, 3, 4 and 22, 23, 24… (but 12, 13, 14 take złotych).",
+        null,
+        "Not used after whole numbers."
+      ]
+    },
+    {
+      "id": "a1-functions-ordering-shopping-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "The waiter asks: Coś jeszcze? You want nothing more. You say:",
+      "options": [
+        "To wszystko, dziękuję.",
+        "Proszę bardzo.",
+        "Na wynos.",
+        "Co pan poleca?"
+      ],
+      "correct": 0,
+      "explanation": "Coś jeszcze? means \"Anything else?\". To wszystko means \"That's all\".",
+      "optionNotes": [
+        null,
+        "Proszę bardzo is \"Here you are\".",
+        "Na wynos is \"to take away\".",
+        "Co pan poleca? asks for a recommendation."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,263 @@
+{
+  "version": 1,
+  "id": "a1-verbs-modal-verbs-basics-1",
+  "topic": "a1-verbs-modal-verbs-basics",
+  "level": "A1",
+  "title": "Like, want, can, must: check yourself",
+  "intro": "10 tasks: lubić, chcieć, móc, musieć, umieć + infinitive.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-01",
+      "type": "paradigm",
+      "tags": [
+        "modal",
+        "musiec"
+      ],
+      "prompt": "Give all six present forms of musieć.",
+      "lemma": "musieć",
+      "gloss": "must, have to",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "muszę"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "musisz"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "musi"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "musimy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "musicie"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "muszą"
+          ]
+        }
+      ],
+      "explanation": "s changes to sz in muszę and muszą."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "modal",
+        "infinitive"
+      ],
+      "prompt": "Chcę ___. (I want to sleep.)",
+      "options": [
+        "śpię",
+        "spać",
+        "spę",
+        "śpi"
+      ],
+      "correct": 1,
+      "explanation": "After chcę the second verb is the infinitive: spać.",
+      "optionNotes": [
+        "Only the first verb takes a person ending.",
+        null,
+        "There is no such form.",
+        "Śpi is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-03",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "tags": [
+        "modal",
+        "moc-umiec"
+      ],
+      "prompt": "Ola ___ gotować, ale dzisiaj nie ma czasu. (Ola can cook = she knows how)",
+      "options": [
+        "umie",
+        "może",
+        "zna",
+        "wie"
+      ],
+      "correct": 0,
+      "explanation": "A skill takes umieć: Ola umie gotować.",
+      "optionNotes": [
+        null,
+        "Móc is about being able or allowed now; the sentence is about a skill.",
+        "Znać is for people and places.",
+        "Wiedzieć is for facts."
+      ]
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "modal",
+        "moc",
+        "musiec"
+      ],
+      "context": "I can't today, I have to work.",
+      "text": "Dzisiaj nie {{1}}, {{2}} pracować.",
+      "gaps": [
+        {
+          "accepted": [
+            "mogę"
+          ],
+          "hint": "(móc)"
+        },
+        {
+          "accepted": [
+            "muszę"
+          ],
+          "hint": "(musieć)"
+        }
+      ],
+      "explanation": "Móc: ja mogę. Musieć: ja muszę."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-05",
+      "type": "find-error",
+      "tags": [
+        "modal",
+        "infinitive"
+      ],
+      "tokens": [
+        "Lubię",
+        "czytam",
+        "książki."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "czytać"
+      ],
+      "explanation": "After lubię the second verb is the infinitive: czytać."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-06",
+      "type": "find-error",
+      "tags": [
+        "modal",
+        "umiec"
+      ],
+      "tokens": [
+        "Znasz",
+        "pływać?"
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Umiesz",
+        "Potrafisz"
+      ],
+      "explanation": "Skills take umieć: Umiesz pływać?"
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-07",
+      "type": "short-answer",
+      "tags": [
+        "modal",
+        "umiec"
+      ],
+      "prompt": "Oni nie ___ mówić po polsku. (umieć)",
+      "accepted": [
+        "umieją"
+      ],
+      "explanation": "Umieć: oni umieją."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-08",
+      "type": "match",
+      "tags": [
+        "modal",
+        "meaning"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "I like dancing.",
+          "Lubię tańczyć."
+        ],
+        [
+          "I want to dance.",
+          "Chcę tańczyć."
+        ],
+        [
+          "I have to dance.",
+          "Muszę tańczyć."
+        ],
+        [
+          "I know how to dance.",
+          "Umiem tańczyć."
+        ],
+        [
+          "I don't have to dance.",
+          "Nie muszę tańczyć."
+        ]
+      ],
+      "explanation": "The first verb carries the meaning and the person; tańczyć stays the same."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-09",
+      "type": "translate",
+      "tags": [
+        "modal",
+        "moc",
+        "polite"
+      ],
+      "source": "Can I pay by card?",
+      "accepted": [
+        "Czy mogę zapłacić kartą?",
+        "Mogę zapłacić kartą?",
+        "Czy mogę płacić kartą?",
+        "Mogę płacić kartą?",
+        "Czy można zapłacić kartą?",
+        "Można zapłacić kartą?",
+        "Czy można płacić kartą?",
+        "Można płacić kartą?"
+      ],
+      "hint": "pay = zapłacić, by card = kartą",
+      "explanation": "Czy mogę + infinitive is a polite request."
+    },
+    {
+      "id": "a1-verbs-modal-verbs-basics-1-10",
+      "type": "translate",
+      "tags": [
+        "modal",
+        "chciec"
+      ],
+      "source": "We want to go to the cinema.",
+      "accepted": [
+        "Chcemy iść do kina.",
+        "My chcemy iść do kina.",
+        "Chcemy pójść do kina.",
+        "My chcemy pójść do kina.",
+        "Chcemy pojechać do kina."
+      ],
+      "hint": "to the cinema = do kina",
+      "explanation": "Chcieć: my chcemy + the infinitive iść."
+    }
+  ]
+}

@@ -40,6 +40,18 @@
         "a1-cases-accusative",
         "a1-grammar-questions-negation"
       ]
+    },
+    {
+      "id": "mix-a1-u4",
+      "title": "Unit review: Likes and needs",
+      "description": "The genitive and lubić, chcieć, móc, musieć, umieć + infinitive, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-cases-genitive-basics",
+        "a1-verbs-modal-verbs-basics"
+      ]
     }
   ]
 }

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-cases-genitive-basics",
+  "topic": "a1-cases-genitive-basics",
+  "level": "A1",
+  "title": "Stop: genitive",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-cases-genitive-basics-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Przepraszam, nie mam ___. (Sorry, I don't have time.)",
+      "options": [
+        "czas",
+        "czasu",
+        "czasem",
+        "czasa"
+      ],
+      "correct": 1,
+      "explanation": "After nie the object takes the genitive. Czas takes -u: czasu.",
+      "optionNotes": [
+        "The accusative: after nie the object changes.",
+        null,
+        "The instrumental, used after z meaning \"with\".",
+        "Czas takes -u, not -a."
+      ]
+    },
+    {
+      "id": "a1-cases-genitive-basics-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nie lubię ___. (I don't like coffee.)",
+      "options": [
+        "kawę",
+        "kawa",
+        "kawą",
+        "kawy"
+      ],
+      "correct": 3,
+      "explanation": "Lubię kawę, but after nie: Nie lubię kawy.",
+      "optionNotes": [
+        "The accusative: correct without nie, but not after nie.",
+        "The nominative is not used for an object.",
+        "The instrumental, used after z meaning \"with\".",
+        null
+      ]
+    },
+    {
+      "id": "a1-cases-genitive-basics-q3",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Which phrase means \"my sister's room\"?",
+      "options": [
+        "pokój siostrę",
+        "pokój siostry",
+        "pokój siostra",
+        "pokój siostrą"
+      ],
+      "correct": 1,
+      "explanation": "The owner comes after the thing, in the genitive: pokój siostry.",
+      "optionNotes": [
+        "Siostrę is the accusative; the owner takes the genitive.",
+        null,
+        "The owner must be in the genitive.",
+        "The instrumental means \"with\"."
+      ]
+    },
+    {
+      "id": "a1-cases-genitive-basics-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Herbata bez ___, proszę. (Tea without sugar, please.)",
+      "options": [
+        "cukru",
+        "cukier",
+        "cukierem",
+        "cukiera"
+      ],
+      "correct": 0,
+      "explanation": "Bez takes the genitive. Cukier loses its e: cukru.",
+      "optionNotes": [
+        null,
+        "The nominative: bez needs the genitive.",
+        "The instrumental, and the e drops out.",
+        "Cukier takes -u, and the e drops out: cukru."
+      ]
+    }
+  ]
+}
