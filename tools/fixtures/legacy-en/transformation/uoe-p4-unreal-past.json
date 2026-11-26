@@ -2,9 +2,9 @@
   "id": "uoe-p4-czas-nierzeczywisty",
   "part": 4,
   "type": "transformation",
-  "title": "Czas nierzeczywisty i preferencje",
+  "title": "(title: test fixture text)",
   "focus": "It's time, would rather, as if, supposing, haven't… for, never… before",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -23,7 +23,7 @@
         ]
       ],
       "model": "TIME YOU STARTED",
-      "explanation": "It's (high) time + podmiot + czas przeszły = najwyższy czas, żeby."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -41,7 +41,7 @@
         ]
       ],
       "model": "RATHER YOU DIDN'T TELL",
-      "explanation": "Would rather + podmiot + czas przeszły. Didn't liczy się jako dwa słowa."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -59,7 +59,7 @@
         ]
       ],
       "model": "AS IF HE KNEW",
-      "explanation": "As if + czas przeszły podkreśla nierzeczywistość. Forma he knows też jest poprawna."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -77,7 +77,7 @@
         ]
       ],
       "model": "SUPPOSING YOU LOST",
-      "explanation": "Supposing = przypuśćmy, że. Po nim czas przeszły dla sytuacji hipotetycznej."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -95,7 +95,7 @@
         ]
       ],
       "model": "HAVEN'T SEEN TOM FOR",
-      "explanation": "Last… ago → haven't… for. Haven't liczy się jako dwa słowa."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,

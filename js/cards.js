@@ -24,8 +24,8 @@ window.LM = window.LM || {};
   const HASH = "#/review/decks";      // the “Decks” tab and its sub-pages
   const SESSION = "#/review/session";   // the unified session
   const HOME = "#/review";            // “Due today”
-  const MISTAKES_ID = "u-moje-bledy";  // stored deck id
-  const WORDS_ID = "u-moje-slowa"; // system deck “My words” (system: "words", pack v6 spec 14); stored id
+  const MISTAKES_ID = "u-mistakes";  // stored deck id
+  const WORDS_ID = "u-words"; // system deck “My words” (system: "words", pack v6 spec 14); stored id
   const GRADE_INFO = [
     { id: "again", label: "Again", key: "1" },
     { id: "hard", label: "Hard", key: "2" },
@@ -763,7 +763,7 @@ window.LM = window.LM || {};
     if (!total) {
       const next = nextDue(now());
       box.appendChild(el("h2", { class: "section-title", id: "fc-sum-title", text: "All done for today" }));
-      box.appendChild(LM.ui.emptyState({ art: "brak-powtorek", title: next ? "Next review: " + fmtWhen(next) + "." : "You have nothing to review. Turn on a deck, add a mistake to the log or do a few exercises." }));
+      box.appendChild(LM.ui.emptyState({ art: "no-reviews", title: next ? "Next review: " + fmtWhen(next) + "." : "You have nothing to review. Turn on a deck, add a mistake to the log or do a few exercises." }));
       box.appendChild(summaryActions());
       return box;
     }

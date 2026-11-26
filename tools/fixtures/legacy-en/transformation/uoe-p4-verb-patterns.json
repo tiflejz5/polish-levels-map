@@ -4,7 +4,7 @@
   "type": "transformation",
   "title": "Wzorce czasownikowe: -ing i bezokolicznik",
   "focus": "Regret, get used to, can't help, it's no use, object to, look forward to",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -23,7 +23,7 @@
         ]
       ],
       "model": "REGRET NOT TELLING",
-      "explanation": "Regret + -ing: żałować, że się coś zrobiło."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -41,7 +41,7 @@
         ]
       ],
       "model": "GOT USED TO PRACTISING",
-      "explanation": "Get used to + -ing = przyzwyczaić się do."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -59,7 +59,7 @@
         ]
       ],
       "model": "COULDN'T HELP LAUGHING",
-      "explanation": "Can't help + -ing = nie móc się powstrzymać."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -93,7 +93,7 @@
         ]
       ],
       "model": "OBJECT TO GETTING",
-      "explanation": "Object to + -ing = sprzeciwiać się (to jest przyimek)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,

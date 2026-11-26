@@ -289,10 +289,10 @@ window.LM = window.LM || {};
           body.appendChild(el("ul", { class: "zw-panel-list" }, r.phrases.map(function (p) {
             return el("li", { class: "zw-panel-item" }, [
               el("div", null, [
-                el("p", { class: "zw-panel-en", lang: LM.APP.targetLang, text: p.en }),
-                el("p", { class: "zw-panel-pl", text: p.pl + " · " + p.level })
+                el("p", { class: "zw-panel-target", lang: LM.APP.targetLang, text: p.text }),
+                el("p", { class: "zw-panel-meaning", text: p.en + " · " + p.level })
               ]),
-              el("button", { type: "button", class: "btn btn-secondary btn-small", "aria-label": "Insert: " + LM.writingPhrases.plain(p.en), onclick: function () { insertPhrase(p.en); } }, "Insert")
+              el("button", { type: "button", class: "btn btn-secondary btn-small", "aria-label": "Insert: " + LM.writingPhrases.plain(p.text), onclick: function () { insertPhrase(p.text); } }, "Insert")
             ]);
           })));
         });

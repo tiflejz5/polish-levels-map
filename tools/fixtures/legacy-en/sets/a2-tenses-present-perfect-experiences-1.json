@@ -3,8 +3,8 @@
   "id": "a2-czasy-present-perfect-doswiadczenia-1",
   "topic": "a2-czasy-present-perfect-doswiadczenia",
   "level": "A2",
-  "title": "Present Perfect (doświadczenia) – sprawdź się",
-  "intro": "10 zadań: wybór formy, układanie zdań i szukanie błędów.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -18,12 +18,12 @@
         "am"
       ],
       "correct": 0,
-      "explanation": "Doświadczenie z życia, bez konkretnej daty: have been.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         null,
-        "Was nie łączy się z to London w tym sensie.",
+        "(optionNotes: test fixture text)",
         "Went wymaga konkretnego momentu.",
-        "Am nie pasuje."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "been"
@@ -64,12 +64,12 @@
         "Are"
       ],
       "correct": 2,
-      "explanation": "Pytanie o doświadczenie: Have you ever + trzecia forma.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         "Did wymaga konkretnego momentu.",
-        "Do jest w Present Simple.",
+        "(optionNotes: test fixture text)",
         null,
-        "Are nie pasuje."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "pytania"
@@ -91,8 +91,8 @@
       "optionNotes": [
         "Po has potrzebna trzecia forma.",
         null,
-        "Dla he używamy has.",
-        "Did nie tworzy Present Perfect."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "participle"
@@ -101,11 +101,11 @@
     },
     {
       "type": "reorder",
-      "context": "Nigdy nie byłem w Hiszpanii.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I have never been to Spain."
       ],
-      "explanation": "Never stoi między have a trzecią formą.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "been"
       ],
@@ -113,7 +113,7 @@
     },
     {
       "type": "reorder",
-      "context": "Czy kiedykolwiek jadłeś ostrygi?",
+      "context": "(context: test fixture text)",
       "answers": [
         "Have you ever eaten oysters?"
       ],
@@ -125,11 +125,11 @@
     },
     {
       "type": "reorder",
-      "context": "Ona jeszcze nie skończyła zadania.",
+      "context": "(context: test fixture text)",
       "answers": [
         "She hasn't finished her homework yet."
       ],
-      "explanation": "Yet stoi na końcu zdania przeczącego.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "yet"
       ],
@@ -152,7 +152,7 @@
       "fixes": [
         "seen"
       ],
-      "explanation": "Po have potrzebna jest trzecia forma: seen.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "participle"
       ],
@@ -174,7 +174,7 @@
       "fixes": [
         "has"
       ],
-      "explanation": "Dla she używamy has.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "has-have"
       ],
@@ -196,7 +196,7 @@
       "fixes": [
         "tried"
       ],
-      "explanation": "Po have potrzebna jest trzecia forma: tried.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "participle"
       ],

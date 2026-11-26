@@ -227,7 +227,7 @@ window.LM = window.LM || {};
     if (!res.total) {
       status.textContent = "";
       list.appendChild(el("div", { class: "search-empty", role: "presentation" }, [
-        LM.ui.emptyState({ art: "brak-wynikow", title: "No results", class: "es-inline" }),
+        LM.ui.emptyState({ art: "no-results", title: "No results", class: "es-inline" }),
         el("p", { class: "search-empty-title", text: "Nothing found for “" + q + "”." }),
         el("p", { class: "tool-note", text: "Try a shorter word, or type it without " + LM.APP.language + " special letters. Exercises for every topic are in Practice." }),
         el("p", null, el("a", { class: "btn btn-secondary btn-small", href: "#/practice", onclick: function () { close(false); } }, LM.ui.withIcon("dumbbell", "Go to Practice")))

@@ -42,14 +42,17 @@ function ratio(a, b) { const la = lum(a), lb = lum(b); return (Math.max(la, lb) 
 // [foreground, background, (base under a translucent background), minimum, description]
 const pairs = [];
 ["bg", "surface", "surface-2", "surface-3", "empty-bg"].forEach(function (bg) {
-  pairs.push(["ink", bg, null, 4.5, "tekst / " + bg]);
+  pairs.push(["ink", bg, null, 4.5, "text / " + bg]);
   pairs.push(["ink-muted", bg, null, 4.5, "secondary text / " + bg]);
 });
 ["uoe", "reading", "writing", "listening", "speaking", "grammar", "vocab", "other"].forEach(function (c) {
   pairs.push(["cat-" + c, "surface", null, 3, "mistake log category stripe (" + c + ") / card"]);
 });
 pairs.push(
-  ["ink-faint", "surface", null, 4.5, "placeholder / pole"],
+  ["accent", "surface-2", null, 4.5, "wordmark “Polish” / sidebar"],
+  ["accent", "surface", null, 4.5, "wordmark “Polish” / home header card"],
+  ["accent-bg", "surface", null, 3, "primary button / card"],
+  ["ink-faint", "surface", null, 4.5, "placeholder / field"],
   ["accent", "surface", null, 4.5, "link / card"],
   ["accent", "bg", null, 4.5, "link / background"],
   ["accent", "surface-2", null, 4.5, "link / sidebar"],
@@ -187,5 +190,52 @@ const manifest = { exams: [].concat.apply([], regs.filter(function (p) { return 
   console.log("== MINI COVERS " + theme[0] + ": " + (bad.length ? "failures" : "ok"));
   bad.forEach(function (b) { console.log(b); });
 });
+
+// ---------------------------------------------------------------------------
+// Palette check (spec 11 §2): the accent must stay clearly different from the
+// colours it sits next to — the six level colours, the seven case colours and
+// the error colour. OKLab ΔE ×100 under normal vision (≥ 15) and under the
+// Machado 2009 protanopia / deuteranopia simulation (≥ 8), the same method and
+// thresholds as the dataviz palette validator used for the case colours.
+const MACHADO = {
+  protan: [[0.152286, 1.052583, -0.204868], [0.114503, 0.786281, 0.099216], [-0.003882, -0.048116, 1.051998]],
+  deutan: [[0.367322, 0.860646, -0.227968], [0.280085, 0.672501, 0.047413], [-0.011820, 0.042940, 0.968881]]
+};
+function linRgb(c) { return [0, 1, 2].map(function (i) { const v = c[i] / 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); }
+function oklab(l3) {
+  const l = Math.cbrt(0.4122214708 * l3[0] + 0.5363325363 * l3[1] + 0.0514459929 * l3[2]);
+  const m = Math.cbrt(0.2119034982 * l3[0] + 0.6806995451 * l3[1] + 0.1073969566 * l3[2]);
+  const s = Math.cbrt(0.0883024619 * l3[0] + 0.2817188376 * l3[1] + 0.6299787005 * l3[2]);
+  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+}
+function simulate(l3, kind) {
+  const M = MACHADO[kind];
+  return M.map(function (row) { return Math.max(0, Math.min(1, row[0] * l3[0] + row[1] * l3[1] + row[2] * l3[2])); });
+}
+function deltaE(a, b, kind) {
+  let la = linRgb(parse(a)), lb = linRgb(parse(b));
+  if (kind) { la = simulate(la, kind); lb = simulate(lb, kind); }
+  const p = oklab(la), q = oklab(lb);
+  return 100 * Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+}
+const NEIGHBOURS = ["lvl-a1", "lvl-a2", "lvl-b1", "lvl-b2", "lvl-c1", "lvl-c2",
+  "case-nom", "case-gen", "case-dat", "case-acc", "case-ins", "case-loc", "case-voc", "danger"];
+[["LIGHT", light], ["DARK", dark]].forEach(function (theme) {
+  const t = theme[1];
+  const bad = [];
+  let worstN = 99, worstC = 99;
+  NEIGHBOURS.forEach(function (k) {
+    const n = deltaE(t.accent, t[k]);
+    const c = Math.min(deltaE(t.accent, t[k], "protan"), deltaE(t.accent, t[k], "deutan"));
+    worstN = Math.min(worstN, n); worstC = Math.min(worstC, c);
+    checked++;
+    if (n < 15) { fails++; bad.push("  TOO CLOSE ΔE " + n.toFixed(1) + " (min 15, normal vision)  accent / " + k); }
+    if (c < 8) { fails++; bad.push("  TOO CLOSE ΔE " + c.toFixed(1) + " (min 8, protan/deutan)  accent / " + k); }
+  });
+  console.log("== ACCENT PALETTE " + theme[0] + ": " + (bad.length ? "failures" : "ok") +
+    " (worst ΔE normal " + worstN.toFixed(1) + ", colour-blind " + worstC.toFixed(1) + ")");
+  bad.forEach(function (b) { console.log(b); });
+});
+
 console.log("Pairs checked: " + checked + ", failing: " + fails);
 if (fails) process.exit(1);

@@ -3,12 +3,12 @@
   "part": 4,
   "type": "transformation",
   "title": "Struktury emfatyczne i modalne",
-  "focus": "Bardziej wymagające transformacje",
+  "focus": "(focus: test fixture text)",
   "wordLimit": [
     2,
     5
   ],
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 2 do 5 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -77,7 +77,7 @@
         ]
       ],
       "model": "SINCE HE HAD",
-      "explanation": "since jako przyczyna."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,

@@ -4,7 +4,7 @@
   "type": "transformation",
   "title": "Czasowniki frazowe i kolokacje",
   "focus": "Call off, put up with, make up, look up to, run out of, come into effect",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -22,7 +22,7 @@
         ]
       ],
       "model": "WAS CALLED OFF",
-      "explanation": "Call off = odwołać."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -39,7 +39,7 @@
         ]
       ],
       "model": "PUT UP WITH",
-      "explanation": "Put up with = znosić."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -56,7 +56,7 @@
         ]
       ],
       "model": "MADE UP AN EXCUSE",
-      "explanation": "Make up an excuse = zmyślić wymówkę."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -73,7 +73,7 @@
         ]
       ],
       "model": "IS LOOKED UP TO",
-      "explanation": "Look up to = podziwiać (strona bierna)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -90,7 +90,7 @@
         ]
       ],
       "model": "RUNNING OUT OF",
-      "explanation": "Run out of = skończyć się."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,
@@ -107,7 +107,7 @@
         ]
       ],
       "model": "COME INTO EFFECT",
-      "explanation": "Come into effect = wejść w życie."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

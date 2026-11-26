@@ -303,7 +303,8 @@ function langFixture(name) { return JSON.parse(fs.readFileSync(path.join(LANG_FX
 const PL_ITEMS = langFixture("items").items;
 const LANG_ACCENTED = langFixture("match").cases.find(function (c) { return c.near === "accents"; }).closest;
 function plItem(id) { return PL_ITEMS.find(function (it) { return it.id === id; }); }
-// Test-only English fixtures from english-levels-map@275be9f (tools/fixtures/legacy-en); replaced by Polish fixtures in stages 3–4
+// Frozen engine regression fixtures from english-levels-map@275be9f (tools/fixtures/legacy-en): generic grading, shuffling and
+// drawing on real item shapes. English items; the original Polish explanations were replaced by placeholders in stage 7.
 const LEGACY = path.join(__dirname, "fixtures", "legacy-en");
 const SETS_DIR = path.join(LEGACY, "sets");
 const exBank = fs.readdirSync(SETS_DIR).filter(function (f) { return /\.json$/.test(f); })
@@ -1014,11 +1015,11 @@ test("snippet and highlight: parts with a hit flag, no HTML", function () {
 
 console.log("\nExams: timer zones (spec 06, 4.2)");
 const EL = global.LM.examLogic;
-test("writingZone: matura podstawowa (<80, 80–99, 100–150, >150)", function () {
+test("writingZone: exam fixture thresholds A (<80, 80–99, 100–150, >150)", function () {
   const T = { wordRange: [100, 150], warnBelow: 80 };
   assert.deepStrictEqual([79, 80, 99, 100, 150, 151].map(function (n) { return EL.writingZone(n, T); }), ["low", "warn", "warn", "ok", "ok", "over"]);
 });
-test("writingZone: matura rozszerzona (<160, 160–199, 200–250, >250)", function () {
+test("writingZone: exam fixture thresholds B (<160, 160–199, 200–250, >250)", function () {
   const T = { wordRange: [200, 250], warnBelow: 160 };
   assert.deepStrictEqual([159, 160, 199, 200, 250, 251].map(function (n) { return EL.writingZone(n, T); }), ["low", "warn", "warn", "ok", "ok", "over"]);
 });
@@ -1565,9 +1566,9 @@ test("plm.speaking: an old record without seen works, seen is optional, tolerant
   const parsed = PD.parseImport({ speaking: { version: 1, profiles: { p1: { sessions: [], seen: { "a:1": ["x-1", "x-1", "BAD", 5], "bad": ["x"], "b:2": "not a list" } } } } });
   assert.deepStrictEqual(parsed.speaking.profiles.p1.seen, { "a:1": ["x-1"] });
   // a “Whole exam” session keeps full
-  const full = PD.addSpeakingSession({ exam: "matura-podstawowa", part: 1, scores: { komunikacja: 4 }, full: true });
+  const full = PD.addSpeakingSession({ exam: "exam-demo", part: 1, scores: { komunikacja: 4 }, full: true });
   assert.strictEqual(full.full, true);
-  assert.strictEqual(PD.addSpeakingSession({ exam: "matura-podstawowa", part: 2, scores: { zakres: 3 } }).full, undefined);
+  assert.strictEqual(PD.addSpeakingSession({ exam: "exam-demo", part: 2, scores: { zakres: 3 } }).full, undefined);
   // clearing the cycle
   assert.strictEqual(PD.markSpeakingSeen("exam-b2:1", null), true);
   assert.deepStrictEqual(PD.speakingSeen("exam-b2:1"), []);
@@ -1581,7 +1582,7 @@ test("examsOf: exam codes come from the registry (no list in code); registry ord
   const reg = { exams: [{ id: "exam-demo", code: "DEMO", label: "Demo exam" }, { id: "exam-two", code: "TWO", label: "Second exam" }] };
   const codes = function (tags) { return FL.examsOf({ tags: tags }, reg).map(function (e) { return e.code; }); };
   assert.deepStrictEqual(codes(["vocabulary", "two", "Demo"]), ["demo", "two"]);
-  assert.deepStrictEqual(codes(["e8", "matura"]), [], "codes of the original app mean nothing without a registry entry");
+  assert.deepStrictEqual(codes(["e8", "matura"]), [], "codes of the original app mean nothing without a registry entry"); // pl-fixture: exam codes of the original app
   assert.deepStrictEqual(FL.examsOf({ tags: ["demo"] }, reg)[0], { code: "demo", short: "DEMO", name: "Demo exam", id: "exam-demo" });
   assert.deepStrictEqual(FL.examsOf({ tags: ["demo"] }, { exams: [] }), []);
   assert.deepStrictEqual(FL.examsOf({}, reg), []);
@@ -1681,9 +1682,9 @@ test("makeWordCard: cloze from the sentence; no occurrence → basic; no sentenc
   assert.deepStrictEqual([bad.card.source, bad.card.addedAt], [{ title: "T" }, undefined]);
 });
 test("sanitizeState: new card fields (word, source, addedAt, examples) on saving and import, the system deck “words”, an old file without the fields", function () {
-  const s = FL.sanitizeState({ version: 1, cards: {}, userDecks: [{ id: "u-moje-slowa", title: "My words", system: "words" }, { id: "u-moje-bledy", title: "My mistakes", system: "mistakes" }, { id: "u-x", title: "X", system: "other" }], userCards: [
-    { id: "u-w1", deck: "u-moje-slowa", type: "cloze", text: "Most people {{commute}} to work.", hint: "travel to work", word: "commute".padEnd(80, "x"), source: { route: "#/b1/vocabulary", title: "T".repeat(200) }, addedAt: "2026-11-03", examples: ["a", "  b  ", "", 7, "c", "d", "e".repeat(300)] },
-    { id: "u-w2", deck: "u-moje-slowa", type: "basic", front: "x", back: "y", word: 5, source: { route: "http://bad.example", title: "" }, addedAt: "2026-13-40", examples: "not a list" },
+  const s = FL.sanitizeState({ version: 1, cards: {}, userDecks: [{ id: "u-words", title: "My words", system: "words" }, { id: "u-mistakes", title: "My mistakes", system: "mistakes" }, { id: "u-x", title: "X", system: "other" }], userCards: [
+    { id: "u-w1", deck: "u-words", type: "cloze", text: "Most people {{commute}} to work.", hint: "travel to work", word: "commute".padEnd(80, "x"), source: { route: "#/b1/vocabulary", title: "T".repeat(200) }, addedAt: "2026-11-03", examples: ["a", "  b  ", "", 7, "c", "d", "e".repeat(300)] },
+    { id: "u-w2", deck: "u-words", type: "basic", front: "x", back: "y", word: 5, source: { route: "http://bad.example", title: "" }, addedAt: "2026-13-40", examples: "not a list" },
     { id: "u-w3", deck: "u-x", type: "basic", front: "old", back: "card" }
   ], settings: {}, daily: {} });
   assert.deepStrictEqual(s.userDecks.map(function (d) { return d.system || null; }), ["words", "mistakes", null]);
@@ -1796,15 +1797,15 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
   function makeCtx(over) {
     const st = FLg.sanitizeState(FLg.emptyState());
     st.settings.enabledDecks = ["d1", "d2"];
-    const userCards = ["u-mb-1", "u-mb-2", "u-mb-3"].map(function (id) { return { id: id, deck: "u-moje-bledy", type: "basic", front: "a", back: "b", tags: [] }; });
-    st.userDecks.push({ id: "u-moje-bledy", title: "My mistakes", system: "mistakes" });
+    const userCards = ["u-mb-1", "u-mb-2", "u-mb-3"].map(function (id) { return { id: id, deck: "u-mistakes", type: "basic", front: "a", back: "b", tags: [] }; });
+    st.userDecks.push({ id: "u-mistakes", title: "My mistakes", system: "mistakes" });
     st.userCards = userCards;
-    const decks = [{ id: "d1", count: 4 }, { id: "d2", count: 3 }, { id: "u-moje-bledy", count: 3 }];
-    const cards = { d1: [1, 2, 3, 4].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-moje-bledy": userCards };
+    const decks = [{ id: "d1", count: 4 }, { id: "d2", count: 3 }, { id: "u-mistakes", count: 3 }];
+    const cards = { d1: [1, 2, 3, 4].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-mistakes": userCards };
     const ctx = Object.assign({
       state: st, decks: decks, weak: [],
       cardsOf: function (id) { return cards[id] || []; },
-      deckOf: function (id) { return /^u-mb/.test(id) ? "u-moje-bledy" : id.replace(/-\d{3}$/, ""); }
+      deckOf: function (id) { return /^u-mb/.test(id) ? "u-mistakes" : id.replace(/-\d{3}$/, ""); }
     }, over || {});
     return ctx;
   }
@@ -1835,7 +1836,7 @@ require(path.join(__dirname, "..", "js", "review-queue.js"));
   test("queue: interleaving — at most 2 of the same kind and not the same topic in a row", function () {
     const items = [];
     for (let i = 0; i < 4; i++) items.push({ kind: "card", id: "c" + i, due: i, topic: "d1" });
-    for (let i = 0; i < 3; i++) items.push({ kind: "mistake", id: "m" + i, due: 10 + i, topic: "u-moje-bledy" });
+    for (let i = 0; i < 3; i++) items.push({ kind: "mistake", id: "m" + i, due: 10 + i, topic: "u-mistakes" });
     items.push({ kind: "exercise", id: "e0", due: 20, topic: "t1" }, { kind: "card", id: "c9", due: 21, topic: "d2" });
     const out = R.interleave(items);
     assert.strictEqual(out.length, items.length);
@@ -2074,13 +2075,13 @@ test("queueFrom: four overdue mistakes in a row separated by new cards and items
   const NOW = new Date(2026, 10, 10, 12, 0, 0).getTime();
   const st = FLg.sanitizeState(FLg.emptyState());
   st.settings.enabledDecks = ["d1", "d2"];
-  const mist = [1, 2, 3, 4].map(function (i) { return { id: "u-mb-" + i, deck: "u-moje-bledy", type: "basic", front: "a", back: "b", tags: [] }; });
-  st.userDecks.push({ id: "u-moje-bledy", title: "My mistakes", system: "mistakes" });
+  const mist = [1, 2, 3, 4].map(function (i) { return { id: "u-mb-" + i, deck: "u-mistakes", type: "basic", front: "a", back: "b", tags: [] }; });
+  st.userDecks.push({ id: "u-mistakes", title: "My mistakes", system: "mistakes" });
   st.userCards = mist;
   mist.forEach(function (m, i) { st.cards[m.id] = Object.assign(HM.newCard(), { state: "review", interval: 3, due: new Date(2026, 10, 5 + i, 5).getTime(), reps: 2 }); });
-  const cards = { d1: [1, 2, 3, 4, 5].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3, 4, 5].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-moje-bledy": mist };
-  const ctx = { state: st, decks: [{ id: "d1", count: 5 }, { id: "d2", count: 5 }, { id: "u-moje-bledy", count: 4 }], weak: [],
-    cardsOf: function (id) { return cards[id] || []; }, deckOf: function (id) { return /^u-mb/.test(id) ? "u-moje-bledy" : id.replace(/-\d{3}$/, ""); } };
+  const cards = { d1: [1, 2, 3, 4, 5].map(function (i) { return { id: "d1-00" + i, deck: "d1" }; }), d2: [1, 2, 3, 4, 5].map(function (i) { return { id: "d2-00" + i, deck: "d2" }; }), "u-mistakes": mist };
+  const ctx = { state: st, decks: [{ id: "d1", count: 5 }, { id: "d2", count: 5 }, { id: "u-mistakes", count: 4 }], weak: [],
+    cardsOf: function (id) { return cards[id] || []; }, deckOf: function (id) { return /^u-mb/.test(id) ? "u-mistakes" : id.replace(/-\d{3}$/, ""); } };
   const q = R.queueFrom(ctx, NOW);
   assert.strictEqual(q.length, 14, "4 overdue + 10 new");
   for (let i = 2; i < q.length; i++) assert.ok(!(q[i].kind === q[i - 1].kind && q[i].kind === q[i - 2].kind && q[i].kind === "mistake"), "third mistake in a row at " + i);
@@ -2127,7 +2128,20 @@ require(path.join(__dirname, "..", "js", "mistake-task.js"));
     const p = FLg.parseCloze(c.text);
     assert.ok(p.ok && p.answers[0] === "reduction" && /Base word: REDUCE/.test(p.after));
   });
-  test("journalCard: choice A–D — the options on the front, the answer accepted as “A – make”, “make” and “A”", function () {
+  test("answerSpread (ported rozklad-regula): ≤ 50% one position, ≤ 2 in a row, fewer than 3 items ignored", function () {
+  const VL = require(path.join(__dirname, "validate-lib.js"));
+  assert.strictEqual(VL.answerSpread([1, 3, 0, 0, 3, 2, 2, 1]), null);
+  assert.ok(/8 of 8/.test(VL.answerSpread([0, 0, 0, 0, 0, 0, 0, 0])));
+  assert.ok(/5 of 8/.test(VL.answerSpread([0, 0, 1, 1, 1, 0, 0, 0]) || ""));
+  assert.ok(/in a row/.test(VL.answerSpread([0, 0, 0, 1, 2, 3, 1, 2])));
+  assert.strictEqual(VL.answerSpread([0, 0]), null);
+  const warns = [];
+  VL.fixedSpread({ warn: function (w, m) { warns.push(m); } }, "x", [0, 0, 0].map(function (c) { return { type: "multiple-choice", correct: c, fixedOrder: true }; }));
+  assert.strictEqual(warns.length, 1);
+  VL.fixedSpread({ warn: function (w, m) { warns.push(m); } }, "x", [0, 0, 0].map(function (c) { return { type: "multiple-choice", correct: c }; }));
+  assert.strictEqual(warns.length, 1, "shuffled options are not checked");
+});
+test("journalCard: choice A–D — the options on the front, the answer accepted as “A – make”, “make” and “A”", function () {
     const c = FLg.journalCard(abcd);
     assert.strictEqual(c.type, "cloze");
     assert.ok(/A – make, B – take, C – pull, D – reach/.test(c.text));

@@ -12,6 +12,8 @@
  *   pronounVariants(ctx, where, accepted)   E11 rule 1
  *   speakerGender(ctx, where, accepted, note)  E11 rule 2
  *   nonEmpty(s), words(s)
+ *   answerSpread(seq)          balanced correct answers in fixed-order choices: null or a message (ported from rozklad-regula.js)
+ *   fixedSpread(ctx, where, items)  WARNING when the fixed-order multiple-choice items of one set break answerSpread
  */
 "use strict";
 
@@ -134,9 +136,36 @@ function speakerGender(ctx, where, accepted, note) {
   ctx.warn(where, "only the " + one + " form (" + (seen.m.length ? seen.m : seen.f).join(", ") + ") is accepted and the task has no gender note");
 }
 
+/**
+ * Balanced correct answers where the learner sees the options in a fixed order (options are shuffled otherwise):
+ * no option position is correct in more than half of the items, and none more than twice in a row.
+ * seq = the correct positions or letters in item order; fewer than 3 → null (the rule means nothing).
+ */
+const SPREAD_MAX_SHARE = 0.5, SPREAD_MAX_RUN = 2;
+function answerSpread(seq) {
+  if (!Array.isArray(seq) || seq.length < 3) return null;
+  const counts = {};
+  seq.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+  const keys = Object.keys(counts);
+  const worst = keys.reduce(function (a, k) { return counts[k] > counts[a] ? k : a; }, keys[0]);
+  const dist = keys.sort().map(function (k) { return k + "×" + counts[k]; }).join(" ") + " [" + seq.join(",") + "]";
+  if (counts[worst] / seq.length > SPREAD_MAX_SHARE) return "option " + worst + " is correct in " + counts[worst] + " of " + seq.length + " fixed-order items (max 50%): " + dist;
+  let run = 1;
+  for (let i = 1; i < seq.length; i++) {
+    run = seq[i] === seq[i - 1] ? run + 1 : 1;
+    if (run > SPREAD_MAX_RUN) return "option " + seq[i] + " is correct more than " + SPREAD_MAX_RUN + " times in a row (items " + (i - SPREAD_MAX_RUN + 1) + "–" + (i + 1) + "): " + dist;
+  }
+  return null;
+}
+function fixedSpread(ctx, where, items) {
+  const seq = (items || []).filter(function (it) { return it && it.type === "multiple-choice" && it.fixedOrder === true; }).map(function (it) { return it.correct; });
+  const msg = answerSpread(seq);
+  if (msg) ctx.warn(where, msg);
+}
+
 module.exports = {
   REPO: REPO, LEVELS: LEVELS, TYPO: TYPO,
   lang: lang, createContext: createContext, readJson: readJson, readText: readText, list: list,
   nonEmpty: nonEmpty, words: words, charset: charset, targetText: targetText,
-  pronounVariants: pronounVariants, speakerGender: speakerGender
+  pronounVariants: pronounVariants, speakerGender: speakerGender, answerSpread: answerSpread, fixedSpread: fixedSpread
 };

@@ -3,8 +3,8 @@
   "id": "b1-gramatyka-conditionals-0-1-2-1",
   "topic": "b1-gramatyka-conditionals-0-1-2",
   "level": "B1",
-  "title": "Zero, First i Second Conditional – sprawdź się",
-  "intro": "10 zadań: tłumaczenie całych zdań, dopasowanie połówek, luki, wybór formy i szukanie błędu. Skróty (I'd, won't) i przecinki nie mają znaczenia.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -13,7 +13,7 @@
       "tags": [
         "second-conditional"
       ],
-      "source": "Gdybym miał więcej czasu, nauczyłbym się grać na gitarze.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "If I had more time, I would learn to play the guitar.",
         "If I had more time, I would learn how to play the guitar.",
@@ -25,7 +25,7 @@
         "I would learn how to play guitar if I had more time."
       ],
       "hint": "second conditional",
-      "explanation": "Hipoteza o teraźniejszości: If + Past Simple, would + bezokolicznik. Skrót I'd też jest poprawny."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-02",
@@ -33,7 +33,7 @@
       "tags": [
         "first-conditional"
       ],
-      "source": "Jeśli jutro będzie padać, zostaniemy w domu.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "If it rains tomorrow, we will stay at home.",
         "If it rains tomorrow, we will stay home.",
@@ -43,8 +43,8 @@
         "If it is raining tomorrow, we will stay home."
       ],
       "hint": "first conditional – po if bez will",
-      "trap": "Po if nie stawiamy will, choć po polsku mówimy „będzie padać”: If it rains, nie „If it will rain”.",
-      "explanation": "Realna przyszłość: If + Present Simple, will + bezokolicznik."
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-03",
@@ -53,7 +53,7 @@
         "second-conditional",
         "advice"
       ],
-      "source": "Na twoim miejscu przeprosiłbym ją.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "If I were you, I would apologise to her.",
         "If I were you, I would apologize to her.",
@@ -65,7 +65,7 @@
         "I would apologise to her if I was you."
       ],
       "hint": "If I were you…",
-      "explanation": "Rada w formie second conditional: If I were you, I would… (was też się spotyka, were jest staranniejsze)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-04",
@@ -73,7 +73,7 @@
       "tags": [
         "zero-conditional"
       ],
-      "source": "Kiedy podgrzewasz lód, on się topi.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "If you heat ice, it melts.",
         "When you heat ice, it melts.",
@@ -82,7 +82,7 @@
         "If ice is heated, it melts.",
         "When ice is heated, it melts."
       ],
-      "explanation": "Fakt, który jest zawsze prawdziwy: zero conditional, czyli Present Simple w obu częściach."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-05",
@@ -91,7 +91,7 @@
         "first-conditional",
         "unless"
       ],
-      "source": "Nie zdasz egzaminu, jeśli nie będziesz się uczyć.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "You won't pass the exam if you don't study.",
         "You won't pass the exam unless you study.",
@@ -102,9 +102,9 @@
         "If you don't study, you won't pass your exam.",
         "Unless you study, you won't pass your exam."
       ],
-      "hint": "if … don't albo unless",
-      "trap": "Unless zawiera już przeczenie: unless you study, nie „unless you don't study”.",
-      "explanation": "First conditional z przeczeniem: if you don't study = unless you study; w części głównej won't."
+      "hint": "(hint: test fixture text)",
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-06",
@@ -113,7 +113,7 @@
         "second-conditional",
         "questions"
       ],
-      "source": "Co byś zrobił, gdybyś wygrał milion euro?",
+      "source": "(source: test fixture text)",
       "accepted": [
         "What would you do if you won a million euros?",
         "What would you do if you won a million euro?",
@@ -122,7 +122,7 @@
         "If you won a million euro, what would you do?",
         "If you won one million euros, what would you do?"
       ],
-      "explanation": "Pytanie o hipotezę: What would you do if you + Past Simple?"
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-07",
@@ -131,7 +131,7 @@
         "conditionals"
       ],
       "mode": "halves",
-      "prompt": "Połącz początki zdań z zakończeniami.",
+      "prompt": "(prompt: test fixture text)",
       "pairs": [
         [
           "If you heat ice,",
@@ -146,7 +146,7 @@
           "I would travel around the world."
         ]
       ],
-      "explanation": "Zero conditional – fakt zawsze prawdziwy; first – realna przyszłość (will); second – hipoteza (would)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-08",
@@ -169,7 +169,7 @@
           ]
         }
       ],
-      "explanation": "Stała zależność (jak na lekcji plastyki): zero conditional, czyli Present Simple w obu częściach. Will get też jest poprawne."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-09",
@@ -189,11 +189,11 @@
       "correct": 0,
       "optionNotes": [
         null,
-        "If daje zdanie bez sensu: spóźnimy się, jeśli wyjdziemy teraz.",
-        "Because podaje przyczynę, a tu potrzebny warunek.",
-        "So wprowadza skutek, a nie warunek."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
-      "explanation": "Unless = if … not: spóźnimy się, jeśli nie wyjdziemy teraz."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b1-gramatyka-conditionals-0-1-2-1-10",

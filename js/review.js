@@ -103,7 +103,7 @@ window.LM = window.LM || {};
       const next = LM.reviewQueue.nextDue(Date.now());
       section.appendChild(el("h2", { class: "tile-title", id: titleId, text: "Flashcards and mistakes" }));
       section.appendChild(LM.ui.emptyState({
-        art: "brak-powtorek", title: "All done for today",
+        art: "no-reviews", title: "All done for today",
         hint: next ? "Next review: " + LM.cards.internal.fmtWhen(next) + "." : "Turn on a deck, save a mistake or do a few exercises – they come back here at growing intervals.",
         class: "es-tile"
       }));
@@ -165,7 +165,7 @@ window.LM = window.LM || {};
 
   function render() {
     const view = document.getElementById("view");
-    view.className = "view tool-view powtorki-view";
+    view.className = "view tool-view review-view";
     view.dataset.file = HOME;
     view.replaceChildren();
     document.title = "Flashcards and mistakes · " + LM.APP.appTitle;

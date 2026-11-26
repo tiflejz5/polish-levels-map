@@ -4,7 +4,7 @@
   "type": "transformation",
   "title": "Warunki, wish i if only",
   "focus": "Third i mixed conditionals, warunki bez if, provided, wish i if only",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -41,7 +41,7 @@
         ]
       ],
       "model": "HADN'T BEEN FOR YOUR",
-      "explanation": "If it hadn't been for… = gdyby nie… (przeszłość)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 3,
@@ -59,7 +59,7 @@
         ]
       ],
       "model": "WISH I HAD TAKEN",
-      "explanation": "Żal dotyczący przeszłości: wish + Past Perfect."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -77,7 +77,7 @@
         ]
       ],
       "model": "ONLY MY BROTHER WERE",
-      "explanation": "If only + Past Simple (were) – żal dotyczący teraźniejszości."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -95,7 +95,7 @@
         ]
       ],
       "model": "PROVIDED THAT YOU RETURN",
-      "explanation": "Provided (that) = pod warunkiem że; po nim czas teraźniejszy, choć chodzi o przyszłość."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,

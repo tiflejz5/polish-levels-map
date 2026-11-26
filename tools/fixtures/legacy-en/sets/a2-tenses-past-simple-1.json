@@ -3,8 +3,8 @@
   "id": "a2-czasy-past-simple-1",
   "topic": "a2-czasy-past-simple",
   "level": "A2",
-  "title": "Past Simple – sprawdź się",
-  "intro": "10 zadań: wybór formy, układanie zdań i szukanie błędów.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -18,12 +18,12 @@
         "gone"
       ],
       "correct": 2,
-      "explanation": "Last night to zakończony moment w przeszłości, więc Past Simple: went.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         "Forma podstawowa.",
         "Present Simple dla he/she/it.",
         null,
-        "Trzecia forma bez have nie tworzy Past Simple."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "irregular"
@@ -41,12 +41,12 @@
         "has lose"
       ],
       "correct": 2,
-      "explanation": "Lose jest nieregularny: lose, lost, lost.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         "Forma podstawowa.",
-        "Nie dodajemy -ed do czasowników nieregularnych.",
+        "(optionNotes: test fixture text)",
         null,
-        "Złe połączenie."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "irregular"
@@ -64,11 +64,11 @@
         "Have"
       ],
       "correct": 1,
-      "explanation": "Pytanie w Past Simple tworzymy przez Did + podmiot + forma podstawowa.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
-        "Do jest w czasie teraźniejszym.",
+        "(optionNotes: test fixture text)",
         null,
-        "Were łączy się z przymiotnikiem lub -ing.",
+        "(optionNotes: test fixture text)",
         "Have tworzy Present Perfect."
       ],
       "tags": [
@@ -90,8 +90,8 @@
       "explanation": "Przeczenie w Past Simple: didn't + forma podstawowa.",
       "optionNotes": [
         null,
-        "Don't to czas teraźniejszy.",
-        "Wasn't łączy się z przymiotnikiem lub -ing.",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
         "Hadn't to Past Perfect."
       ],
       "tags": [
@@ -101,7 +101,7 @@
     },
     {
       "type": "reorder",
-      "context": "Wczoraj nie poszedłem do szkoły.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I didn't go to school yesterday.",
         "Yesterday I didn't go to school."
@@ -114,7 +114,7 @@
     },
     {
       "type": "reorder",
-      "context": "Kiedy kupiłeś ten rower?",
+      "context": "(context: test fixture text)",
       "answers": [
         "When did you buy this bike?"
       ],
@@ -126,11 +126,11 @@
     },
     {
       "type": "reorder",
-      "context": "Spotkaliśmy się w zeszły piątek.",
+      "context": "(context: test fixture text)",
       "answers": [
         "We met last Friday."
       ],
-      "explanation": "Meet to czasownik nieregularny: met.",
+      "explanation": "(explanation: test fixture text)",
       "extraTokens": [
         "meeted"
       ],
@@ -157,7 +157,7 @@
       "fixes": [
         "bought"
       ],
-      "explanation": "Buy jest nieregularny: buy, bought.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "irregular"
       ],
@@ -184,7 +184,7 @@
       "tags": [
         "pytania"
       ],
-      "trap": "Po did nie używamy drugiej formy.",
+      "trap": "(trap: test fixture text)",
       "id": "a2-czasy-past-simple-1-09"
     },
     {
@@ -203,7 +203,7 @@
       "fixes": [
         "didn't call"
       ],
-      "explanation": "Po didn't czasownik jest w formie podstawowej. Poprawka obejmuje oba słowa.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "przeczenia"
       ],

@@ -3,8 +3,8 @@
   "id": "b2-gramatyka-wish-if-only-1",
   "topic": "b2-gramatyka-wish-if-only",
   "level": "B2",
-  "title": "Wish / if only – sprawdź się",
-  "intro": "10 zadań: transformacje zdań (2–5 słów, słowo kluczowe bez zmian), luki, wybór formy i tłumaczenie. Transformacje z dwiema częściami są za 2 punkty.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -27,7 +27,7 @@
         2,
         5
       ],
-      "explanation": "Żal dotyczący przeszłości: wish + Past Perfect (had studied)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-02",
@@ -49,7 +49,7 @@
         2,
         5
       ],
-      "explanation": "Żal dotyczący teraźniejszej umiejętności: if only + could (cofamy can o jeden czas)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-03",
@@ -84,7 +84,7 @@
         2,
         5
       ],
-      "explanation": "Irytacja czyimś zachowaniem i chęć, żeby się zmieniło: wish + would (I wish you would stop… albo I wish you wouldn't keep…)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-04",
@@ -106,7 +106,7 @@
         2,
         5
       ],
-      "explanation": "Marzenie o teraźniejszości: if only + Past Simple; przy be często were także po I."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-05",
@@ -137,7 +137,7 @@
         2,
         5
       ],
-      "explanation": "Żal dotyczący przeszłości: if only + Past Perfect, tu przeczenie: hadn't sold. Skrót hadn't liczy się jako dwa słowa."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-06",
@@ -158,8 +158,8 @@
         2,
         5
       ],
-      "trap": "Po wish o teraźniejszości stoi czas przeszły: I wish I had, nie „I wish I have”.",
-      "explanation": "Teraźniejsza sytuacja, którą chcielibyśmy zmienić: wish + Past Simple."
+      "trap": "(trap: test fixture text)",
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-07",
@@ -180,7 +180,7 @@
         2,
         5
       ],
-      "explanation": "Chcemy, żeby coś poza naszą kontrolą się zmieniło: wish + would (I wish it would stop raining)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-08",
@@ -207,7 +207,7 @@
           ]
         }
       ],
-      "explanation": "Żal o przeszłości: wish + had brought. Postanowienie na przyszłość: will check (albo am going to check)."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-09",
@@ -227,11 +227,11 @@
       "correct": 0,
       "optionNotes": [
         null,
-        "Wish nie służy do życzeń na przyszłość z czasem teraźniejszym – tu potrzebne hope.",
+        "(optionNotes: test fixture text)",
         "Want wymaga konstrukcji want you to pass.",
         "Would like wymaga konstrukcji would like you to pass."
       ],
-      "explanation": "Nadzieja na realną przyszłość: I hope you pass. Wish wyraża żal albo marzenie o czymś nierealnym."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "id": "b2-gramatyka-wish-if-only-1-10",
@@ -240,7 +240,7 @@
         "wish",
         "were"
       ],
-      "source": "Szkoda, że cię tu nie ma.",
+      "source": "(source: test fixture text)",
       "accepted": [
         "I wish you were here.",
         "If only you were here.",
@@ -251,7 +251,7 @@
         "What a shame you aren't here."
       ],
       "hint": "I wish + Past Simple",
-      "explanation": "Żal o teraźniejszości: I wish you were here (were, choć mówimy o teraz)."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

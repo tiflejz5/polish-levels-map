@@ -74,7 +74,7 @@ window.LM = window.LM || {};
     if (state.genre !== "all" && genresOf(g, p).indexOf(state.genre) === -1) return false;
     if (state.starred && starred().indexOf(p.id) === -1) return false;
     const q = fold(state.query.trim());
-    if (q && fold(p.en + " " + p.pl + " " + (p.example || "")).indexOf(q) === -1) return false;
+    if (q && fold(p.text + " " + p.en + " " + (p.example || "")).indexOf(q) === -1) return false;
     return true;
   }
 
@@ -149,7 +149,7 @@ window.LM = window.LM || {};
 
     function phraseItem(g, p) {
       const isStar = starred().indexOf(p.id) !== -1;
-      const label = plain(p.en);
+      const label = plain(p.text);
       const starBtn = el("button", { type: "button", class: "btn btn-link btn-small zw-star" + (isStar ? " is-on" : ""), "aria-pressed": isStar ? "true" : "false",
         "aria-label": (isStar ? "Remove from favorites: " : "Add to favorites: ") + label,
         onclick: function () {
@@ -166,8 +166,8 @@ window.LM = window.LM || {};
       ]) : null;
       return el("li", { class: "card zw-phrase", "data-pid": p.id }, [
         el("div", { class: "zw-text" }, [
-          el("p", { class: "zw-en", lang: LM.APP.targetLang, text: p.en }),
-          el("p", { class: "zw-pl", text: p.pl }),
+          el("p", { class: "zw-target", lang: LM.APP.targetLang, text: p.text }),
+          el("p", { class: "zw-meaning", text: p.en }),
           el("p", { class: "zw-chips" }, [
             el("span", { class: "chip", text: "Level " + p.level }),
             el("span", { class: "chip", text: REGISTERS[p.register] })
@@ -177,7 +177,7 @@ window.LM = window.LM || {};
         el("div", { class: "zw-actions" }, [
           el("button", { type: "button", class: "btn btn-secondary btn-small", "aria-label": "Copy: " + label, onclick: function () { copyText(label); } }, LM.ui.withIcon("copy", "Copy")),
           LM.words && LM.words.addPhrase ? el("button", { type: "button", class: "btn btn-secondary btn-small", "aria-label": "Add to My words: " + label,
-            onclick: function () { LM.words.addPhrase({ en: p.en, pl: p.pl, example: p.example, route: HASH, title: "Phrase bank" }); } }, LM.ui.withIcon("layers", "Add to My words")) : null,
+            onclick: function () { LM.words.addPhrase({ text: p.text, meaning: p.en, example: p.example, route: HASH, title: "Phrase bank" }); } }, LM.ui.withIcon("layers", "Add to My words")) : null,
           starBtn
         ])
       ]);
@@ -202,7 +202,7 @@ window.LM = window.LM || {};
         ]));
       });
       count.textContent = "Phrases: " + shown + " of " + total + (state.starred && !hasProfile() ? " (favorites need a profile)" : "");
-      if (!shown) groupsBox.appendChild(LM.ui.emptyState({ art: "brak-wynikow", title: state.starred ? "You have no favorite phrases that match the filters yet. Select “Favorites” next to a phrase." : "No phrases match the filters." }));
+      if (!shown) groupsBox.appendChild(LM.ui.emptyState({ art: "no-results", title: state.starred ? "You have no favorite phrases that match the filters yet. Select “Favorites” next to a phrase." : "No phrases match the filters." }));
       nav.appendChild(el("ul", { class: "zw-nav-list" }, navItems));
       if (keepScroll) window.scrollTo(0, y);
     }

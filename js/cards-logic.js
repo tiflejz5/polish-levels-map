@@ -636,7 +636,7 @@ window.LM = window.LM || {};
   // MISTAKE LOG → “MY MISTAKES” CARDS (pack v8, spec 20 R1)
   // =====================================================================
 
-  const MISTAKES_DECK = "u-moje-bledy"; // stored deck id
+  const MISTAKES_DECK = "u-mistakes"; // stored deck id
 
   /** The key by which a log entry finds its card (as before: the item's ref or journal:<id>). */
   function journalSource(e) { return e.ref ? String(e.ref) : "journal:" + e.id; }

@@ -271,7 +271,7 @@ window.LM = window.LM || {};
     view.appendChild(LM.ui.pageHead({ eyebrow: "Your progress · Stats", title: "Stats", lead: "Your answers in sets, your accuracy and your activity. Only your own data counts – no comparisons with others." }));
     if (!hasData) {
       view.appendChild(LM.ui.emptyState({
-        art: "pusty-dziennik", title: "Your stats will appear here", hint: "Do your first exercise set – every answer counts. After a few sets you will see which topics go best and which are worth reviewing.",
+        art: "empty-log", title: "Your stats will appear here", hint: "Do your first exercise set – every answer counts. After a few sets you will see which topics go best and which are worth reviewing.",
         action: el("a", { class: "btn btn-primary", href: "#/practice" }, LM.ui.withIcon("dumbbell", "Go to Practice"))
       }));
     }

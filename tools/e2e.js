@@ -163,7 +163,7 @@ async function main() {
     ok(/B1 is on its way\. The topics below are what it will cover\./.test(t), "lead");
     ok(await s.page.locator(".essentials .ess-item.is-planned").count() > 10, "planned topics");
     ok(await s.page.locator(".essentials a, .essentials input").count() === 0, "links or checkboxes on a soon level");
-    ok(await s.page.locator(".lf-level-card, .sciaga-card").count() === 0, "final test / cheat sheet card");
+    ok(await s.page.locator(".lf-level-card, .cheatsheet-card").count() === 0, "final test / cheat sheet card");
     ok(/soon/.test(await s.page.innerText('#level-list a[href="#/b1"]')), "sidebar label");
     await visit(s.page, "#/b1/test");
     ok(/B1 is on its way/.test(await viewText(s.page)), "final test of a soon level");
@@ -431,7 +431,7 @@ async function main() {
     await s.page.addScriptTag({ url: URL + "js/speaking-trainer.js" });
     const out = await s.page.evaluate(function () {
       const data = {
-        format: "matura", criteria: [{ id: "a", label: "Content" }],
+        format: "oral", criteria: [{ id: "a", label: "Content" }],
         intro: { seconds: 60, groups: [{ questions: ["Q1"] }] },
         roleplay: { seconds: 60, cards: [{ situation: "Situation", elements: ["one"], examinerLines: ["Line"] }] },
         picture: { seconds: 60, cards: [{ description: "Picture", questions: ["Q2"] }] },

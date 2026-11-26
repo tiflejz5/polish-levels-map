@@ -49,6 +49,7 @@ function checkSet(ctx, file) {
     if (it && !(Array.isArray(it.tags) && it.tags.length)) ctx.warn(w, "no tags");
     I.checkItem(ctx, w, Object.assign({ level: d.level }, it), d);
   });
+  V.fixedSpread(ctx, rel, items);
   return d;
 }
 

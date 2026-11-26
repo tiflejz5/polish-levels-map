@@ -3,8 +3,8 @@
   "id": "b1-czasy-present-perfect-vs-past-simple-1",
   "topic": "b1-czasy-present-perfect-vs-past-simple",
   "level": "B1",
-  "title": "Present Perfect czy Past Simple – sprawdź się",
-  "intro": "10 zadań: wybór formy, układanie zdań i szukanie błędów.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -18,14 +18,14 @@
         "see"
       ],
       "correct": 1,
-      "explanation": "Last week to zakończony moment w przeszłości, więc Past Simple: saw.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
-        "Z określeniem czasu zakończonego nie używamy Present Perfect.",
+        "(optionNotes: test fixture text)",
         null,
-        "Błędna forma.",
+        "(optionNotes: test fixture text)",
         "Present Simple."
       ],
-      "trap": "Last week, yesterday, in 2019, ago wymagają Past Simple.",
+      "trap": "(trap: test fixture text)",
       "tags": [
         "time-expressions"
       ],
@@ -44,10 +44,10 @@
       "correct": 2,
       "explanation": "Since + punkt w czasie, sytuacja trwa do teraz: has lived.",
       "optionNotes": [
-        "Present Simple nie łączy się z since.",
-        "Past Simple oznacza, że już tam nie mieszka.",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
         null,
-        "Present Continuous nie pasuje do since."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "since-for"
@@ -65,12 +65,12 @@
         "Are"
       ],
       "correct": 1,
-      "explanation": "Yet w pytaniu o skutek do teraz łączy się z Present Perfect: Have you finished.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
-        "Did wymagałoby formy finish, a tu mamy finished.",
+        "(optionNotes: test fixture text)",
         null,
-        "Do nie pasuje do finished.",
-        "Are nie pasuje do finished."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "yet"
@@ -93,7 +93,7 @@
         "When wyklucza Present Perfect.",
         null,
         "Do to Present Simple.",
-        "Are nie pasuje."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "when"
@@ -102,7 +102,7 @@
     },
     {
       "type": "reorder",
-      "context": "Mieszkam tu od pięciu lat.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I have lived here for five years."
       ],
@@ -114,7 +114,7 @@
     },
     {
       "type": "reorder",
-      "context": "Obejrzeliśmy ten film wczoraj.",
+      "context": "(context: test fixture text)",
       "answers": [
         "We watched that film yesterday.",
         "Yesterday we watched that film."
@@ -130,11 +130,11 @@
     },
     {
       "type": "reorder",
-      "context": "Czy już zjadłeś obiad?",
+      "context": "(context: test fixture text)",
       "answers": [
         "Have you had lunch yet?"
       ],
-      "explanation": "Yet w pytaniu na końcu, Present Perfect.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "yet"
       ],
@@ -203,7 +203,7 @@
       "fixes": [
         "Have you ever been"
       ],
-      "explanation": "Pytanie o doświadczenie w Present Perfect: Have you ever been.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "been"
       ],

@@ -3,8 +3,8 @@
   "id": "a1-czasy-present-simple-1",
   "topic": "a1-czasy-present-simple",
   "level": "A1",
-  "title": "Present Simple – sprawdź się",
-  "intro": "10 zadań: wybór formy, układanie zdań i szukanie błędów.",
+  "title": "(title: test fixture text)",
+  "intro": "(intro: test fixture text)",
   "passage": null,
   "items": [
     {
@@ -22,8 +22,8 @@
       "optionNotes": [
         "Brak -s przy he/she/it.",
         null,
-        "-ing bez am/is/are nie tworzy czasu.",
-        "is play to mieszanie dwóch form."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "trap": "W 3. osobie liczby pojedynczej dopisz -s.",
       "tags": [
@@ -42,12 +42,12 @@
         "Is"
       ],
       "correct": 0,
-      "explanation": "Pytanie z you w Present Simple tworzymy przez Do. Does jest tylko dla he/she/it.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         null,
-        "Does tylko dla he/she/it.",
-        "Are/Is dotyczą czasownika be, a like nie jest be.",
-        "Are/Is dotyczą czasownika be, a like nie jest be."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "pytania"
@@ -69,8 +69,8 @@
       "optionNotes": [
         "Don't pasuje do I/you/we/they.",
         null,
-        "isn't łączy się z przymiotnikiem lub -ing, nie z like.",
-        "Samo not nie tworzy przeczenia."
+        "(optionNotes: test fixture text)",
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "przeczenia"
@@ -88,12 +88,12 @@
         "does get up"
       ],
       "correct": 1,
-      "explanation": "Czynność rutynowa, 3. osoba: gets up.",
+      "explanation": "(explanation: test fixture text)",
       "optionNotes": [
         "Brak -s.",
         null,
         "Brak am/is/are.",
-        "does get up to forma pytająca lub emfatyczna."
+        "(optionNotes: test fixture text)"
       ],
       "tags": [
         "he-she-it"
@@ -102,7 +102,7 @@
     },
     {
       "type": "reorder",
-      "context": "Ona nie mieszka w Lublinie.",
+      "context": "(context: test fixture text)",
       "answers": [
         "She doesn't live in Lublin."
       ],
@@ -121,7 +121,7 @@
       "answers": [
         "Where does he work?"
       ],
-      "explanation": "Pytanie: słowo pytające + does + podmiot + czasownik w formie podstawowej.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "pytania"
       ],
@@ -129,11 +129,11 @@
     },
     {
       "type": "reorder",
-      "context": "Zawsze jem śniadanie w domu.",
+      "context": "(context: test fixture text)",
       "answers": [
         "I always have breakfast at home."
       ],
-      "explanation": "Przysłówek częstotliwości stoi przed czasownikiem głównym.",
+      "explanation": "(explanation: test fixture text)",
       "tags": [
         "adverbs"
       ],
@@ -202,7 +202,7 @@
       "tags": [
         "pytania"
       ],
-      "trap": "Po do/does nie dodajemy -s do czasownika.",
+      "trap": "(trap: test fixture text)",
       "id": "a1-czasy-present-simple-1-10"
     }
   ]

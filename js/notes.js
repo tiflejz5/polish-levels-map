@@ -160,7 +160,7 @@ window.LM = window.LM || {};
     const all = pd().noteList();
     if (!all.length) {
       view.appendChild(LM.ui.emptyState({
-        art: "pusty-notes", title: "You have no notes yet.",
+        art: "empty-notes", title: "You have no notes yet.",
         hint: "Every content page has a “Notes” button. Select it and type your thoughts – they save themselves and show up here."
       }));
       return;
@@ -173,7 +173,7 @@ window.LM = window.LM || {};
       const shown = all.filter(function (n) { return !q || fold(n.title + " " + n.text).indexOf(fold(q)) !== -1; });
       count.textContent = "Notes: " + shown.length + " of " + all.length;
       listBox.replaceChildren();
-      if (!shown.length) { listBox.appendChild(LM.ui.emptyState({ tag: "li", art: "brak-wynikow", title: "No notes match your search." })); return; }
+      if (!shown.length) { listBox.appendChild(LM.ui.emptyState({ tag: "li", art: "no-results", title: "No notes match your search." })); return; }
       shown.forEach(function (n) {
         listBox.appendChild(el("li", { class: "card notes-item" }, [
           el("div", { class: "notes-item-head" }, [

@@ -3,8 +3,8 @@
   "part": 4,
   "type": "transformation",
   "title": "Strona bierna i bezosobowa",
-  "focus": "Strona bierna w różnych czasach, strona bierna bezosobowa, have something done",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "focus": "(focus: test fixture text)",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -22,7 +22,7 @@
         ]
       ],
       "model": "IS BELIEVED TO HAVE ESCAPED",
-      "explanation": "Strona bierna bezosobowa: podmiot + is believed + to have + 3. forma, bo ucieczka była wcześniej niż „wierzenie”."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -56,7 +56,7 @@
         ]
       ],
       "model": "SHOULD HAVE BEEN INFORMED",
-      "explanation": "Modalny w przeszłości w stronie biernej: should have been + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 4,
@@ -73,7 +73,7 @@
         ]
       ],
       "model": "IS REPORTED TO BE PLANNING",
-      "explanation": "Czynność trwająca teraz → to be + -ing po is reported."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -90,7 +90,7 @@
         ]
       ],
       "model": "HAVING MY CAR CHECKED",
-      "explanation": "Have something done – ktoś robi coś dla nas: having + przedmiot + 3. forma."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,
@@ -107,7 +107,7 @@
         ]
       ],
       "model": "BEEN GIVEN SUCH",
-      "explanation": "Osoba jako podmiot strony biernej: I have been given…; such + przymiotnik + rzeczownik niepoliczalny."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

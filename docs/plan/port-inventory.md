@@ -381,3 +381,36 @@ In **this repo** (snapshot without content): `node tools/testy.js` runs 31 tests
 2. §9.6: temporary `LM.plural3` between stages 1B and 2, or accept wrong Polish plural forms in the still-Polish UI for one stage? (recommended: accept; it is invisible in English later and costs nothing)
 3. §9.8: `#/practice/mixes` for the mixed-set list?
 4. Speaking trainer, writing trainer and model answers (`speaking-trainer.js`, `writing-trainer.js`, `pisanie-*.js`) are kept in the engine but have no content until stage E (and B1 for the phrase bank). Hide their sidebar entries while their data is empty, like the exams group? (recommended: yes, same rule as E8)
+
+## 11. Closing check (stage 7, 26 Nov 2026)
+
+Every row and note of this inventory was checked against the code on branch `stage/07-branding-qa`. Status of each item:
+
+| Item | Status |
+|---|---|
+| §2 files marked keep / adapt | all present under their new English names (`js/`, `tools/`, `assets/`); every file marked drop is gone (`base-content`, `c1-*`, `default-data`, `rozklad-odpowiedzi`, `waliduj-c1-uoe`, `waliduj-szlak`, `waliduj-zycie`) |
+| `assets/favicon.svg`, `favicon-180.png` (replace, stage 7) | replaced: the map mark in the level gradient, English comments; the PNG is rendered from the SVG |
+| `assets/krainy.js`, `stany-puste.js`, `warstwice.svg` | renamed in stage 1A to `lands.js`, `empty-states.js`; stage 7 renamed `warstwice.svg` → `contours.svg`, the symbol keys `kraina-*` → `land-*`, the art keys `brak-powtorek`, `brak-wynikow`, `pusty-dziennik`, `pusty-notes` → `no-reviews`, `no-results`, `empty-log`, `empty-notes`, and translated the Polish file headers |
+| `tools/rozklad-regula.js` (keep) | was not ported in stage 4; stage 7 ports the rule as `answerSpread` / `fixedSpread` in `tools/validate-lib.js` (a warning for fixed-order multiple-choice items of a set; options are shuffled otherwise) with a unit test |
+| `waliduj-mowienie`, `waliduj-wzorce` (keep, stage E) | deferred: `npm run validate` prints them as SKIPPED until stage E has data |
+| §2 note: English fixtures replaced in stage 3 | the generic grading, shuffling and drawing tests still use the original English items (`tools/fixtures/legacy-en/`), kept as frozen engine regression fixtures; stage 7 replaced their Polish explanations and instructions (340 strings) with placeholders and gave the files English names. Polish-language fixtures for the language layer live in `tools/fixtures/lang/` |
+| §3.1 answer checking | done (stage 3): one `LM.exLogic.match`; no contraction rules (`check:lang` rule `english-rule`) |
+| §3.2 speech | done (stage 3): one `LM.speech`, pl-PL only |
+| §3.3 flashcards and My words | done (stage 3); stage 7 fixed the phrase bank, which still read the old fields (`en` = English phrase, `pl` = meaning): views and “Add to My words” now use `text` (Polish) and `en` (meaning) as spec 07 §8 and `validate-phrases.js` require |
+| §3.3 stored deck ids `u-moje-bledy`, `u-moje-slowa` | renamed to `u-mistakes`, `u-words` (stage 7; D3, nothing to migrate before launch) |
+| §3.4 search | done (stage 3) |
+| §3.5 tense lab | replaced by the Case Lab (stage 6) |
+| §3.6 exams | done (stage 1B); stage 7 removed the last exam names from code: the speaking format `matura` → `oral`, the `certyfikat-` prompt-language test → registry field `promptInTarget`, test names |
+| §3.7 plural, dates, callouts, typography, `index.html` | done (stage 2); `exercise-logic.js` keeps a local English `plural` because the file is pure (documented there) |
+| §3.8 `lang` attributes | done (stages 3–4): no hard-coded `lang: "en"` / `"pl"` in `js/` (`check:lang` rule `lang-code`) |
+| §4 language facts | only in `js/lang.js`, `js/config.js` and `content/` (`check:lang`, which now also scans `assets/*.js` and `*.svg` and flags `kraina`, `sciaga`, `matura`, `u-moje-`) |
+| §5 storage keys | all `plm.`; e2e checks that `elm_*`, `elm.<id>.*` and `slm.` keys are never read, written, exported or cleared |
+| §5 legacy code | removed in stage 1A, except `REVIEW_STEPS` in `learning.js`: it still drives the review cycle of mistake log entries (`entry.review`), so it is live code, not legacy |
+| §5 stored values `first-umiem` (`plm.celebrated`) and via `umiem` (`plm.trail`) | kept so saved data stays valid (an earlier stage decision, listed with its reason in `tools/check-lang-allow.json`) |
+| §6 routes | done (stage 1B), `#/practice/mixes` included; old routes show “Page not found” (e2e) |
+| §7 on-demand modules | done (stage 1A); paths as in spec 02 §4 |
+| §8 tests | 241 unit tests (`npm test`), 36 e2e tests |
+| §9 items 1–14 | resolved as recorded in §10 and in the stage summaries |
+| CSS class names of the original app | stage 7 renamed `.powtorki-view` → `.review-view`, `.pisanie-view` → `.writing-view`, `.sciaga*` → `.cheatsheet*` (the cheat sheet view already used `cheatsheet-view`, so its print styles had not applied since stage 1B) |
+
+Nothing from this inventory remains open.

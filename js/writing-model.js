@@ -75,7 +75,7 @@ window.LM = window.LM || {};
     ]));
     view.appendChild(el("details", { class: "wz-prompt" }, [
       el("summary", { text: "Task" }),
-      el("p", { class: "wz-prompt-text", lang: /^certyfikat-/.test(row.exam.id) ? "en" : null, text: task.prompt || "" })
+      el("p", { class: "wz-prompt-text", lang: row.exam.promptInTarget ? LM.APP.targetLang : null, text: task.prompt || "" })
     ]));
 
     // ----- filter state

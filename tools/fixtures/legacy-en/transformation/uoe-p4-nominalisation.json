@@ -2,9 +2,9 @@
   "id": "uoe-p4-nominalizacja-zwroty",
   "part": 4,
   "type": "transformation",
-  "title": "Nominalizacja i stałe zwroty",
-  "focus": "Rzeczownik zamiast czasownika, despite + lack of, stałe frazy z arkuszy",
-  "instructions": "Uzupełnij drugie zdanie tak, żeby znaczyło to samo co pierwsze. Użyj podanego słowa bez zmieniania go. Wpisz od 3 do 6 słów, łącznie ze słowem kluczowym (skróty typu doesn't liczą się jako dwa słowa). Każda odpowiedź jest warta 2 punkty – po 1 za każdą część.",
+  "title": "(title: test fixture text)",
+  "focus": "(focus: test fixture text)",
+  "instructions": "(instructions: test fixture text)",
   "maxScore": 12,
   "items": [
     {
@@ -23,7 +23,7 @@
         ]
       ],
       "model": "NO DIFFERENCE TO",
-      "explanation": "It makes no difference to me = jest mi wszystko jedno."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 2,
@@ -77,7 +77,7 @@
         ]
       ],
       "model": "IN THE LIGHT OF PROTESTS",
-      "explanation": "In (the) light of = w świetle, z powodu."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 5,
@@ -97,7 +97,7 @@
         ]
       ],
       "model": "WHATEVER IT TAKES",
-      "explanation": "Do whatever it takes = zrobić wszystko, co trzeba."
+      "explanation": "(explanation: test fixture text)"
     },
     {
       "n": 6,
@@ -116,7 +116,7 @@
         ]
       ],
       "model": "CAME AS A SURPRISE TO",
-      "explanation": "Come as a surprise to someone = zaskoczyć kogoś."
+      "explanation": "(explanation: test fixture text)"
     }
   ]
 }

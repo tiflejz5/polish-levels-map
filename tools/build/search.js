@@ -125,7 +125,7 @@ module.exports = function buildSearch(ctx) {
 
   // ---------- Flashcards: shortcuts only (cards are not indexed: too much noise) ----------
   add({ id: "cards", group: "exercises", title: "Flashcards and mistakes", summary: "One review queue: flashcards from decks, My mistakes and weak spots from practice, at growing intervals.", text: "flashcards review active recall decks mistake log weak spots", category: "Flashcards", route: "#/review" });
-  add({ id: "cards:mistakes", group: "exercises", title: "My mistakes (flashcards)", summary: "A flashcard deck made from the entries of the mistake log.", text: "flashcards my mistakes mistake log", category: "Flashcards", route: "#/review/decks/deck/u-moje-bledy" });
+  add({ id: "cards:mistakes", group: "exercises", title: "My mistakes (flashcards)", summary: "A flashcard deck made from the entries of the mistake log.", text: "flashcards my mistakes mistake log", category: "Flashcards", route: "#/review/decks/deck/u-mistakes" });
   add({ id: "cards:words", group: "exercises", title: "My words", summary: "Words and phrases you selected in texts, with the sentence and the meaning.", text: "my words personal glossary saved words flashcards selection", category: "Flashcards", route: "#/review/words" });
 
   // Phrase bank (B1 extras): the bank page and each group
