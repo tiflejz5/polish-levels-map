@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "note": "Engine stage: 4 of the 14 model phrases (spec 09 §4). One per main pattern: masculine personal, masculine inanimate, feminine, neuter. The rest are written in level extras.",
+  "models": [
+    {
+      "id": "nowy-student", "gender": "masculine personal", "en": "new student",
+      "singular": {
+        "nominative": "nowy student",
+        "genitive": "nowego studenta",
+        "dative": "nowemu studentowi",
+        "accusative": "nowego studenta",
+        "instrumental": "nowym studentem",
+        "locative": "nowym studencie",
+        "vocative": "nowy studencie"
+      },
+      "plural": {
+        "nominative": "nowi studenci",
+        "genitive": "nowych studentów",
+        "dative": "nowym studentom",
+        "accusative": "nowych studentów",
+        "instrumental": "nowymi studentami",
+        "locative": "nowych studentach",
+        "vocative": "nowi studenci"
+      }
+    },
+    {
+      "id": "stary-dom", "gender": "masculine inanimate", "en": "old house",
+      "singular": {
+        "nominative": "stary dom",
+        "genitive": "starego domu",
+        "dative": "staremu domowi",
+        "accusative": "stary dom",
+        "instrumental": "starym domem",
+        "locative": "starym domu",
+        "vocative": "stary domu"
+      },
+      "plural": {
+        "nominative": "stare domy",
+        "genitive": "starych domów",
+        "dative": "starym domom",
+        "accusative": "stare domy",
+        "instrumental": "starymi domami",
+        "locative": "starych domach",
+        "vocative": "stare domy"
+      }
+    },
+    {
+      "id": "dobra-kawa", "gender": "feminine", "en": "good coffee", "note": "In the plural: cups or kinds of coffee (Poproszę dwie kawy).",
+      "singular": {
+        "nominative": "dobra kawa",
+        "genitive": "dobrej kawy",
+        "dative": "dobrej kawie",
+        "accusative": "dobrą kawę",
+        "instrumental": "dobrą kawą",
+        "locative": "dobrej kawie",
+        "vocative": "dobra kawo"
+      },
+      "plural": {
+        "nominative": "dobre kawy",
+        "genitive": "dobrych kaw",
+        "dative": "dobrym kawom",
+        "accusative": "dobre kawy",
+        "instrumental": "dobrymi kawami",
+        "locative": "dobrych kawach",
+        "vocative": "dobre kawy"
+      }
+    },
+    {
+      "id": "male-okno", "gender": "neuter", "en": "small window",
+      "singular": {
+        "nominative": "małe okno",
+        "genitive": "małego okna",
+        "dative": "małemu oknu",
+        "accusative": "małe okno",
+        "instrumental": "małym oknem",
+        "locative": "małym oknie",
+        "vocative": "małe okno"
+      },
+      "plural": {
+        "nominative": "małe okna",
+        "genitive": "małych okien",
+        "dative": "małym oknom",
+        "accusative": "małe okna",
+        "instrumental": "małymi oknami",
+        "locative": "małych oknach",
+        "vocative": "małe okna"
+      }
+    }
+  ]
+}
