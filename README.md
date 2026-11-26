@@ -68,7 +68,7 @@ Hash routing; any other address shows “Page not found” with a link home. The
 | `#/review/session[?only=mistakes\|weak\|decks\|deck:<id>][&max=10]` | review session |
 | `#/practice`, `#/practice/set/<id>`, `#/practice/mix/<id>`, `#/practice/mixes`, `#/practice/session`, `#/practice/weak[/<topic>]` | Practice |
 | `#/lab`, `#/lab/<case>`, `#/lab/pick[/<tree>]`, `#/lab/compare[/<a>/<b>]`, `#/lab/forms[/model/<id> \| /case/<case>]`, `#/lab/aspect` | Case Lab |
-| `#/writing`, `#/writing/models/<exam>/<id>`, `#/writing/phrases[/<group>]` | Writing (hidden while empty) |
+| `#/writing`, `#/writing/models/<exam>/<id>`, `#/writing/phrases[/<group>]` | Writing (model answers and the phrase bank say when they have no content yet) |
 | `#/stats`, `#/notes` | Stats, My notes |
 | `#/exams/<id>[/…]` | exams (hidden while the registry is empty) |
 

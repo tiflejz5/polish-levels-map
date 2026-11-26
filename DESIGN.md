@@ -167,7 +167,7 @@ Rules in detail: section 4.
 
 Files: `index.html` (markup), `js/sidebar.js` (behaviour), `js/render.js` (tools and levels), the “SIDEBAR” section of `css/style.css`.
 
-- **Order:** the logo with the wordmark, the tagline “Your map of Polish, A1–C2”, then Trail, Today, Review (one badge = `LM.reviewQueue.count()`), Practice, Case Lab, Writing (hidden while it has no content), a line, “Levels · all categories” with six land circles, a line, My exams (hidden while the registry is empty), the pin. Placement test, Stats and My notes are in the profile menu.
+- **Order:** the logo with the wordmark, the tagline “Your map of Polish, A1–C2”, then Trail, Today, Review (one badge = `LM.reviewQueue.count()`), Practice, Case Lab, Writing, a line, “Levels · all categories” with six land circles, a line, My exams (hidden while the registry is empty), the pin. Placement test, Stats and My notes are in the profile menu.
 - **Land circles:** 36 px with the land symbol in the land colour and a progress ring; the code and land name (“A1 · Meadow”) next to it when expanded, “X / Y known” with a bar. A passed level (`is-passed`): a ✓ stamp; the current land (`is-current`): an outline in the land colour and “Current land” in `aria-label`. A **soon** level (`.sb-item.is-soon`): dimmed ring, the italic word “soon” instead of the count, no bar, `aria-label` “Level B1, Hills: coming soon”.
 
 | State | When | Look |
