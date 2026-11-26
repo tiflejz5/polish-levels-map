@@ -1,7 +1,81 @@
 {
   "version": 1,
-  "note": "Sample: one case card and two model phrases. The full lab has 7 cards and 14 models (spec 09 §4).",
+  "note": "Engine stage: 3 of the 7 case cards (spec 09 §4). The other cards and the plural details are written in level extras (spec 08 §4).",
   "cases": [
+    {
+      "id": "nominative",
+      "name": "Mianownik",
+      "nameEn": "Nominative",
+      "questions": "kto? co?",
+      "level": "A1",
+      "summary": "The dictionary form: the subject of the sentence, and the noun after to jest / to są.",
+      "uses": [
+        { "label": "Subject", "pl": "Anna pracuje w banku.", "en": "Anna works at a bank." },
+        { "label": "After to jest / to są", "pl": "To jest mój brat.", "en": "This is my brother." },
+        { "label": "Adjective after być", "pl": "Kawa jest gorąca.", "en": "The coffee is hot." },
+        { "label": "Name after nazywać się", "pl": "Nazywam się Tomek.", "en": "My name is Tomek." }
+      ],
+      "triggers": {
+        "prepositions": [],
+        "verbs": ["być + adjective", "nazywać się"],
+        "other": ["to jest", "to są"]
+      },
+      "endings": {
+        "singular": { "masculine": "— (consonant); a few in -a: tata, kolega", "feminine": "-a (a few: -i pani, consonant noc)", "neuter": "-o / -e / -ę / -um" },
+        "plural": { "masculine personal": "-i / -y / -owie", "other": "-y / -i / -e / -a" },
+        "adjective": {
+          "singular": { "masculine": "-y / -i", "feminine": "-a", "neuter": "-e" },
+          "plural": { "masculine personal": "-i / -y", "other": "-e" }
+        }
+      },
+      "traps": [
+        "After być a noun goes into the instrumental: Jestem studentem, not Jestem student. With to jest the noun stays in the nominative: To jest student.",
+        "Masculine personal plurals change the last consonant: student → studenci, Polak → Polacy. Not studenty, Polaki."
+      ],
+      "contrasts": [
+        { "with": "accusative", "rule": "The subject is in the nominative. The direct object is in the accusative: feminine nouns change -a to -ę.", "examples": ["Kawa jest dobra.", "Lubię kawę."] }
+      ],
+      "topicIds": ["a1-cases-nominative", "a2-cases-nominative-plural"],
+      "setTags": ["nominative"]
+    },
+    {
+      "id": "genitive",
+      "name": "Dopełniacz",
+      "nameEn": "Genitive",
+      "questions": "kogo? czego?",
+      "level": "A1",
+      "summary": "Absence, possession, quantity, and after many prepositions.",
+      "uses": [
+        { "label": "After negation", "pl": "Nie mam czasu.", "en": "I don't have time." },
+        { "label": "Possession (of whom?)", "pl": "To jest samochód Marka.", "en": "This is Marek's car." },
+        { "label": "Quantity and containers", "pl": "Poproszę butelkę wody.", "en": "A bottle of water, please." },
+        { "label": "After do, z, bez, dla, u", "pl": "Idę do sklepu.", "en": "I'm going to the shop." }
+      ],
+      "triggers": {
+        "prepositions": ["do", "z (from)", "od", "bez", "dla", "u", "obok", "koło"],
+        "verbs": ["szukać", "słuchać", "używać", "bać się", "potrzebować"],
+        "other": ["nie ma", "nie mam, nie lubię …", "dużo", "mało", "kilka", "pięć i więcej"]
+      },
+      "endings": {
+        "singular": { "masculine": "-a / -u", "feminine": "-y / -i", "neuter": "-a" },
+        "plural": { "masculine personal": "-ów / -i / -y", "other": "-ów / — / -i / -y" },
+        "adjective": {
+          "singular": { "masculine": "-ego", "feminine": "-ej", "neuter": "-ego" },
+          "plural": { "masculine personal": "-ych / -ich", "other": "-ych / -ich" }
+        }
+      },
+      "traps": [
+        "English does not change the object after not, so learners keep the accusative: Nie mam czas ✗ → Nie mam czasu ✓.",
+        "Masculine people and animals that end in a consonant always take -a (brata, kota). For things it is -a or -u, and you learn them in pairs (dom – domu, chleb – chleba).",
+        "After nie only an object that would be in the accusative changes. The subject stays in the nominative (Kawa nie jest droga), and other cases stay too (Nie pomagam mamie)."
+      ],
+      "contrasts": [
+        { "with": "accusative", "rule": "A positive sentence takes the accusative. The same sentence with nie takes the genitive.", "examples": ["Mam samochód.", "Nie mam samochodu."] },
+        { "with": "locative", "rule": "do + genitive = where to (a shop, a city). w + locative = where you are.", "examples": ["Jadę do Krakowa.", "Mieszkam w Krakowie."] }
+      ],
+      "topicIds": ["a1-cases-genitive-basics", "a2-cases-genitive-plural-quantities"],
+      "setTags": ["genitive"]
+    },
     {
       "id": "accusative",
       "name": "Biernik",
@@ -12,16 +86,16 @@
       "uses": [
         { "label": "Direct object", "pl": "Czytam książkę.", "en": "I'm reading a book." },
         { "label": "Ordering", "pl": "Poproszę kawę.", "en": "A coffee, please." },
-        { "label": "Where to (motion), after na and w", "pl": "Idę na koncert.", "en": "I'm going to a concert." },
+        { "label": "Where to, after na", "pl": "Idę na koncert.", "en": "I'm going to a concert." },
         { "label": "Days of the week", "pl": "w sobotę", "en": "on Saturday" }
       ],
       "triggers": {
-        "prepositions": ["na (where to)", "w (where to, days)", "przez", "za (in return for, in … time)", "o (prosić o, pytać o)", "po (iść po chleb)"],
+        "prepositions": ["na (where to)", "w (days: w sobotę)", "przez", "za (in … time)", "o (prosić o, pytać o)"],
         "verbs": ["mieć", "lubić", "znać", "widzieć", "czytać", "pić", "jeść", "kupować", "kochać", "odwiedzać"],
         "other": []
       },
       "endings": {
-        "singular": { "masculine (people, animals)": "-a", "masculine (things)": "= nominative", "feminine": "-ę", "neuter": "= nominative" },
+        "singular": { "masculine (people, animals)": "-a (in -a: tata → tatę)", "masculine (things)": "= nominative", "feminine": "-ę (pani → panią, noc → noc)", "neuter": "= nominative" },
         "plural": { "masculine personal": "= genitive", "other": "= nominative" },
         "adjective": {
           "singular": { "masculine (people, animals)": "-ego", "masculine (things)": "-y / -i", "feminine": "-ą", "neuter": "-e" },
@@ -29,27 +103,18 @@
         }
       },
       "traps": [
-        "English marks the object only by position. In Polish the ending is required: Lubię kawę, not Lubię kawa.",
-        "After nie the object switches to the genitive: Mam czas. → Nie mam czasu."
+        "English marks the object only by its place in the sentence. Polish needs the ending: Lubię kawę, not Lubię kawa.",
+        "Masculine people and animals take -a, like the genitive: Mam brata, Mam psa. Things do not change: Mam dom.",
+        "After nie the object switches to the genitive: Mam czas. → Nie mam czasu.",
+        "Going into a building or a town takes do + genitive, not w + accusative: Idę do szkoły, not Idę w szkołę."
       ],
       "contrasts": [
         { "with": "genitive", "rule": "Positive sentence: accusative. Negated sentence: genitive.", "examples": ["Mam samochód.", "Nie mam samochodu."] },
-        { "with": "locative", "rule": "na / w + accusative = where to. na / w + locative = where.", "examples": ["Idę na pocztę.", "Jestem na poczcie."] }
+        { "with": "nominative", "rule": "A feminine noun ends in -a as the subject and in -ę as the object.", "examples": ["Książka jest ciekawa.", "Czytam książkę."] },
+        { "with": "locative", "rule": "na + accusative = where to. na + locative = where. With w, where to is usually do + genitive: Idę do szkoły, Jestem w szkole.", "examples": ["Idę na pocztę.", "Jestem na poczcie."] }
       ],
       "topicIds": ["a1-cases-accusative", "a2-cases-accusative-plural"],
       "setTags": ["accusative"]
-    }
-  ],
-  "models": [
-    {
-      "id": "nowy-student", "gender": "masculine personal", "en": "new student",
-      "singular": { "nominative": "nowy student", "genitive": "nowego studenta", "dative": "nowemu studentowi", "accusative": "nowego studenta", "instrumental": "nowym studentem", "locative": "nowym studencie", "vocative": "nowy studencie" },
-      "plural": { "nominative": "nowi studenci", "genitive": "nowych studentów", "dative": "nowym studentom", "accusative": "nowych studentów", "instrumental": "nowymi studentami", "locative": "nowych studentach", "vocative": "nowi studenci" }
-    },
-    {
-      "id": "dobra-kawa", "gender": "feminine", "en": "good coffee",
-      "singular": { "nominative": "dobra kawa", "genitive": "dobrej kawy", "dative": "dobrej kawie", "accusative": "dobrą kawę", "instrumental": "dobrą kawą", "locative": "dobrej kawie", "vocative": "dobra kawo" },
-      "plural": { "nominative": "dobre kawy", "genitive": "dobrych kaw", "dative": "dobrym kawom", "accusative": "dobre kawy", "instrumental": "dobrymi kawami", "locative": "dobrych kawach", "vocative": "dobre kawy" }
     }
   ]
 }
