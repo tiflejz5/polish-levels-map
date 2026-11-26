@@ -14,8 +14,8 @@
  *   validate-phrases.js      writing phrase bank    validate-items.js       one item, every type (used by the others)
  *   validate-lib.js          context, charset, E11 heuristics (subject pronoun, speaker gender, no-diacritics warning)
  *
- * Until the first content stage an "available" level that is not complete, and a placement pool that is not full,
- * are warnings (STRICT_COMPLETE = false); validate_plan.py reports them as errors. Exit code 1 on errors.
+ * An "available" level that is not complete, and a placement pool that is not full, are errors (STRICT_COMPLETE = true
+ * since the A1 level extras; before that they were warnings). Exit code 1 on errors.
  */
 "use strict";
 
@@ -23,8 +23,8 @@ const fs = require("fs");
 const path = require("path");
 const V = require("./validate-lib");
 
-// Switch to true in the first content stage (stage C): completeness and pool sizes become errors.
-const STRICT_COMPLETE = false;
+// true since the A1 level extras: completeness and pool sizes are errors.
+const STRICT_COMPLETE = true;
 const LANG_ID = "pl";
 
 function run(opts) {
