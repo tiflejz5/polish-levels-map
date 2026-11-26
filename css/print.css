@@ -3,12 +3,13 @@
  *
  * For every page: no interface (sidebar, top bar, search, buttons, “I know this”, notes, toasts,
  * dialogs, “Check yourself”), white paper and black text (js/print.js forces the light tokens while printing),
- * cards without shadows or rounding, A4 with a 12 mm margin. Answers that are behind “Show answers” on screen
+ * cards without shadows or rounding, the paper of the print dialog (A4 or US Letter) with a 12 mm margin. Answers that are behind “Show answers” on screen
  * print at the end of the page under the heading “Answers” in a smaller size.
  * Cheat sheet layout (two columns, a header with the level code): the “CHEAT SHEET” section at the end of the file.
  */
 
-@page { size: A4; margin: 12mm; }
+/* size: auto = the paper chosen in the print dialog (A4 or US Letter, spec 11 §5) */
+@page { size: auto; margin: 12mm; }
 
 @media print {
   .page-toc { display: none !important; }
@@ -62,8 +63,8 @@
 }
 
 /* =====================================================================
-   CHEAT SHEET (pack v6, spec 16, section 1.3): one A4 sheet, two columns, a full-width header.
-   Type not smaller than 9.5 pt (checked by tools/cheatsheets-pdf.js: 1 A4 page).
+   CHEAT SHEET: one sheet of A4 or US Letter, two columns, a full-width header.
+   Type not smaller than 9.5 pt (checked by tools/cheatsheets-pdf.js: 1 page on both papers).
    ===================================================================== */
 @media print {
   .cheatsheet-view .cheatsheet-tools { display: none !important; }
