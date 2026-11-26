@@ -1,0 +1,266 @@
+{
+  "version": 1,
+  "id": "a1-grammar-pronouns-pan-pani-1",
+  "topic": "a1-grammar-pronouns-pan-pani",
+  "level": "A1",
+  "title": "Pronouns and pan / pani: check yourself",
+  "intro": "10 tasks: choose the pronoun, fill the table, pick the polite form and correct the mistakes.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-01",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "pronouns",
+        "they"
+      ],
+      "prompt": "Kasia i Ola? ___ są tu.",
+      "options": [
+        "Oni",
+        "One",
+        "Ona",
+        "Wy"
+      ],
+      "correct": 1,
+      "explanation": "Two women: one. Oni needs at least one man in the group.",
+      "optionNotes": [
+        "Oni is for groups with at least one man.",
+        null,
+        "Ona is one woman.",
+        "Wy means 'you', not 'they'."
+      ]
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-02",
+      "type": "paradigm",
+      "tags": [
+        "pronouns"
+      ],
+      "prompt": "Write the Polish personal pronoun for each English one.",
+      "lemma": "ja, ty, on …",
+      "gloss": "personal pronouns",
+      "cells": [
+        {
+          "label": "I",
+          "accepted": [
+            "ja"
+          ]
+        },
+        {
+          "label": "you (one friend)",
+          "accepted": [
+            "ty"
+          ]
+        },
+        {
+          "label": "he",
+          "accepted": [
+            "on"
+          ]
+        },
+        {
+          "label": "she",
+          "accepted": [
+            "ona"
+          ]
+        },
+        {
+          "label": "we",
+          "accepted": [
+            "my"
+          ]
+        },
+        {
+          "label": "you (several friends)",
+          "accepted": [
+            "wy"
+          ]
+        },
+        {
+          "label": "they (a man and a woman)",
+          "accepted": [
+            "oni"
+          ]
+        },
+        {
+          "label": "they (two women)",
+          "accepted": [
+            "one"
+          ]
+        }
+      ],
+      "explanation": "Singular: ja, ty, on, ona, ono. Plural: my, wy, oni (with at least one man), one (all other groups)."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-03",
+      "type": "multiple-choice",
+      "kind": "function",
+      "tags": [
+        "formal",
+        "pan-pani"
+      ],
+      "prompt": "In a shop, to a woman: 'Fine, thank you. And you?' – Dobrze, dziękuję. ___",
+      "options": [
+        "A ty?",
+        "A pani?",
+        "A pan?",
+        "A wy?"
+      ],
+      "correct": 1,
+      "explanation": "To a woman you don't know, use pani.",
+      "optionNotes": [
+        "Ty is informal: friends and family.",
+        null,
+        "Pan is for a man.",
+        "Wy is plural and never polite for one person."
+      ]
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-04",
+      "type": "match",
+      "tags": [
+        "pronouns",
+        "formal"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "we",
+          "my"
+        ],
+        [
+          "she",
+          "ona"
+        ],
+        [
+          "it (a child)",
+          "ono"
+        ],
+        [
+          "you (several friends)",
+          "wy"
+        ],
+        [
+          "you (formal, to a man)",
+          "pan"
+        ],
+        [
+          "you (formal, to a couple)",
+          "państwo"
+        ]
+      ],
+      "explanation": "Wy is the informal plural 'you'. Pan, pani and państwo are the polite 'you'. Dziecko is neuter, so it is ono."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-05",
+      "type": "find-error",
+      "tags": [
+        "formal",
+        "verb-form"
+      ],
+      "tokens": [
+        "Jak",
+        "się",
+        "pan",
+        "masz?"
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "ma"
+      ],
+      "explanation": "Pan takes the he / she form of the verb: Jak się pan ma?"
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-06",
+      "type": "find-error",
+      "tags": [
+        "pronouns",
+        "they"
+      ],
+      "tokens": [
+        "Anna",
+        "i",
+        "Ewa?",
+        "Oni",
+        "są",
+        "tu."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "One"
+      ],
+      "explanation": "Anna and Ewa are two women, so the pronoun is one."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-07",
+      "type": "gap-fill",
+      "tags": [
+        "formal",
+        "pan-pani"
+      ],
+      "context": "To a married couple you don't know: How are you?",
+      "text": "Dzień dobry! Jak się {{1}} mają?",
+      "gaps": [
+        {
+          "accepted": [
+            "państwo"
+          ]
+        }
+      ],
+      "explanation": "Państwo is the polite 'you' for a couple or a mixed group. The verb is the they form: mają."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-08",
+      "type": "short-answer",
+      "tags": [
+        "pronouns",
+        "he"
+      ],
+      "prompt": "Replace the name with a pronoun: Marek jest tu. → ___ jest tu.",
+      "accepted": [
+        "on"
+      ],
+      "explanation": "Marek is a man, so the pronoun is on."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-09",
+      "type": "translate",
+      "tags": [
+        "formal",
+        "pan-pani"
+      ],
+      "source": "How are you? (formal, to a woman)",
+      "accepted": [
+        "Jak się pani ma?",
+        "Jak pani się ma?",
+        "Jak się pani miewa?",
+        "Co u pani słychać?"
+      ],
+      "explanation": "To a woman you don't know: pani + the she form of the verb (ma)."
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-1-10",
+      "type": "translate",
+      "tags": [
+        "informal",
+        "wy"
+      ],
+      "source": "Hi! How are you? (to two friends)",
+      "accepted": [
+        "Cześć! Jak się macie?",
+        "Hej! Jak się macie?",
+        "Cześć! Co u was słychać?",
+        "Hej! Co u was słychać?"
+      ],
+      "explanation": "Two friends: wy, so the verb is macie. Cześć and hej are informal."
+    }
+  ]
+}

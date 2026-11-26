@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-functions-greetings-introductions",
+  "topic": "a1-functions-greetings-introductions",
+  "level": "A1",
+  "title": "Stop: greetings",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-functions-greetings-introductions-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You walk into a small shop in the morning. What do you say?",
+      "options": [
+        "Cześć!",
+        "Dzień dobry!",
+        "Dobranoc!",
+        "Na razie!"
+      ],
+      "correct": 1,
+      "explanation": "Dzień dobry is the formal hello for shops, offices and strangers.",
+      "optionNotes": [
+        "Cześć is only for friends and family.",
+        null,
+        "Dobranoc means good night, when you leave late or go to bed.",
+        "Na razie is an informal goodbye."
+      ]
+    },
+    {
+      "id": "a1-functions-greetings-introductions-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "How do you ask a friend how they are?",
+      "options": [
+        "Jak się masz?",
+        "Jak się jesteś?",
+        "Jak się pan ma?",
+        "Jak masz?"
+      ],
+      "correct": 0,
+      "explanation": "The informal question is Jak się masz? It uses masz (have), not jesteś (are).",
+      "optionNotes": [
+        null,
+        "A calque of English 'how are you'; Polish uses masz here.",
+        "This is formal, for a man you don't know well.",
+        "się is missing."
+      ]
+    },
+    {
+      "id": "a1-functions-greetings-introductions-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mam ___ imię Ewa. (My name is Ewa.)",
+      "options": [
+        "na",
+        "moje",
+        "jest",
+        "się"
+      ],
+      "correct": 0,
+      "explanation": "The fixed phrase is Mam na imię … (literally 'I have the name …').",
+      "optionNotes": [
+        null,
+        "A calque of 'my name'.",
+        "A calque of 'is'.",
+        "się belongs to Nazywam się …"
+      ]
+    },
+    {
+      "id": "a1-functions-greetings-introductions-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "At noon you leave a meeting with a new client. What do you say?",
+      "options": [
+        "Cześć!",
+        "Na razie!",
+        "Do widzenia!",
+        "Dobranoc!"
+      ],
+      "correct": 2,
+      "explanation": "Do widzenia is the formal goodbye.",
+      "optionNotes": [
+        "Cześć is informal: friends and family only.",
+        "Na razie is informal.",
+        null,
+        "Dobranoc is for late in the evening."
+      ]
+    }
+  ]
+}

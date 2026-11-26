@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-vocabulary-numbers-days-months",
+  "topic": "a1-vocabulary-numbers-days-months",
+  "level": "A1",
+  "title": "Stop: numbers, days, months",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-vocabulary-numbers-days-months-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "15 = ?",
+      "options": [
+        "pięćnaście",
+        "piętnaście",
+        "piętnascie",
+        "pięćdziesiąt"
+      ],
+      "correct": 1,
+      "explanation": "Fifteen is spelled with t: piętnaście.",
+      "optionNotes": [
+        "Built from pięć, but the spelling is piętnaście.",
+        null,
+        "The ś in -naście is missing.",
+        "Pięćdziesiąt is 50."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-numbers-days-months-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "How do you say 'on Saturday'?",
+      "options": [
+        "w sobota",
+        "w sobotę",
+        "na sobotę",
+        "w sobote"
+      ],
+      "correct": 1,
+      "explanation": "'On' + a day is w + a changed ending: sobota → w sobotę.",
+      "optionNotes": [
+        "The ending must change: -a → -ę.",
+        null,
+        "Na sobotę means 'for Saturday'.",
+        "The ę needs its mark."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-numbers-days-months-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which day comes after czwartek (Thursday)?",
+      "options": [
+        "środa",
+        "piątek",
+        "wtorek",
+        "sobota"
+      ],
+      "correct": 1,
+      "explanation": "poniedziałek, wtorek, środa, czwartek, piątek, sobota, niedziela.",
+      "optionNotes": [
+        "Środa is Wednesday, the day before czwartek.",
+        null,
+        "Wtorek is Tuesday.",
+        "Sobota is Saturday, two days after czwartek."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-numbers-days-months-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "42 = ?",
+      "options": [
+        "czterdzieści dwa",
+        "czterdzieści i dwa",
+        "czterdziesiąt dwa",
+        "cztery dwa"
+      ],
+      "correct": 0,
+      "explanation": "Tens + units, with no 'and': czterdzieści dwa.",
+      "optionNotes": [
+        null,
+        "No 'and' inside a number.",
+        "-dziesiąt is for 50–90; 40 is czterdzieści.",
+        "That is just 'four two'."
+      ]
+    }
+  ]
+}

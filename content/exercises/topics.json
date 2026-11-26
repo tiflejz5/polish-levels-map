@@ -5,6 +5,24 @@
       "a1-cases-accusative-1",
       "a1-cases-accusative-2",
       "a1-cases-accusative-3"
+    ],
+    "a1-grammar-alphabet-pronunciation": [
+      "a1-grammar-alphabet-pronunciation-1"
+    ],
+    "a1-grammar-pronouns-pan-pani": [
+      "a1-grammar-pronouns-pan-pani-1"
+    ],
+    "a1-verbs-byc": [
+      "a1-verbs-byc-1"
+    ],
+    "a1-grammar-gender-of-nouns": [
+      "a1-grammar-gender-of-nouns-1"
+    ],
+    "a1-cases-nominative": [
+      "a1-cases-nominative-1"
+    ],
+    "a1-cases-instrumental-identity": [
+      "a1-cases-instrumental-identity-1"
     ]
   }
 }

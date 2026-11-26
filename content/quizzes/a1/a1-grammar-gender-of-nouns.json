@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "id": "a1-grammar-gender-of-nouns",
+  "topic": "a1-grammar-gender-of-nouns",
+  "level": "A1",
+  "title": "Stop: gender of nouns",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-grammar-gender-of-nouns-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which noun is feminine?",
+      "options": [
+        "dom",
+        "noc",
+        "okno",
+        "tata"
+      ],
+      "correct": 1,
+      "explanation": "Noc is feminine although it ends in a consonant: ta noc.",
+      "optionNotes": [
+        "A consonant ending: masculine, ten dom.",
+        null,
+        "-o: neuter, to okno.",
+        "A man's word in -a is masculine: ten tata."
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ okno (this window)",
+      "options": [
+        "ten",
+        "ta",
+        "to"
+      ],
+      "correct": 2,
+      "explanation": "Okno ends in -o, so it is neuter: to okno.",
+      "optionNotes": [
+        "Ten is masculine.",
+        "Ta is feminine.",
+        null
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ kolega (this friend)",
+      "options": [
+        "ten",
+        "ta",
+        "to"
+      ],
+      "correct": 0,
+      "explanation": "Kolega is a man, so it is masculine although it ends in -a: ten kolega.",
+      "optionNotes": [
+        null,
+        "The -a ending misleads: kolega is a man.",
+        "To is neuter."
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Gdzie jest telefon? — ___ jest tu.",
+      "options": [
+        "Ono",
+        "On",
+        "Ona",
+        "One"
+      ],
+      "correct": 1,
+      "explanation": "Telefon is masculine, so 'it' is on.",
+      "optionNotes": [
+        "Ono is only for neuter nouns, not for every thing.",
+        null,
+        "Ona is for feminine nouns.",
+        "One is plural."
+      ]
+    }
+  ]
+}

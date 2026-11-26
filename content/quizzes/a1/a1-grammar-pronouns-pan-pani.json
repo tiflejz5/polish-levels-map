@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-grammar-pronouns-pan-pani",
+  "topic": "a1-grammar-pronouns-pan-pani",
+  "level": "A1",
+  "title": "Stop: pronouns and pan / pani",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-grammar-pronouns-pan-pani-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Anna i Ewa? ___ są tu.",
+      "options": [
+        "Oni",
+        "One",
+        "Ono",
+        "Wy"
+      ],
+      "correct": 1,
+      "explanation": "A group of women is one. Oni needs at least one man.",
+      "optionNotes": [
+        "Oni is for a group with at least one man.",
+        null,
+        "Ono is 'it', for neuter nouns.",
+        "Wy is 'you', not 'they'."
+      ]
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "To an older man you don't know: How are you?",
+      "options": [
+        "Jak się masz?",
+        "Jak się pan ma?",
+        "Jak się pan masz?",
+        "Jak się macie?"
+      ],
+      "correct": 1,
+      "explanation": "With strangers use pan (to a man) and the he form of the verb: ma.",
+      "optionNotes": [
+        "Informal: too familiar for a stranger.",
+        null,
+        "Pan takes the he form ma, not the you form masz.",
+        "Wy is never the polite form for one person."
+      ]
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which pronoun replaces dziecko (a child)?",
+      "options": [
+        "on",
+        "ona",
+        "ono",
+        "one"
+      ],
+      "correct": 2,
+      "explanation": "Dziecko is a neuter noun, so the pronoun is ono.",
+      "optionNotes": [
+        "On is for masculine nouns.",
+        "Ona is for feminine nouns.",
+        null,
+        "One is a plural pronoun."
+      ]
+    },
+    {
+      "id": "a1-grammar-pronouns-pan-pani-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Marek i Ola? ___ są tam.",
+      "options": [
+        "One",
+        "Oni",
+        "On",
+        "Ona"
+      ],
+      "correct": 1,
+      "explanation": "The group has a man (Marek), so the pronoun is oni.",
+      "optionNotes": [
+        "One is only for groups with no men.",
+        null,
+        "On is one man; this is two people.",
+        "Ona is one woman; this is two people."
+      ]
+    }
+  ]
+}

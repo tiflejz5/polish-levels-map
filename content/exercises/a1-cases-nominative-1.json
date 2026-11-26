@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "id": "a1-cases-nominative-1",
+  "topic": "a1-cases-nominative",
+  "level": "A1",
+  "title": "Nominative: check yourself",
+  "intro": "10 tasks: make adjectives agree, ask kto or co, correct the mistakes and translate.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-cases-nominative-1-01",
+      "type": "paradigm",
+      "tags": [
+        "nominative",
+        "adjectives",
+        "all-genders"
+      ],
+      "prompt": "Write nowy (new) in the right form for each noun.",
+      "lemma": "nowy",
+      "gloss": "new",
+      "cells": [
+        {
+          "label": "dom",
+          "accepted": [
+            "nowy",
+            "nowy dom"
+          ]
+        },
+        {
+          "label": "praca",
+          "accepted": [
+            "nowa",
+            "nowa praca"
+          ]
+        },
+        {
+          "label": "auto",
+          "accepted": [
+            "nowe",
+            "nowe auto"
+          ]
+        },
+        {
+          "label": "telefon",
+          "accepted": [
+            "nowy",
+            "nowy telefon"
+          ]
+        },
+        {
+          "label": "kawa",
+          "accepted": [
+            "nowa",
+            "nowa kawa"
+          ]
+        },
+        {
+          "label": "mieszkanie",
+          "accepted": [
+            "nowe",
+            "nowe mieszkanie"
+          ]
+        }
+      ],
+      "explanation": "Masculine -y, feminine -a, neuter -e: nowy dom, nowa praca, nowe auto."
+    },
+    {
+      "id": "a1-cases-nominative-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "nominative",
+        "adjectives",
+        "feminine"
+      ],
+      "prompt": "To jest ___ kawa. (This is expensive coffee.)",
+      "options": [
+        "droga",
+        "drogi",
+        "drogie",
+        "drogo"
+      ],
+      "correct": 0,
+      "explanation": "Kawa is feminine: droga kawa.",
+      "optionNotes": [
+        null,
+        "Masculine.",
+        "Neuter.",
+        "Drogo is an adverb, not an adjective."
+      ]
+    },
+    {
+      "id": "a1-cases-nominative-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "nominative",
+        "adjectives",
+        "spelling"
+      ],
+      "prompt": "Mój brat jest ___. (My brother is tall.)",
+      "options": [
+        "wysoka",
+        "wysoki",
+        "wysoky",
+        "wysokie"
+      ],
+      "correct": 1,
+      "explanation": "Brat is masculine, and after k the ending is -i: wysoki.",
+      "optionNotes": [
+        "Feminine.",
+        null,
+        "After k write i, never y.",
+        "Neuter."
+      ]
+    },
+    {
+      "id": "a1-cases-nominative-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "nominative",
+        "kto-co",
+        "neuter"
+      ],
+      "context": "What's this? — It's an old window.",
+      "text": "{{1}} to jest? — To jest {{2}} okno.",
+      "gaps": [
+        {
+          "accepted": [
+            "co"
+          ]
+        },
+        {
+          "accepted": [
+            "stare"
+          ],
+          "hint": "(stary)"
+        }
+      ],
+      "explanation": "Co asks about things. Okno is neuter, so stary becomes stare."
+    },
+    {
+      "id": "a1-cases-nominative-1-05",
+      "type": "find-error",
+      "tags": [
+        "nominative",
+        "adjectives",
+        "masculine"
+      ],
+      "tokens": [
+        "To",
+        "jest",
+        "nowa",
+        "dom."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "nowy"
+      ],
+      "explanation": "Dom is masculine: nowy dom."
+    },
+    {
+      "id": "a1-cases-nominative-1-06",
+      "type": "find-error",
+      "tags": [
+        "nominative",
+        "spelling"
+      ],
+      "tokens": [
+        "Tata",
+        "jest",
+        "wysoky."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "wysoki"
+      ],
+      "explanation": "After k write i: wysoki."
+    },
+    {
+      "id": "a1-cases-nominative-1-07",
+      "type": "short-answer",
+      "tags": [
+        "nominative",
+        "kto-co"
+      ],
+      "prompt": "___ to jest? — To jest pani Nowak.",
+      "accepted": [
+        "kto"
+      ],
+      "explanation": "Kto to jest? asks about people and animals."
+    },
+    {
+      "id": "a1-cases-nominative-1-08",
+      "type": "translate",
+      "tags": [
+        "nominative",
+        "neuter"
+      ],
+      "source": "The flat is small.",
+      "accepted": [
+        "Mieszkanie jest małe.",
+        "To mieszkanie jest małe."
+      ],
+      "hint": "flat = mieszkanie",
+      "explanation": "Mieszkanie ends in -e, so it is neuter: małe."
+    },
+    {
+      "id": "a1-cases-nominative-1-09",
+      "type": "translate",
+      "tags": [
+        "nominative",
+        "to-jest"
+      ],
+      "source": "This is a very good book.",
+      "accepted": [
+        "To jest bardzo dobra książka.",
+        "To bardzo dobra książka."
+      ],
+      "hint": "book = książka",
+      "explanation": "After to jest the noun is in the nominative. Książka is feminine: dobra."
+    },
+    {
+      "id": "a1-cases-nominative-1-10",
+      "type": "match",
+      "tags": [
+        "nominative",
+        "adjectives",
+        "all-genders"
+      ],
+      "mode": "halves",
+      "prompt": "Match each adjective with its noun.",
+      "pairs": [
+        [
+          "nowy",
+          "telefon"
+        ],
+        [
+          "nowa",
+          "lampa"
+        ],
+        [
+          "nowe",
+          "okno"
+        ]
+      ],
+      "explanation": "nowy + masculine, nowa + feminine, nowe + neuter."
+    }
+  ]
+}

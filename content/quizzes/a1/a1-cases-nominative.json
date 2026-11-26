@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-cases-nominative",
+  "topic": "a1-cases-nominative",
+  "level": "A1",
+  "title": "Stop: nominative and adjectives",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-cases-nominative-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To jest ___ praca. (This is a new job.)",
+      "options": [
+        "nowy",
+        "nowe",
+        "nowa",
+        "nowo"
+      ],
+      "correct": 2,
+      "explanation": "Praca is feminine, so the adjective ends in -a: nowa praca.",
+      "optionNotes": [
+        "-y is masculine.",
+        "-e is neuter.",
+        null,
+        "Nowo is not an adjective form."
+      ]
+    },
+    {
+      "id": "a1-cases-nominative-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To jest ___ okno. (This is a high window.)",
+      "options": [
+        "wysoki",
+        "wysoka",
+        "wysokie",
+        "wysoky"
+      ],
+      "correct": 2,
+      "explanation": "Okno is neuter: -e, and after k it is -ie: wysokie.",
+      "optionNotes": [
+        "Masculine.",
+        "Feminine.",
+        null,
+        "After k write i, never y."
+      ]
+    },
+    {
+      "id": "a1-cases-nominative-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ to jest? — To jest lampa.",
+      "options": [
+        "Kto",
+        "Co",
+        "Jak",
+        "Gdzie"
+      ],
+      "correct": 1,
+      "explanation": "Co to jest? asks about things.",
+      "optionNotes": [
+        "Kto is for people and animals.",
+        null,
+        "Jak means 'how'.",
+        "Gdzie means 'where'."
+      ]
+    },
+    {
+      "id": "a1-cases-nominative-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which is correct? (good coffee)",
+      "options": [
+        "dobry kawa",
+        "dobre kawa",
+        "dobrą kawa",
+        "dobra kawa"
+      ],
+      "correct": 3,
+      "explanation": "Kawa is feminine: dobra kawa.",
+      "optionNotes": [
+        "Masculine adjective with a feminine noun.",
+        "Neuter adjective with a feminine noun.",
+        "-ą is not the nominative.",
+        null
+      ]
+    }
+  ]
+}

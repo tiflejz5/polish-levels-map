@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-functions-personal-details",
+  "topic": "a1-functions-personal-details",
+  "level": "A1",
+  "title": "Stop: personal details",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-functions-personal-details-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "How do you ask a man you don't know where he is from?",
+      "options": [
+        "Skąd jesteś?",
+        "Gdzie pan jest?",
+        "Skąd pan jesteś?",
+        "Skąd pan jest?"
+      ],
+      "correct": 3,
+      "explanation": "To a stranger use pan + the he form: Skąd pan jest?",
+      "optionNotes": [
+        "Informal: for friends.",
+        "Gdzie pan jest? means 'Where are you (now)?'",
+        "Pan takes jest, not jesteś.",
+        null
+      ]
+    },
+    {
+      "id": "a1-functions-personal-details-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "I'm 30.",
+      "options": [
+        "Jestem trzydzieści lat.",
+        "Mam trzydzieści lat.",
+        "Mam trzydzieści lata.",
+        "Jestem trzydzieści."
+      ],
+      "correct": 1,
+      "explanation": "Age uses mieć: Mam … lat.",
+      "optionNotes": [
+        "Age uses mieć, not być.",
+        null,
+        "After 30 say lat; lata is for numbers ending in 2, 3, 4.",
+        "Age uses mieć, and lat is missing."
+      ]
+    },
+    {
+      "id": "a1-functions-personal-details-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mieszkam w ___. (I live in Kraków.)",
+      "options": [
+        "Krakowie",
+        "Kraków",
+        "Krakowa",
+        "Krakowem"
+      ],
+      "correct": 0,
+      "explanation": "After w (in) the city changes: w Krakowie.",
+      "optionNotes": [
+        null,
+        "The dictionary form does not follow w.",
+        "Krakowa follows z (from): z Krakowa.",
+        "Krakowem is the instrumental."
+      ]
+    },
+    {
+      "id": "a1-functions-personal-details-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mam dwadzieścia trzy ___. (I'm 23.)",
+      "options": [
+        "lat",
+        "lata",
+        "rok",
+        "roku"
+      ],
+      "correct": 1,
+      "explanation": "After numbers ending in 2, 3, 4 (not 12–14) say lata.",
+      "optionNotes": [
+        "Lat follows the other numbers: dwadzieścia pięć lat.",
+        null,
+        "Rok is one year.",
+        "Roku is another form of rok."
+      ]
+    }
+  ]
+}

@@ -1,4 +1,31 @@
 {
   "version": 1,
-  "mixes": []
+  "mixes": [
+    {
+      "id": "mix-a1-u1",
+      "title": "Unit review: Sounds and first words",
+      "description": "Sounds and stress, pronouns and pan / pani, and być, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-grammar-alphabet-pronunciation",
+        "a1-grammar-pronouns-pan-pani",
+        "a1-verbs-byc"
+      ]
+    },
+    {
+      "id": "mix-a1-u2",
+      "title": "Unit review: People and things",
+      "description": "Gender, the nominative with adjectives, and the instrumental after być and z, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-grammar-gender-of-nouns",
+        "a1-cases-nominative",
+        "a1-cases-instrumental-identity"
+      ]
+    }
+  ]
 }
