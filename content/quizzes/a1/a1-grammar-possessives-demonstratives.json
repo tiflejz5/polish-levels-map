@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-grammar-possessives-demonstratives",
+  "topic": "a1-grammar-possessives-demonstratives",
+  "level": "A1",
+  "title": "Stop: my, your, this",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-grammar-possessives-demonstratives-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To jest ___ siostra. (This is my sister.)",
+      "options": [
+        "mój",
+        "moja",
+        "moje",
+        "mojego"
+      ],
+      "correct": 1,
+      "explanation": "Mój agrees with the noun: siostra is feminine, so moja.",
+      "optionNotes": [
+        "Mój is for masculine nouns.",
+        null,
+        "Moje is for neuter nouns and the plural.",
+        "Mojego is the accusative for male people."
+      ]
+    },
+    {
+      "id": "a1-grammar-possessives-demonstratives-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola and her brother.",
+      "options": [
+        "Ola i jego brat.",
+        "Ola i ona brat.",
+        "Ola i jej brata.",
+        "Ola i jej brat."
+      ],
+      "correct": 3,
+      "explanation": "Jej (her) depends on the owner, Ola, and never changes.",
+      "optionNotes": [
+        "Jego means \"his\".",
+        "Ona means \"she\", not \"her\".",
+        "There is no verb here, so brat stays in the nominative.",
+        null
+      ]
+    },
+    {
+      "id": "a1-grammar-possessives-demonstratives-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Znasz ___? (Do you know my brother?)",
+      "options": [
+        "mojego brata",
+        "mój brat",
+        "moja brata",
+        "mojego brat"
+      ],
+      "correct": 0,
+      "explanation": "Znać takes the accusative. A male person: mojego brata.",
+      "optionNotes": [
+        null,
+        "The nominative: the object must change.",
+        "Moja is feminine; brat is masculine.",
+        "The noun must change too: brata."
+      ]
+    },
+    {
+      "id": "a1-grammar-possessives-demonstratives-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You ask a woman you don't know: \"Excuse me, is this your bag?\"",
+      "options": [
+        "Przepraszam, czy to twoja torba?",
+        "Przepraszam, czy to pani torbę?",
+        "Przepraszam, czy to pani torba?",
+        "Przepraszam, czy to panią torba?"
+      ],
+      "correct": 2,
+      "explanation": "Formal \"your\" for a woman is pani, and it never changes.",
+      "optionNotes": [
+        "Twoja is for friends and family.",
+        "After to the noun stays in the nominative: torba.",
+        null,
+        "Panią is the accusative of pani, not \"your\"."
+      ]
+    }
+  ]
+}

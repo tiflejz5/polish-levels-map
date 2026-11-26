@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-cases-locative-places",
+  "topic": "a1-cases-locative-places",
+  "level": "A1",
+  "title": "Stop: locative",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-cases-locative-places-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mieszkam w ___. (I live in Kraków.)",
+      "options": [
+        "Kraków",
+        "Krakowa",
+        "Krakowie",
+        "Krakowem"
+      ],
+      "correct": 2,
+      "explanation": "After w meaning \"in\" the noun takes the locative: Kraków → w Krakowie.",
+      "optionNotes": [
+        "The nominative: after w the noun must change.",
+        "The genitive, used after do and z: do Krakowa.",
+        null,
+        "The instrumental, used after z meaning \"with\"."
+      ]
+    },
+    {
+      "id": "a1-cases-locative-places-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jestem w ___. (I'm at home.)",
+      "options": [
+        "domie",
+        "domu",
+        "dom",
+        "domem"
+      ],
+      "correct": 1,
+      "explanation": "Dom is an exception: it takes -u in the locative: w domu.",
+      "optionNotes": [
+        "Most nouns take -e, but dom takes -u.",
+        null,
+        "The nominative: after w the noun must change.",
+        "The instrumental, used after być for jobs and after z."
+      ]
+    },
+    {
+      "id": "a1-cases-locative-places-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Czekam ___ przystanku. (I'm waiting at the stop.)",
+      "options": [
+        "w",
+        "na",
+        "do",
+        "z"
+      ],
+      "correct": 1,
+      "explanation": "Przystanek is one of the na-places: na przystanku, na poczcie, na dworcu.",
+      "optionNotes": [
+        "Most places take w, but przystanek takes na.",
+        null,
+        "Do means \"to\" and takes the genitive.",
+        "Z means \"from\" or \"with\"."
+      ]
+    },
+    {
+      "id": "a1-cases-locative-places-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ania mieszka w ___. (Ania lives in Poland.)",
+      "options": [
+        "Polska",
+        "Polski",
+        "Polską",
+        "Polsce"
+      ],
+      "correct": 3,
+      "explanation": "Feminine -a → -e in the locative, and k changes to c: Polska → w Polsce.",
+      "optionNotes": [
+        "The nominative: after w the noun must change.",
+        "The genitive, used after z and do: z Polski.",
+        "The instrumental.",
+        null
+      ]
+    }
+  ]
+}

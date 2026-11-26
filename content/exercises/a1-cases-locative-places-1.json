@@ -1,0 +1,262 @@
+{
+  "version": 1,
+  "id": "a1-cases-locative-places-1",
+  "topic": "a1-cases-locative-places",
+  "level": "A1",
+  "title": "Locative: check yourself",
+  "intro": "10 tasks: w and na with the locative, -e, -u and -i endings, and where vs where to.",
+  "passage": null,
+  "items": [
+    {
+      "type": "paradigm",
+      "tags": [
+        "locative",
+        "w-na"
+      ],
+      "prompt": "Gdzie jesteś? Answer with w or na and the place in the locative.",
+      "lemma": "Jestem …",
+      "gloss": "I'm …",
+      "cells": [
+        {
+          "label": "dom",
+          "accepted": [
+            "w domu"
+          ]
+        },
+        {
+          "label": "sklep",
+          "accepted": [
+            "w sklepie"
+          ]
+        },
+        {
+          "label": "szkoła",
+          "accepted": [
+            "w szkole"
+          ]
+        },
+        {
+          "label": "kuchnia",
+          "accepted": [
+            "w kuchni"
+          ]
+        },
+        {
+          "label": "poczta",
+          "accepted": [
+            "na poczcie"
+          ]
+        },
+        {
+          "label": "dworzec",
+          "accepted": [
+            "na dworcu"
+          ]
+        }
+      ],
+      "explanation": "Dom takes -u; sklep and szkoła take -e; kuchnia takes -i. Poczta and dworzec are na-places.",
+      "id": "a1-cases-locative-places-1-01"
+    },
+    {
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "locative",
+        "feminine"
+      ],
+      "prompt": "Pracuję w ___. (I work in Warsaw.)",
+      "options": [
+        "Warszawa",
+        "Warszawie",
+        "Warszawy",
+        "Warszawą"
+      ],
+      "correct": 1,
+      "explanation": "Feminine -a → -e in the locative, and w becomes wi: w Warszawie.",
+      "optionNotes": [
+        "The nominative: after w the noun must change.",
+        null,
+        "The genitive, used after do and z.",
+        "The instrumental."
+      ],
+      "id": "a1-cases-locative-places-1-02"
+    },
+    {
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "locative",
+        "w-na"
+      ],
+      "prompt": "Which place takes na, not w, when you say where you are?",
+      "options": [
+        "sklep",
+        "szkoła",
+        "poczta",
+        "kuchnia"
+      ],
+      "correct": 2,
+      "explanation": "Na poczcie. Most places take w; learn the na-places as a list: poczta, dworzec, przystanek, rynek, lotnisko, uniwersytet.",
+      "optionNotes": [
+        "w sklepie",
+        "w szkole",
+        null,
+        "w kuchni"
+      ],
+      "id": "a1-cases-locative-places-1-03"
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "locative",
+        "cities",
+        "countries"
+      ],
+      "context": "My sister lives in Poland, in Gdańsk.",
+      "text": "Moja siostra mieszka w {{1}}, w {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "Polsce"
+          ],
+          "hint": "(Polska)"
+        },
+        {
+          "accepted": [
+            "Gdańsku"
+          ],
+          "hint": "(Gdańsk)"
+        }
+      ],
+      "explanation": "Polska → w Polsce (k becomes c before -e). Gdańsk ends in k, so it takes -u: w Gdańsku.",
+      "id": "a1-cases-locative-places-1-04"
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "locative",
+        "adjectives"
+      ],
+      "context": "We live in a small flat.",
+      "text": "Mieszkamy w {{1}} {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "małym"
+          ],
+          "hint": "(małe)"
+        },
+        {
+          "accepted": [
+            "mieszkaniu"
+          ],
+          "hint": "(mieszkanie)"
+        }
+      ],
+      "explanation": "Neuter adjectives take -ym in the locative; mieszkanie ends in a soft consonant, so it takes -u.",
+      "id": "a1-cases-locative-places-1-05"
+    },
+    {
+      "type": "find-error",
+      "tags": [
+        "locative",
+        "dom"
+      ],
+      "tokens": [
+        "Jestem",
+        "w",
+        "domie."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "domu."
+      ],
+      "explanation": "Dom is an exception: w domu.",
+      "id": "a1-cases-locative-places-1-06"
+    },
+    {
+      "type": "find-error",
+      "tags": [
+        "locative",
+        "w-na"
+      ],
+      "tokens": [
+        "Czekam",
+        "w",
+        "przystanku."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "na"
+      ],
+      "explanation": "Przystanek is a na-place: na przystanku.",
+      "id": "a1-cases-locative-places-1-07"
+    },
+    {
+      "type": "short-answer",
+      "tags": [
+        "locative",
+        "surface"
+      ],
+      "prompt": "Where is the key? On the table. Klucz jest na ___. (stół)",
+      "accepted": [
+        "stole"
+      ],
+      "explanation": "Na + locative for \"on\" a surface. Stół → na stole: ó becomes o and ł becomes l before -e.",
+      "id": "a1-cases-locative-places-1-08"
+    },
+    {
+      "type": "translate",
+      "tags": [
+        "locative",
+        "work"
+      ],
+      "source": "Ola is at work.",
+      "accepted": [
+        "Ola jest w pracy."
+      ],
+      "explanation": "Praca ends in -ca, so the locative is -y: w pracy.",
+      "id": "a1-cases-locative-places-1-09"
+    },
+    {
+      "type": "match",
+      "tags": [
+        "locative",
+        "w-na",
+        "meaning"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "at home",
+          "w domu"
+        ],
+        [
+          "at work",
+          "w pracy"
+        ],
+        [
+          "at school",
+          "w szkole"
+        ],
+        [
+          "at the post office",
+          "na poczcie"
+        ],
+        [
+          "at the station",
+          "na dworcu"
+        ]
+      ],
+      "explanation": "English uses \"at\" for all of them; Polish uses w for most places and na for poczta and dworzec.",
+      "id": "a1-cases-locative-places-1-10"
+    }
+  ]
+}

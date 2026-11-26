@@ -52,6 +52,20 @@
         "a1-cases-genitive-basics",
         "a1-verbs-modal-verbs-basics"
       ]
+    },
+    {
+      "id": "mix-a1-u5",
+      "title": "Unit review: Where and when",
+      "description": "The locative, iść and jechać, possessives and demonstratives, and the first past forms, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-cases-locative-places",
+        "a1-verbs-going-isc-jechac",
+        "a1-grammar-possessives-demonstratives",
+        "a1-verbs-past-tense-basics"
+      ]
     }
   ]
 }
