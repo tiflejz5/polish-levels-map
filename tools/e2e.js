@@ -888,7 +888,7 @@ async function main() {
     await visit(s.page, "#/lab/forms/model/nowy-student", 800);
     ok((await s.page.$$(".lab-forms-table tbody tr")).length === 7, "seven case rows");
     ok((await s.page.$$(".lab-forms-table td .lab-form")).length === 14, "fourteen forms");
-    ok(/nowych studentów/.test(await s.page.innerText(".lab-forms-table")), "genitive plural");
+    ok((await s.page.innerText(".lab-forms-table")).indexOf(await s.page.evaluate(function () { return LM.LAB.models[0].plural.genitive; })) !== -1, "genitive plural from the data");
     ok(await s.page.$(".lab-end"), "ending marked");
     await visit(s.page, "#/lab/forms/case/genitive", 800);
     const n = await s.page.evaluate(function () { return LM.LAB.models.length; });

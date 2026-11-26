@@ -2,7 +2,7 @@
 
 A static web app for learning Polish (A1–C2), explained in English. Ported from `english-levels-map`; the two projects are independent.
 
-> **Work in progress (stage 5).** The interface is English (spec 04), the Polish language layer is in place (spec 05), the exercise engine runs every item type on Polish data with the full content validators (stage 4), and the learning loop works end to end with one available level (stage 5). The full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
+> **Work in progress (stage 6).** The interface is English (spec 04), the Polish language layer is in place (spec 05), the exercise engine runs every item type on Polish data with the full content validators (stage 4), the learning loop works end to end with one available level (stage 5), and the Case Lab replaces the tense lab (stage 6). The full README is written in stage 7. The plan is in `docs/plan/` (start with `docs/plan/00-READ-ME.md`).
 
 ## Run
 
@@ -64,9 +64,15 @@ tools/     build.js + build/*.js, validate.js + validate-*.js, strip-keys.js, te
 - **Report a mistake** (E12): a quiet link on topic pages, set and quiz results and the back of content flashcards, to `LM.APP.reportUrl` with the title prefilled (`<id>: `); `LM.APP.reportMail` adds a `mailto:` alternative. The home footer shows the version, "No accounts. Your progress stays in this browser." and the source repository (`LM.APP.repoUrl`).
 - **Other apps on the same origin.** `elm_*`, `elm.<id>.*` (english-levels-map) and other prefixes (`slm.`) are never read, written, exported or cleared; a backup file of another app is refused and nothing changes (e2e).
 
+## Case Lab (stage 6, spec 09)
+
+- `js/lab.js` (LM.labKit) holds the parts shared with the original tense lab: the timeline drawing (one function, one or more lanes on a shared axis), the decision-tree view, the compare picker, listen buttons, the notes button, practice links and the lazy loader. `js/lab-cases.js` (LM.lab) draws the six views: Map, Case card, Pick the case, Compare, Declension viewer, Aspect strip.
+- Sources in `content/lab/`: `cases.json` (case cards), `models.json` (model phrases, all 14 forms), `trees.json` (decision trees), `aspect.json` (the aspect strip). `npm run build` writes `data/lab.js`, loaded when the lab opens (or ahead, on idle time). Engine-stage content: 3 cards, 4 model phrases, the Pick the case tree, the strip; the rest comes with the level extras.
+- `tools/validate-lab.js` checks all 14 forms of every model, case names and question words against `LM.lang.cases`, topic ids, set tags, tree links (no dead ends, no cycles, every node reachable), the strip and the Polish alphabet. "Practice this case" lists the sets of the card's topics and the sets whose items carry one of its `setTags`; a topic page links to the card that lists it (`caseByTopic` in the sets index).
+
 ## Routes
 
-`#/` home · `#/today` · `#/trail` · `#/a1` … `#/c2` level page · `#/a1/<category>-<slug>` topic page · `#/a1/test`, `#/a1/cheatsheet` · `#/placement` · `#/review`, `#/review/decks[/…]`, `#/review/mistakes`, `#/review/words`, `#/review/session[?only=mistakes|weak|decks|deck:<id>]` · `#/practice`, `#/practice/set/<id>`, `#/practice/mix/<id>`, `#/practice/session`, `#/practice/weak[/<topic>]` · `#/lab[/…]` · `#/writing`, `#/writing/models/<exam>/<id>`, `#/writing/phrases[/<group>]` · `#/stats`, `#/notes` · `#/exams/<id>[/…]`. There are no redirects from the original app's routes; any other address shows "Page not found".
+`#/` home · `#/today` · `#/trail` · `#/a1` … `#/c2` level page · `#/a1/<category>-<slug>` topic page · `#/a1/test`, `#/a1/cheatsheet` · `#/placement` · `#/review`, `#/review/decks[/…]`, `#/review/mistakes`, `#/review/words`, `#/review/session[?only=mistakes|weak|decks|deck:<id>]` · `#/practice`, `#/practice/set/<id>`, `#/practice/mix/<id>`, `#/practice/session`, `#/practice/weak[/<topic>]` · `#/lab`, `#/lab/<case>`, `#/lab/pick[/<tree>]`, `#/lab/compare[/<a>/<b>]`, `#/lab/forms[/model/<id> | /case/<case>]`, `#/lab/aspect` · `#/writing`, `#/writing/models/<exam>/<id>`, `#/writing/phrases[/<group>]` · `#/stats`, `#/notes` · `#/exams/<id>[/…]`. There are no redirects from the original app's routes; any other address shows "Page not found".
 
 ## Version stamp
 
