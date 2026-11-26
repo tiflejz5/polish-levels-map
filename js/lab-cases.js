@@ -381,7 +381,10 @@ window.LM = window.LM || {};
   // VIEW 5: DECLENSION VIEWER
   // =====================================================================
 
-  /** Common start of two words; the rest of the form is shown as its ending (only when the start is long enough). */
+  /**
+   * Splits a form against the dictionary form, word by word: the common start stays plain, the rest is the ending
+   * (span.lab-end). A word equal to its base, a zero ending (kaw) or a common start under 2 letters stays plain.
+   */
   function withEnding(form, base) {
     const fw = form.split(" "), bw = (base || "").split(" ");
     const out = [];
@@ -419,7 +422,8 @@ window.LM = window.LM || {};
     }))));
     view.appendChild(el("section", { class: "card lab-forms", "aria-labelledby": "lab-forms-title" }, [
       el("h2", { class: "lab-card-title", id: "lab-forms-title" }, [target(m.singular.nominative), el("span", { class: "lab-forms-en", text: " – " + m.en })]),
-      el("p", { class: "tool-note", text: "Gender: " + m.gender + ". The ending (what changes against the nominative) is underlined." }),
+      el("p", { class: "tool-note", text: "Gender: " + m.gender + ". What differs from the dictionary form (nominative singular) is underlined. A thing is rarely addressed, so its vocative is mostly theoretical." }),
+      m.note ? el("p", { class: "tool-note", text: m.note }) : null,
       el("div", { class: "md-table" }, el("div", { class: "md-table-wrap" }, el("table", { class: "lab-forms-table" }, [
         el("caption", { class: "visually-hidden", text: m.singular.nominative + ": all forms" }),
         el("thead", null, el("tr", null, [el("th", { scope: "col", text: "Case" }), el("th", { scope: "col", text: "Singular" }), el("th", { scope: "col", text: "Plural" })])),
@@ -427,7 +431,7 @@ window.LM = window.LM || {};
           return el("tr", { class: caseClass(c.id) }, [
             el("th", { scope: "row" }, caseLink(c)),
             formCell(m.singular[c.id], m.singular.nominative, "Singular"),
-            formCell(m.plural[c.id], m.plural.nominative, "Plural")
+            formCell(m.plural[c.id], m.singular.nominative, "Plural")
           ]);
         }))
       ])))
@@ -457,7 +461,7 @@ window.LM = window.LM || {};
           return el("tr", null, [
             el("th", { scope: "row" }, el("a", { href: BASE + "/forms/model/" + m.id }, [target(m.singular.nominative), el("span", { class: "lab-forms-en", text: " · " + m.en })])),
             formCell(m.singular[c.id], m.singular.nominative, "Singular"),
-            formCell(m.plural[c.id], m.plural.nominative, "Plural")
+            formCell(m.plural[c.id], m.singular.nominative, "Plural")
           ]);
         }))
       ])))

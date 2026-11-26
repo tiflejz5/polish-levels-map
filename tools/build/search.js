@@ -5,7 +5,7 @@
  *   pages      topic pages, level summaries, cheat sheets (content/pages, summaries, cheatsheets)
  *   exams      pages of active exams in the registry (content/exams/<id>/)
  *   exercises  topic sets, mixes, decks, fixed shortcuts (flashcards, My words, writing)
- *   lab        Case Lab entries: added in stage 6
+ *   lab        Case Lab: the lab itself, case cards, model phrases, decision trees, the aspect strip (content/lab)
  * Notes and the mistake log are private: js/search.js adds them in the browser, not this file.
  *
  * Record: { id, group, title, headings[], summary, text (no Markdown, max 4000 chars), level, category, route }
@@ -161,6 +161,37 @@ module.exports = function buildSearch(ctx) {
   if (C.exists(mixFile)) C.readJson(mixFile).mixes.forEach(function (m) {
     add({ id: "mix:" + m.id, group: "exercises", title: m.title, summary: m.description || "", text: "Mixed set. Topics: " + m.topics.map(function (t) { return topicTitle[t] || t; }).join(", "), category: "Mixed set", route: "#/practice/mix/" + m.id });
   });
+
+  // ---------- Case Lab (spec 09): no level, so a card stays findable while its level is "soon" ----------
+  const labFile = function (n) { const f = C.content("lab", n + ".json"); return C.exists(f) ? C.readJson(f) : null; };
+  const labCases = labFile("cases"), labModels = labFile("models"), labTrees = labFile("trees"), labAspect = labFile("aspect");
+  if (labCases || labModels || labTrees || labAspect) {
+    add({ id: "lab", group: "lab", title: "Case Lab", summary: "Seven Polish cases on cards, Pick the case, Compare, Declension and the aspect strip.", text: "cases case lab declension endings nominative genitive dative accusative instrumental locative vocative aspect", category: "Case Lab", route: "#/lab" });
+  }
+  ((labCases && labCases.cases) || []).forEach(function (c) {
+    const t = c.triggers || {};
+    add({
+      id: "lab:" + c.id, group: "lab", title: c.nameEn + " (" + c.name + ")", headings: (c.uses || []).map(function (u) { return u.label; }),
+      summary: c.summary, category: "Case Lab · case card", route: "#/lab/" + c.id,
+      text: [c.questions].concat((c.uses || []).map(function (u) { return u.pl + " " + u.en; }), t.prepositions || [], t.verbs || [], t.other || [], c.traps || [],
+        (c.contrasts || []).map(function (x) { return x.rule + " " + (x.examples || []).join(" "); })).join(" ")
+    });
+  });
+  ((labModels && labModels.models) || []).forEach(function (m) {
+    const forms = [];
+    ["singular", "plural"].forEach(function (n) { Object.keys(m[n] || {}).forEach(function (k) { if (forms.indexOf(m[n][k]) === -1) forms.push(m[n][k]); }); });
+    add({ id: "lab:model:" + m.id, group: "lab", title: m.singular.nominative + " – all forms", summary: m.en + ", " + m.gender + ": 14 forms in the declension viewer.", text: "declension " + forms.join(" "), category: "Case Lab · declension", route: "#/lab/forms/model/" + m.id });
+  });
+  ((labTrees && labTrees.trees) || []).forEach(function (tr) {
+    const words = [];
+    Object.keys(tr.nodes || {}).forEach(function (k) { const n = tr.nodes[k]; words.push(n.question); (n.options || []).forEach(function (o) { words.push(o.label, o.why || "", o.example ? o.example.pl : ""); }); });
+    add({ id: "lab:tree:" + tr.id, group: "lab", title: tr.title, summary: tr.intro || "A decision tree in the Case Lab.", text: words.join(" "), category: "Case Lab · decision tree", route: "#/lab/pick/" + tr.id });
+  });
+  if (labAspect) {
+    add({ id: "lab:aspect", group: "lab", title: labAspect.title, summary: labAspect.summary, category: "Case Lab · aspect",
+      text: "aspect imperfective perfective tense " + labAspect.verb.imperfective + " " + labAspect.verb.perfective + " " + (labAspect.forms || []).map(function (f) { return f.name + " " + f.aspect + " " + f.form + " " + f.example.pl + " " + f.example.en; }).join(" "),
+      route: "#/lab/aspect" });
+  }
 
   // ---------- Write (with size control) ----------
   let json = JSON.stringify({ version: 1, records: records });

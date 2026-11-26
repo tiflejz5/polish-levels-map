@@ -293,7 +293,7 @@ window.LM = window.LM || {};
         }, [el("span", { lang: o.lang || null, text: o.label }), el("span", { "aria-hidden": "true" }, LM.icon("chevron-right", { size: 18 }))]));
       })));
     } else {
-      U.appendChildren(body, opts.renderResult(done));
+      Array.prototype.push.apply(body, opts.renderResult(done));
     }
     body.push(el("div", { class: "tool-actions" }, [
       stack.length ? el("button", { type: "button", class: "btn btn-secondary", onclick: function () { stack.pop(); again("#lab-q"); } }, LM.ui.withIcon("arrow-left", "Back")) : null,

@@ -820,6 +820,117 @@ async function main() {
     await s.ctx.close();
   });
 
+  console.log("\nCase Lab (stage 6, spec 09)");
+  const LAB_ROUTES = ["#/lab", "#/lab/genitive", "#/lab/pick", "#/lab/compare/accusative/genitive", "#/lab/forms/model/dobra-kawa", "#/lab/forms/case/accusative", "#/lab/aspect"];
+  await test("Case Lab: the six views render without errors; unknown ids say so", async function () {
+    const s = await session();
+    for (const r of LAB_ROUTES) {
+      await visit(s.page, r, 700);
+      ok((await viewText(s.page)).length > 80, r + ": empty view");
+      ok(!(await s.page.$(".lab-skeleton")), r + ": still loading");
+    }
+    await visit(s.page, "#/lab/dative", 700);
+    ok(/Dative card is being written/.test(await viewText(s.page)), "card not written yet");
+    await visit(s.page, "#/lab/forms/model/nope", 700);
+    ok(/no such model phrase/.test(await viewText(s.page)), "unknown model");
+    ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
+    await s.ctx.close();
+  });
+  await test("Case Lab map: seven cases in the school order with names, arrows move between cards, Enter opens one", async function () {
+    const s = await session();
+    await visit(s.page, "#/lab", 800);
+    const names = await s.page.$$eval(".lab-case-grid .lab-tile-name", function (n) { return n.map(function (x) { return x.textContent.trim(); }); });
+    ok(names.join(",") === "Nominative,Genitive,Dative,Accusative,Instrumental,Locative,Vocative", "order: " + names.join(","));
+    ok((await s.page.$$("a.lab-tile")).length === 3, "three written cards are links");
+    await s.page.focus("a.lab-tile[data-case=nominative]");
+    await s.page.keyboard.press("ArrowRight");
+    ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "genitive", "ArrowRight");
+    await s.page.keyboard.press("End");
+    ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "accusative", "End = last written card");
+    await s.page.keyboard.press("Enter");
+    await s.page.waitForTimeout(500);
+    ok(/#\/lab\/accusative$/.test(s.page.url()), "Enter opens the card");
+    await s.page.keyboard.press("?");
+    await s.page.waitForTimeout(300);
+    ok(/Shortcuts in the lab/.test(await s.page.innerText("body")), "? lists the lab shortcuts");
+    await s.ctx.close();
+  });
+  await test("Case Lab card: endings switch (aria-pressed), trigger chips are buttons, Compare and Declension links", async function () {
+    const s = await session();
+    await visit(s.page, "#/lab/accusative", 800);
+    ok(/masculine \(things\)/.test(await s.page.innerText(".lab-end-table")), "singular endings");
+    await s.page.click(".lab-switch .chip-btn:nth-child(2)");
+    ok(await s.page.getAttribute(".lab-switch .chip-btn:nth-child(2)", "aria-pressed") === "true", "plural pressed");
+    ok(/masculine personal/.test(await s.page.innerText(".lab-end-table")), "plural endings");
+    ok((await s.page.$$("button.lab-trigger")).length >= 10, "trigger chips are buttons");
+    ok(await s.page.$("a[href='#/lab/compare/accusative/genitive']"), "compare link");
+    ok(await s.page.$("a[href='#/lab/forms/case/accusative']"), "declension link");
+    await s.ctx.close();
+  });
+  await test("Pick the case: a path ends in the genitive with a link to its card; Back and Start again", async function () {
+    const s = await session();
+    await visit(s.page, "#/lab/pick", 800);
+    const choose = async function (text) { await s.page.click(".lab-answer:has-text(\"" + text + "\")"); await s.page.waitForTimeout(150); };
+    await choose("No preposition");
+    await choose("It is the object of the verb");
+    await choose("Another verb");
+    await choose("Yes, there is nie");
+    ok(/Use the Genitive/.test(await viewText(s.page)), "result");
+    ok(await s.page.$(".lab-result a[href='#/lab/genitive']"), "link to the card");
+    await s.page.click("button:has-text(\"Back\")");
+    ok(await s.page.$(".lab-answer"), "Back shows the question again");
+    await s.page.click("button:has-text(\"Start again\")");
+    ok(/preposition right before/.test(await viewText(s.page)), "start again");
+    await s.ctx.close();
+  });
+  await test("Declension viewer: 7 rows × 2 forms per phrase, case view lists every model, endings underlined", async function () {
+    const s = await session();
+    await visit(s.page, "#/lab/forms/model/nowy-student", 800);
+    ok((await s.page.$$(".lab-forms-table tbody tr")).length === 7, "seven case rows");
+    ok((await s.page.$$(".lab-forms-table td .lab-form")).length === 14, "fourteen forms");
+    ok(/nowych studentów/.test(await s.page.innerText(".lab-forms-table")), "genitive plural");
+    ok(await s.page.$(".lab-end"), "ending marked");
+    await visit(s.page, "#/lab/forms/case/genitive", 800);
+    const n = await s.page.evaluate(function () { return LM.LAB.models.length; });
+    ok((await s.page.$$(".lab-forms-table tbody tr")).length === n, "one row per model");
+    await s.ctx.close();
+  });
+  await test("Case Lab map under 500 ms on a warm cache", async function () {
+    const s = await session();
+    await s.ctx.addInitScript(function () {
+      new MutationObserver(function (m, o) {
+        if (document.querySelector("a.lab-tile")) { window.__labMap = performance.now(); o.disconnect(); }
+      }).observe(document, { childList: true, subtree: true });
+    });
+    await visit(s.page, "#/lab", 1200);
+    const times = [];
+    for (let i = 0; i < 3; i++) {
+      await s.page.reload(); await s.page.waitForSelector("a.lab-tile");
+      times.push(await s.page.evaluate(function () { return window.__labMap; }));
+    }
+    const best = Math.min.apply(null, times);
+    console.log("       lab map after navigation start: " + times.map(function (t) { return Math.round(t) + " ms"; }).join(", "));
+    ok(best < 500, "lab map took " + Math.round(best) + " ms");
+    await s.ctx.close();
+  });
+  await test("Case Lab on a 320 px phone: no horizontal scroll, tables become cards, targets ≥ 44 px", async function () {
+    const s = await session(320, 740);
+    const bad = [];
+    for (const r of LAB_ROUTES) {
+      await visit(s.page, r, 700);
+      const d = await s.page.evaluate(function () { return [document.documentElement.scrollWidth, document.documentElement.clientWidth]; });
+      if (d[0] > d[1]) bad.push(r + " (" + d[0] + ">" + d[1] + ")");
+    }
+    ok(!bad.length, "horizontal scroll: " + bad.join("; "));
+    await visit(s.page, "#/lab/forms/model/nowy-student", 700);
+    ok(await s.page.evaluate(function () { return getComputedStyle(document.querySelector(".lab-forms-table tr")).display; }) === "block", "table rows are cards");
+    const small = await s.page.$$eval(".lab-view .chip-btn, .lab-view .lab-tab, .lab-view .lab-speak", function (n) {
+      return n.filter(function (x) { const r = x.getBoundingClientRect(); return r.width && r.height < 44; }).length;
+    });
+    ok(!small, small + " targets under 44 px");
+    await s.ctx.close();
+  });
+
   console.log("\nPhones");
   await test("no horizontal scroll at 320, 360 and 375 px", async function () {
     const s = await session(375, 812, true);

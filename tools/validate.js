@@ -106,7 +106,6 @@ function run(opts) {
 }
 
 const SKIPPED = [
-  ["Case Lab decision trees, strip and colours", "stage 6"],
   ["model answers, speaking trainer, exam folders", "validate-models.js, validate-speaking.js, stage E"]
 ];
 
