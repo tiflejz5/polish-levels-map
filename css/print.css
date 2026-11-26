@@ -86,6 +86,9 @@
 }
 
 @media print {
+  /* Cheat sheet: a section with a wide table (5 or more columns, e.g. a conjugation grid) spans both
+     columns, otherwise the table runs into the second column (QA stage 7) */
+  .cheatsheet.md .md-section:has(th:nth-child(5)) { column-span: all; margin-bottom: 6pt; }
   /* Cheat sheet: words in tables are not broken in the middle (the column widens to the longest word) */
   .cheatsheet.md th, .cheatsheet.md td { overflow-wrap: break-word !important; word-break: normal !important; hyphens: none; }
 }

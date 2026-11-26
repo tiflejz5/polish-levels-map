@@ -173,7 +173,7 @@ window.LM = window.LM || {};
       if (passedText) n.ringWrap.appendChild(LM.ui.stamp(id, { size: 16 }));
       n.a.classList.toggle("is-passed", !!passedText);
       n.a.classList.toggle("is-current", id === currentId);
-      n.a.setAttribute("aria-label", "Level " + id + ", " + level.land + (soon ? ": coming soon" : ": " + s.done + " of " + s.total + " topics known (" + s.percent + "%)") +
+      n.a.setAttribute("aria-label", id + " · " + level.land + (soon ? ": coming soon" : ": " + s.done + " of " + s.total + " topics known (" + s.percent + "%)") +
         (passedText ? ". " + passedText : "") + (id === currentId ? ". Current land" : ""));
     });
 

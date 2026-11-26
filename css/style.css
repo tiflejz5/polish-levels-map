@@ -1183,8 +1183,6 @@ html.theme-anim *::after {
   .know-toggle { min-height: 44px; }
   .task-item label { min-height: 44px; align-items: center; }
   .task-item input { margin-top: 0; }
-  /* Gap fields in exercises: 44 px on touch screens too */
-
 }
 
 /* ===================== REDUCED MOTION ===================== */
@@ -4048,3 +4046,11 @@ html:not([data-voice="ready"]) .listen-btn { display: none; }
 .ex-near strong { font-weight: 700; }
 .ex-near.is-lenient { color: var(--success); }
 .fc-result.is-accents, .fc-result.is-ending { color: var(--warning); }
+
+/* ===================== TOUCH SCREENS, LAST WORD (QA stage 7) =====================
+   At the end of the file so it wins over the component rules above: filter chips, small buttons,
+   the notes button, “What next” links and topic chips that stand alone are ≥ 44 px on touch screens. */
+@media (pointer: coarse) {
+  .chip-btn, .btn-small, .notes-btn, .page-head :is(.notes-btn, .know-toggle), .callout-next a:not(.wiki-chip), .toc-list a { min-height: 44px; }
+  li > .wiki-chip:only-child, .lab-view .wiki-chip { min-height: 44px; }
+}

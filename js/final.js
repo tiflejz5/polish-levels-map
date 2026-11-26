@@ -298,7 +298,7 @@ window.LM = window.LM || {};
         info ? el("p", { class: "tool-note", text: "Best score: " + info.best.score + "/" + info.best.total + " points (" + percentOf(info.best) + "%), last: " + info.last.score + "/" + info.last.total + " (" + fmtDate(info.last.date) + ")." })
           : el("p", { class: "tool-note", text: "The test is always available – you can take it without marking “I know this”." })
       ]),
-      el("a", { class: "btn btn-primary", href: testHash(level), "aria-label": (info ? "Take the final test again: " : "Start the final test: ") + level }, LM.ui.withIcon("play", info ? "Take it again" : "Start the test"))
+      el("a", { class: "btn btn-primary", href: testHash(level), "aria-label": (info ? "Take it again: " : "Start the test: ") + level + " final test" }, LM.ui.withIcon("play", info ? "Take it again" : "Start the test"))
     ]);
   }
 
