@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "id": "a1-numbers-days-months",
+  "title": "Numbers, days and months",
+  "description": "Numbers 0–100, the days of the week and the months, with \"on Monday\" and \"in July\".",
+  "level": "A1",
+  "cards": [
+    {
+      "id": "a1-numbers-days-months-001",
+      "type": "typed",
+      "front": "seven",
+      "accepted": [
+        "siedem"
+      ],
+      "back": "siedem",
+      "example": "Tydzień ma siedem dni.",
+      "exampleEn": "A week has seven days.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-002",
+      "type": "typed",
+      "front": "eleven",
+      "accepted": [
+        "jedenaście"
+      ],
+      "back": "jedenaście",
+      "example": "Autobus numer jedenaście.",
+      "exampleEn": "Bus number eleven.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-003",
+      "type": "typed",
+      "front": "fifteen",
+      "accepted": [
+        "piętnaście"
+      ],
+      "back": "piętnaście",
+      "note": "Spelled with t: pięt-.",
+      "example": "Mam piętnaście lat.",
+      "exampleEn": "I'm fifteen.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-004",
+      "type": "typed",
+      "front": "nineteen",
+      "accepted": [
+        "dziewiętnaście"
+      ],
+      "back": "dziewiętnaście",
+      "note": "Spelled with t: dziewięt-.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-005",
+      "type": "typed",
+      "front": "twenty",
+      "accepted": [
+        "dwadzieścia"
+      ],
+      "back": "dwadzieścia",
+      "example": "Mam dwadzieścia lat.",
+      "exampleEn": "I'm twenty.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-006",
+      "type": "typed",
+      "front": "forty",
+      "accepted": [
+        "czterdzieści"
+      ],
+      "back": "czterdzieści",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-007",
+      "type": "typed",
+      "front": "fifty",
+      "accepted": [
+        "pięćdziesiąt"
+      ],
+      "back": "pięćdziesiąt",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-008",
+      "type": "typed",
+      "front": "ninety",
+      "accepted": [
+        "dziewięćdziesiąt"
+      ],
+      "back": "dziewięćdziesiąt",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-009",
+      "type": "typed",
+      "front": "a hundred",
+      "accepted": [
+        "sto"
+      ],
+      "back": "sto",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-010",
+      "type": "typed",
+      "front": "Monday",
+      "accepted": [
+        "poniedziałek"
+      ],
+      "back": "poniedziałek (m) · w poniedziałek",
+      "note": "Days take a small letter.",
+      "example": "W poniedziałek pracuję.",
+      "exampleEn": "On Monday I work.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-011",
+      "type": "typed",
+      "front": "Tuesday",
+      "accepted": [
+        "wtorek"
+      ],
+      "back": "wtorek (m) · we wtorek",
+      "example": "We wtorek mam lekcję.",
+      "exampleEn": "On Tuesday I have a lesson.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-012",
+      "type": "typed",
+      "front": "Wednesday",
+      "accepted": [
+        "środa"
+      ],
+      "back": "środa (f) · w środę",
+      "example": "Dzisiaj jest środa.",
+      "exampleEn": "Today is Wednesday.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-013",
+      "type": "typed",
+      "front": "Thursday",
+      "accepted": [
+        "czwartek"
+      ],
+      "back": "czwartek (m) · w czwartek",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-014",
+      "type": "typed",
+      "front": "Friday",
+      "accepted": [
+        "piątek"
+      ],
+      "back": "piątek (m) · w piątek",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-015",
+      "type": "typed",
+      "front": "Saturday",
+      "accepted": [
+        "sobota"
+      ],
+      "back": "sobota (f) · w sobotę",
+      "example": "W sobotę nie pracuję.",
+      "exampleEn": "I don't work on Saturday.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-016",
+      "type": "typed",
+      "front": "Sunday",
+      "accepted": [
+        "niedziela"
+      ],
+      "back": "niedziela (f) · w niedzielę",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-017",
+      "type": "typed",
+      "front": "January",
+      "accepted": [
+        "styczeń"
+      ],
+      "back": "styczeń (m) · w styczniu",
+      "note": "Months take a small letter.",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-018",
+      "type": "typed",
+      "front": "March",
+      "accepted": [
+        "marzec"
+      ],
+      "back": "marzec (m) · w marcu",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-019",
+      "type": "typed",
+      "front": "September",
+      "accepted": [
+        "wrzesień"
+      ],
+      "back": "wrzesień (m) · we wrześniu",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-020",
+      "type": "typed",
+      "front": "December",
+      "accepted": [
+        "grudzień"
+      ],
+      "back": "grudzień (m) · w grudniu",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-021",
+      "type": "cloze",
+      "text": "Dzisiaj jest {{środa}}.",
+      "hint": "Wednesday",
+      "en": "Today is Wednesday.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-022",
+      "type": "cloze",
+      "text": "Jutro jest {{sobota}}.",
+      "hint": "Saturday",
+      "en": "Tomorrow is Saturday.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-023",
+      "type": "cloze",
+      "text": "W {{piątek}} idę do kina.",
+      "hint": "Friday (on …)",
+      "en": "On Friday I'm going to the cinema.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-024",
+      "type": "cloze",
+      "text": "W {{sobotę}} nie pracuję.",
+      "hint": "Saturday (on …)",
+      "en": "I don't work on Saturday.",
+      "note": "On + a day: -a → -ę.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-025",
+      "type": "cloze",
+      "text": "Mam lekcję {{we}} wtorek.",
+      "hint": "on (before wtorek)",
+      "en": "I have a lesson on Tuesday.",
+      "note": "we instead of w before w + another consonant.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-026",
+      "type": "cloze",
+      "text": "W {{niedzielę}} jadę do babci.",
+      "hint": "Sunday (on …)",
+      "en": "On Sunday I'm going to Grandma's.",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-027",
+      "type": "cloze",
+      "text": "W {{lipcu}} jestem w Polsce.",
+      "hint": "July (in …)",
+      "en": "In July I'm in Poland.",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-028",
+      "type": "cloze",
+      "text": "W {{maju}} jadę do Gdańska.",
+      "hint": "May (in …)",
+      "en": "In May I'm going to Gdańsk.",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-029",
+      "type": "cloze",
+      "text": "W {{październiku}} mam dużo pracy.",
+      "hint": "October (in …)",
+      "en": "In October I have a lot of work.",
+      "level": "A1",
+      "tags": [
+        "months"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-030",
+      "type": "cloze",
+      "text": "Mam {{dwadzieścia}} lat.",
+      "hint": "twenty",
+      "en": "I'm twenty.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-031",
+      "type": "cloze",
+      "text": "Autobus numer {{trzynaście}} jedzie do centrum.",
+      "hint": "thirteen",
+      "en": "Bus number thirteen goes to the centre.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-032",
+      "type": "cloze",
+      "text": "To jest pokój numer {{czternaście}}.",
+      "hint": "fourteen",
+      "en": "This is room fourteen.",
+      "level": "A1",
+      "tags": [
+        "numbers"
+      ]
+    },
+    {
+      "id": "a1-numbers-days-months-033",
+      "type": "cloze",
+      "text": "Jaki dzisiaj jest {{dzień}}?",
+      "hint": "day",
+      "en": "What day is it today?",
+      "level": "A1",
+      "tags": [
+        "days"
+      ]
+    }
+  ]
+}

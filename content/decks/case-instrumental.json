@@ -1,0 +1,377 @@
+{
+  "version": 1,
+  "id": "case-instrumental",
+  "title": "Instrumental in sentences",
+  "description": "Put the phrase in brackets into the instrumental: a job or nationality after być, z meaning \"with\", and \"by bus\", \"by card\". A1: singular.",
+  "level": "A1-A2",
+  "cards": [
+    {
+      "id": "case-instrumental-001",
+      "type": "cloze",
+      "text": "Jestem {{studentem}} (student).",
+      "hint": "a student",
+      "en": "I'm a student.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-002",
+      "type": "cloze",
+      "text": "Moja siostra jest {{lekarką}} (lekarka).",
+      "hint": "a doctor",
+      "en": "My sister is a doctor.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-003",
+      "type": "cloze",
+      "text": "Kawa z {{mlekiem}} (mleko), proszę.",
+      "hint": "with milk",
+      "en": "A coffee with milk, please.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-004",
+      "type": "cloze",
+      "text": "Herbata z {{cytryną}} (cytryna) czy z miodem?",
+      "hint": "with lemon",
+      "en": "Tea with lemon or with honey?",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-005",
+      "type": "cloze",
+      "text": "Marek jest {{Polakiem}} (Polak).",
+      "hint": "Polish (a Pole)",
+      "en": "Marek is Polish.",
+      "note": "After k: -iem.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-006",
+      "type": "cloze",
+      "text": "Pani Smith jest {{Angielką}} (Angielka).",
+      "hint": "English (an Englishwoman)",
+      "en": "Ms Smith is English.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-007",
+      "type": "cloze",
+      "text": "Mój tata jest {{dobrym kucharzem}} (dobry kucharz).",
+      "hint": "a good cook",
+      "en": "My dad is a good cook.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "adjectives"
+      ]
+    },
+    {
+      "id": "case-instrumental-008",
+      "type": "cloze",
+      "text": "Poproszę kanapkę z {{serem}} (ser).",
+      "hint": "with cheese",
+      "en": "A cheese sandwich, please.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-009",
+      "type": "cloze",
+      "text": "Moja mama jest {{nauczycielką}} (nauczycielka).",
+      "hint": "a teacher",
+      "en": "My mum is a teacher.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-010",
+      "type": "cloze",
+      "text": "To jest Kasia z {{bratem}} (brat).",
+      "hint": "with her brother",
+      "en": "This is Kasia with her brother.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-011",
+      "type": "cloze",
+      "text": "Pan Nowak jest {{lekarzem}} (lekarz).",
+      "hint": "a doctor",
+      "en": "Mr Nowak is a doctor.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-012",
+      "type": "cloze",
+      "text": "Ewa jest tu z {{mężem}} (mąż).",
+      "hint": "with her husband",
+      "en": "Ewa is here with her husband.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-013",
+      "type": "cloze",
+      "text": "Jesteś {{informatykiem}} (informatyk)?",
+      "hint": "an IT specialist",
+      "en": "Are you an IT specialist?",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-014",
+      "type": "cloze",
+      "text": "Ola jest {{dobrą nauczycielką}} (dobra nauczycielka).",
+      "hint": "a good teacher",
+      "en": "Ola is a good teacher.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "adjectives"
+      ]
+    },
+    {
+      "id": "case-instrumental-015",
+      "type": "cloze",
+      "text": "Czy mogę zapłacić {{kartą}} (karta)?",
+      "hint": "by card",
+      "en": "Can I pay by card?",
+      "note": "\"by card\": instrumental alone, no z.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "means"
+      ]
+    },
+    {
+      "id": "case-instrumental-016",
+      "type": "cloze",
+      "text": "Jadę do pracy {{autobusem}} (autobus).",
+      "hint": "by bus",
+      "en": "I go to work by bus.",
+      "note": "\"by bus\": instrumental alone, no z.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "means"
+      ]
+    },
+    {
+      "id": "case-instrumental-017",
+      "type": "cloze",
+      "text": "Moja córka jest {{kelnerką}} (kelnerka).",
+      "hint": "a waitress",
+      "en": "My daughter is a waitress.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-018",
+      "type": "cloze",
+      "text": "Kuba jest {{Amerykaninem}} (Amerykanin).",
+      "hint": "American",
+      "en": "Kuba is American.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-019",
+      "type": "cloze",
+      "text": "Pierogi ze {{śmietaną}} (śmietana), proszę.",
+      "hint": "with sour cream",
+      "en": "Dumplings with sour cream, please.",
+      "note": "ze before ś + another consonant.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-020",
+      "type": "cloze",
+      "text": "Idę do kina z {{kolegą}} (kolega).",
+      "hint": "with a friend",
+      "en": "I'm going to the cinema with a friend.",
+      "note": "kolega ends in -a: -ą.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-021",
+      "type": "cloze",
+      "text": "Mój brat jest {{prawnikiem}} (prawnik).",
+      "hint": "a lawyer",
+      "en": "My brother is a lawyer.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-022",
+      "type": "cloze",
+      "text": "Jutro jadę {{pociągiem}} (pociąg) do Gdańska.",
+      "hint": "by train",
+      "en": "Tomorrow I'm going to Gdańsk by train.",
+      "note": "\"by train\": instrumental alone, no z.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "means"
+      ]
+    },
+    {
+      "id": "case-instrumental-023",
+      "type": "cloze",
+      "text": "Moja żona jest {{Kanadyjką}} (Kanadyjka).",
+      "hint": "Canadian",
+      "en": "My wife is Canadian.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-024",
+      "type": "cloze",
+      "text": "Herbata z {{miodem}} (miód), proszę.",
+      "hint": "with honey",
+      "en": "Tea with honey, please.",
+      "note": "ó → o: miodem.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-025",
+      "type": "cloze",
+      "text": "Ania jest {{studentką}} (studentka).",
+      "hint": "a student",
+      "en": "Ania is a student.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-026",
+      "type": "cloze",
+      "text": "Mieszkam z {{siostrą}} (siostra).",
+      "hint": "with my sister",
+      "en": "I live with my sister.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-027",
+      "type": "cloze",
+      "text": "Pan Adam jest {{miłym sąsiadem}} (miły sąsiad).",
+      "hint": "a nice neighbour",
+      "en": "Mr Adam is a nice neighbour.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "adjectives"
+      ]
+    },
+    {
+      "id": "case-instrumental-028",
+      "type": "cloze",
+      "text": "Płacę {{gotówką}} (gotówka).",
+      "hint": "in cash",
+      "en": "I'm paying in cash.",
+      "note": "\"in cash\": instrumental alone, no z.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "means"
+      ]
+    },
+    {
+      "id": "case-instrumental-029",
+      "type": "cloze",
+      "text": "Sean jest {{Irlandczykiem}} (Irlandczyk).",
+      "hint": "Irish (an Irishman)",
+      "en": "Sean is Irish.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "identity"
+      ]
+    },
+    {
+      "id": "case-instrumental-030",
+      "type": "cloze",
+      "text": "Poproszę zupę z {{makaronem}} (makaron).",
+      "hint": "with noodles",
+      "en": "Soup with noodles, please.",
+      "level": "A1",
+      "tags": [
+        "instrumental",
+        "with"
+      ]
+    }
+  ]
+}
