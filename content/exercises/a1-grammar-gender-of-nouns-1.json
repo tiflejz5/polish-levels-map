@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "id": "a1-grammar-gender-of-nouns-1",
+  "topic": "a1-grammar-gender-of-nouns",
+  "level": "A1",
+  "title": "Gender of nouns: check yourself",
+  "intro": "10 tasks: find the gender, choose ten, ta or to, correct the mistakes and translate.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-grammar-gender-of-nouns-1-01",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "gender",
+        "masculine"
+      ],
+      "prompt": "Which noun is masculine?",
+      "options": [
+        "kawa",
+        "okno",
+        "dom",
+        "noc"
+      ],
+      "correct": 2,
+      "explanation": "Dom ends in a consonant: masculine.",
+      "optionNotes": [
+        "-a: feminine.",
+        "-o: neuter.",
+        null,
+        "Noc is a feminine exception."
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "gender",
+        "neuter"
+      ],
+      "prompt": "Which noun is neuter?",
+      "options": [
+        "muzeum",
+        "lampa",
+        "telefon",
+        "pani"
+      ],
+      "correct": 0,
+      "explanation": "Nouns in -um are neuter: to muzeum.",
+      "optionNotes": [
+        null,
+        "-a: feminine.",
+        "A consonant: masculine.",
+        "Pani (lady) is feminine."
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-03",
+      "type": "gap-fill",
+      "tags": [
+        "gender",
+        "ten-ta-to"
+      ],
+      "context": "This house is old, this coffee is cold, and this window is small.",
+      "text": "{{1}} dom jest stary, {{2}} kawa jest zimna, a {{3}} okno jest małe.",
+      "gaps": [
+        {
+          "accepted": [
+            "ten"
+          ]
+        },
+        {
+          "accepted": [
+            "ta"
+          ]
+        },
+        {
+          "accepted": [
+            "to"
+          ]
+        }
+      ],
+      "explanation": "Dom (consonant) is masculine: ten. Kawa (-a) is feminine: ta. Okno (-o) is neuter: to."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-04",
+      "type": "paradigm",
+      "tags": [
+        "gender",
+        "ten-ta-to",
+        "exceptions"
+      ],
+      "prompt": "Write ten, ta or to for each noun.",
+      "lemma": "ten / ta / to",
+      "gloss": "this",
+      "cells": [
+        {
+          "label": "telefon",
+          "accepted": [
+            "ten",
+            "ten telefon"
+          ]
+        },
+        {
+          "label": "książka",
+          "accepted": [
+            "ta",
+            "ta książka"
+          ]
+        },
+        {
+          "label": "okno",
+          "accepted": [
+            "to",
+            "to okno"
+          ]
+        },
+        {
+          "label": "kolega",
+          "accepted": [
+            "ten",
+            "ten kolega"
+          ]
+        },
+        {
+          "label": "noc",
+          "accepted": [
+            "ta",
+            "ta noc"
+          ]
+        },
+        {
+          "label": "imię",
+          "accepted": [
+            "to",
+            "to imię"
+          ]
+        }
+      ],
+      "explanation": "The ending usually tells you: consonant = ten, -a = ta, -o / -e / -ę = to. Exceptions: kolega (a man) is ten, noc is ta."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-05",
+      "type": "find-error",
+      "tags": [
+        "gender",
+        "neuter"
+      ],
+      "tokens": [
+        "Ta",
+        "muzeum",
+        "jest",
+        "nowe."
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "To"
+      ],
+      "explanation": "Muzeum ends in -um, so it is neuter: to muzeum."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-06",
+      "type": "find-error",
+      "tags": [
+        "gender",
+        "pronouns"
+      ],
+      "tokens": [
+        "Gdzie",
+        "jest",
+        "lampa?",
+        "Ono",
+        "jest",
+        "tam."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "Ona"
+      ],
+      "explanation": "Lampa is feminine, so 'it' is ona. Ono is only for neuter nouns."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-07",
+      "type": "short-answer",
+      "tags": [
+        "gender",
+        "pronouns"
+      ],
+      "prompt": "Gdzie jest telefon? — ___ jest tu. (Write the pronoun.)",
+      "accepted": [
+        "on"
+      ],
+      "explanation": "Telefon is masculine, so 'it' is on."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-08",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "gender",
+        "exceptions"
+      ],
+      "prompt": "___ mężczyzna (this man)",
+      "options": [
+        "ten",
+        "ta",
+        "to"
+      ],
+      "correct": 0,
+      "explanation": "Mężczyzna is a man, so it is masculine although it ends in -a.",
+      "optionNotes": [
+        null,
+        "The -a ending misleads: a man is masculine.",
+        "To is neuter."
+      ]
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-09",
+      "type": "translate",
+      "tags": [
+        "gender",
+        "exceptions"
+      ],
+      "source": "This night is long.",
+      "accepted": [
+        "Ta noc jest długa."
+      ],
+      "hint": "night = noc, long = długi",
+      "explanation": "Noc is feminine: ta noc, and the adjective is feminine too: długa."
+    },
+    {
+      "id": "a1-grammar-gender-of-nouns-1-10",
+      "type": "reorder",
+      "tags": [
+        "gender",
+        "neuter"
+      ],
+      "context": "This child is very tired.",
+      "answers": [
+        "To dziecko jest bardzo zmęczone.",
+        "Bardzo zmęczone jest to dziecko."
+      ],
+      "explanation": "Dziecko is neuter: to dziecko … zmęczone."
+    }
+  ]
+}

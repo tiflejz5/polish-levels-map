@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "id": "a1-vocabulary-family-people",
+  "topic": "a1-vocabulary-family-people",
+  "level": "A1",
+  "title": "Stop: family and people",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-vocabulary-family-people-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ brat (my brother)",
+      "options": [
+        "mój",
+        "moja",
+        "moje"
+      ],
+      "correct": 0,
+      "explanation": "Brat is masculine: mój brat.",
+      "optionNotes": [
+        null,
+        "Moja is feminine.",
+        "Moje is neuter."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-family-people-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "What is the female form of lekarz (doctor)?",
+      "options": [
+        "lekarza",
+        "lekarka",
+        "lekarzka",
+        "lekarkę"
+      ],
+      "correct": 1,
+      "explanation": "lekarz → lekarka.",
+      "optionNotes": [
+        "Lekarza is another case of lekarz.",
+        null,
+        "Not a word: rz drops before -ka: lekarz → lekarka.",
+        "Lekarkę is another case of lekarka."
+      ]
+    },
+    {
+      "id": "a1-vocabulary-family-people-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "I'm Polish. (a woman speaking)",
+      "options": [
+        "Jestem polska.",
+        "Jestem Polakiem.",
+        "Jestem Polka.",
+        "Jestem Polką."
+      ],
+      "correct": 3,
+      "explanation": "Use the nationality noun in the instrumental, with a capital letter: Polką.",
+      "optionNotes": [
+        "Polska is an adjective (and the name of the country); use the noun.",
+        "Polakiem is the man's form.",
+        "After jestem the noun changes: -a → -ą.",
+        null
+      ]
+    },
+    {
+      "id": "a1-vocabulary-family-people-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which word means 'parents'?",
+      "options": [
+        "krewni",
+        "rodzina",
+        "rodzice",
+        "dziadkowie"
+      ],
+      "correct": 2,
+      "explanation": "Rodzice means parents.",
+      "optionNotes": [
+        "Krewni means relatives.",
+        "Rodzina means family.",
+        null,
+        "Dziadkowie means grandparents."
+      ]
+    }
+  ]
+}

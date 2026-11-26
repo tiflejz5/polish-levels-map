@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "id": "a1-cases-instrumental-identity-1",
+  "topic": "a1-cases-instrumental-identity",
+  "level": "A1",
+  "title": "Instrumental: check yourself",
+  "intro": "10 tasks: jobs and nationalities after być, z meaning 'with', mistakes and translations.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-cases-instrumental-identity-1-01",
+      "type": "paradigm",
+      "tags": [
+        "instrumental",
+        "jobs",
+        "nationalities"
+      ],
+      "prompt": "Finish “Jestem …” with each word in the instrumental.",
+      "lemma": "Jestem …",
+      "gloss": "I am …",
+      "cells": [
+        {
+          "label": "student",
+          "accepted": [
+            "studentem"
+          ]
+        },
+        {
+          "label": "studentka",
+          "accepted": [
+            "studentką"
+          ]
+        },
+        {
+          "label": "lekarz",
+          "accepted": [
+            "lekarzem"
+          ]
+        },
+        {
+          "label": "nauczycielka",
+          "accepted": [
+            "nauczycielką"
+          ]
+        },
+        {
+          "label": "Polak",
+          "accepted": [
+            "Polakiem"
+          ]
+        },
+        {
+          "label": "Angielka",
+          "accepted": [
+            "Angielką"
+          ]
+        }
+      ],
+      "explanation": "Masculine -em (after k: -iem), feminine -a → -ą."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "instrumental",
+        "feminine",
+        "jobs"
+      ],
+      "prompt": "Ona jest ___. (She's a waitress.)",
+      "options": [
+        "kelnerka",
+        "kelnerką",
+        "kelnerem",
+        "kelnerkę"
+      ],
+      "correct": 1,
+      "explanation": "After być the feminine -a becomes -ą.",
+      "optionNotes": [
+        "The nominative.",
+        null,
+        "-em is masculine.",
+        "-ę is another case (accusative)."
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "instrumental",
+        "z-with"
+      ],
+      "prompt": "Herbata z ___. (Tea with lemon.)",
+      "options": [
+        "cytryna",
+        "cytrynę",
+        "cytrynem",
+        "cytryną"
+      ],
+      "correct": 3,
+      "explanation": "Z meaning 'with' takes the instrumental: cytryną.",
+      "optionNotes": [
+        "The nominative.",
+        "-ę is another case (accusative).",
+        "-em is the masculine ending.",
+        null
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "instrumental",
+        "adjectives"
+      ],
+      "context": "My dad is a very good cook.",
+      "text": "Mój tata jest bardzo {{1}} {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "dobrym"
+          ],
+          "hint": "(dobry)"
+        },
+        {
+          "accepted": [
+            "kucharzem"
+          ],
+          "hint": "(kucharz)"
+        }
+      ],
+      "explanation": "Adjective + noun after być: both in the instrumental, -ym and -em."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-05",
+      "type": "find-error",
+      "tags": [
+        "instrumental",
+        "jobs"
+      ],
+      "tokens": [
+        "Marek",
+        "jest",
+        "student."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "studentem"
+      ],
+      "explanation": "A noun after być takes the instrumental: studentem."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-06",
+      "type": "find-error",
+      "tags": [
+        "instrumental",
+        "adjectives"
+      ],
+      "tokens": [
+        "Jestem",
+        "bardzo",
+        "zmęczonym."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "zmęczony",
+        "zmęczona"
+      ],
+      "explanation": "An adjective alone after być stays in the nominative: zmęczony (a man), zmęczona (a woman)."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-07",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "instrumental",
+        "to-jest"
+      ],
+      "prompt": "Which sentence is correct? (This is a doctor.)",
+      "options": [
+        "To jest lekarz.",
+        "To jest lekarzem.",
+        "To lekarzem jest.",
+        "To jest lekarza."
+      ],
+      "correct": 0,
+      "explanation": "After to jest the noun stays in the nominative.",
+      "optionNotes": [
+        null,
+        "After to jest, no instrumental.",
+        "After to jest, no instrumental, and the order is odd.",
+        "Lekarza is another case."
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-08",
+      "type": "transformation",
+      "tags": [
+        "instrumental",
+        "jobs"
+      ],
+      "source": "Tomek – lekarz.",
+      "keyword": "jest",
+      "before": "Tomek",
+      "after": ".",
+      "answers": [
+        "jest lekarzem"
+      ],
+      "explanation": "Tomek jest lekarzem: a noun after być takes the instrumental."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-09",
+      "type": "translate",
+      "tags": [
+        "instrumental",
+        "jobs",
+        "feminine"
+      ],
+      "source": "I'm a student. (a woman speaking)",
+      "accepted": [
+        "Jestem studentką.",
+        "Ja jestem studentką."
+      ],
+      "explanation": "studentka → studentką after jestem."
+    },
+    {
+      "id": "a1-cases-instrumental-identity-1-10",
+      "type": "translate",
+      "tags": [
+        "instrumental",
+        "z-with"
+      ],
+      "source": "Coffee with milk, please.",
+      "accepted": [
+        "Kawa z mlekiem, proszę.",
+        "Poproszę kawę z mlekiem.",
+        "Proszę kawę z mlekiem.",
+        "Kawę z mlekiem, proszę.",
+        "Kawę z mlekiem poproszę."
+      ],
+      "explanation": "Z meaning 'with' takes the instrumental: mleko → mlekiem."
+    }
+  ]
+}

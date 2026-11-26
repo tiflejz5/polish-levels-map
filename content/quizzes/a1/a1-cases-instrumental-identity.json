@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-cases-instrumental-identity",
+  "topic": "a1-cases-instrumental-identity",
+  "level": "A1",
+  "title": "Stop: instrumental",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-cases-instrumental-identity-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jestem ___. (I'm a student. – a man speaking)",
+      "options": [
+        "student",
+        "studentą",
+        "studenta",
+        "studentem"
+      ],
+      "correct": 3,
+      "explanation": "A noun after być takes the instrumental: masculine -em.",
+      "optionNotes": [
+        "The nominative: English does not change the noun, Polish does.",
+        "-ą is the feminine ending.",
+        "Studenta is another case (accusative).",
+        null
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ona jest ___. (She's a teacher.)",
+      "options": [
+        "nauczycielką",
+        "nauczycielka",
+        "nauczycielkę",
+        "nauczycielem"
+      ],
+      "correct": 0,
+      "explanation": "Feminine nouns change -a to -ą after być.",
+      "optionNotes": [
+        null,
+        "The nominative.",
+        "-ę is another case (accusative).",
+        "The masculine form; for a woman use nauczycielką."
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kawa z ___, proszę. (Coffee with milk, please.)",
+      "options": [
+        "mleko",
+        "mlekiem",
+        "mleka",
+        "mlekem"
+      ],
+      "correct": 1,
+      "explanation": "Z meaning 'with' takes the instrumental; after k the ending is -iem: mlekiem.",
+      "optionNotes": [
+        "The nominative.",
+        null,
+        "Mleka is another case (genitive).",
+        "After k the ending is -iem."
+      ]
+    },
+    {
+      "id": "a1-cases-instrumental-identity-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "To jest studentem.",
+        "Jestem zmęczonym.",
+        "On jest lekarzem.",
+        "Ona jest lekarka."
+      ],
+      "correct": 2,
+      "explanation": "A noun after być is in the instrumental: lekarzem.",
+      "optionNotes": [
+        "After to jest the noun stays in the nominative: to jest student.",
+        "An adjective alone stays in the nominative: zmęczony.",
+        null,
+        "Lekarka must change: lekarką."
+      ]
+    }
+  ]
+}
