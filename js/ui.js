@@ -203,25 +203,32 @@ window.LM = window.LM || {};
     defs.appendChild(g);
   }
 
-  /** Sam znak (40 × 40). */
+  /** The mark alone (40 × 40): the map edge and the north needle in the level gradient (lands A1 → C2). */
   function logoMark(size) {
     const svg = svgEl("svg", { class: "logo-mark", width: size || 34, height: size || 34, viewBox: "0 0 40 40", "aria-hidden": "true", focusable: "false" });
+    const id = "lm-logo-grad-" + (++gradientCounter);
+    const defs = svgEl("defs", {});
+    brandGradient(defs, id, 4, 36, 36, 4);
+    svg.appendChild(defs);
     // Circle (edge of the map) and a dotted trail from A1 (bottom left) to C2 (top right)
-    svg.appendChild(svgEl("circle", { cx: 20, cy: 20, r: 17, fill: "none", stroke: "currentColor", "stroke-width": 2.2 }));
+    svg.appendChild(svgEl("circle", { cx: 20, cy: 20, r: 17, fill: "none", stroke: "url(#" + id + ")", "stroke-width": 2.4 }));
     svg.appendChild(svgEl("path", {
       d: "M9.5 28.5c4-1.5 3.5-6.5 8-7.5s6.5 1.5 9.5-2.5 2.5-6 3.5-7.5",
       fill: "none", stroke: "currentColor", "stroke-width": 2.2, "stroke-linecap": "round", "stroke-dasharray": "0.1 4.2"
     }));
     // Compass needle (north in the gradient, south in the line colour)
     const needle = svgEl("g", { transform: "rotate(40 20 20)" });
-    needle.appendChild(svgEl("path", { d: "M20 8.5 23.2 20h-6.4z", fill: "currentColor" }));
+    needle.appendChild(svgEl("path", { d: "M20 8.5 23.2 20h-6.4z", fill: "url(#" + id + ")" }));
     needle.appendChild(svgEl("path", { d: "M20 31.5 16.8 20h6.4z", class: "logo-needle-s" }));
     svg.appendChild(needle);
     svg.appendChild(svgEl("circle", { cx: 20, cy: 20, r: 2.1, class: "logo-pin" }));
     return svg;
   }
 
-  /** Mark + app name from LM.APP.appTitle (display font). */
+  /**
+   * Mark + wordmark (display font): LM.APP.wordmark = [accent part, ink part]
+   * ("Polish" in the accent, "Levels Map" in ink); falls back to LM.APP.appTitle.
+   */
   function logo(opts) {
     opts = opts || {};
     const wrap = document.createElement("span");
@@ -229,7 +236,16 @@ window.LM = window.LM || {};
     wrap.appendChild(logoMark(opts.size));
     const word = document.createElement("span");
     word.className = "logo-word";
-    word.textContent = (LM.APP && LM.APP.appTitle) || "";
+    const parts = (LM.APP && LM.APP.wordmark) || null;
+    if (parts && parts.length === 2) {
+      const a = document.createElement("span");
+      a.className = "logo-word-accent";
+      a.textContent = parts[0];
+      word.appendChild(a);
+      word.appendChild(document.createTextNode(" " + parts[1]));
+    } else {
+      word.textContent = (LM.APP && LM.APP.appTitle) || "";
+    }
     wrap.appendChild(word);
     return wrap;
   }

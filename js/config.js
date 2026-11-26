@@ -13,7 +13,7 @@ LM.VERSION = 1;
 LM.APP = {
   id: "pl",
   language: "Polish", nativeName: "polski",
-  appTitle: "Polish Levels Map", tagline: "Your map of Polish, A1–C2",
+  appTitle: "Polish Levels Map", wordmark: ["Polish", "Levels Map"], tagline: "Your map of Polish, A1–C2",
   targetLang: "pl",
   uiLocale: "en-US",            // LM.fmt dates and numbers (spec 04 §1)
   storagePrefix: "plm.",
