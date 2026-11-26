@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-common-irregular",
+  "topic": "a1-verbs-common-irregular",
+  "level": "A1",
+  "title": "Stop: irregular verbs",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-common-irregular-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Oni ___ obiad. (They are eating lunch.)",
+      "options": [
+        "jadą",
+        "jedzą",
+        "jedą",
+        "jemy"
+      ],
+      "correct": 1,
+      "explanation": "Jeść: oni jedzą.",
+      "optionNotes": [
+        "Jadą is from jechać: \"they are going\".",
+        null,
+        "There is no such form.",
+        "Jemy is the my form."
+      ]
+    },
+    {
+      "id": "a1-verbs-common-irregular-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ty ___ do Gdańska? (Are you going to Gdańsk by train?)",
+      "options": [
+        "jadziesz",
+        "idziesz",
+        "jedziesz",
+        "jedzie"
+      ],
+      "correct": 2,
+      "explanation": "By train you use jechać; the ty form is jedziesz (the stem changes from jad- to jedzi-).",
+      "optionNotes": [
+        "The stem changes: jadę but jedziesz.",
+        "Iść is only on foot.",
+        null,
+        "Jedzie is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-common-irregular-q3",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Which sentence means \"I know Kraków\"?",
+      "options": [
+        "Wiem Kraków.",
+        "Znam Kraków.",
+        "Mam Kraków.",
+        "Wie Kraków."
+      ],
+      "correct": 1,
+      "explanation": "Places and people take znać; wiedzieć is for facts.",
+      "optionNotes": [
+        "Wiedzieć is for facts, not places.",
+        null,
+        "Mieć means \"have\".",
+        "Wiedzieć is for facts, and wie is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-common-irregular-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Przepraszam, nie ___ dzisiaj. (Sorry, I can't today.)",
+      "options": [
+        "może",
+        "mogę",
+        "możę",
+        "mogą"
+      ],
+      "correct": 1,
+      "explanation": "Móc: ja mogę, ty możesz. The ja form keeps g.",
+      "optionNotes": [
+        "Może is the on / ona form (and also \"maybe\").",
+        null,
+        "The ja form keeps g: mogę.",
+        "Mogą is the oni form."
+      ]
+    }
+  ]
+}

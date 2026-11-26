@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "id": "a1-verbs-common-irregular-1",
+  "topic": "a1-verbs-common-irregular",
+  "level": "A1",
+  "title": "Irregular verbs: check yourself",
+  "intro": "10 tasks: mieć, jeść, wiedzieć, iść, jechać, chcieć and móc.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-verbs-common-irregular-1-01",
+      "type": "paradigm",
+      "tags": [
+        "irregular",
+        "jechac"
+      ],
+      "prompt": "Give all six present forms of jechać.",
+      "lemma": "jechać",
+      "gloss": "to go (by vehicle)",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "jadę"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "jedziesz"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "jedzie"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "jedziemy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "jedziecie"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "jadą"
+          ]
+        }
+      ],
+      "explanation": "The stem is jad- for ja and oni, jedzi- / jedzie- for the rest."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "irregular",
+        "jesc"
+      ],
+      "prompt": "Co ___ na śniadanie? (to a friend: What do you eat for breakfast?)",
+      "options": [
+        "jedziesz",
+        "jem",
+        "jesz",
+        "je"
+      ],
+      "correct": 2,
+      "explanation": "Jeść: ty jesz.",
+      "optionNotes": [
+        "Jedziesz is from jechać: \"you are going\".",
+        "Jem is the ja form.",
+        null,
+        "Je is the on / ona form."
+      ]
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-03",
+      "type": "gap-fill",
+      "tags": [
+        "irregular",
+        "wiedziec"
+      ],
+      "context": "I don't know where Ola is.",
+      "text": "Nie {{1}}, gdzie jest Ola.",
+      "gaps": [
+        {
+          "accepted": [
+            "wiem"
+          ],
+          "hint": "(wiedzieć)"
+        }
+      ],
+      "explanation": "Wiedzieć (know a fact): ja wiem."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-04",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "tags": [
+        "irregular",
+        "znac-wiedziec"
+      ],
+      "prompt": "___ ten film? (Do you know this film?)",
+      "options": [
+        "Wiesz",
+        "Znasz",
+        "Masz",
+        "Jesz"
+      ],
+      "correct": 1,
+      "explanation": "A film, a person or a place: znać. Wiedzieć is for facts.",
+      "optionNotes": [
+        "Wiedzieć is for facts, often before gdzie, kto, co.",
+        null,
+        "Masz means \"you have\".",
+        "Jesz means \"you eat\"."
+      ]
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-05",
+      "type": "find-error",
+      "tags": [
+        "irregular",
+        "isc-jechac"
+      ],
+      "tokens": [
+        "Idę",
+        "do",
+        "Krakowa",
+        "samochodem."
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Jadę"
+      ],
+      "explanation": "By car you use jechać: jadę. Iść is only on foot."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-06",
+      "type": "find-error",
+      "tags": [
+        "irregular",
+        "jechac"
+      ],
+      "tokens": [
+        "Ty",
+        "jadziesz",
+        "do",
+        "pracy?"
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "jedziesz",
+        "idziesz"
+      ],
+      "explanation": "Jadziesz does not exist. Jechać: ja jadę, but ty jedziesz (on foot: idziesz)."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-07",
+      "type": "short-answer",
+      "tags": [
+        "irregular",
+        "isc"
+      ],
+      "prompt": "My ___ do domu. (iść)",
+      "accepted": [
+        "idziemy"
+      ],
+      "explanation": "Iść: my idziemy."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-08",
+      "type": "match",
+      "tags": [
+        "irregular",
+        "meaning"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "I have",
+          "mam"
+        ],
+        [
+          "I eat",
+          "jem"
+        ],
+        [
+          "I know (a fact)",
+          "wiem"
+        ],
+        [
+          "I'm going (on foot)",
+          "idę"
+        ],
+        [
+          "I'm going (by car)",
+          "jadę"
+        ],
+        [
+          "I can",
+          "mogę"
+        ]
+      ],
+      "explanation": "All six are ja forms: mam, jem, wiem end in -m; idę, jadę, mogę end in -ę."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-09",
+      "type": "translate",
+      "tags": [
+        "irregular",
+        "chciec"
+      ],
+      "source": "Do you want a beer? (to a friend)",
+      "accepted": [
+        "Chcesz piwo?",
+        "Czy chcesz piwo?",
+        "Ty chcesz piwo?",
+        "Czy ty chcesz piwo?",
+        "Chcesz piwa?",
+        "Czy chcesz piwa?"
+      ],
+      "explanation": "Chcieć: ty chcesz. Piwo does not change after chcesz. You will also hear Chcesz piwa? (\"some beer\"), which is correct too."
+    },
+    {
+      "id": "a1-verbs-common-irregular-1-10",
+      "type": "translate",
+      "tags": [
+        "irregular",
+        "miec"
+      ],
+      "source": "We have a new flat.",
+      "accepted": [
+        "Mamy nowe mieszkanie.",
+        "My mamy nowe mieszkanie."
+      ],
+      "hint": "flat = mieszkanie",
+      "explanation": "Mieć: my mamy. Mieszkanie is neuter, so it does not change after mamy."
+    }
+  ]
+}

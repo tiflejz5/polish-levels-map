@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-present-conjugations",
+  "topic": "a1-verbs-present-conjugations",
+  "level": "A1",
+  "title": "Stop: present tense",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-present-conjugations-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ona ___ w banku. (She works in a bank.)",
+      "options": [
+        "pracuje",
+        "pracuję",
+        "pracowa",
+        "pracują"
+      ],
+      "correct": 0,
+      "explanation": "Verbs in -ować change to -uj-; the on / ona form ends in -e: pracuje.",
+      "optionNotes": [
+        null,
+        "Pracuję is the ja form.",
+        "-ować verbs change to -uj-: there is no pracowa.",
+        "Pracują is the oni form."
+      ]
+    },
+    {
+      "id": "a1-verbs-present-conjugations-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "My ___ w Krakowie. (We live in Kraków.)",
+      "options": [
+        "mieszkam",
+        "mieszkają",
+        "mieszkamy",
+        "mieszkacie"
+      ],
+      "correct": 2,
+      "explanation": "The my form ends in -my: mieszkamy.",
+      "optionNotes": [
+        "Mieszkam is the ja form.",
+        "Mieszkają is the oni form.",
+        null,
+        "Mieszkacie is the wy form."
+      ]
+    },
+    {
+      "id": "a1-verbs-present-conjugations-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "How do you say \"I'm reading\"?",
+      "options": [
+        "Jestem czytam.",
+        "Czytam.",
+        "Jestem czytać.",
+        "Czytać."
+      ],
+      "correct": 1,
+      "explanation": "Polish has one present tense: czytam is both \"I read\" and \"I'm reading\".",
+      "optionNotes": [
+        "Never add być to a verb in the present.",
+        null,
+        "Być + infinitive is not a tense.",
+        "Czytać is the infinitive, \"to read\"."
+      ]
+    },
+    {
+      "id": "a1-verbs-present-conjugations-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ty ___ po polsku? (Do you speak Polish?)",
+      "options": [
+        "mówisz",
+        "mówię",
+        "mówi",
+        "mówysz"
+      ],
+      "correct": 0,
+      "explanation": "Mówić follows the -ę, -isz pattern: ty mówisz.",
+      "optionNotes": [
+        null,
+        "Mówię is the ja form.",
+        "Mówi is the on / ona form.",
+        "Mówić is an -ić verb, so it keeps i: mówisz. -ysz comes only after cz, sz, rz, ż."
+      ]
+    }
+  ]
+}

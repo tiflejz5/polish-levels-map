@@ -26,6 +26,20 @@
         "a1-cases-nominative",
         "a1-cases-instrumental-identity"
       ]
+    },
+    {
+      "id": "mix-a1-u3",
+      "title": "Unit review: Doing things",
+      "description": "The present tense, irregular verbs, the accusative, and questions and negation, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-verbs-present-conjugations",
+        "a1-verbs-common-irregular",
+        "a1-cases-accusative",
+        "a1-grammar-questions-negation"
+      ]
     }
   ]
 }
