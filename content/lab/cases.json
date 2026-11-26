@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Engine stage: 3 of the 7 case cards (spec 09 §4). The other cards and the plural details are written in level extras (spec 08 §4).",
+  "note": "Level extras A1: the five cases taught at A1 (nominative, genitive, accusative, instrumental, locative). Dative comes with A2 extras, vocative with B1 (spec 08 §4).",
   "cases": [
     {
       "id": "nominative",
@@ -10,22 +10,58 @@
       "level": "A1",
       "summary": "The dictionary form: the subject of the sentence, and the noun after to jest / to są.",
       "uses": [
-        { "label": "Subject", "pl": "Anna pracuje w banku.", "en": "Anna works at a bank." },
-        { "label": "After to jest / to są", "pl": "To jest mój brat.", "en": "This is my brother." },
-        { "label": "Adjective after być", "pl": "Kawa jest gorąca.", "en": "The coffee is hot." },
-        { "label": "Name after nazywać się", "pl": "Nazywam się Tomek.", "en": "My name is Tomek." }
+        {
+          "label": "Subject",
+          "pl": "Anna pracuje w banku.",
+          "en": "Anna works at a bank."
+        },
+        {
+          "label": "After to jest / to są",
+          "pl": "To jest mój brat.",
+          "en": "This is my brother."
+        },
+        {
+          "label": "Adjective after być",
+          "pl": "Kawa jest gorąca.",
+          "en": "The coffee is hot."
+        },
+        {
+          "label": "Name after nazywać się",
+          "pl": "Nazywam się Tomek.",
+          "en": "My name is Tomek."
+        }
       ],
       "triggers": {
         "prepositions": [],
-        "verbs": ["być + adjective", "nazywać się"],
-        "other": ["to jest", "to są"]
+        "verbs": [
+          "być + adjective",
+          "nazywać się"
+        ],
+        "other": [
+          "to jest",
+          "to są"
+        ]
       },
       "endings": {
-        "singular": { "masculine": "— (consonant); a few in -a: tata, kolega", "feminine": "-a (a few: -i pani, consonant noc)", "neuter": "-o / -e / -ę / -um" },
-        "plural": { "masculine personal": "-i / -y / -owie", "other": "-y / -i / -e / -a" },
+        "singular": {
+          "masculine": "— (consonant); a few in -a: tata, kolega",
+          "feminine": "-a (a few: -i pani, consonant noc)",
+          "neuter": "-o / -e / -ę / -um"
+        },
+        "plural": {
+          "masculine personal": "-i / -y / -owie",
+          "other": "-y / -i / -e / -a"
+        },
         "adjective": {
-          "singular": { "masculine": "-y / -i", "feminine": "-a", "neuter": "-e" },
-          "plural": { "masculine personal": "-i / -y", "other": "-e" }
+          "singular": {
+            "masculine": "-y / -i",
+            "feminine": "-a",
+            "neuter": "-e"
+          },
+          "plural": {
+            "masculine personal": "-i / -y",
+            "other": "-e"
+          }
         }
       },
       "traps": [
@@ -33,10 +69,22 @@
         "Masculine personal plurals change the last consonant: student → studenci, Polak → Polacy. Not studenty, Polaki."
       ],
       "contrasts": [
-        { "with": "accusative", "rule": "The subject is in the nominative. The direct object is in the accusative: feminine nouns change -a to -ę.", "examples": ["Kawa jest dobra.", "Lubię kawę."] }
+        {
+          "with": "accusative",
+          "rule": "The subject is in the nominative. The direct object is in the accusative: feminine nouns change -a to -ę.",
+          "examples": [
+            "Kawa jest dobra.",
+            "Lubię kawę."
+          ]
+        }
       ],
-      "topicIds": ["a1-cases-nominative", "a2-cases-nominative-plural"],
-      "setTags": ["nominative"]
+      "topicIds": [
+        "a1-cases-nominative",
+        "a2-cases-nominative-plural"
+      ],
+      "setTags": [
+        "nominative"
+      ]
     },
     {
       "id": "genitive",
@@ -46,22 +94,74 @@
       "level": "A1",
       "summary": "Absence, possession, quantity, and after many prepositions.",
       "uses": [
-        { "label": "After negation", "pl": "Nie mam czasu.", "en": "I don't have time." },
-        { "label": "Possession (of whom?)", "pl": "To jest samochód Marka.", "en": "This is Marek's car." },
-        { "label": "Quantity and containers", "pl": "Poproszę butelkę wody.", "en": "A bottle of water, please." },
-        { "label": "After do, z, bez, dla, u", "pl": "Idę do sklepu.", "en": "I'm going to the shop." }
+        {
+          "label": "After negation",
+          "pl": "Nie mam czasu.",
+          "en": "I don't have time."
+        },
+        {
+          "label": "Possession (of whom?)",
+          "pl": "To jest samochód Marka.",
+          "en": "This is Marek's car."
+        },
+        {
+          "label": "Quantity and containers",
+          "pl": "Poproszę butelkę wody.",
+          "en": "A bottle of water, please."
+        },
+        {
+          "label": "After do, z, bez, dla, u",
+          "pl": "Idę do sklepu.",
+          "en": "I'm going to the shop."
+        }
       ],
       "triggers": {
-        "prepositions": ["do", "z (from)", "od", "bez", "dla", "u", "obok", "koło"],
-        "verbs": ["szukać", "słuchać", "używać", "bać się", "potrzebować"],
-        "other": ["nie ma", "nie mam, nie lubię …", "dużo", "mało", "kilka", "pięć i więcej"]
+        "prepositions": [
+          "do",
+          "z (from)",
+          "od",
+          "bez",
+          "dla",
+          "u",
+          "obok",
+          "koło"
+        ],
+        "verbs": [
+          "szukać",
+          "słuchać",
+          "używać",
+          "bać się",
+          "potrzebować"
+        ],
+        "other": [
+          "nie ma",
+          "nie mam, nie lubię …",
+          "dużo",
+          "mało",
+          "kilka",
+          "pięć i więcej"
+        ]
       },
       "endings": {
-        "singular": { "masculine": "-a / -u", "feminine": "-y / -i", "neuter": "-a" },
-        "plural": { "masculine personal": "-ów / -i / -y", "other": "-ów / — / -i / -y" },
+        "singular": {
+          "masculine": "-a / -u",
+          "feminine": "-y / -i",
+          "neuter": "-a"
+        },
+        "plural": {
+          "masculine personal": "-ów / -i / -y",
+          "other": "-ów / — / -i / -y"
+        },
         "adjective": {
-          "singular": { "masculine": "-ego", "feminine": "-ej", "neuter": "-ego" },
-          "plural": { "masculine personal": "-ych / -ich", "other": "-ych / -ich" }
+          "singular": {
+            "masculine": "-ego",
+            "feminine": "-ej",
+            "neuter": "-ego"
+          },
+          "plural": {
+            "masculine personal": "-ych / -ich",
+            "other": "-ych / -ich"
+          }
         }
       },
       "traps": [
@@ -70,11 +170,30 @@
         "After nie only an object that would be in the accusative changes. The subject stays in the nominative (Kawa nie jest droga), and other cases stay too (Nie pomagam mamie)."
       ],
       "contrasts": [
-        { "with": "accusative", "rule": "A positive sentence takes the accusative. The same sentence with nie takes the genitive.", "examples": ["Mam samochód.", "Nie mam samochodu."] },
-        { "with": "locative", "rule": "do + genitive = where to (a shop, a city). w + locative = where you are.", "examples": ["Jadę do Krakowa.", "Mieszkam w Krakowie."] }
+        {
+          "with": "accusative",
+          "rule": "A positive sentence takes the accusative. The same sentence with nie takes the genitive.",
+          "examples": [
+            "Mam samochód.",
+            "Nie mam samochodu."
+          ]
+        },
+        {
+          "with": "locative",
+          "rule": "do + genitive = where to (a shop, a city). w + locative = where you are.",
+          "examples": [
+            "Jadę do Krakowa.",
+            "Mieszkam w Krakowie."
+          ]
+        }
       ],
-      "topicIds": ["a1-cases-genitive-basics", "a2-cases-genitive-plural-quantities"],
-      "setTags": ["genitive"]
+      "topicIds": [
+        "a1-cases-genitive-basics",
+        "a2-cases-genitive-plural-quantities"
+      ],
+      "setTags": [
+        "genitive"
+      ]
     },
     {
       "id": "accusative",
@@ -84,22 +203,71 @@
       "level": "A1",
       "summary": "The direct object: the person or thing the action goes to.",
       "uses": [
-        { "label": "Direct object", "pl": "Czytam książkę.", "en": "I'm reading a book." },
-        { "label": "Ordering", "pl": "Poproszę kawę.", "en": "A coffee, please." },
-        { "label": "Where to, after na", "pl": "Idę na koncert.", "en": "I'm going to a concert." },
-        { "label": "Days of the week", "pl": "w sobotę", "en": "on Saturday" }
+        {
+          "label": "Direct object",
+          "pl": "Czytam książkę.",
+          "en": "I'm reading a book."
+        },
+        {
+          "label": "Ordering",
+          "pl": "Poproszę kawę.",
+          "en": "A coffee, please."
+        },
+        {
+          "label": "Where to, after na",
+          "pl": "Idę na koncert.",
+          "en": "I'm going to a concert."
+        },
+        {
+          "label": "Days of the week",
+          "pl": "w sobotę",
+          "en": "on Saturday"
+        }
       ],
       "triggers": {
-        "prepositions": ["na (where to)", "w (days: w sobotę)", "przez", "za (in … time)", "o (prosić o, pytać o)"],
-        "verbs": ["mieć", "lubić", "znać", "widzieć", "czytać", "pić", "jeść", "kupować", "kochać", "odwiedzać"],
+        "prepositions": [
+          "na (where to)",
+          "w (days: w sobotę)",
+          "przez",
+          "za (in … time)",
+          "o (prosić o, pytać o)"
+        ],
+        "verbs": [
+          "mieć",
+          "lubić",
+          "znać",
+          "widzieć",
+          "czytać",
+          "pić",
+          "jeść",
+          "kupować",
+          "kochać",
+          "odwiedzać"
+        ],
         "other": []
       },
       "endings": {
-        "singular": { "masculine (people, animals)": "-a (in -a: tata → tatę)", "masculine (things)": "= nominative", "feminine": "-ę (pani → panią, noc → noc)", "neuter": "= nominative" },
-        "plural": { "masculine personal": "= genitive", "other": "= nominative" },
+        "singular": {
+          "masculine (people, animals)": "-a (in -a: tata → tatę)",
+          "masculine (things)": "= nominative",
+          "feminine": "-ę (pani → panią, noc → noc)",
+          "neuter": "= nominative"
+        },
+        "plural": {
+          "masculine personal": "= genitive",
+          "other": "= nominative"
+        },
         "adjective": {
-          "singular": { "masculine (people, animals)": "-ego", "masculine (things)": "-y / -i", "feminine": "-ą", "neuter": "-e" },
-          "plural": { "masculine personal": "-ych / -ich", "other": "-e" }
+          "singular": {
+            "masculine (people, animals)": "-ego",
+            "masculine (things)": "-y / -i",
+            "feminine": "-ą",
+            "neuter": "-e"
+          },
+          "plural": {
+            "masculine personal": "-ych / -ich",
+            "other": "-e"
+          }
         }
       },
       "traps": [
@@ -109,12 +277,238 @@
         "Going into a building or a town takes do + genitive, not w + accusative: Idę do szkoły, not Idę w szkołę."
       ],
       "contrasts": [
-        { "with": "genitive", "rule": "Positive sentence: accusative. Negated sentence: genitive.", "examples": ["Mam samochód.", "Nie mam samochodu."] },
-        { "with": "nominative", "rule": "A feminine noun ends in -a as the subject and in -ę as the object.", "examples": ["Książka jest ciekawa.", "Czytam książkę."] },
-        { "with": "locative", "rule": "na + accusative = where to. na + locative = where. With w, where to is usually do + genitive: Idę do szkoły, Jestem w szkole.", "examples": ["Idę na pocztę.", "Jestem na poczcie."] }
+        {
+          "with": "genitive",
+          "rule": "Positive sentence: accusative. Negated sentence: genitive.",
+          "examples": [
+            "Mam samochód.",
+            "Nie mam samochodu."
+          ]
+        },
+        {
+          "with": "nominative",
+          "rule": "A feminine noun ends in -a as the subject and in -ę as the object.",
+          "examples": [
+            "Książka jest ciekawa.",
+            "Czytam książkę."
+          ]
+        },
+        {
+          "with": "locative",
+          "rule": "na + accusative = where to. na + locative = where. With w, where to is usually do + genitive: Idę do szkoły, Jestem w szkole.",
+          "examples": [
+            "Idę na pocztę.",
+            "Jestem na poczcie."
+          ]
+        }
       ],
-      "topicIds": ["a1-cases-accusative", "a2-cases-accusative-plural"],
-      "setTags": ["accusative"]
+      "topicIds": [
+        "a1-cases-accusative",
+        "a2-cases-accusative-plural"
+      ],
+      "setTags": [
+        "accusative"
+      ]
+    },
+    {
+      "id": "instrumental",
+      "name": "Narzędnik",
+      "nameEn": "Instrumental",
+      "questions": "z kim? z czym?",
+      "level": "A1",
+      "summary": "Who or what someone is after być, the company you are in after z (with), and how you travel or pay.",
+      "uses": [
+        {
+          "label": "A job or nationality after być",
+          "pl": "Jestem studentem.",
+          "en": "I'm a student."
+        },
+        {
+          "label": "Together with, after z",
+          "pl": "Poproszę kawę z mlekiem.",
+          "en": "A coffee with milk, please."
+        },
+        {
+          "label": "Means of transport",
+          "pl": "Jadę do pracy autobusem.",
+          "en": "I'm going to work by bus."
+        },
+        {
+          "label": "Paying",
+          "pl": "Czy mogę zapłacić kartą?",
+          "en": "Can I pay by card?"
+        }
+      ],
+      "triggers": {
+        "prepositions": [
+          "z (with)"
+        ],
+        "verbs": [
+          "być + noun (a job, a nationality, a role)"
+        ],
+        "other": [
+          "transport: autobusem, pociągiem, samochodem",
+          "paying: kartą, gotówką"
+        ]
+      },
+      "endings": {
+        "singular": {
+          "masculine": "-em (after k, g: -iem)",
+          "feminine": "-ą",
+          "neuter": "-em (after k, g: -iem)"
+        },
+        "plural": {
+          "masculine personal": "-ami",
+          "other": "-ami (a few: -mi, dziećmi)"
+        },
+        "adjective": {
+          "singular": {
+            "masculine": "-ym / -im",
+            "feminine": "-ą",
+            "neuter": "-ym / -im"
+          },
+          "plural": {
+            "masculine personal": "-ymi / -imi",
+            "other": "-ymi / -imi"
+          }
+        }
+      },
+      "traps": [
+        "English uses the same form in \"I am a student\" and \"the student is here\". Polish needs the instrumental after być: Jestem student ✗ → Jestem studentem ✓.",
+        "An adjective alone after być stays in the nominative: Jestem zmęczony, not Jestem zmęczonym. A first name in an introduction stays in the nominative too: Jestem Tomek.",
+        "After to jest the noun stays in the nominative: To jest student. But: On jest studentem.",
+        "\"By bus\" has no preposition: Jadę z autobusem ✗ → Jadę autobusem ✓. z autobusem means \"together with a bus\"."
+      ],
+      "contrasts": [
+        {
+          "with": "nominative",
+          "rule": "to jest + nominative names someone; być + noun says what someone is and takes the instrumental.",
+          "examples": [
+            "To jest lekarz.",
+            "On jest lekarzem."
+          ]
+        },
+        {
+          "with": "genitive",
+          "rule": "z meaning with takes the instrumental; z meaning from takes the genitive.",
+          "examples": [
+            "kawa z mlekiem",
+            "Jestem z Polski."
+          ]
+        }
+      ],
+      "topicIds": [
+        "a1-cases-instrumental-identity",
+        "a2-cases-instrumental-full"
+      ],
+      "setTags": [
+        "instrumental"
+      ]
+    },
+    {
+      "id": "locative",
+      "name": "Miejscownik",
+      "nameEn": "Locative",
+      "questions": "o kim? o czym?",
+      "level": "A1",
+      "summary": "Where someone or something is, after w and na. The locative never stands alone: it always follows a preposition.",
+      "uses": [
+        {
+          "label": "Where, after w",
+          "pl": "Mieszkam w Krakowie.",
+          "en": "I live in Kraków."
+        },
+        {
+          "label": "Where, after na (the na-places)",
+          "pl": "Czekam na przystanku.",
+          "en": "I'm waiting at the stop."
+        },
+        {
+          "label": "Events, after na",
+          "pl": "Jestem na koncercie.",
+          "en": "I'm at a concert."
+        },
+        {
+          "label": "Surfaces, after na",
+          "pl": "Telefon jest na stole.",
+          "en": "The phone is on the table."
+        },
+        {
+          "label": "At home",
+          "pl": "Wieczorem jestem w domu.",
+          "en": "In the evening I'm at home."
+        }
+      ],
+      "triggers": {
+        "prepositions": [
+          "w (where)",
+          "na (where)",
+          "o (about: mówić o pracy, A2)",
+          "po, przy (A2)"
+        ],
+        "verbs": [
+          "mieszkać w / na",
+          "być w / na",
+          "pracować w / na"
+        ],
+        "other": [
+          "Gdzie? (where?)"
+        ]
+      },
+      "endings": {
+        "singular": {
+          "masculine": "-e with a softened consonant (Kraków → w Krakowie); -u after k, g, ch and soft consonants (w banku, w hotelu), and in w domu",
+          "feminine": "-e with a softened consonant (w szkole, w Polsce); -i / -y after soft consonants (w kuchni, w pracy)",
+          "neuter": "-e with a softened consonant (w kinie); -u after k, g, ch (na lotnisku, w łóżku) and after soft consonants (w mieszkaniu); -um does not change (w muzeum)"
+        },
+        "plural": {
+          "masculine personal": "-ach",
+          "other": "-ach"
+        },
+        "adjective": {
+          "singular": {
+            "masculine": "-ym / -im",
+            "feminine": "-ej",
+            "neuter": "-ym / -im"
+          },
+          "plural": {
+            "masculine personal": "-ych / -ich",
+            "other": "-ych / -ich"
+          }
+        }
+      },
+      "traps": [
+        "In English the noun after in or at never changes. In Polish it does: Mieszkam w Kraków ✗ → Mieszkam w Krakowie ✓.",
+        "Before -e the consonant softens: k → c (w Polsce), g → dz (w Pradze), t → ci (na poczcie), d → dzi (w ogrodzie), r → rz (w biurze), ł → l (w szkole).",
+        "dom takes -u: w domu, not w domie.",
+        "Some places take na, not w: na poczcie, na dworcu, na przystanku, na rynku, na lotnisku, na uniwersytecie.",
+        "The locative says where you are, not where you go: Idę w sklepie ✗ → Idę do sklepu ✓."
+      ],
+      "contrasts": [
+        {
+          "with": "genitive",
+          "rule": "w + locative = where you are; do + genitive = where you go.",
+          "examples": [
+            "Jestem w sklepie.",
+            "Idę do sklepu."
+          ]
+        },
+        {
+          "with": "accusative",
+          "rule": "na + locative = where you are; na + accusative = where you go.",
+          "examples": [
+            "Jestem na poczcie.",
+            "Idę na pocztę."
+          ]
+        }
+      ],
+      "topicIds": [
+        "a1-cases-locative-places",
+        "a2-cases-locative-full"
+      ],
+      "setTags": [
+        "locative"
+      ]
     }
   ]
 }

@@ -2,12 +2,76 @@
   "version": 1,
   "decks": [
     {
+      "id": "a1-numbers-days-months",
+      "title": "Numbers, days and months",
+      "description": "Numbers 0–100, the days of the week and the months, with \"on Monday\" and \"in July\".",
+      "level": "A1",
+      "file": "a1-numbers-days-months.json",
+      "count": 33
+    },
+    {
+      "id": "a1-family-people",
+      "title": "Family and people",
+      "description": "Family words, describing people, nationalities and jobs.",
+      "level": "A1",
+      "file": "a1-family-people.json",
+      "count": 33
+    },
+    {
+      "id": "a1-food-drink",
+      "title": "Food and drink",
+      "description": "Drinks, meals, everyday food and the phrases you need at the table.",
+      "level": "A1",
+      "file": "a1-food-drink.json",
+      "count": 33
+    },
+    {
+      "id": "a1-home-city",
+      "title": "Home and town",
+      "description": "Rooms, furniture and places in town, with w or na.",
+      "level": "A1",
+      "file": "a1-home-city.json",
+      "count": 33
+    },
+    {
       "id": "case-accusative",
       "title": "Accusative in sentences",
-      "description": "Sample of 6 cards. The full deck has 30 cards. Put the phrase in brackets into the accusative.",
+      "description": "Put the phrase in brackets into the accusative. A1: singular.",
       "level": "A1-A2",
       "file": "case-accusative.json",
-      "count": 6
+      "count": 30
+    },
+    {
+      "id": "case-genitive",
+      "title": "Genitive in sentences",
+      "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular.",
+      "level": "A1-A2",
+      "file": "case-genitive.json",
+      "count": 30
+    },
+    {
+      "id": "case-locative",
+      "title": "Locative in sentences",
+      "description": "Put the place in brackets into the locative after w or na. A1: singular.",
+      "level": "A1-A2",
+      "file": "case-locative.json",
+      "count": 30
+    },
+    {
+      "id": "case-instrumental",
+      "title": "Instrumental in sentences",
+      "description": "Put the phrase in brackets into the instrumental: a job or nationality after być, z meaning \"with\", and \"by bus\", \"by card\". A1: singular.",
+      "level": "A1-A2",
+      "file": "case-instrumental.json",
+      "count": 30
+    },
+    {
+      "id": "verbs-core-100",
+      "title": "Core verbs",
+      "description": "The most common verbs: type the infinitive, then use it in the present. A1 part: 60 of 100 cards; A2 adds the rest. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
+      "level": "A1-A2",
+      "file": "verbs-core-100.json",
+      "count": 60
     }
   ]
 }

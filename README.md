@@ -6,6 +6,15 @@ No accounts, no tracking, no server: progress is stored only in the browser (`lo
 
 Ported from english-levels-map (Polish UI, teaches English); the two projects are independent.
 
+## Content so far
+
+| Level | Status | Topics | Pages | Quizzes | Sets (items) | Extras |
+| --- | --- | --- | --- | --- | --- | --- |
+| A1 | available | 25 | 25 | 25 (100 items) | 18 (180) + 7 mixes | summary, cheat sheet, final test (30 items) |
+| A2–C2 | coming soon | 108 | — | — | — | — |
+
+Across levels: placement test 60 questions (10 per level); 9 flashcard decks with 312 cards (4 A1 vocabulary decks, case-accusative, case-genitive, case-locative, case-instrumental, verbs-core-100 with its A1 part); Case Lab with 5 case cards (the A1 cases), 14 model phrases, 3 decision trees and the aspect strip.
+
 ## Run
 
 Open `index.html`. That is all: from disk (`file://`), from any static server or from GitHub Pages (`https://tiflejz5.github.io/polish-levels-map/`). No build step is needed to *run* the app:

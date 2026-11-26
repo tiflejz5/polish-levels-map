@@ -24,8 +24,8 @@ Levels marked "Coming soon" already show their planned topics, so you can see wh
 ## How it works
 
 1. **The trail.** Each level is a land, and each land is a path of stops: one stop per topic, with a short quiz, and a checkpoint at the end of each unit. Follow it in order, or jump to any topic from the level page.
-2. **"I know this".** Tick a topic when you are confident. Your level page and the map fill in as you go, and the final test of the level checks that it holds.
-3. **Review.** Wrong answers go to your mistake log, and words you save go to My words. Both come back in short review sessions, spaced out so that each one arrives just before you would forget it. Today shows what is due.
+2. **"I know this".** Tick a topic when you are confident. Your level page and the map fill in as you go, and the final test of the level checks that it holds. Every available level also has a summary and a one-page cheat sheet you can print.
+3. **Review.** Wrong answers go to your mistake log, and words you save go to My words. Ready-made flashcard decks (words of each topic, case endings, core verbs) work the same way. All of them come back in short review sessions, spaced out so that each one arrives just before you would forget it. Today shows what is due.
 4. **The Case Lab.** All seven cases on one map: what each one does, its endings, a "Pick the case" helper and every form of a phrase side by side.
 
 ## Your data

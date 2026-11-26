@@ -1,0 +1,441 @@
+{
+  "version": 1,
+  "id": "a1-family-people",
+  "title": "Family and people",
+  "description": "Family words, describing people, nationalities and jobs.",
+  "level": "A1",
+  "cards": [
+    {
+      "id": "a1-family-people-001",
+      "type": "typed",
+      "front": "mum, mother",
+      "accepted": [
+        "mama",
+        "matka"
+      ],
+      "back": "mama (f) · formal: matka",
+      "example": "Moja mama jest lekarką.",
+      "exampleEn": "My mum is a doctor.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-002",
+      "type": "typed",
+      "front": "dad, father",
+      "accepted": [
+        "tata",
+        "ojciec"
+      ],
+      "back": "tata (m) · formal: ojciec",
+      "note": "tata ends in -a but is masculine: mój tata.",
+      "example": "Mój tata jest wysoki.",
+      "exampleEn": "My dad is tall.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-003",
+      "type": "typed",
+      "front": "brother",
+      "accepted": [
+        "brat"
+      ],
+      "back": "brat (m)",
+      "example": "Mam brata.",
+      "exampleEn": "I have a brother.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-004",
+      "type": "typed",
+      "front": "sister",
+      "accepted": [
+        "siostra"
+      ],
+      "back": "siostra (f)",
+      "example": "Moja siostra mieszka w Krakowie.",
+      "exampleEn": "My sister lives in Kraków.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-005",
+      "type": "typed",
+      "front": "son",
+      "accepted": [
+        "syn"
+      ],
+      "back": "syn (m)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-006",
+      "type": "typed",
+      "front": "daughter",
+      "accepted": [
+        "córka"
+      ],
+      "back": "córka (f)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-007",
+      "type": "typed",
+      "front": "husband",
+      "accepted": [
+        "mąż"
+      ],
+      "back": "mąż (m)",
+      "example": "Ewa jest tu z mężem.",
+      "exampleEn": "Ewa is here with her husband.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-008",
+      "type": "typed",
+      "front": "wife",
+      "accepted": [
+        "żona"
+      ],
+      "back": "żona (f)",
+      "example": "To jest moja żona, Ola.",
+      "exampleEn": "This is my wife, Ola.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-009",
+      "type": "typed",
+      "front": "child",
+      "accepted": [
+        "dziecko"
+      ],
+      "back": "dziecko (n) · plural: dzieci",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-010",
+      "type": "typed",
+      "front": "children",
+      "accepted": [
+        "dzieci"
+      ],
+      "back": "dzieci (plural of dziecko)",
+      "example": "To są moje dzieci.",
+      "exampleEn": "These are my children.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-011",
+      "type": "typed",
+      "front": "grandma",
+      "accepted": [
+        "babcia"
+      ],
+      "back": "babcia (f)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-012",
+      "type": "typed",
+      "front": "grandpa",
+      "accepted": [
+        "dziadek"
+      ],
+      "back": "dziadek (m)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-013",
+      "type": "typed",
+      "front": "aunt",
+      "accepted": [
+        "ciocia",
+        "ciotka"
+      ],
+      "back": "ciocia (f)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-014",
+      "type": "typed",
+      "front": "uncle",
+      "accepted": [
+        "wujek",
+        "wuj"
+      ],
+      "back": "wujek (m)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-015",
+      "type": "typed",
+      "front": "parents",
+      "accepted": [
+        "rodzice"
+      ],
+      "back": "rodzice (plural)",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-016",
+      "type": "typed",
+      "front": "family",
+      "accepted": [
+        "rodzina"
+      ],
+      "back": "rodzina (f)",
+      "example": "polska rodzina",
+      "exampleEn": "a Polish family",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-017",
+      "type": "typed",
+      "front": "tall (about a man)",
+      "accepted": [
+        "wysoki"
+      ],
+      "back": "wysoki / wysoka",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "a1-family-people-018",
+      "type": "typed",
+      "front": "young (about a woman)",
+      "accepted": [
+        "młoda"
+      ],
+      "back": "młody / młoda",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "a1-family-people-019",
+      "type": "typed",
+      "front": "a Pole (a woman)",
+      "accepted": [
+        "Polka"
+      ],
+      "back": "Polak / Polka",
+      "note": "Nationality nouns take a capital letter.",
+      "example": "Jestem Polką.",
+      "exampleEn": "I'm Polish. (a woman)",
+      "level": "A1",
+      "tags": [
+        "nationalities"
+      ]
+    },
+    {
+      "id": "a1-family-people-020",
+      "type": "typed",
+      "front": "a doctor (a man)",
+      "accepted": [
+        "lekarz",
+        "doktor"
+      ],
+      "back": "lekarz / lekarka",
+      "level": "A1",
+      "tags": [
+        "jobs"
+      ]
+    },
+    {
+      "id": "a1-family-people-021",
+      "type": "typed",
+      "front": "a teacher (a woman)",
+      "accepted": [
+        "nauczycielka"
+      ],
+      "back": "nauczyciel / nauczycielka",
+      "level": "A1",
+      "tags": [
+        "jobs"
+      ]
+    },
+    {
+      "id": "a1-family-people-022",
+      "type": "cloze",
+      "text": "To jest mój {{brat}}, Marek.",
+      "hint": "brother",
+      "en": "This is my brother, Marek.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-023",
+      "type": "cloze",
+      "text": "Moja {{siostra}} jest lekarką.",
+      "hint": "sister",
+      "en": "My sister is a doctor.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-024",
+      "type": "cloze",
+      "text": "Babcia i {{dziadek}} mieszkają w Lublinie.",
+      "hint": "grandpa",
+      "en": "Grandma and Grandpa live in Lublin.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-025",
+      "type": "cloze",
+      "text": "Mój tata jest {{wysoki}}, a mama jest niska.",
+      "hint": "tall",
+      "en": "My dad is tall, and my mum is short.",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "a1-family-people-026",
+      "type": "cloze",
+      "text": "Moja córka jest bardzo {{zabawna|śmieszna}}.",
+      "hint": "funny",
+      "en": "My daughter is very funny.",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "a1-family-people-027",
+      "type": "cloze",
+      "text": "Ola jest {{miła}} i sympatyczna.",
+      "hint": "nice, pleasant",
+      "en": "Ola is kind and friendly.",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    },
+    {
+      "id": "a1-family-people-028",
+      "type": "cloze",
+      "text": "Jestem {{Kanadyjczykiem}} (Kanadyjczyk).",
+      "hint": "Canadian (a man)",
+      "en": "I'm Canadian.",
+      "note": "After jestem a nationality takes the instrumental.",
+      "level": "A1",
+      "tags": [
+        "nationalities"
+      ]
+    },
+    {
+      "id": "a1-family-people-029",
+      "type": "cloze",
+      "text": "Moja żona jest {{nauczycielką}} (nauczycielka).",
+      "hint": "teacher",
+      "en": "My wife is a teacher.",
+      "note": "After jest a job takes the instrumental.",
+      "level": "A1",
+      "tags": [
+        "jobs"
+      ]
+    },
+    {
+      "id": "a1-family-people-030",
+      "type": "cloze",
+      "text": "Nasze {{dziecko}} ma pięć lat.",
+      "hint": "child",
+      "en": "Our child is five.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-031",
+      "type": "cloze",
+      "text": "To są moi {{rodzice}}.",
+      "hint": "parents",
+      "en": "These are my parents.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-032",
+      "type": "cloze",
+      "text": "Jego {{żona}} jest z Irlandii.",
+      "hint": "wife",
+      "en": "His wife is from Ireland.",
+      "level": "A1",
+      "tags": [
+        "family"
+      ]
+    },
+    {
+      "id": "a1-family-people-033",
+      "type": "cloze",
+      "text": "Pan Adam jest {{przystojny}}.",
+      "hint": "handsome",
+      "en": "Mr Adam is handsome.",
+      "level": "A1",
+      "tags": [
+        "people"
+      ]
+    }
+  ]
+}

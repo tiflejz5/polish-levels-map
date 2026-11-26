@@ -66,6 +66,37 @@
         "a1-grammar-possessives-demonstratives",
         "a1-verbs-past-tense-basics"
       ]
+    },
+    {
+      "id": "mix-a1-cases",
+      "title": "All five A1 cases",
+      "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",
+      "level": "A1",
+      "count": 20,
+      "mode": "learn",
+      "topics": [
+        "a1-cases-nominative",
+        "a1-cases-instrumental-identity",
+        "a1-cases-accusative",
+        "a1-cases-genitive-basics",
+        "a1-cases-locative-places"
+      ]
+    },
+    {
+      "id": "mix-a1-verbs",
+      "title": "A1 verbs in one go",
+      "description": "być, the three present patterns, the irregular verbs, verb + infinitive, iść and jechać, and the first past forms, mixed.",
+      "level": "A1",
+      "count": 20,
+      "mode": "learn",
+      "topics": [
+        "a1-verbs-byc",
+        "a1-verbs-present-conjugations",
+        "a1-verbs-common-irregular",
+        "a1-verbs-modal-verbs-basics",
+        "a1-verbs-going-isc-jechac",
+        "a1-verbs-past-tense-basics"
+      ]
     }
   ]
 }

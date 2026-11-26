@@ -148,7 +148,7 @@ async function main() {
     const groups = await s.page.locator(".ess-group-title").allInnerTexts();
     ok(groups.length >= 4 && groups.indexOf("Cases") !== -1, "groups: " + groups.join(", "));
     ok(await s.page.locator('.ess-item[data-topic="a1-cases-accusative"] a[href="#/a1/cases-accusative"]').count() === 1, "topic link");
-    ok(await s.page.locator(".ess-item.is-pending").count() === 24, "\"Being written\" rows");
+    ok(await s.page.locator(".ess-item.is-pending").count() === 0, "\"Being written\" rows (A1 is complete: every topic has a page)");
     await s.page.click('.ess-item[data-topic="a1-cases-accusative"] label.know-toggle input', { force: true });
     await s.page.waitForTimeout(300);
     const progress = await s.page.evaluate(function () { return JSON.parse(localStorage.getItem("plm.profiles")).profiles[0].progress; });
@@ -169,13 +169,13 @@ async function main() {
     ok(/B1 is on its way/.test(await viewText(s.page)), "final test of a soon level");
     await s.ctx.close();
   });
-  await test("topic page: the example page renders; a topic without a page says \"This topic is being written\"", async function () {
+  await test("topic page: A1 pages render with their title and the trail bar (an available level has no pending pages: the validator requires them)", async function () {
     const s = await session(1280, 900, true);
     await visit(s.page, "#/a1/cases-accusative");
     ok(await s.page.locator("article.md h1").innerText() === "Accusative: the direct object", "title");
     ok(await s.page.locator(".sz-bar").count() === 1, "trail bar");
     await visit(s.page, "#/a1/verbs-byc");
-    ok(/This topic is being written\./.test(await viewText(s.page)), "pending page");
+    ok(await s.page.locator("article.md h1").innerText() === "być (to be) and to jest / to są", "second page title");
     ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
     await s.ctx.close();
   });
@@ -841,15 +841,15 @@ async function main() {
     await visit(s.page, "#/lab", 800);
     const names = await s.page.$$eval(".lab-case-grid .lab-tile-name", function (n) { return n.map(function (x) { return x.textContent.trim(); }); });
     ok(names.join(",") === "Nominative,Genitive,Dative,Accusative,Instrumental,Locative,Vocative", "order: " + names.join(","));
-    ok((await s.page.$$("a.lab-tile")).length === 3, "three written cards are links");
+    ok((await s.page.$$("a.lab-tile")).length === 5, "the five written cards (the A1 cases) are links");
     await s.page.focus("a.lab-tile[data-case=nominative]");
     await s.page.keyboard.press("ArrowRight");
     ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "genitive", "ArrowRight");
     await s.page.keyboard.press("End");
-    ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "accusative", "End = last written card");
+    ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "locative", "End = last written card");
     await s.page.keyboard.press("Enter");
     await s.page.waitForTimeout(500);
-    ok(/#\/lab\/accusative$/.test(s.page.url()), "Enter opens the card");
+    ok(/#\/lab\/locative$/.test(s.page.url()), "Enter opens the card");
     await s.page.keyboard.press("?");
     await s.page.waitForTimeout(300);
     ok(/Shortcuts in the lab/.test(await s.page.innerText("body")), "? lists the lab shortcuts");

@@ -1,0 +1,379 @@
+{
+  "version": 1,
+  "id": "case-locative",
+  "title": "Locative in sentences",
+  "description": "Put the place in brackets into the locative after w or na. A1: singular.",
+  "level": "A1-A2",
+  "cards": [
+    {
+      "id": "case-locative-001",
+      "type": "cloze",
+      "text": "Mieszkam w {{Krakowie}} (Kraków).",
+      "hint": "in Kraków",
+      "en": "I live in Kraków.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-002",
+      "type": "cloze",
+      "text": "Wieczorem jestem w {{domu}} (dom).",
+      "hint": "at home",
+      "en": "In the evening I'm at home.",
+      "note": "dom takes -u: w domu.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-003",
+      "type": "cloze",
+      "text": "Pracuję w {{banku}} (bank).",
+      "hint": "in a bank",
+      "en": "I work in a bank.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-004",
+      "type": "cloze",
+      "text": "Ola jest w {{kuchni}} (kuchnia).",
+      "hint": "in the kitchen",
+      "en": "Ola is in the kitchen.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-005",
+      "type": "cloze",
+      "text": "Czekam na {{przystanku}} (przystanek).",
+      "hint": "at the stop",
+      "en": "I'm waiting at the stop.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-006",
+      "type": "cloze",
+      "text": "Mieszkamy w {{Polsce}} (Polska).",
+      "hint": "in Poland",
+      "en": "We live in Poland.",
+      "note": "k → c before -e.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-007",
+      "type": "cloze",
+      "text": "Jestem na {{poczcie}} (poczta).",
+      "hint": "at the post office",
+      "en": "I'm at the post office.",
+      "note": "t → ci before -e.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-008",
+      "type": "cloze",
+      "text": "Pani Ewa jest w {{pracy}} (praca).",
+      "hint": "at work",
+      "en": "Mrs Ewa is at work.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-009",
+      "type": "cloze",
+      "text": "Dzieci są w {{szkole}} (szkoła).",
+      "hint": "at school",
+      "en": "The children are at school.",
+      "note": "ł → l before -e.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-010",
+      "type": "cloze",
+      "text": "Telefon jest na {{stole}} (stół).",
+      "hint": "on the table",
+      "en": "The phone is on the table.",
+      "note": "ó → o, ł → l: na stole.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-011",
+      "type": "cloze",
+      "text": "Kasia studiuje na {{uniwersytecie}} (uniwersytet).",
+      "hint": "at the university",
+      "en": "Kasia studies at the university.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-012",
+      "type": "cloze",
+      "text": "Paweł czeka na {{dworcu}} (dworzec).",
+      "hint": "at the station",
+      "en": "Paweł is waiting at the station.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-013",
+      "type": "cloze",
+      "text": "Mój brat mieszka w {{Warszawie}} (Warszawa).",
+      "hint": "in Warsaw",
+      "en": "My brother lives in Warsaw.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-014",
+      "type": "cloze",
+      "text": "Jesteśmy w {{kinie}} (kino).",
+      "hint": "at the cinema",
+      "en": "We're at the cinema.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-015",
+      "type": "cloze",
+      "text": "Marta jest w {{sklepie}} (sklep).",
+      "hint": "in the shop",
+      "en": "Marta is in the shop.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-016",
+      "type": "cloze",
+      "text": "Mieszkam w {{małym mieszkaniu}} (małe mieszkanie).",
+      "hint": "in a small flat",
+      "en": "I live in a small flat.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "adjectives"
+      ]
+    },
+    {
+      "id": "case-locative-017",
+      "type": "cloze",
+      "text": "Moja siostra pracuje w {{aptece}} (apteka).",
+      "hint": "at a pharmacy",
+      "en": "My sister works at a pharmacy.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-018",
+      "type": "cloze",
+      "text": "Jesteśmy w {{muzeum}} (muzeum).",
+      "hint": "at the museum",
+      "en": "We're at the museum.",
+      "note": "Nouns in -um do not change.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-019",
+      "type": "cloze",
+      "text": "Jemy obiad w {{restauracji}} (restauracja).",
+      "hint": "in a restaurant",
+      "en": "We're having lunch in a restaurant.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-020",
+      "type": "cloze",
+      "text": "Dzieci są w {{parku}} (park).",
+      "hint": "in the park",
+      "en": "The children are in the park.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-021",
+      "type": "cloze",
+      "text": "Marek jest na {{lekcji}} (lekcja).",
+      "hint": "at a lesson",
+      "en": "Marek is at a lesson.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-022",
+      "type": "cloze",
+      "text": "Jestem w {{hotelu}} (hotel).",
+      "hint": "at the hotel",
+      "en": "I'm at the hotel.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-023",
+      "type": "cloze",
+      "text": "Mieszkamy w {{Gdańsku}} (Gdańsk).",
+      "hint": "in Gdańsk",
+      "en": "We live in Gdańsk.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-024",
+      "type": "cloze",
+      "text": "Ania jest na {{koncercie}} (koncert).",
+      "hint": "at a concert",
+      "en": "Ania is at a concert.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    },
+    {
+      "id": "case-locative-025",
+      "type": "cloze",
+      "text": "Kot jest w {{ogrodzie}} (ogród).",
+      "hint": "in the garden",
+      "en": "The cat is in the garden.",
+      "note": "d → dzi, ó → o: w ogrodzie.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-026",
+      "type": "cloze",
+      "text": "Mój kolega mieszka w {{Pradze}} (Praga).",
+      "hint": "in Prague",
+      "en": "My friend lives in Prague.",
+      "note": "g → dz before -e.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-027",
+      "type": "cloze",
+      "text": "Pracuję w {{biurze}} (biuro).",
+      "hint": "in an office",
+      "en": "I work in an office.",
+      "note": "r → rz before -e.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-028",
+      "type": "cloze",
+      "text": "Ola jest w {{nowej szkole}} (nowa szkoła).",
+      "hint": "at a new school",
+      "en": "Ola is at a new school.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "adjectives"
+      ]
+    },
+    {
+      "id": "case-locative-029",
+      "type": "cloze",
+      "text": "Teraz jestem w {{mieście}} (miasto).",
+      "hint": "in town",
+      "en": "I'm in town now.",
+      "note": "st → ści before -e: w mieście.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "w"
+      ]
+    },
+    {
+      "id": "case-locative-030",
+      "type": "cloze",
+      "text": "Samochód jest na {{ulicy}} (ulica).",
+      "hint": "in the street",
+      "en": "The car is in the street.",
+      "level": "A1",
+      "tags": [
+        "locative",
+        "na"
+      ]
+    }
+  ]
+}

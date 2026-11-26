@@ -1,0 +1,374 @@
+{
+  "version": 1,
+  "id": "case-genitive",
+  "title": "Genitive in sentences",
+  "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular.",
+  "level": "A1-A2",
+  "cards": [
+    {
+      "id": "case-genitive-001",
+      "type": "cloze",
+      "text": "Przepraszam, nie mam {{czasu}} (czas).",
+      "hint": "time",
+      "en": "Sorry, I don't have time.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-002",
+      "type": "cloze",
+      "text": "Nie lubię {{kawy}} (kawa).",
+      "hint": "coffee",
+      "en": "I don't like coffee.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-003",
+      "type": "cloze",
+      "text": "W domu nie ma {{chleba}} (chleb).",
+      "hint": "bread",
+      "en": "There's no bread at home.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "nie-ma"
+      ]
+    },
+    {
+      "id": "case-genitive-004",
+      "type": "cloze",
+      "text": "Niestety nie ma {{mleka}} (mleko).",
+      "hint": "milk",
+      "en": "Sorry, there's no milk.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "nie-ma"
+      ]
+    },
+    {
+      "id": "case-genitive-005",
+      "type": "cloze",
+      "text": "To jest samochód {{taty}} (tata).",
+      "hint": "Dad's",
+      "en": "This is Dad's car.",
+      "note": "tata ends in -a: taty.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "possession"
+      ]
+    },
+    {
+      "id": "case-genitive-006",
+      "type": "cloze",
+      "text": "Jutro jadę do {{Krakowa}} (Kraków).",
+      "hint": "to Kraków",
+      "en": "Tomorrow I'm going to Kraków.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-007",
+      "type": "cloze",
+      "text": "Jestem z {{Polski}} (Polska).",
+      "hint": "from Poland",
+      "en": "I'm from Poland.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-008",
+      "type": "cloze",
+      "text": "Herbata bez {{cukru}} (cukier), proszę.",
+      "hint": "without sugar",
+      "en": "Tea without sugar, please.",
+      "note": "cukier loses its e and takes -u: cukru.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-009",
+      "type": "cloze",
+      "text": "To prezent dla {{mamy}} (mama).",
+      "hint": "for Mum",
+      "en": "It's a present for Mum.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-010",
+      "type": "cloze",
+      "text": "Mam list od {{siostry}} (siostra).",
+      "hint": "from my sister",
+      "en": "I have a letter from my sister.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-011",
+      "type": "cloze",
+      "text": "Idę do {{sklepu}} (sklep).",
+      "hint": "to the shop",
+      "en": "I'm going to the shop.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-012",
+      "type": "cloze",
+      "text": "Nie mam {{brata}} (brat).",
+      "hint": "a brother",
+      "en": "I don't have a brother.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-013",
+      "type": "cloze",
+      "text": "Nie znam {{tego pana}} (ten pan).",
+      "hint": "this man",
+      "en": "I don't know this man.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-014",
+      "type": "cloze",
+      "text": "Ania jest u {{babci}} (babcia).",
+      "hint": "at Grandma's",
+      "en": "Ania is at Grandma's.",
+      "note": "u + genitive: at someone's place.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-015",
+      "type": "cloze",
+      "text": "Idę do {{lekarza}} (lekarz).",
+      "hint": "to the doctor's",
+      "en": "I'm going to the doctor's.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-016",
+      "type": "cloze",
+      "text": "Nie mam {{samochodu}} (samochód).",
+      "hint": "a car",
+      "en": "I don't have a car.",
+      "note": "ó → o: samochodu.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-017",
+      "type": "cloze",
+      "text": "Paweł jest z {{Gdańska}} (Gdańsk).",
+      "hint": "from Gdańsk",
+      "en": "Paweł is from Gdańsk.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-018",
+      "type": "cloze",
+      "text": "Poproszę kanapkę bez {{masła}} (masło).",
+      "hint": "without butter",
+      "en": "A sandwich without butter, please.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-019",
+      "type": "cloze",
+      "text": "Imię {{psa}} (pies) to Burek.",
+      "hint": "the dog's",
+      "en": "The dog's name is Burek.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "possession"
+      ]
+    },
+    {
+      "id": "case-genitive-020",
+      "type": "cloze",
+      "text": "Nie lubię {{zimnej herbaty}} (zimna herbata).",
+      "hint": "cold tea",
+      "en": "I don't like cold tea.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-021",
+      "type": "cloze",
+      "text": "Nie mam {{dobrego telefonu}} (dobry telefon).",
+      "hint": "a good phone",
+      "en": "I don't have a good phone.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-022",
+      "type": "cloze",
+      "text": "W sobotę jedziemy do {{Warszawy}} (Warszawa).",
+      "hint": "to Warsaw",
+      "en": "On Saturday we're going to Warsaw.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-023",
+      "type": "cloze",
+      "text": "To jest dom {{mojej siostry}} (moja siostra).",
+      "hint": "my sister's",
+      "en": "This is my sister's house.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "possession"
+      ]
+    },
+    {
+      "id": "case-genitive-024",
+      "type": "cloze",
+      "text": "Ta kawa jest dla {{pani Ewy}} (pani Ewa).",
+      "hint": "for Mrs Ewa",
+      "en": "This coffee is for Mrs Ewa.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-025",
+      "type": "cloze",
+      "text": "Idziemy do {{kina}} (kino).",
+      "hint": "to the cinema",
+      "en": "We're going to the cinema.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-026",
+      "type": "cloze",
+      "text": "Mam dużo {{pracy}} (praca).",
+      "hint": "work",
+      "en": "I have a lot of work.",
+      "note": "dużo + genitive.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "quantity"
+      ]
+    },
+    {
+      "id": "case-genitive-027",
+      "type": "cloze",
+      "text": "Przepraszam, nie ma {{Ani}} (Ania).",
+      "hint": "Ania",
+      "en": "Sorry, Ania isn't here.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "nie-ma"
+      ]
+    },
+    {
+      "id": "case-genitive-028",
+      "type": "cloze",
+      "text": "Mój kolega jest z {{Kanady}} (Kanada).",
+      "hint": "from Canada",
+      "en": "My friend is from Canada.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "prepositions"
+      ]
+    },
+    {
+      "id": "case-genitive-029",
+      "type": "cloze",
+      "text": "Nie piję {{piwa}} (piwo).",
+      "hint": "beer",
+      "en": "I don't drink beer.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "negation"
+      ]
+    },
+    {
+      "id": "case-genitive-030",
+      "type": "cloze",
+      "text": "To jest pokój {{dziecka}} (dziecko).",
+      "hint": "the child's",
+      "en": "This is the child's room.",
+      "level": "A1",
+      "tags": [
+        "genitive",
+        "possession"
+      ]
+    }
+  ]
+}

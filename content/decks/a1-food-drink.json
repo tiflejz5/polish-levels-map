@@ -1,0 +1,434 @@
+{
+  "version": 1,
+  "id": "a1-food-drink",
+  "title": "Food and drink",
+  "description": "Drinks, meals, everyday food and the phrases you need at the table.",
+  "level": "A1",
+  "cards": [
+    {
+      "id": "a1-food-drink-001",
+      "type": "typed",
+      "front": "water",
+      "accepted": [
+        "woda"
+      ],
+      "back": "woda (f)",
+      "example": "Poproszę wodę.",
+      "exampleEn": "Some water, please.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-002",
+      "type": "typed",
+      "front": "coffee",
+      "accepted": [
+        "kawa"
+      ],
+      "back": "kawa (f)",
+      "example": "Piję kawę z mlekiem.",
+      "exampleEn": "I drink coffee with milk.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-003",
+      "type": "typed",
+      "front": "tea",
+      "accepted": [
+        "herbata"
+      ],
+      "back": "herbata (f)",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-004",
+      "type": "typed",
+      "front": "milk",
+      "accepted": [
+        "mleko"
+      ],
+      "back": "mleko (n)",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-005",
+      "type": "typed",
+      "front": "juice",
+      "accepted": [
+        "sok"
+      ],
+      "back": "sok (m)",
+      "example": "sok pomarańczowy",
+      "exampleEn": "orange juice",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-006",
+      "type": "typed",
+      "front": "beer",
+      "accepted": [
+        "piwo"
+      ],
+      "back": "piwo (n)",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-007",
+      "type": "typed",
+      "front": "bread",
+      "accepted": [
+        "chleb"
+      ],
+      "back": "chleb (m)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-008",
+      "type": "typed",
+      "front": "butter",
+      "accepted": [
+        "masło"
+      ],
+      "back": "masło (n)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-009",
+      "type": "typed",
+      "front": "cheese",
+      "accepted": [
+        "ser"
+      ],
+      "back": "ser (m)",
+      "example": "kanapka z serem",
+      "exampleEn": "a cheese sandwich",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-010",
+      "type": "typed",
+      "front": "egg",
+      "accepted": [
+        "jajko",
+        "jajo"
+      ],
+      "back": "jajko (n)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-011",
+      "type": "typed",
+      "front": "sandwich",
+      "accepted": [
+        "kanapka"
+      ],
+      "back": "kanapka (f)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-012",
+      "type": "typed",
+      "front": "soup",
+      "accepted": [
+        "zupa"
+      ],
+      "back": "zupa (f)",
+      "example": "zupa pomidorowa",
+      "exampleEn": "tomato soup",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-013",
+      "type": "typed",
+      "front": "fish",
+      "accepted": [
+        "ryba"
+      ],
+      "back": "ryba (f)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-014",
+      "type": "typed",
+      "front": "chicken",
+      "accepted": [
+        "kurczak"
+      ],
+      "back": "kurczak (m)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-015",
+      "type": "typed",
+      "front": "potatoes",
+      "accepted": [
+        "ziemniaki",
+        "kartofle"
+      ],
+      "back": "ziemniaki (plural)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-016",
+      "type": "typed",
+      "front": "apple",
+      "accepted": [
+        "jabłko"
+      ],
+      "back": "jabłko (n)",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-017",
+      "type": "typed",
+      "front": "breakfast",
+      "accepted": [
+        "śniadanie"
+      ],
+      "back": "śniadanie (n)",
+      "example": "Jem śniadanie o siódmej.",
+      "exampleEn": "I have breakfast at seven.",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    },
+    {
+      "id": "a1-food-drink-018",
+      "type": "typed",
+      "front": "lunch (the main hot meal)",
+      "accepted": [
+        "obiad"
+      ],
+      "back": "obiad (m)",
+      "note": "obiad is the main meal, often in the afternoon.",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    },
+    {
+      "id": "a1-food-drink-019",
+      "type": "typed",
+      "front": "supper, evening meal",
+      "accepted": [
+        "kolacja"
+      ],
+      "back": "kolacja (f)",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    },
+    {
+      "id": "a1-food-drink-020",
+      "type": "typed",
+      "front": "ice cream",
+      "accepted": [
+        "lody"
+      ],
+      "back": "lody (plural)",
+      "note": "Plural in Polish: lody są.",
+      "example": "Lody są zimne.",
+      "exampleEn": "The ice cream is cold.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-021",
+      "type": "cloze",
+      "text": "Na śniadanie jem {{chleb}} z masłem.",
+      "hint": "bread",
+      "en": "For breakfast I eat bread and butter.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-022",
+      "type": "cloze",
+      "text": "Poproszę {{kawę}} (kawa) z mlekiem.",
+      "hint": "coffee",
+      "en": "A coffee with milk, please.",
+      "note": "After poproszę: kawa → kawę.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-023",
+      "type": "cloze",
+      "text": "Herbata z {{cytryną}} (cytryna), proszę.",
+      "hint": "lemon",
+      "en": "Tea with lemon, please.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-024",
+      "type": "cloze",
+      "text": "Ta {{zupa}} jest bardzo smaczna.",
+      "hint": "soup",
+      "en": "This soup is very tasty.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-025",
+      "type": "cloze",
+      "text": "{{Smacznego}}! — Dziękuję, nawzajem.",
+      "hint": "Enjoy your meal!",
+      "en": "Enjoy your meal! — Thank you, you too.",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    },
+    {
+      "id": "a1-food-drink-026",
+      "type": "cloze",
+      "text": "{{Lody}} są zimne.",
+      "hint": "ice cream",
+      "en": "The ice cream is cold.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-027",
+      "type": "cloze",
+      "text": "Piję kawę bez {{cukru}} (cukier).",
+      "hint": "sugar",
+      "en": "I drink coffee without sugar.",
+      "note": "bez + genitive: cukier → cukru.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-028",
+      "type": "cloze",
+      "text": "Woda gazowana czy {{niegazowana}}?",
+      "hint": "still",
+      "en": "Sparkling or still water?",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-029",
+      "type": "cloze",
+      "text": "Na obiad jemy rybę i {{ziemniaki}}.",
+      "hint": "potatoes",
+      "en": "We're having fish and potatoes for lunch.",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    },
+    {
+      "id": "a1-food-drink-030",
+      "type": "cloze",
+      "text": "Jestem {{głodna}}.",
+      "hint": "hungry (a woman speaking)",
+      "en": "I'm hungry.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-031",
+      "type": "cloze",
+      "text": "Sok {{pomarańczowy}}, proszę.",
+      "hint": "orange",
+      "en": "Orange juice, please.",
+      "level": "A1",
+      "tags": [
+        "drinks"
+      ]
+    },
+    {
+      "id": "a1-food-drink-032",
+      "type": "cloze",
+      "text": "Poproszę kanapkę z {{serem}} (ser).",
+      "hint": "cheese",
+      "en": "A cheese sandwich, please.",
+      "note": "z (with) + instrumental: ser → serem.",
+      "level": "A1",
+      "tags": [
+        "food"
+      ]
+    },
+    {
+      "id": "a1-food-drink-033",
+      "type": "cloze",
+      "text": "Na kolację jem {{sałatkę}} (sałatka).",
+      "hint": "salad (the dish)",
+      "en": "For supper I have a salad.",
+      "note": "sałatka is a salad; sałata is lettuce.",
+      "level": "A1",
+      "tags": [
+        "meals"
+      ]
+    }
+  ]
+}

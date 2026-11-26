@@ -1,0 +1,809 @@
+{
+  "version": 1,
+  "id": "verbs-core-100",
+  "title": "Core verbs",
+  "description": "The most common verbs: type the infinitive, then use it in the present. A1 part: 60 of 100 cards; A2 adds the rest. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
+  "level": "A1-A2",
+  "cards": [
+    {
+      "id": "verbs-core-100-001",
+      "type": "typed",
+      "front": "to be",
+      "accepted": [
+        "być"
+      ],
+      "back": "być: jestem, jesteś",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-002",
+      "type": "cloze",
+      "text": "Gdzie {{jesteś}} (być)?",
+      "hint": "are you (one person)",
+      "en": "Where are you?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-003",
+      "type": "typed",
+      "front": "to have",
+      "accepted": [
+        "mieć"
+      ],
+      "back": "mieć: mam, masz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-004",
+      "type": "cloze",
+      "text": "Ile {{masz}} (mieć) lat?",
+      "hint": "do you have (how old are you) (one person)",
+      "en": "How old are you?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-005",
+      "type": "typed",
+      "front": "to live (somewhere)",
+      "accepted": [
+        "mieszkać"
+      ],
+      "back": "mieszkać: mieszkam, mieszkasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-006",
+      "type": "cloze",
+      "text": "Gdzie pan {{mieszka}} (mieszkać)?",
+      "hint": "do you live (to a man)",
+      "en": "Where do you live?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-007",
+      "type": "typed",
+      "front": "to work",
+      "accepted": [
+        "pracować"
+      ],
+      "back": "pracować: pracuję, pracujesz",
+      "note": "-ować → -uję.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-008",
+      "type": "cloze",
+      "text": "{{Pracuję}} (pracować) w szkole.",
+      "hint": "I work",
+      "en": "I work at a school.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-009",
+      "type": "typed",
+      "front": "to read",
+      "accepted": [
+        "czytać",
+        "przeczytać"
+      ],
+      "back": "czytać: czytam, czytasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-010",
+      "type": "cloze",
+      "text": "Co {{czytasz}} (czytać)?",
+      "hint": "are you reading (one person)",
+      "en": "What are you reading?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-011",
+      "type": "typed",
+      "front": "to write",
+      "accepted": [
+        "pisać",
+        "napisać"
+      ],
+      "back": "pisać: piszę, piszesz",
+      "note": "s → sz in every present form.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-012",
+      "type": "cloze",
+      "text": "Kasia {{pisze}} (pisać) list.",
+      "hint": "is writing",
+      "en": "Kasia is writing a letter.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-013",
+      "type": "typed",
+      "front": "to speak",
+      "accepted": [
+        "mówić"
+      ],
+      "back": "mówić: mówię, mówisz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-014",
+      "type": "cloze",
+      "text": "{{Mówię}} (mówić) trochę po polsku.",
+      "hint": "I speak",
+      "en": "I speak a little Polish.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-015",
+      "type": "typed",
+      "front": "to understand",
+      "accepted": [
+        "rozumieć",
+        "zrozumieć"
+      ],
+      "back": "rozumieć: rozumiem, rozumiesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-016",
+      "type": "cloze",
+      "text": "Przepraszam, nie {{rozumiem}} (rozumieć).",
+      "hint": "I (don't) understand",
+      "en": "Sorry, I don't understand.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-017",
+      "type": "typed",
+      "front": "to do, to make",
+      "accepted": [
+        "robić",
+        "zrobić"
+      ],
+      "back": "robić: robię, robisz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-018",
+      "type": "cloze",
+      "text": "Co {{robicie}} (robić) wieczorem?",
+      "hint": "are you doing (several people)",
+      "en": "What are you doing this evening?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-019",
+      "type": "typed",
+      "front": "to like",
+      "accepted": [
+        "lubić"
+      ],
+      "back": "lubić: lubię, lubisz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-020",
+      "type": "cloze",
+      "text": "{{Lubię}} (lubić) polską kuchnię.",
+      "hint": "I like",
+      "en": "I like Polish food.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-021",
+      "type": "typed",
+      "front": "to know (a person or place)",
+      "accepted": [
+        "znać"
+      ],
+      "back": "znać: znam, znasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-022",
+      "type": "cloze",
+      "text": "{{Znasz}} (znać) Kraków?",
+      "hint": "do you know (one person)",
+      "en": "Do you know Kraków?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-023",
+      "type": "typed",
+      "front": "to know (a fact)",
+      "accepted": [
+        "wiedzieć"
+      ],
+      "back": "wiedzieć: wiem, wiesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-024",
+      "type": "cloze",
+      "text": "Nie {{wiem}} (wiedzieć), gdzie on jest.",
+      "hint": "I (don't) know",
+      "en": "I don't know where he is.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-025",
+      "type": "typed",
+      "front": "to eat",
+      "accepted": [
+        "jeść"
+      ],
+      "back": "jeść: jem, jesz",
+      "note": "they eat: jedzą.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-026",
+      "type": "cloze",
+      "text": "Dzieci {{jedzą}} (jeść) obiad w szkole.",
+      "hint": "eat",
+      "en": "The children eat lunch at school.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-027",
+      "type": "typed",
+      "front": "to drink",
+      "accepted": [
+        "pić"
+      ],
+      "back": "pić: piję, pijesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-028",
+      "type": "cloze",
+      "text": "Rano {{piję}} (pić) kawę.",
+      "hint": "I drink",
+      "en": "In the morning I drink coffee.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-029",
+      "type": "typed",
+      "front": "to go (on foot)",
+      "accepted": [
+        "iść",
+        "chodzić"
+      ],
+      "back": "iść: idę, idziesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-030",
+      "type": "cloze",
+      "text": "Dokąd {{idziesz}} (iść)?",
+      "hint": "are you going (on foot) (one person)",
+      "en": "Where are you going?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-031",
+      "type": "typed",
+      "front": "to go (by vehicle)",
+      "accepted": [
+        "jechać",
+        "jeździć"
+      ],
+      "back": "jechać: jadę, jedziesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-032",
+      "type": "cloze",
+      "text": "Jutro {{jadę}} (jechać) do Gdańska.",
+      "hint": "I'm going (by vehicle)",
+      "en": "Tomorrow I'm going to Gdańsk.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-033",
+      "type": "typed",
+      "front": "to want",
+      "accepted": [
+        "chcieć"
+      ],
+      "back": "chcieć: chcę, chcesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-034",
+      "type": "cloze",
+      "text": "{{Chcesz}} (chcieć) iść do kina?",
+      "hint": "do you want (one person)",
+      "en": "Do you want to go to the cinema?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-035",
+      "type": "typed",
+      "front": "can (be able, be allowed)",
+      "accepted": [
+        "móc"
+      ],
+      "back": "móc: mogę, możesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-036",
+      "type": "cloze",
+      "text": "Czy {{mogę}} (móc) tu usiąść?",
+      "hint": "may I",
+      "en": "May I sit here?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-037",
+      "type": "typed",
+      "front": "must, to have to",
+      "accepted": [
+        "musieć"
+      ],
+      "back": "musieć: muszę, musisz",
+      "note": "s → sz in muszę, muszą.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-038",
+      "type": "cloze",
+      "text": "Jutro {{muszę}} (musieć) pracować.",
+      "hint": "I have to",
+      "en": "Tomorrow I have to work.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-039",
+      "type": "typed",
+      "front": "can (know how)",
+      "accepted": [
+        "umieć",
+        "potrafić"
+      ],
+      "back": "umieć: umiem, umiesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-040",
+      "type": "cloze",
+      "text": "{{Umiesz}} (umieć) pływać?",
+      "hint": "can you (know how) (one person)",
+      "en": "Can you swim?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-041",
+      "type": "typed",
+      "front": "to buy",
+      "accepted": [
+        "kupować",
+        "kupić"
+      ],
+      "back": "kupować: kupuję, kupujesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-042",
+      "type": "cloze",
+      "text": "{{Kupujemy}} (kupować) nowy telefon.",
+      "hint": "we're buying",
+      "en": "We're buying a new phone.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-043",
+      "type": "typed",
+      "front": "to cook",
+      "accepted": [
+        "gotować",
+        "ugotować"
+      ],
+      "back": "gotować: gotuję, gotujesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-044",
+      "type": "cloze",
+      "text": "Mój tata {{gotuje}} (gotować) obiad.",
+      "hint": "is cooking",
+      "en": "My dad is cooking lunch.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-045",
+      "type": "typed",
+      "front": "to watch",
+      "accepted": [
+        "oglądać",
+        "obejrzeć"
+      ],
+      "back": "oglądać: oglądam, oglądasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-046",
+      "type": "cloze",
+      "text": "Wieczorem {{oglądamy}} (oglądać) film.",
+      "hint": "we watch",
+      "en": "In the evening we watch a film.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-047",
+      "type": "typed",
+      "front": "to listen",
+      "accepted": [
+        "słuchać"
+      ],
+      "back": "słuchać: słucham, słuchasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-048",
+      "type": "cloze",
+      "text": "{{Słucham}} (słuchać) pana?",
+      "hint": "I'm listening (how can I help?)",
+      "en": "How can I help you, sir?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-049",
+      "type": "typed",
+      "front": "to ask (a question)",
+      "accepted": [
+        "pytać",
+        "zapytać"
+      ],
+      "back": "pytać: pytam, pytasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-050",
+      "type": "cloze",
+      "text": "Dlaczego {{pytasz}} (pytać)?",
+      "hint": "are you asking (one person)",
+      "en": "Why are you asking?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-051",
+      "type": "typed",
+      "front": "to dance",
+      "accepted": [
+        "tańczyć",
+        "zatańczyć"
+      ],
+      "back": "tańczyć: tańczę, tańczysz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-052",
+      "type": "cloze",
+      "text": "Moi rodzice bardzo dobrze {{tańczą}} (tańczyć).",
+      "hint": "dance",
+      "en": "My parents dance very well.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-053",
+      "type": "typed",
+      "front": "to study (at university)",
+      "accepted": [
+        "studiować"
+      ],
+      "back": "studiować: studiuję, studiujesz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-054",
+      "type": "cloze",
+      "text": "Moja siostra {{studiuje}} (studiować) w Poznaniu.",
+      "hint": "studies",
+      "en": "My sister studies in Poznań.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-055",
+      "type": "typed",
+      "front": "to wait",
+      "accepted": [
+        "czekać",
+        "poczekać",
+        "zaczekać"
+      ],
+      "back": "czekać: czekam, czekasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-056",
+      "type": "cloze",
+      "text": "{{Czekam}} (czekać) na przystanku.",
+      "hint": "I'm waiting",
+      "en": "I'm waiting at the stop.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-057",
+      "type": "typed",
+      "front": "to swim",
+      "accepted": [
+        "pływać",
+        "płynąć"
+      ],
+      "back": "pływać: pływam, pływasz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-058",
+      "type": "cloze",
+      "text": "W lipcu {{pływamy}} (pływać) w morzu.",
+      "hint": "we swim",
+      "en": "In July we swim in the sea.",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-059",
+      "type": "typed",
+      "front": "to pay",
+      "accepted": [
+        "płacić",
+        "zapłacić"
+      ],
+      "back": "płacić: płacę, płacisz",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-060",
+      "type": "cloze",
+      "text": "Ile {{płacę}} (płacić)?",
+      "hint": "do I pay (owe)",
+      "en": "How much do I owe?",
+      "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    }
+  ]
+}

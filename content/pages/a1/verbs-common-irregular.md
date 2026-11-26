@@ -77,7 +77,7 @@ In bold: the *ja* and *oni* forms have a different stem from the rest: *idę –
 ## Common mistakes for English speakers
 
 - ✗ *Wiem Kraków.* → ✓ *Znam Kraków.* — *wiedzieć* is for facts; people and places take *znać*.
-- ✗ *Idę do Krakowa samochodem.* → ✓ *Jadę do Krakowa samochodem.* — *iść* is only on foot.
+- ✗ *Idę do Krakowa samochodem.* → ✓ *Jadę do Krakowa samochodem.* — with a vehicle, use *jechać*.
 - ✗ *Oni jadą obiad.* → ✓ *Oni jedzą obiad.* — *jedzą* is "they eat"; *jadą* is "they are going".
 - ✗ *Ty jadziesz.* → ✓ *Ty jedziesz.* — the stem changes: *jadę*, but *jedziesz, jedzie*.
 - ✗ *Chcę jem.* → ✓ *Chcę jeść.* — after *chcę* the second verb is the infinitive.
