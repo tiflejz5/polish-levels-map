@@ -1,4 +1,18 @@
 {
   "version": 1,
-  "mixes": []
+  "mixes": [
+    {
+      "id": "mix-a1-u1",
+      "title": "Unit review: Sounds and first words",
+      "description": "Sounds and stress, pronouns and pan / pani, and być, mixed.",
+      "level": "A1",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a1-grammar-alphabet-pronunciation",
+        "a1-grammar-pronouns-pan-pani",
+        "a1-verbs-byc"
+      ]
+    }
+  ]
 }

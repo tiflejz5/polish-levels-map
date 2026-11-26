@@ -1,0 +1,236 @@
+{
+  "version": 1,
+  "id": "a1-verbs-byc-1",
+  "topic": "a1-verbs-byc",
+  "level": "A1",
+  "title": "być: check yourself",
+  "intro": "10 tasks: conjugate być, choose to jest or to są, correct the mistakes and translate.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-verbs-byc-1-01",
+      "type": "paradigm",
+      "tags": [
+        "byc",
+        "present"
+      ],
+      "prompt": "Write the present tense of być.",
+      "lemma": "być",
+      "gloss": "to be",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "jestem"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "jesteś"
+          ]
+        },
+        {
+          "label": "on / ona / ono",
+          "accepted": [
+            "jest"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "jesteśmy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "jesteście"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "są"
+          ]
+        }
+      ],
+      "explanation": "być is irregular: jestem, jesteś, jest, jesteśmy, jesteście, są."
+    },
+    {
+      "id": "a1-verbs-byc-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "byc",
+        "present"
+      ],
+      "prompt": "Ty ___ Ola? (Are you Ola?)",
+      "options": [
+        "jestem",
+        "jesteś",
+        "jest",
+        "jesteście"
+      ],
+      "correct": 1,
+      "explanation": "ty → jesteś.",
+      "optionNotes": [
+        "Jestem is 'I am'.",
+        null,
+        "Jest is he / she / it.",
+        "Jesteście is the plural 'you'."
+      ]
+    },
+    {
+      "id": "a1-verbs-byc-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "byc",
+        "formal"
+      ],
+      "prompt": "Pan ___ bardzo miły. (You're very nice. – to a man)",
+      "options": [
+        "jesteś",
+        "jest",
+        "są",
+        "jesteście"
+      ],
+      "correct": 1,
+      "explanation": "Pan takes the he form: pan jest.",
+      "optionNotes": [
+        "Jesteś is the ty form; pan uses the he form.",
+        null,
+        "Są is plural.",
+        "Wy is never the polite form for one person."
+      ]
+    },
+    {
+      "id": "a1-verbs-byc-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "to-jest",
+        "to-sa"
+      ],
+      "context": "These are my children, and this is my wife.",
+      "text": "To {{1}} moje dzieci, a to {{2}} moja żona.",
+      "gaps": [
+        {
+          "accepted": [
+            "są"
+          ]
+        },
+        {
+          "accepted": [
+            "jest"
+          ]
+        }
+      ],
+      "explanation": "More than one: to są. One person: to jest. To itself does not change."
+    },
+    {
+      "id": "a1-verbs-byc-1-05",
+      "type": "find-error",
+      "tags": [
+        "byc",
+        "plural"
+      ],
+      "tokens": [
+        "Oni",
+        "jest",
+        "tam."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "są"
+      ],
+      "explanation": "Oni (they) → są."
+    },
+    {
+      "id": "a1-verbs-byc-1-06",
+      "type": "find-error",
+      "tags": [
+        "to-jest",
+        "to-sa"
+      ],
+      "tokens": [
+        "To",
+        "są",
+        "mój",
+        "brat."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "jest"
+      ],
+      "explanation": "One person: to jest mój brat."
+    },
+    {
+      "id": "a1-verbs-byc-1-07",
+      "type": "reorder",
+      "tags": [
+        "byc",
+        "negation"
+      ],
+      "context": "This is not my phone.",
+      "answers": [
+        "To nie jest mój telefon."
+      ],
+      "explanation": "Nie goes right before the verb: to nie jest."
+    },
+    {
+      "id": "a1-verbs-byc-1-08",
+      "type": "translate",
+      "tags": [
+        "byc",
+        "present"
+      ],
+      "source": "We are here.",
+      "accepted": [
+        "Jesteśmy tu.",
+        "Jesteśmy tutaj.",
+        "My jesteśmy tu.",
+        "My jesteśmy tutaj.",
+        "Tu jesteśmy.",
+        "Tutaj jesteśmy.",
+        "My tu jesteśmy.",
+        "My tutaj jesteśmy."
+      ],
+      "explanation": "my → jesteśmy. The pronoun my is usually left out."
+    },
+    {
+      "id": "a1-verbs-byc-1-09",
+      "type": "translate",
+      "tags": [
+        "byc",
+        "questions"
+      ],
+      "source": "Where are you? (to one friend)",
+      "accepted": [
+        "Gdzie jesteś?",
+        "Gdzie ty jesteś?",
+        "Ty gdzie jesteś?"
+      ],
+      "explanation": "One friend: ty → jesteś. The pronoun ty is usually left out."
+    },
+    {
+      "id": "a1-verbs-byc-1-10",
+      "type": "short-answer",
+      "tags": [
+        "kto-co",
+        "questions"
+      ],
+      "prompt": "___ to jest? — To jest mój brat.",
+      "accepted": [
+        "Kto"
+      ],
+      "explanation": "Kto to jest? asks about people and animals; Co to jest? asks about things."
+    }
+  ]
+}

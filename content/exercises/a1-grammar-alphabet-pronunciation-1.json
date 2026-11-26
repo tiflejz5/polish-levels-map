@@ -1,0 +1,233 @@
+{
+  "version": 1,
+  "id": "a1-grammar-alphabet-pronunciation-1",
+  "topic": "a1-grammar-alphabet-pronunciation",
+  "level": "A1",
+  "title": "Sounds and stress: check yourself",
+  "intro": "10 tasks: find the stress, match letters and sounds, add the marks and write a dictation.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-01",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "stress"
+      ],
+      "prompt": "herbata (tea) = her-ba-ta. Which syllable is stressed?",
+      "options": [
+        "her",
+        "ba",
+        "ta"
+      ],
+      "correct": 1,
+      "explanation": "Stress the second-to-last syllable: her-BA-ta.",
+      "optionNotes": [
+        "English habit: stress on the first syllable.",
+        null,
+        "Polish does not stress the last syllable here."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "stress",
+        "syllables"
+      ],
+      "prompt": "poniedziałek (Monday) = po-nie-dzia-łek. Which syllable is stressed?",
+      "options": [
+        "po",
+        "nie",
+        "dzia",
+        "łek"
+      ],
+      "correct": 2,
+      "explanation": "Four syllables: po-nie-dzia-łek. The i in dzia is not a syllable of its own. The stress is on the second-to-last: DZIA.",
+      "optionNotes": [
+        "That is the first syllable.",
+        "That is the third syllable from the end.",
+        null,
+        "That is the last syllable."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-03",
+      "type": "match",
+      "tags": [
+        "sounds",
+        "letters"
+      ],
+      "mode": "definition",
+      "prompt": "Match the Polish letters with the English sounds.",
+      "pairs": [
+        [
+          "sz",
+          "sh in shop"
+        ],
+        [
+          "cz",
+          "ch in church"
+        ],
+        [
+          "w",
+          "v in van"
+        ],
+        [
+          "ł",
+          "w in water"
+        ],
+        [
+          "ch",
+          "ch in Scottish loch"
+        ],
+        [
+          "j",
+          "y in yes"
+        ]
+      ],
+      "explanation": "Polish letters keep a fixed sound (apart from changes at the end of a word): w is v, ł is English w, j is y, and ch is the sound in loch."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "spelling",
+        "rz-z"
+      ],
+      "context": "Both gaps make the sound of the s in pleasure. River, wife.",
+      "text": "{{1}}eka, {{2}}ona",
+      "gaps": [
+        {
+          "accepted": [
+            "rz"
+          ]
+        },
+        {
+          "accepted": [
+            "ż"
+          ]
+        }
+      ],
+      "explanation": "rz and ż sound the same, so learn the spelling with each word: rzeka, żona."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "spelling",
+        "o-u"
+      ],
+      "context": "Each gap is ó or u. Krakow (the city), ear, pencil.",
+      "text": "Kra{{1}}w, {{2}}cho, oł{{3}}wek",
+      "gaps": [
+        {
+          "accepted": [
+            "ó"
+          ]
+        },
+        {
+          "accepted": [
+            "u"
+          ]
+        },
+        {
+          "accepted": [
+            "ó"
+          ]
+        }
+      ],
+      "explanation": "ó and u sound the same: Kraków, ucho, ołówek. The spelling has to be learnt with the word."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-06",
+      "type": "find-error",
+      "tags": [
+        "spelling",
+        "diacritics"
+      ],
+      "tokens": [
+        "Dzien",
+        "dobry!"
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Dzień"
+      ],
+      "explanation": "Dzień ends in ń, a soft n. Leaving out the mark is a spelling mistake."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-07",
+      "type": "find-error",
+      "tags": [
+        "spelling",
+        "diacritics"
+      ],
+      "tokens": [
+        "Przepraszam,",
+        "ktora",
+        "godzina?"
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "która"
+      ],
+      "explanation": "Która is spelled with ó."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-08",
+      "type": "dictation",
+      "tags": [
+        "spelling",
+        "diacritics",
+        "sounds"
+      ],
+      "text": "Dzień dobry. Przepraszam. Dziękuję. Cześć!",
+      "explanation": "Listen for the soft sounds ń and ść. Remember the two ę's in dziękuję (the last one sounds almost like e) and that przepraszam is spelled with rz, although it sounds like psz."
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-09",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "sounds",
+        "rz-z"
+      ],
+      "prompt": "Which word starts with the same sound as żona?",
+      "options": [
+        "rzeka",
+        "zupa",
+        "szkoła",
+        "czas"
+      ],
+      "correct": 0,
+      "explanation": "rz and ż are one sound, like the s in pleasure.",
+      "optionNotes": [
+        null,
+        "z is the z in zoo.",
+        "sz is the sh in shop.",
+        "cz is the ch in church."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-1-10",
+      "type": "short-answer",
+      "tags": [
+        "spelling",
+        "diacritics"
+      ],
+      "prompt": "Write the name of the city with all its marks: Lodz → ___",
+      "accepted": [
+        "Łódź"
+      ],
+      "explanation": "Łódź has three letters with marks: Ł, ó and ź."
+    }
+  ]
+}

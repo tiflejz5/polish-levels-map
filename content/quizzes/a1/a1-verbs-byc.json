@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a1-verbs-byc",
+  "topic": "a1-verbs-byc",
+  "level": "A1",
+  "title": "Stop: być",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-verbs-byc-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "My ___ tu. (We're here.)",
+      "options": [
+        "jesteśmy",
+        "jesteście",
+        "są",
+        "jest"
+      ],
+      "correct": 0,
+      "explanation": "my → jesteśmy.",
+      "optionNotes": [
+        null,
+        "Jesteście goes with wy (you, plural).",
+        "Są goes with oni / one (they).",
+        "Jest is the he / she / it form."
+      ]
+    },
+    {
+      "id": "a1-verbs-byc-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Oni ___ tam. (They're over there.)",
+      "options": [
+        "jest",
+        "są",
+        "jesteście",
+        "jestem"
+      ],
+      "correct": 1,
+      "explanation": "oni → są.",
+      "optionNotes": [
+        "Jest is singular: he / she / it is.",
+        null,
+        "Jesteście goes with wy.",
+        "Jestem is I am."
+      ]
+    },
+    {
+      "id": "a1-verbs-byc-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ moje dzieci. (These are my children.)",
+      "options": [
+        "To jest",
+        "To są",
+        "Ten jest",
+        "To jesteś"
+      ],
+      "correct": 1,
+      "explanation": "Dzieci is plural, so to są. To itself never changes.",
+      "optionNotes": [
+        "To jest is for one person or thing.",
+        null,
+        "Polish says to, not ten, when pointing: to jest, to są.",
+        "Jesteś is the you form."
+      ]
+    },
+    {
+      "id": "a1-verbs-byc-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Pani ___ bardzo miła. (You're very nice. – to a woman)",
+      "options": [
+        "jesteś",
+        "jest",
+        "jesteście",
+        "są"
+      ],
+      "correct": 1,
+      "explanation": "Pani takes the she form of the verb: pani jest.",
+      "optionNotes": [
+        "Jesteś is the ty form; pani uses the she form.",
+        null,
+        "Wy is never the polite form for one person.",
+        "Są is plural."
+      ]
+    }
+  ]
+}

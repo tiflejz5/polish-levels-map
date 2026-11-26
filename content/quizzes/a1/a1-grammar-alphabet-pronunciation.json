@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "id": "a1-grammar-alphabet-pronunciation",
+  "topic": "a1-grammar-alphabet-pronunciation",
+  "level": "A1",
+  "title": "Stop: alphabet and stress",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a1-grammar-alphabet-pronunciation-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Warszawa = war-sza-wa. Which syllable is stressed?",
+      "options": [
+        "war",
+        "sza",
+        "wa"
+      ],
+      "correct": 1,
+      "explanation": "Polish stresses the second-to-last syllable: war-SZA-wa.",
+      "optionNotes": [
+        "English habit: stress on the first syllable.",
+        null,
+        "The last syllable is not stressed in Polish words like this."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which spelling makes the same sound as ż?",
+      "options": [
+        "rz",
+        "sz",
+        "cz",
+        "z"
+      ],
+      "correct": 0,
+      "explanation": "rz and ż are two spellings of one sound, like the s in pleasure.",
+      "optionNotes": [
+        null,
+        "sz is the sh in shop.",
+        "cz is the ch in church.",
+        "z is the z in zoo."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which letter sounds like the w in English water?",
+      "options": [
+        "w",
+        "ł",
+        "u",
+        "l"
+      ],
+      "correct": 1,
+      "explanation": "ł sounds like English w. Polish w sounds like v.",
+      "optionNotes": [
+        "Polish w sounds like v, as in van.",
+        null,
+        "u is a vowel, like the oo in book.",
+        "l is a clear l, as in leaf."
+      ]
+    },
+    {
+      "id": "a1-grammar-alphabet-pronunciation-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which spelling is correct? (Thank you.)",
+      "options": [
+        "Dziekuje.",
+        "Dziękuje.",
+        "Dziekuję.",
+        "Dziękuję."
+      ],
+      "correct": 3,
+      "explanation": "Both e's in dziękuję have the mark: dzię-ku-ję. The marks are part of the spelling.",
+      "optionNotes": [
+        "Both marks are missing.",
+        "The final ę is missing its mark.",
+        "The first ę is missing its mark.",
+        null
+      ]
+    }
+  ]
+}
