@@ -288,6 +288,7 @@ window.LM = window.LM || {};
     const doc = LM.markdown.parse(d.home);
     const article = el("article", { class: "md home" }, LM.markdown.render(doc.blocks));
     linkLevelTable(article);
+    wordmarkHeading(article);
     if (LM.callouts) LM.callouts.apply(article);
     if (firstRun) article.insertBefore(firstRun, article.querySelector(".md-section"));
     if (LM.today && LM.today.compactTrail) {
@@ -300,6 +301,15 @@ window.LM = window.LM || {};
     U.setScroll(keepScroll);
   }
 
+  /** The home heading that equals the app title is drawn as the wordmark: "Polish" in the accent, the rest in ink (spec 11 §1). */
+  function wordmarkHeading(root) {
+    const h1 = root.querySelector("h1");
+    const parts = LM.APP.wordmark;
+    if (!h1 || !parts || h1.textContent.trim() !== parts.join(" ")) return;
+    h1.classList.add("home-wordmark");
+    h1.replaceChildren(el("span", { class: "logo-word-accent", text: parts[0] }), document.createTextNode(" " + parts[1]));
+  }
+
   /** Home footer (spec 06 E12): version, the privacy sentence, the source repository. */
   function homeFooter() {
     return el("footer", { class: "home-foot" }, [
@@ -309,8 +319,22 @@ window.LM = window.LM || {};
     ]);
   }
 
-  /** In home.md tables the level codes A1…C2 of the first column become links to the level pages. */
+  /**
+   * In home.md tables the level codes A1…C2 of the first column become links to the level pages;
+   * a column headed "Status" is filled from content/levels.json, so the text never goes stale.
+   */
   function linkLevelTable(root) {
+    root.querySelectorAll("table").forEach(function (table) {
+      const heads = Array.prototype.map.call(table.querySelectorAll("thead th"), function (th) { return th.textContent.trim().toLowerCase(); });
+      const statusCol = heads.indexOf("status");
+      if (statusCol === -1) return;
+      table.querySelectorAll("tbody tr").forEach(function (tr) {
+        const code = tr.cells[0] ? tr.cells[0].textContent.trim().toUpperCase() : "";
+        const cell = tr.cells[statusCol];
+        if (LM.LEVEL_IDS.indexOf(code) === -1 || !cell) return;
+        cell.textContent = S().isAvailable(code) ? "Available" : "Coming soon";
+      });
+    });
     root.querySelectorAll("tbody tr").forEach(function (tr) {
       const cell = tr.cells[0];
       const code = cell ? cell.textContent.trim().toUpperCase() : "";

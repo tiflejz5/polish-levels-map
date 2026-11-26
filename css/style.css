@@ -885,7 +885,7 @@ textarea.field { resize: vertical; min-height: 44px; overflow: hidden; }
   transition: box-shadow var(--transition), color var(--transition);
 }
 .level-link:hover { color: var(--accent); box-shadow: 0 0 0 1.5px var(--lvl); }
-.md a:not(.level-link) { color: var(--accent); }
+.md a:not(.level-link):not(.btn) { color: var(--accent); }
 
 /* ===================== TABLET AND PHONE (up to 899 px): smaller margins ===================== */
 @media (max-width: 899px) {
