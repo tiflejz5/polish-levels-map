@@ -68,6 +68,19 @@
       ]
     },
     {
+      "id": "mix-a2-u1",
+      "title": "Unit review: Past and future",
+      "description": "The full past tense, aspect pairs and the two futures, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-verbs-past-tense",
+        "a2-verbs-aspect-introduction",
+        "a2-verbs-future-tense"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",

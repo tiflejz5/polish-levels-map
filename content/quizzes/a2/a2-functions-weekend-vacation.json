@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-weekend-vacation",
+  "topic": "a2-functions-weekend-vacation",
+  "level": "A2",
+  "title": "Stop: your weekend",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-weekend-vacation-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Monday at work. How do you ask a colleague about the weekend?",
+      "options": [
+        "Jak minął weekend?",
+        "Jak minąłeś weekend?",
+        "Jak minął czas weekend?",
+        "Gdzie minął weekend?"
+      ],
+      "correct": 0,
+      "explanation": "The usual question is Jak minął weekend? (\"How did the weekend pass?\").",
+      "optionNotes": [
+        null,
+        "The weekend is the subject: minął, not minąłeś.",
+        "Czas does not belong here.",
+        "Gdzie asks \"where\"."
+      ]
+    },
+    {
+      "id": "a2-functions-weekend-vacation-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You want to say that you had a good time.",
+      "options": [
+        "Był dobry czas.",
+        "Miałem super.",
+        "Było super!",
+        "Miałem dobry czas."
+      ],
+      "correct": 2,
+      "explanation": "Polish says Było super! or Dobrze się bawiłem.",
+      "optionNotes": [
+        "A word-for-word copy; Polish uses było.",
+        "Mieć cannot go with super.",
+        null,
+        "A word-for-word copy of \"I had a good time\"."
+      ]
+    },
+    {
+      "id": "a2-functions-weekend-vacation-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "We went to the mountains.",
+      "options": [
+        "Pojechaliśmy w górach.",
+        "Pojechaliśmy w góry.",
+        "Pojechaliśmy do gór.",
+        "Pojechaliśmy na góry."
+      ],
+      "correct": 1,
+      "explanation": "The mountains take w: w góry (where to), w górach (where). Do gór is heard, but w góry is the standard phrase.",
+      "optionNotes": [
+        "W górach is \"in the mountains\" (where), not \"to\".",
+        null,
+        "The mountains take w, not do.",
+        "Na góry means \"onto the mountains\"."
+      ]
+    },
+    {
+      "id": "a2-functions-weekend-vacation-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Marta says that she was at the seaside.",
+      "options": [
+        "Byłam w morzu.",
+        "Byłam nad morze.",
+        "Byłem nad morzem.",
+        "Byłam nad morzem."
+      ],
+      "correct": 3,
+      "explanation": "At the seaside is nad morzem; a woman says byłam.",
+      "optionNotes": [
+        "W morzu means \"in the sea\", in the water.",
+        "Nad morze is \"to the seaside\" (where to).",
+        "Byłem is a man's form.",
+        null
+      ]
+    }
+  ]
+}

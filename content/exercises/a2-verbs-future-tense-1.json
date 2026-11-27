@@ -1,0 +1,248 @@
+{
+  "version": 1,
+  "id": "a2-verbs-future-tense-1",
+  "topic": "a2-verbs-future-tense",
+  "level": "A2",
+  "title": "Future tense: check yourself",
+  "intro": "10 tasks: będę + infinitive for activities, the perfective form for results.",
+  "passage": null,
+  "items": [
+    {
+      "type": "paradigm",
+      "tags": [
+        "future",
+        "byc"
+      ],
+      "prompt": "Write the future tense of być.",
+      "lemma": "być",
+      "gloss": "to be (future)",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "będę"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "będziesz"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "będzie"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "będziemy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "będziecie"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "będą"
+          ]
+        }
+      ],
+      "explanation": "Stem będ- in ja and oni (będę, będą), będzi- elsewhere (będziesz, będzie, będziemy, będziecie).",
+      "id": "a2-verbs-future-tense-1-01"
+    },
+    {
+      "id": "a2-verbs-future-tense-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "future",
+        "imperfective"
+      ],
+      "prompt": "Od poniedziałku ___ biegać codziennie.",
+      "options": [
+        "pobiegnę",
+        "byłem",
+        "będę",
+        "jestem"
+      ],
+      "correct": 2,
+      "explanation": "A future habit: będę + imperfective infinitive.",
+      "optionNotes": [
+        "Pobiegnę is a verb of its own; it cannot help another verb.",
+        "Byłem is the past.",
+        null,
+        "Jestem + infinitive is not a future."
+      ]
+    },
+    {
+      "id": "a2-verbs-future-tense-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "future",
+        "perfective"
+      ],
+      "prompt": "Kupisz chleb? — Tak, ___.",
+      "options": [
+        "kupiłem",
+        "kupię",
+        "będę kupić",
+        "kupuję"
+      ],
+      "correct": 1,
+      "explanation": "Kupić is perfective: kupię means \"I'll buy\".",
+      "optionNotes": [
+        "Kupiłem is the past.",
+        null,
+        "Będę does not go with a perfective infinitive.",
+        "Kupuję is the present: \"I'm buying\"."
+      ]
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "future",
+        "perfective",
+        "sequence"
+      ],
+      "context": "On Saturday we'll go to Toruń and have lunch in a restaurant.",
+      "text": "W sobotę {{1}} do Torunia i {{2}} obiad w restauracji.",
+      "gaps": [
+        {
+          "accepted": [
+            "pojedziemy"
+          ],
+          "hint": "(pojechać)"
+        },
+        {
+          "accepted": [
+            "zjemy"
+          ],
+          "hint": "(zjeść)"
+        }
+      ],
+      "explanation": "Two finished events in the future: perfective forms with present endings, pojedziemy and zjemy.",
+      "id": "a2-verbs-future-tense-1-04"
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "future",
+        "byc"
+      ],
+      "context": "It will be cold tomorrow.",
+      "text": "Jutro {{1}} zimno.",
+      "gaps": [
+        {
+          "accepted": [
+            "będzie"
+          ],
+          "hint": "(być)"
+        }
+      ],
+      "explanation": "\"It will be\" is będzie.",
+      "id": "a2-verbs-future-tense-1-05"
+    },
+    {
+      "id": "a2-verbs-future-tense-1-06",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "future",
+        "bede-perfective"
+      ],
+      "prompt": "Which sentence is correct? (I'll get the shopping done tomorrow.)",
+      "options": [
+        "Jutro będę zrobić zakupy.",
+        "Jutro będę zrobię zakupy.",
+        "Jutro zrobię zakupy.",
+        "Jutro zrobiłem zakupy."
+      ],
+      "correct": 2,
+      "explanation": "A result in the future: the perfective form zrobię, without będę.",
+      "optionNotes": [
+        "Będę goes only with an imperfective infinitive.",
+        "The perfective future needs no będę.",
+        null,
+        "Zrobiłem is the past."
+      ]
+    },
+    {
+      "id": "a2-verbs-future-tense-1-07",
+      "type": "find-error",
+      "tags": [
+        "future",
+        "pojsc",
+        "spelling"
+      ],
+      "tokens": [
+        "W",
+        "sobotę",
+        "pojdziemy",
+        "do",
+        "kina."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "pójdziemy"
+      ],
+      "explanation": "The future of pójść keeps ó in every form: pójdę, pójdziemy."
+    },
+    {
+      "type": "short-answer",
+      "tags": [
+        "future",
+        "perfective"
+      ],
+      "prompt": "Make it future and keep the perfective. Wczoraj napisałam e-mail. → Jutro ___ e-mail.",
+      "accepted": [
+        "napiszę"
+      ],
+      "explanation": "Napisać conjugates like pisać: napiszę means \"I'll write\".",
+      "id": "a2-verbs-future-tense-1-08"
+    },
+    {
+      "type": "translate",
+      "tags": [
+        "future",
+        "perfective"
+      ],
+      "source": "I'll call tomorrow.",
+      "accepted": [
+        "Zadzwonię jutro.",
+        "Jutro zadzwonię.",
+        "Ja zadzwonię jutro.",
+        "Ja jutro zadzwonię."
+      ],
+      "hint": "call = zadzwonić",
+      "explanation": "One action that gets done: the perfective zadzwonię, no będę.",
+      "id": "a2-verbs-future-tense-1-09"
+    },
+    {
+      "type": "reorder",
+      "tags": [
+        "future",
+        "imperfective",
+        "word-order"
+      ],
+      "context": "(to a friend) What are you going to do at the weekend?",
+      "answers": [
+        "Co będziesz robić w weekend?",
+        "Co w weekend będziesz robić?",
+        "Co będziesz w weekend robić?"
+      ],
+      "explanation": "An activity, not a result: będziesz + the imperfective infinitive robić.",
+      "id": "a2-verbs-future-tense-1-10"
+    }
+  ]
+}

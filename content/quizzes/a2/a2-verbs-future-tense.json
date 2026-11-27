@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-future-tense",
+  "topic": "a2-verbs-future-tense",
+  "level": "A2",
+  "title": "Stop: future tense",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-future-tense-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jutro ___ zakupy. (I'll get the shopping done tomorrow.)",
+      "options": [
+        "będę zrobię",
+        "robiłem",
+        "zrobię",
+        "będę zrobić"
+      ],
+      "correct": 2,
+      "explanation": "One finished action in the future: the perfective form zrobię, no będę.",
+      "optionNotes": [
+        "The perfective future needs no będę.",
+        "Robiłem is the past.",
+        null,
+        "Będę goes only with an imperfective infinitive."
+      ]
+    },
+    {
+      "id": "a2-verbs-future-tense-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jutro cały dzień ___ pracować.",
+      "options": [
+        "byłem",
+        "będę",
+        "zrobię",
+        "jestem"
+      ],
+      "correct": 1,
+      "explanation": "Imperfective future: będę + infinitive.",
+      "optionNotes": [
+        "Byłem is the past and cannot go with an infinitive.",
+        null,
+        "Zrobię is a verb of its own; it cannot help another verb.",
+        "Jestem + infinitive is not a future."
+      ]
+    },
+    {
+      "id": "a2-verbs-future-tense-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which sentence is correct?",
+      "options": [
+        "Będę kupię bilet.",
+        "Kupię bilet.",
+        "Będę kupić bilet.",
+        "Będę kupuję bilet."
+      ],
+      "correct": 1,
+      "explanation": "Kupić is perfective: its present-looking form kupię already means \"I'll buy\".",
+      "optionNotes": [
+        "Two futures in one: drop będę.",
+        null,
+        "Będę does not go with a perfective infinitive.",
+        "Będę is followed by an infinitive, not a present form."
+      ]
+    },
+    {
+      "id": "a2-verbs-future-tense-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wieczorem ___ do kina. (I'll go to the cinema in the evening.)",
+      "options": [
+        "pojdę",
+        "pójdzię",
+        "poszedłem",
+        "pójdę"
+      ],
+      "correct": 3,
+      "explanation": "The future of pójść keeps ó: pójdę.",
+      "optionNotes": [
+        "Spelling: pójdę is written with ó.",
+        "Not a word: the ending is -ę without i.",
+        "Poszedłem is the past.",
+        null
+      ]
+    }
+  ]
+}

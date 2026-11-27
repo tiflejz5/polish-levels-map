@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-aspect-introduction",
+  "topic": "a2-verbs-aspect-introduction",
+  "level": "A2",
+  "title": "Stop: aspect",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-aspect-introduction-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kiedyś codziennie ___ kawę. (I used to drink coffee every day.)",
+      "options": [
+        "będę wypić",
+        "piłam",
+        "wypiłam",
+        "wypiję"
+      ],
+      "correct": 1,
+      "explanation": "A habit (codziennie) takes the imperfective: piłam.",
+      "optionNotes": [
+        "Będę never goes with a perfective infinitive.",
+        null,
+        "The perfective is for one finished drink, not a habit.",
+        "Wypiję is the future: \"I'll drink it up\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-aspect-introduction-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wczoraj ___ nowy telefon. (I bought a new phone.)",
+      "options": [
+        "kupowałem",
+        "kupiłem",
+        "kupię",
+        "kupuję"
+      ],
+      "correct": 1,
+      "explanation": "One finished purchase takes the perfective: kupiłem.",
+      "optionNotes": [
+        "Kupowałem means \"I was buying\" or \"I used to buy\".",
+        null,
+        "Kupię is the future: \"I'll buy\".",
+        "Kupuję is the present."
+      ]
+    },
+    {
+      "id": "a2-verbs-aspect-introduction-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "What is the perfective partner of brać (take)?",
+      "options": [
+        "wybrać",
+        "brać się",
+        "wziąć",
+        "zbrać"
+      ],
+      "correct": 2,
+      "explanation": "Brać / wziąć is a pair of two different verbs.",
+      "optionNotes": [
+        "Wybrać is a different verb: \"choose\".",
+        "Brać się is a different verb with się.",
+        null,
+        "Not a word: you cannot guess the prefix."
+      ]
+    },
+    {
+      "id": "a2-verbs-aspect-introduction-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wczoraj cały wieczór ___ telewizję.",
+      "options": [
+        "obejrzeliśmy",
+        "obejrzymy",
+        "oglądamy",
+        "oglądaliśmy"
+      ],
+      "correct": 3,
+      "explanation": "Cały wieczór (all evening) is about how long: imperfective, oglądaliśmy.",
+      "optionNotes": [
+        "The perfective shows a finished result, not how long.",
+        "Obejrzymy is the future.",
+        "Wczoraj needs the past.",
+        null
+      ]
+    }
+  ]
+}
