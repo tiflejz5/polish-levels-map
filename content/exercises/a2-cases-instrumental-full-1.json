@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "id": "a2-cases-instrumental-full-1",
+  "topic": "a2-cases-instrumental-full",
+  "level": "A2",
+  "title": "Instrumental: check yourself",
+  "intro": "10 tasks: by bus, with friends, interested in, under the table, and the plural -ami.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-cases-instrumental-full-1-01",
+      "type": "paradigm",
+      "tags": [
+        "instrumental",
+        "plural",
+        "company"
+      ],
+      "prompt": "Finish “Idę do kina z …” with each phrase in the instrumental.",
+      "lemma": "Idę do kina z …",
+      "gloss": "I'm going to the cinema with …",
+      "cells": [
+        {
+          "label": "nowi koledzy",
+          "accepted": [
+            "nowymi kolegami"
+          ]
+        },
+        {
+          "label": "moja siostra",
+          "accepted": [
+            "moją siostrą"
+          ]
+        },
+        {
+          "label": "przyjaciele",
+          "accepted": [
+            "przyjaciółmi"
+          ]
+        },
+        {
+          "label": "dzieci",
+          "accepted": [
+            "dziećmi"
+          ]
+        },
+        {
+          "label": "mój brat",
+          "accepted": [
+            "moim bratem"
+          ]
+        },
+        {
+          "label": "koleżanki z pracy",
+          "accepted": [
+            "koleżankami z pracy"
+          ]
+        }
+      ],
+      "explanation": "Plural -ymi / -imi and -ami (irregular przyjaciółmi, dziećmi). Singular: feminine -ą, masculine -ym, -em."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "instrumental",
+        "transport"
+      ],
+      "prompt": "Do Gdańska jedziemy ___. (by train)",
+      "options": [
+        "pociągiem",
+        "z pociągiem",
+        "na pociągu",
+        "pociąg"
+      ],
+      "correct": 0,
+      "explanation": "How you travel: the vehicle in the instrumental, no preposition.",
+      "optionNotes": [
+        null,
+        "Z pociągiem means \"together with a train\".",
+        "A copy of \"on the train\"; not used for how you travel.",
+        "Nominative."
+      ]
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "instrumental",
+        "plural",
+        "jobs"
+      ],
+      "prompt": "Moi rodzice są ___. (teachers)",
+      "options": [
+        "nauczyciele",
+        "nauczycielami",
+        "nauczycielach",
+        "nauczycieli"
+      ],
+      "correct": 1,
+      "explanation": "A job after być takes the instrumental, in the plural too: -ami.",
+      "optionNotes": [
+        "Nominative plural: a job after są still takes the instrumental.",
+        null,
+        "Locative plural (-ach).",
+        "Genitive plural."
+      ]
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "instrumental",
+        "interests"
+      ],
+      "context": "Marek is interested in film.",
+      "text": "Marek interesuje się {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "filmem",
+            "filmami"
+          ],
+          "hint": "(film)"
+        }
+      ],
+      "explanation": "Interesować się takes the instrumental: film → filmem."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "instrumental",
+        "place"
+      ],
+      "context": "The shoes are under the bed.",
+      "text": "Buty są pod {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "łóżkiem"
+          ],
+          "hint": "(łóżko)"
+        }
+      ],
+      "explanation": "Pod meaning \"under\" (where) takes the instrumental: łóżkiem."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-06",
+      "type": "find-error",
+      "tags": [
+        "instrumental",
+        "plural",
+        "company"
+      ],
+      "tokens": [
+        "Mieszkam",
+        "z",
+        "moi",
+        "rodzice",
+        "w",
+        "Gdyni."
+      ],
+      "errorRange": [
+        2,
+        3
+      ],
+      "fixes": [
+        "moimi rodzicami"
+      ],
+      "explanation": "Z meaning \"with\" takes the instrumental plural: moimi rodzicami."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-07",
+      "type": "find-error",
+      "tags": [
+        "instrumental",
+        "place"
+      ],
+      "tokens": [
+        "Rower",
+        "stoi",
+        "przed",
+        "dom."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "domem"
+      ],
+      "explanation": "Przed meaning \"in front of\" (where) takes the instrumental: domem."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-08",
+      "type": "translate",
+      "tags": [
+        "instrumental",
+        "plural",
+        "company"
+      ],
+      "source": "I'm going to the cinema with friends.",
+      "accepted": [
+        "Idę do kina z przyjaciółmi.",
+        "Idę z przyjaciółmi do kina.",
+        "Ja idę do kina z przyjaciółmi.",
+        "Ja idę z przyjaciółmi do kina.",
+        "Z przyjaciółmi idę do kina.",
+        "Idę do kina z przyjaciółkami.",
+        "Idę z przyjaciółkami do kina."
+      ],
+      "hint": "friends = przyjaciele",
+      "explanation": "Z + instrumental plural: przyjaciele → przyjaciółmi (irregular); women friends: przyjaciółkami."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-09",
+      "type": "translate",
+      "tags": [
+        "instrumental",
+        "means"
+      ],
+      "source": "Are you paying by card? (to a friend)",
+      "accepted": [
+        "Płacisz kartą?",
+        "Czy płacisz kartą?",
+        "Ty płacisz kartą?",
+        "Zapłacisz kartą?",
+        "Czy zapłacisz kartą?"
+      ],
+      "explanation": "\"By card\" is the instrumental alone: kartą, no z."
+    },
+    {
+      "id": "a2-cases-instrumental-full-1-10",
+      "type": "match",
+      "tags": [
+        "instrumental",
+        "place"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "in front of the house",
+          "przed domem"
+        ],
+        [
+          "behind the house",
+          "za domem"
+        ],
+        [
+          "at the seaside",
+          "nad morzem"
+        ],
+        [
+          "under the table",
+          "pod stołem"
+        ],
+        [
+          "between the bank and the post office",
+          "między bankiem a pocztą"
+        ]
+      ],
+      "explanation": "Przed, za, nad, pod and między take the instrumental when they say where something is."
+    }
+  ]
+}

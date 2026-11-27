@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-grammar-adverbs-frequency",
+  "topic": "a2-grammar-adverbs-frequency",
+  "level": "A2",
+  "title": "Stop: adverbs and negation",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-grammar-adverbs-frequency-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nobody came.",
+      "options": [
+        "Nikt przyszedł.",
+        "Nikt nie przyszedł.",
+        "Ktoś nie przyszedł.",
+        "Nie nikt przyszedł."
+      ],
+      "correct": 1,
+      "explanation": "Nikt needs nie before the verb: Nikt nie przyszedł.",
+      "optionNotes": [
+        "A copy of the English single negation; Polish needs nie too.",
+        null,
+        "Ktoś means \"somebody\".",
+        "Nie goes before the verb, not before nikt."
+      ]
+    },
+    {
+      "id": "a2-grammar-adverbs-frequency-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola gotuje bardzo ___.",
+      "options": [
+        "dobra",
+        "dobry",
+        "dobrze",
+        "dobre"
+      ],
+      "correct": 2,
+      "explanation": "How someone does something: the adverb dobrze (well).",
+      "optionNotes": [
+        "An adjective (good); a verb needs the adverb.",
+        "An adjective (good); a verb needs the adverb.",
+        null,
+        "An adjective (good); a verb needs the adverb."
+      ]
+    },
+    {
+      "id": "a2-grammar-adverbs-frequency-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "I never drink coffee.",
+      "options": [
+        "Nigdy piję kawę.",
+        "Nigdy nie piję kawy.",
+        "Nigdy nie piję kawę.",
+        "Zawsze nie piję kawy."
+      ],
+      "correct": 1,
+      "explanation": "Nigdy needs nie, and after nie the object is in the genitive: kawy.",
+      "optionNotes": [
+        "Nigdy needs nie before the verb.",
+        null,
+        "After nie the object takes the genitive: kawy.",
+        "A copy of \"always don't\"; \"never\" is nigdy nie."
+      ]
+    },
+    {
+      "id": "a2-grammar-adverbs-frequency-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nie lubię ryb. — Ja ___. (Me neither.)",
+      "options": [
+        "też",
+        "też nie",
+        "tak",
+        "nie też"
+      ],
+      "correct": 1,
+      "explanation": "Agreeing with a negative: Ja też nie.",
+      "optionNotes": [
+        "Ja też means \"me too\", agreeing with a positive.",
+        null,
+        "Tak means \"yes\".",
+        "The order is też nie."
+      ]
+    }
+  ]
+}

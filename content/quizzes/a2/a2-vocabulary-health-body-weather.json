@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-vocabulary-health-body-weather",
+  "topic": "a2-vocabulary-health-body-weather",
+  "level": "A2",
+  "title": "Stop: body, health and weather",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-vocabulary-health-body-weather-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "It's raining.",
+      "options": [
+        "Jest deszcz.",
+        "Pada deszcz.",
+        "To pada deszcz.",
+        "Deszcz jest."
+      ],
+      "correct": 1,
+      "explanation": "Rain and snow \"fall\": Pada deszcz.",
+      "optionNotes": [
+        "Polish does not say \"there is rain\" for the weather.",
+        null,
+        "No \"it\" in Polish weather sentences.",
+        "Not how Polish describes the weather."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-health-body-weather-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Dzisiaj jest bardzo ___. (It's very cold today.)",
+      "options": [
+        "zimny",
+        "zimna",
+        "zimno",
+        "zimne"
+      ],
+      "correct": 2,
+      "explanation": "The weather takes the -o form: Jest zimno.",
+      "optionNotes": [
+        "An adjective needs a noun: zimny dzień.",
+        "An adjective needs a noun: zimna woda.",
+        null,
+        "An adjective needs a noun: zimne piwo."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-health-body-weather-q3",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Kasia ma niebieskie ___. (eyes)",
+      "options": [
+        "oka",
+        "oczy",
+        "oki",
+        "oczami"
+      ],
+      "correct": 1,
+      "explanation": "Oko has an irregular plural: oczy.",
+      "optionNotes": [
+        "Not a plural of oko.",
+        null,
+        "Not a plural of oko.",
+        "Instrumental plural; after ma use the accusative, oczy."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-health-body-weather-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola jest dziś bardzo ___. (tired)",
+      "options": [
+        "zmęczony",
+        "zmęczona",
+        "zmęczone",
+        "zmęczeni"
+      ],
+      "correct": 1,
+      "explanation": "Feelings are adjectives and agree with the person: Ola → zmęczona.",
+      "optionNotes": [
+        "Masculine; Ola is a woman.",
+        null,
+        "Neuter or plural other than men.",
+        "Masculine personal plural."
+      ]
+    }
+  ]
+}

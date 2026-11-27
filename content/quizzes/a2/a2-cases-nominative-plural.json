@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-nominative-plural",
+  "topic": "a2-cases-nominative-plural",
+  "level": "A2",
+  "title": "Stop: nominative plural",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-nominative-plural-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Moi ___ są bardzo mili. (colleagues)",
+      "options": [
+        "kolegi",
+        "koledzy",
+        "kolegowie",
+        "kolegy"
+      ],
+      "correct": 1,
+      "explanation": "Kolega is a man: masculine personal -y, and g → dz: koledzy.",
+      "optionNotes": [
+        "After g the masculine personal ending is -y with g → dz.",
+        null,
+        "-owie is for a few nouns like panowie, synowie.",
+        "The g must change to dz: koledzy."
+      ]
+    },
+    {
+      "id": "a2-cases-nominative-plural-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Te ___ są nowe. (books)",
+      "options": [
+        "książky",
+        "książke",
+        "książki",
+        "książkie"
+      ],
+      "correct": 2,
+      "explanation": "After k Polish writes -i, never -y: książki.",
+      "optionNotes": [
+        "After k you cannot write y.",
+        "-e is the plural after soft consonants (klucze), not after k.",
+        null,
+        "Not a word: the ending is just -i."
+      ]
+    },
+    {
+      "id": "a2-cases-nominative-plural-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Which phrase is correct? (good doctors)",
+      "options": [
+        "dobre lekarze",
+        "dobrzy lekarzy",
+        "dobry lekarze",
+        "dobrzy lekarze"
+      ],
+      "correct": 3,
+      "explanation": "Doctors here are men: masculine personal dobrzy (r → rz) + lekarze.",
+      "optionNotes": [
+        "Dobre is for women, animals and things.",
+        "Lekarzy is the genitive plural (dużo lekarzy).",
+        "Dobry is singular.",
+        null
+      ]
+    },
+    {
+      "id": "a2-cases-nominative-plural-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ania i Tomek są ___. (tired)",
+      "options": [
+        "zmęczeni",
+        "zmęczone",
+        "zmęczony",
+        "zmęczona"
+      ],
+      "correct": 0,
+      "explanation": "A group with a man takes the masculine personal form: zmęczeni.",
+      "optionNotes": [
+        null,
+        "Zmęczone is for groups without men.",
+        "Zmęczony is singular, for one man.",
+        "Zmęczona is singular, for one woman."
+      ]
+    }
+  ]
+}

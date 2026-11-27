@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "id": "a2-grammar-pronouns-in-cases-1",
+  "topic": "a2-grammar-pronouns-in-cases",
+  "level": "A2",
+  "title": "Pronouns in cases: check yourself",
+  "intro": "10 tasks: short and long forms, and the n- forms after prepositions.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-01",
+      "type": "paradigm",
+      "tags": [
+        "pronouns",
+        "on"
+      ],
+      "prompt": "Complete each phrase with the usual (short) form of on (he); use the n- form after a preposition.",
+      "lemma": "on",
+      "gloss": "he, him",
+      "cells": [
+        {
+          "label": "Widzę … (accusative)",
+          "accepted": [
+            "go"
+          ]
+        },
+        {
+          "label": "Daję … prezent. (dative)",
+          "accepted": [
+            "mu"
+          ]
+        },
+        {
+          "label": "Idę z … (instrumental)",
+          "accepted": [
+            "nim"
+          ]
+        },
+        {
+          "label": "To dla … (after a preposition)",
+          "accepted": [
+            "niego"
+          ]
+        },
+        {
+          "label": "Nie ma … w domu. (genitive)",
+          "accepted": [
+            "go"
+          ]
+        }
+      ],
+      "explanation": "Short forms go, mu without a preposition; after a preposition n- forms: niego, nim."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "pronouns",
+        "ty"
+      ],
+      "prompt": "Kocham ___. (you, to a friend)",
+      "options": [
+        "ty",
+        "cię",
+        "tobie",
+        "tobą"
+      ],
+      "correct": 1,
+      "explanation": "The object \"you\" is the accusative short form cię.",
+      "optionNotes": [
+        "Ty is the subject form.",
+        null,
+        "Tobie is the dative or locative.",
+        "Tobą is the instrumental."
+      ]
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "pronouns",
+        "ty",
+        "prepositions"
+      ],
+      "prompt": "Zadzwonię do ___ jutro. (you, to a friend)",
+      "options": [
+        "cię",
+        "ty",
+        "ciebie",
+        "tobie"
+      ],
+      "correct": 2,
+      "explanation": "After a preposition \"you\" takes the long form: do ciebie.",
+      "optionNotes": [
+        "Cię is the short form, never used after a preposition.",
+        "Ty is the subject form.",
+        null,
+        "Tobie is the dative or locative, not after do."
+      ]
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "pronouns",
+        "oni",
+        "prepositions"
+      ],
+      "context": "We're talking about them.",
+      "text": "Rozmawiamy o {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "nich"
+          ],
+          "hint": "(oni)"
+        }
+      ],
+      "explanation": "After a preposition: n- forms. O + locative: o nich."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "pronouns",
+        "wy"
+      ],
+      "context": "Can I come with you? (to friends)",
+      "text": "Czy mogę iść z {{1}}?",
+      "gaps": [
+        {
+          "accepted": [
+            "wami"
+          ],
+          "hint": "(wy)"
+        }
+      ],
+      "explanation": "Z meaning \"with\" + instrumental: z wami."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-06",
+      "type": "find-error",
+      "tags": [
+        "pronouns",
+        "ona",
+        "prepositions"
+      ],
+      "tokens": [
+        "To",
+        "prezent",
+        "dla",
+        "ona."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "niej"
+      ],
+      "explanation": "After dla the genitive, with n-: dla niej."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-07",
+      "type": "find-error",
+      "tags": [
+        "pronouns",
+        "ona",
+        "negation"
+      ],
+      "tokens": [
+        "Nie",
+        "znam",
+        "ją",
+        "dobrze."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "jej"
+      ],
+      "explanation": "After nie the object takes the genitive: nie znam jej."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-08",
+      "type": "translate",
+      "tags": [
+        "pronouns",
+        "ja"
+      ],
+      "source": "Do you know me? (to a friend)",
+      "accepted": [
+        "Znasz mnie?",
+        "Czy mnie znasz?",
+        "Czy znasz mnie?"
+      ],
+      "explanation": "\"Me\" as an object is mnie."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-09",
+      "type": "translate",
+      "tags": [
+        "pronouns",
+        "ja",
+        "prepositions"
+      ],
+      "source": "Are you coming with me? (to a friend)",
+      "accepted": [
+        "Idziesz ze mną?",
+        "Czy idziesz ze mną?",
+        "Pójdziesz ze mną?",
+        "Czy pójdziesz ze mną?",
+        "Jedziesz ze mną?",
+        "Czy jedziesz ze mną?",
+        "Pojedziesz ze mną?",
+        "Czy pojedziesz ze mną?"
+      ],
+      "explanation": "\"With me\" is ze mną (ze, not z)."
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-1-10",
+      "type": "match",
+      "tags": [
+        "pronouns"
+      ],
+      "mode": "halves",
+      "prompt": "Match the beginnings with the endings.",
+      "pairs": [
+        [
+          "Kocham",
+          "cię."
+        ],
+        [
+          "Idę do",
+          "niego."
+        ],
+        [
+          "Dziękuję",
+          "wam za pomoc."
+        ],
+        [
+          "Często o",
+          "tobie myślę."
+        ]
+      ],
+      "explanation": "Short cię as an object; n- form after do; dative wam after dziękować; long tobie after o."
+    }
+  ]
+}

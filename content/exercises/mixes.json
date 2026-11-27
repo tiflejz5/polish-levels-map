@@ -68,6 +68,75 @@
       ]
     },
     {
+      "id": "mix-a2-u1",
+      "title": "Unit review: Past and future",
+      "description": "The full past tense, aspect pairs and the two futures, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-verbs-past-tense",
+        "a2-verbs-aspect-introduction",
+        "a2-verbs-future-tense"
+      ]
+    },
+    {
+      "id": "mix-a2-u2",
+      "title": "Unit review: Plural and quantities",
+      "description": "The nominative, accusative and genitive plural and numbers with nouns, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-cases-nominative-plural",
+        "a2-cases-accusative-plural",
+        "a2-cases-genitive-plural-quantities",
+        "a2-grammar-numbers-with-nouns"
+      ]
+    },
+    {
+      "id": "mix-a2-u3",
+      "title": "Unit review: Giving and going",
+      "description": "The dative, the instrumental and the locative in all their uses, and verbs of motion, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-cases-dative",
+        "a2-cases-instrumental-full",
+        "a2-cases-locative-full",
+        "a2-verbs-motion-verbs-basics"
+      ]
+    },
+    {
+      "id": "mix-a2-u4",
+      "title": "Unit review: Everyday grammar",
+      "description": "Pronouns in all cases, comparing, adverbs and double negation, verbs with się, must and should, and conjunctions, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-grammar-pronouns-in-cases",
+        "a2-grammar-comparison",
+        "a2-grammar-adverbs-frequency",
+        "a2-verbs-reflexive-sie",
+        "a2-verbs-modals-necessity",
+        "a2-grammar-conjunctions-basic"
+      ]
+    },
+    {
+      "id": "mix-a2-u5",
+      "title": "Unit review: Getting things done",
+      "description": "Commands and polite requests side by side with must, should, can and mustn't: getting people to do things.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-verbs-imperative-basics",
+        "a2-verbs-modals-necessity"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",

@@ -1,0 +1,250 @@
+{
+  "version": 1,
+  "id": "a2-grammar-numbers-with-nouns-1",
+  "topic": "a2-grammar-numbers-with-nouns",
+  "level": "A2",
+  "title": "Numbers with nouns: check yourself",
+  "intro": "10 tasks: the 1 / 2–4 / 5+ rule, dwa or dwie, and the verb after a number.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-01",
+      "type": "paradigm",
+      "tags": [
+        "numbers",
+        "rule-1-2-5"
+      ],
+      "prompt": "Write kot in the right form after each number.",
+      "lemma": "kot",
+      "gloss": "cat",
+      "cells": [
+        {
+          "label": "jeden …",
+          "accepted": [
+            "kot"
+          ]
+        },
+        {
+          "label": "dwa …",
+          "accepted": [
+            "koty"
+          ]
+        },
+        {
+          "label": "cztery …",
+          "accepted": [
+            "koty"
+          ]
+        },
+        {
+          "label": "pięć …",
+          "accepted": [
+            "kotów"
+          ]
+        },
+        {
+          "label": "dwanaście …",
+          "accepted": [
+            "kotów"
+          ]
+        },
+        {
+          "label": "dwadzieścia dwa …",
+          "accepted": [
+            "koty"
+          ]
+        }
+      ],
+      "explanation": "1: singular. 2–4 and 22–24: nominative plural. 5–21 (with 12–14): genitive plural."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "numbers",
+        "dwa-dwie"
+      ],
+      "prompt": "Poproszę ___ piwa.",
+      "options": [
+        "dwie",
+        "dwa",
+        "dwoje",
+        "dwóch"
+      ],
+      "correct": 1,
+      "explanation": "Piwo is neuter, so 2 is dwa.",
+      "optionNotes": [
+        "Dwie is for feminine nouns.",
+        null,
+        "Dwoje is for children (B1).",
+        "Dwóch is for men (B1)."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "numbers",
+        "money"
+      ],
+      "prompt": "Bilet kosztuje dwadzieścia pięć ___.",
+      "options": [
+        "złote",
+        "złotych",
+        "złoty",
+        "złotymi"
+      ],
+      "correct": 1,
+      "explanation": "25 ends in 5: the 5+ form, złotych.",
+      "optionNotes": [
+        "Złote is for 2–4 and 22–24.",
+        null,
+        "Złoty is for 1.",
+        "Złotymi is the instrumental."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "numbers",
+        "rule-1-2-5"
+      ],
+      "context": "The flat has three rooms.",
+      "text": "Mieszkanie ma trzy {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "pokoje"
+          ],
+          "hint": "(pokój)"
+        }
+      ],
+      "explanation": "After 3: the nominative plural, pokoje."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "numbers",
+        "age"
+      ],
+      "context": "Ola is 23, and her brother is 25.",
+      "text": "Ola ma dwadzieścia trzy {{1}}, a jej brat dwadzieścia pięć {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "lata"
+          ],
+          "hint": "(rok)"
+        },
+        {
+          "accepted": [
+            "lat"
+          ],
+          "hint": "(rok)"
+        }
+      ],
+      "explanation": "23 ends in 3: lata. 25 ends in 5: lat."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-06",
+      "type": "find-error",
+      "tags": [
+        "numbers",
+        "dwa-dwie"
+      ],
+      "tokens": [
+        "Mam",
+        "dwa",
+        "siostry."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "dwie"
+      ],
+      "explanation": "Siostra is feminine: dwie siostry."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-07",
+      "type": "find-error",
+      "tags": [
+        "numbers",
+        "agreement"
+      ],
+      "tokens": [
+        "Pięć",
+        "autobusów",
+        "jadą",
+        "do",
+        "centrum."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "jedzie"
+      ],
+      "explanation": "After 5+ the verb is singular: jedzie."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-08",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "numbers",
+        "agreement"
+      ],
+      "prompt": "W grupie ___ dwanaście osób.",
+      "options": [
+        "są",
+        "jest",
+        "będą",
+        "byli"
+      ],
+      "correct": 1,
+      "explanation": "After 12 (a 5+ number) the verb is singular: jest.",
+      "optionNotes": [
+        "After 5+ the verb is not plural.",
+        null,
+        "After 5+ the verb is not plural: będzie.",
+        "After 5+ the verb is singular and neuter: było."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-09",
+      "type": "translate",
+      "tags": [
+        "numbers",
+        "ordering"
+      ],
+      "source": "Five beers, please.",
+      "accepted": [
+        "Poproszę pięć piw.",
+        "Pięć piw, proszę.",
+        "Pięć piw poproszę.",
+        "Proszę pięć piw."
+      ],
+      "explanation": "From 5 on, the genitive plural: piwo → piw."
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-1-10",
+      "type": "short-answer",
+      "tags": [
+        "numbers",
+        "rule-1-2-5"
+      ],
+      "prompt": "14 minutes: czternaście (minuta) → czternaście ___",
+      "accepted": [
+        "minut"
+      ],
+      "explanation": "12–14 follow the 5+ rule: minut."
+    }
+  ]
+}

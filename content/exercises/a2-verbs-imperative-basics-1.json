@@ -1,0 +1,234 @@
+{
+  "version": 1,
+  "id": "a2-verbs-imperative-basics-1",
+  "topic": "a2-verbs-imperative-basics",
+  "level": "A2",
+  "title": "Commands and requests: check yourself",
+  "intro": "10 tasks: the ty, wy and my forms, the aspect after nie, and polite requests to strangers.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-verbs-imperative-basics-1-01",
+      "type": "paradigm",
+      "tags": [
+        "imperative",
+        "forms"
+      ],
+      "prompt": "Give the imperative of czytać (read).",
+      "lemma": "czytać",
+      "gloss": "read",
+      "cells": [
+        {
+          "label": "ty",
+          "accepted": [
+            "czytaj"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "czytajcie"
+          ]
+        },
+        {
+          "label": "my (let's)",
+          "accepted": [
+            "czytajmy"
+          ]
+        }
+      ],
+      "explanation": "Drop -ą from the oni form (czytają → czytaj), then add -cie for wy and -my for \"let's\"."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "imperative",
+        "irregular"
+      ],
+      "prompt": "___ cicho, dziecko śpi! (Be quiet, the baby's sleeping! To a friend.)",
+      "options": [
+        "Bądź",
+        "Być",
+        "Jesteś",
+        "Bądźcie"
+      ],
+      "correct": 0,
+      "explanation": "Być has an irregular imperative: bądź.",
+      "optionNotes": [
+        null,
+        "The infinitive is not a command to a friend.",
+        "Present tense: \"you are\".",
+        "The wy form, for a group; here you speak to one friend."
+      ]
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "imperative",
+        "aspect",
+        "negation"
+      ],
+      "prompt": "Nie ___ okna, jest zimno. (Don't open the window.)",
+      "options": [
+        "otwórz",
+        "otwieraj",
+        "otwierasz",
+        "otworzyć"
+      ],
+      "correct": 1,
+      "explanation": "\"Don't\" takes the imperfective imperative: nie otwieraj.",
+      "optionNotes": [
+        "Otwórz is perfective; after nie use the imperfective.",
+        null,
+        "Present tense: \"you are opening\", not a command.",
+        "An infinitive does not make a \"don't\" command to a friend."
+      ]
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "imperative",
+        "forms"
+      ],
+      "context": "Call me tomorrow! (to a friend, one call)",
+      "text": "{{1}} do mnie jutro!",
+      "gaps": [
+        {
+          "accepted": [
+            "Zadzwoń"
+          ],
+          "hint": "(zadzwonić)"
+        }
+      ],
+      "explanation": "Zadzwonią → drop -ą and the -i: zadzwoń (ni becomes ń)."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "imperative",
+        "wy"
+      ],
+      "context": "Children, take your coats! (to a group)",
+      "text": "Dzieci, {{1}} kurtki!",
+      "gaps": [
+        {
+          "accepted": [
+            "weźcie"
+          ],
+          "hint": "(wziąć)"
+        }
+      ],
+      "explanation": "Wziąć has an irregular imperative: weź, and for wy weźcie."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-06",
+      "type": "find-error",
+      "tags": [
+        "imperative",
+        "aspect",
+        "negation"
+      ],
+      "tokens": [
+        "Nie",
+        "zrób",
+        "tego,",
+        "proszę!"
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "rób"
+      ],
+      "explanation": "With nie the imperative is imperfective: Nie rób tego!"
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-07",
+      "type": "translate",
+      "tags": [
+        "imperative",
+        "polite"
+      ],
+      "source": "Please wait. (to a stranger)",
+      "accepted": [
+        "Proszę poczekać.",
+        "Proszę czekać.",
+        "Proszę zaczekać.",
+        "Proszę chwilę poczekać.",
+        "Proszę poczekać chwilę.",
+        "Proszę chwilę zaczekać.",
+        "Niech pan poczeka.",
+        "Niech pani poczeka."
+      ],
+      "hint": "proszę + infinitive",
+      "explanation": "To a stranger: proszę + infinitive, not the ty form."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-08",
+      "type": "translate",
+      "tags": [
+        "imperative",
+        "sie"
+      ],
+      "source": "Don't worry! (to a friend)",
+      "accepted": [
+        "Nie martw się!",
+        "Nie przejmuj się!",
+        "Nie martw się tym!"
+      ],
+      "explanation": "Martwić się → martw się; się stays after the imperative."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-09",
+      "type": "reorder",
+      "tags": [
+        "imperative",
+        "my"
+      ],
+      "context": "Let's go for a coffee!",
+      "answers": [
+        "Chodźmy na kawę!"
+      ],
+      "explanation": "\"Let's go\" is chodźmy; na kawę = for a coffee."
+    },
+    {
+      "id": "a2-verbs-imperative-basics-1-10",
+      "type": "match",
+      "tags": [
+        "imperative"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "Come here!",
+          "Chodź tutaj!"
+        ],
+        [
+          "Eat!",
+          "Jedz!"
+        ],
+        [
+          "Help me!",
+          "Pomóż mi!"
+        ],
+        [
+          "Sit down! (to a group)",
+          "Usiądźcie!"
+        ],
+        [
+          "Please sit down. (to a stranger)",
+          "Proszę usiąść."
+        ]
+      ],
+      "explanation": "Chodź = come; jedz (from jeść) = eat; pomóż = help; usiądźcie = the wy form; proszę + infinitive for strangers."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-grammar-conjunctions-basic",
+  "topic": "a2-grammar-conjunctions-basic",
+  "level": "A2",
+  "title": "Stop: conjunctions",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-grammar-conjunctions-basic-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ja jestem z Polski, ___ Tom z Anglii.",
+      "options": [
+        "i",
+        "a",
+        "czy",
+        "więc"
+      ],
+      "correct": 1,
+      "explanation": "A contrast between two people takes a.",
+      "optionNotes": [
+        "I adds something similar; for a contrast use a.",
+        null,
+        "Czy means \"or\" in questions.",
+        "Więc means \"so\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-conjunctions-basic-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Myślę, ___ masz rację.",
+      "options": [
+        "że",
+        "bo",
+        "czy",
+        "a"
+      ],
+      "correct": 0,
+      "explanation": "\"That\" after verbs of thinking is że, and it cannot be dropped.",
+      "optionNotes": [
+        null,
+        "Bo means \"because\".",
+        "Czy means \"whether\" or \"or\".",
+        "A means \"and, while\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-conjunctions-basic-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Chcesz kawę ___ herbatę? (asking which one)",
+      "options": [
+        "albo",
+        "czy",
+        "a",
+        "i"
+      ],
+      "correct": 1,
+      "explanation": "\"Or\" in a question about a choice is czy.",
+      "optionNotes": [
+        "Albo is \"or\" in statements: Wezmę kawę albo herbatę.",
+        null,
+        "A means \"and, while\".",
+        "I means \"and\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-conjunctions-basic-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nie poszłam do pracy, ___ byłam chora.",
+      "options": [
+        "więc",
+        "bo",
+        "że",
+        "ale"
+      ],
+      "correct": 1,
+      "explanation": "The reason comes after bo (because).",
+      "optionNotes": [
+        "Więc (so) introduces a result, not a reason.",
+        null,
+        "Że means \"that\".",
+        "Ale means \"but\"."
+      ]
+    }
+  ]
+}

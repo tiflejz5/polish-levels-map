@@ -1,0 +1,252 @@
+{
+  "version": 1,
+  "id": "a2-verbs-modals-necessity-1",
+  "topic": "a2-verbs-modals-necessity",
+  "level": "A2",
+  "title": "Must, should, can: check yourself",
+  "intro": "10 tasks: musieć, powinien, trzeba, można, wolno, warto.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-verbs-modals-necessity-1-01",
+      "type": "paradigm",
+      "tags": [
+        "modals",
+        "powinien"
+      ],
+      "prompt": "Give the forms of powinien (should).",
+      "lemma": "powinien",
+      "gloss": "should",
+      "cells": [
+        {
+          "label": "ja (a man)",
+          "accepted": [
+            "powinienem"
+          ]
+        },
+        {
+          "label": "ja (a woman)",
+          "accepted": [
+            "powinnam"
+          ]
+        },
+        {
+          "label": "ty (a man)",
+          "accepted": [
+            "powinieneś"
+          ]
+        },
+        {
+          "label": "ty (a woman)",
+          "accepted": [
+            "powinnaś"
+          ]
+        },
+        {
+          "label": "my (a group with a man)",
+          "accepted": [
+            "powinniśmy"
+          ]
+        },
+        {
+          "label": "oni",
+          "accepted": [
+            "powinni"
+          ]
+        }
+      ],
+      "explanation": "The e of powinien stays only in the men's singular: powinienem, powinieneś; women and plural: powinnam, powinniśmy."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "modals",
+        "musiec"
+      ],
+      "prompt": "Mam samochód, nie ___ jechać autobusem. (I don't have to)",
+      "options": [
+        "muszę",
+        "wolno",
+        "można",
+        "warto"
+      ],
+      "correct": 0,
+      "explanation": "\"Don't have to\" is nie musieć: nie muszę.",
+      "optionNotes": [
+        null,
+        "Nie wolno means \"mustn't\".",
+        "Nie można means \"can't, it isn't allowed\".",
+        "Nie warto means \"it's not worth it\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "modals",
+        "mozna"
+      ],
+      "prompt": "Czy ___ tu zapłacić kartą? (Can one…?)",
+      "options": [
+        "można",
+        "trzeba",
+        "warto",
+        "muszę"
+      ],
+      "correct": 0,
+      "explanation": "Asking if something is possible, with no person: Czy można…?",
+      "optionNotes": [
+        null,
+        "Trzeba means \"one has to\".",
+        "Warto means \"it's worth it\".",
+        "Muszę means \"I have to\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "modals",
+        "trzeba"
+      ],
+      "context": "You have to buy the ticket at the machine. (in general, no person)",
+      "text": "{{1}} kupić bilet w automacie.",
+      "gaps": [
+        {
+          "accepted": [
+            "Trzeba",
+            "Należy"
+          ]
+        }
+      ],
+      "explanation": "A general necessity with no person: trzeba + infinitive."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "modals",
+        "trzeba",
+        "past"
+      ],
+      "context": "It was necessary to wait an hour.",
+      "text": "{{1}} czekać godzinę.",
+      "gaps": [
+        {
+          "accepted": [
+            "Trzeba było"
+          ],
+          "hint": "(trzeba, past)"
+        }
+      ],
+      "explanation": "The past of trzeba is trzeba było."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-06",
+      "type": "find-error",
+      "tags": [
+        "modals",
+        "powinien"
+      ],
+      "tokens": [
+        "Ona",
+        "powinien",
+        "więcej",
+        "spać."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "powinna"
+      ],
+      "explanation": "Powinien agrees with the person: ona → powinna."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-07",
+      "type": "translate",
+      "tags": [
+        "modals",
+        "musiec"
+      ],
+      "source": "You don't have to come. (to a friend)",
+      "accepted": [
+        "Nie musisz przychodzić.",
+        "Nie musisz przyjść.",
+        "Ty nie musisz przychodzić.",
+        "Ty nie musisz przyjść."
+      ],
+      "explanation": "\"Don't have to\" is nie musieć: nie musisz."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-08",
+      "type": "translate",
+      "tags": [
+        "modals",
+        "mozna",
+        "wolno"
+      ],
+      "source": "You can't eat here. (a general rule)",
+      "accepted": [
+        "Tu nie można jeść.",
+        "Nie można tu jeść.",
+        "Tutaj nie można jeść.",
+        "Nie można tutaj jeść.",
+        "Tu nie wolno jeść.",
+        "Nie wolno tu jeść.",
+        "Tutaj nie wolno jeść.",
+        "Nie wolno tutaj jeść."
+      ],
+      "explanation": "A general rule with no person: nie można or nie wolno + infinitive."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-09",
+      "type": "reorder",
+      "tags": [
+        "modals",
+        "powinien"
+      ],
+      "context": "Mr Adam should rest.",
+      "answers": [
+        "Pan Adam powinien odpocząć."
+      ],
+      "explanation": "Powinien + infinitive; pan takes the \"he\" form."
+    },
+    {
+      "id": "a2-verbs-modals-necessity-1-10",
+      "type": "match",
+      "tags": [
+        "modals"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "I have to go now.",
+          "Muszę już iść."
+        ],
+        [
+          "You should rest.",
+          "Powinieneś odpocząć."
+        ],
+        [
+          "You mustn't park here.",
+          "Tu nie wolno parkować."
+        ],
+        [
+          "It's worth seeing.",
+          "Warto to zobaczyć."
+        ],
+        [
+          "There's no need to wait.",
+          "Nie trzeba czekać."
+        ]
+      ],
+      "explanation": "musieć = must; powinien = should; nie wolno = mustn't; warto = worth it; nie trzeba = no need."
+    }
+  ]
+}

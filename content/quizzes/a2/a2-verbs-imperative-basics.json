@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-imperative-basics",
+  "topic": "a2-verbs-imperative-basics",
+  "level": "A2",
+  "title": "Stop: imperative",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-imperative-basics-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ okno, proszę. (Close the window, please. To a friend, one simple request.)",
+      "options": [
+        "Zamknij",
+        "Zamykasz",
+        "Zamknąć",
+        "Zamknęłeś"
+      ],
+      "correct": 0,
+      "explanation": "A single request to a friend: the perfective imperative, zamknij.",
+      "optionNotes": [
+        null,
+        "Present tense: \"you are closing\", not a request.",
+        "The infinitive is for strangers after proszę: Proszę zamknąć okno.",
+        "Past tense."
+      ]
+    },
+    {
+      "id": "a2-verbs-imperative-basics-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Nie ___ tego! (Don't do that!)",
+      "options": [
+        "zrób",
+        "rób",
+        "robisz",
+        "zrobić"
+      ],
+      "correct": 1,
+      "explanation": "\"Don't\" takes the imperfective imperative: Nie rób tego!",
+      "optionNotes": [
+        "Zrób is perfective; with nie the imperative is almost always imperfective.",
+        null,
+        "Present tense, not a command.",
+        "An infinitive does not make a \"don't\" command to a friend."
+      ]
+    },
+    {
+      "id": "a2-verbs-imperative-basics-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Tell a stranger in a waiting room: \"Please take a seat.\"",
+      "options": [
+        "Usiądź, proszę.",
+        "Proszę usiąść.",
+        "Proszę usiądź.",
+        "Usiądźcie."
+      ],
+      "correct": 1,
+      "explanation": "To a stranger: proszę + infinitive.",
+      "optionNotes": [
+        "The ty form is for friends and family.",
+        null,
+        "After proszę to a stranger, use the infinitive, not the ty form.",
+        "The wy form is for a group of friends."
+      ]
+    },
+    {
+      "id": "a2-verbs-imperative-basics-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ do kina! (Let's go to the cinema!)",
+      "options": [
+        "Chodźmy",
+        "Chodź",
+        "Chodzimy",
+        "Chodźcie"
+      ],
+      "correct": 0,
+      "explanation": "\"Let's go\" is Chodźmy.",
+      "optionNotes": [
+        null,
+        "Chodź means \"come\", to one person.",
+        "Chodzimy is a statement: \"we go (regularly)\".",
+        "Chodźcie means \"come\", to a group; \"let's\" ends in -my."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-locative-full",
+  "topic": "a2-cases-locative-full",
+  "level": "A2",
+  "title": "Stop: locative",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-locative-full-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Rozmawiamy o ___. (the weather)",
+      "options": [
+        "pogoda",
+        "pogodę",
+        "pogodzie",
+        "pogodą"
+      ],
+      "correct": 2,
+      "explanation": "\"About\" after rozmawiać takes the locative: pogoda → pogodzie (d → dzi).",
+      "optionNotes": [
+        "Nominative.",
+        "Accusative: o + accusative is for asking for something (pytać o drogę).",
+        null,
+        "Instrumental."
+      ]
+    },
+    {
+      "id": "a2-cases-locative-full-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Po ___ jadę do domu. (the lesson)",
+      "options": [
+        "lekcja",
+        "lekcji",
+        "lekcję",
+        "lekcją"
+      ],
+      "correct": 1,
+      "explanation": "Po meaning \"after\" takes the locative: lekcja → lekcji.",
+      "optionNotes": [
+        "Nominative.",
+        null,
+        "Accusative.",
+        "Instrumental."
+      ]
+    },
+    {
+      "id": "a2-cases-locative-full-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ jadę do Rzymu. (Next year)",
+      "options": [
+        "W przyszły rok",
+        "Na przyszłym roku",
+        "W przyszłego roku",
+        "W przyszłym roku"
+      ],
+      "correct": 3,
+      "explanation": "\"Next / this / last year\" is w + locative: w przyszłym roku.",
+      "optionNotes": [
+        "The noun and adjective must take the locative.",
+        "Time phrases use w, not na.",
+        "Genitive endings.",
+        null
+      ]
+    },
+    {
+      "id": "a2-cases-locative-full-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W ___ jest dużo ludzi. (shops)",
+      "options": [
+        "sklepach",
+        "sklepami",
+        "sklepy",
+        "sklepów"
+      ],
+      "correct": 0,
+      "explanation": "The locative plural is -ach for every gender: w sklepach.",
+      "optionNotes": [
+        null,
+        "-ami is the instrumental plural.",
+        "Nominative plural.",
+        "Genitive plural."
+      ]
+    }
+  ]
+}

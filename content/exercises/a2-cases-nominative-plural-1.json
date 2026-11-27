@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "id": "a2-cases-nominative-plural-1",
+  "topic": "a2-cases-nominative-plural",
+  "level": "A2",
+  "title": "Nominative plural: check yourself",
+  "intro": "10 tasks: plural endings for things and animals, and masculine personal forms for men.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-cases-nominative-plural-1-01",
+      "type": "paradigm",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal",
+        "all-genders"
+      ],
+      "prompt": "Write the nominative plural of each phrase.",
+      "lemma": "plural",
+      "gloss": "more than one",
+      "cells": [
+        {
+          "label": "nowy dom",
+          "accepted": [
+            "nowe domy"
+          ]
+        },
+        {
+          "label": "nowa szkoła",
+          "accepted": [
+            "nowe szkoły"
+          ]
+        },
+        {
+          "label": "małe okno",
+          "accepted": [
+            "małe okna"
+          ]
+        },
+        {
+          "label": "mały kot",
+          "accepted": [
+            "małe koty"
+          ]
+        },
+        {
+          "label": "nowy student",
+          "accepted": [
+            "nowi studenci"
+          ]
+        },
+        {
+          "label": "dobry lekarz",
+          "accepted": [
+            "dobrzy lekarze"
+          ]
+        }
+      ],
+      "explanation": "Things, animals, women: adjective -e, noun -y / -i / -a. Men: adjective -i / -y with a consonant change (nowi, dobrzy), noun studenci, lekarze."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "nominative-plural",
+        "soft-stems"
+      ],
+      "prompt": "Gdzie są ___? (the keys)",
+      "options": [
+        "kluczy",
+        "klucze",
+        "kluczów",
+        "klucza"
+      ],
+      "correct": 1,
+      "explanation": "After cz the plural ending is -e: klucze.",
+      "optionNotes": [
+        "Kluczy is the genitive plural.",
+        null,
+        "Not a word: the plural is klucze.",
+        "Klucza is singular."
+      ]
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal",
+        "possessives"
+      ],
+      "prompt": "To są ___. (my brothers)",
+      "options": [
+        "moje bracia",
+        "moi braty",
+        "moi bracia",
+        "moje braci"
+      ],
+      "correct": 2,
+      "explanation": "Brat has an irregular plural, bracia, and men take moi.",
+      "optionNotes": [
+        "Men take moi, not moje.",
+        "The plural of brat is irregular: bracia.",
+        null,
+        "Braci is the genitive plural."
+      ]
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal",
+        "animals"
+      ],
+      "context": "Our neighbours are very nice, and their dogs are very calm.",
+      "text": "Nasi {{1}} są bardzo mili, a ich {{2}} są bardzo spokojne.",
+      "gaps": [
+        {
+          "accepted": [
+            "sąsiedzi"
+          ],
+          "hint": "(sąsiad)"
+        },
+        {
+          "accepted": [
+            "psy"
+          ],
+          "hint": "(pies)"
+        }
+      ],
+      "explanation": "Neighbours are people: sąsiedzi (d → dzi). Dogs are animals: psy (the e drops), with spokojne."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal",
+        "adjectives"
+      ],
+      "context": "These gentlemen are very tall.",
+      "text": "Ci {{1}} są bardzo {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "panowie"
+          ],
+          "hint": "(pan)"
+        },
+        {
+          "accepted": [
+            "wysocy"
+          ],
+          "hint": "(wysoki)"
+        }
+      ],
+      "explanation": "Pan → panowie; the adjective for men changes k → c: wysocy."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-06",
+      "type": "find-error",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal"
+      ],
+      "tokens": [
+        "Studenty",
+        "mają",
+        "dziś",
+        "wolne."
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Studenci"
+      ],
+      "explanation": "Students here are people: masculine personal studenci (t → ci)."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-07",
+      "type": "find-error",
+      "tags": [
+        "nominative-plural",
+        "demonstratives"
+      ],
+      "tokens": [
+        "Te",
+        "panowie",
+        "są",
+        "z",
+        "Gdańska."
+      ],
+      "errorRange": [
+        0,
+        0
+      ],
+      "fixes": [
+        "Ci"
+      ],
+      "explanation": "\"These\" for men is ci; te is for women, animals and things."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-08",
+      "type": "match",
+      "tags": [
+        "nominative-plural",
+        "irregular"
+      ],
+      "mode": "translation",
+      "prompt": "Match the English with the Polish.",
+      "pairs": [
+        [
+          "people",
+          "ludzie"
+        ],
+        [
+          "children",
+          "dzieci"
+        ],
+        [
+          "brothers",
+          "bracia"
+        ],
+        [
+          "Poles",
+          "Polacy"
+        ],
+        [
+          "years",
+          "lata"
+        ]
+      ],
+      "explanation": "Irregular plurals: człowiek → ludzie, dziecko → dzieci, brat → bracia, rok → lata; Polak → Polacy (k → c)."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-09",
+      "type": "translate",
+      "tags": [
+        "nominative-plural",
+        "masculine-personal",
+        "possessives"
+      ],
+      "source": "These are my parents.",
+      "accepted": [
+        "To są moi rodzice.",
+        "To moi rodzice."
+      ],
+      "explanation": "Rodzice is masculine personal, so \"my\" is moi."
+    },
+    {
+      "id": "a2-cases-nominative-plural-1-10",
+      "type": "short-answer",
+      "tags": [
+        "nominative-plural",
+        "adjectives",
+        "masculine-personal"
+      ],
+      "prompt": "Make it plural. Ten aktor jest znany. → Ci aktorzy są ___.",
+      "accepted": [
+        "znani"
+      ],
+      "explanation": "For men the adjective takes -i, and n → ni: znani."
+    }
+  ]
+}

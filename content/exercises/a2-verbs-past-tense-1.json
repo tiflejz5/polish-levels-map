@@ -1,0 +1,270 @@
+{
+  "version": 1,
+  "id": "a2-verbs-past-tense-1",
+  "topic": "a2-verbs-past-tense",
+  "level": "A2",
+  "title": "Past tense: check yourself",
+  "intro": "10 tasks: the plural past (-li or -ły) and the past of iść, jeść and móc.",
+  "passage": null,
+  "items": [
+    {
+      "type": "paradigm",
+      "tags": [
+        "past",
+        "plural",
+        "byc"
+      ],
+      "prompt": "Write the plural past tense of być.",
+      "lemma": "być",
+      "gloss": "to be (past, plural)",
+      "cells": [
+        {
+          "label": "my (a group with a man)",
+          "accepted": [
+            "byliśmy"
+          ]
+        },
+        {
+          "label": "my (no men in the group)",
+          "accepted": [
+            "byłyśmy"
+          ]
+        },
+        {
+          "label": "wy (a group with a man)",
+          "accepted": [
+            "byliście"
+          ]
+        },
+        {
+          "label": "wy (no men in the group)",
+          "accepted": [
+            "byłyście"
+          ]
+        },
+        {
+          "label": "oni",
+          "accepted": [
+            "byli"
+          ]
+        },
+        {
+          "label": "one",
+          "accepted": [
+            "były"
+          ]
+        }
+      ],
+      "explanation": "A group with at least one man: -liśmy, -liście, -li. Any other group: -łyśmy, -łyście, -ły.",
+      "id": "a2-verbs-past-tense-1-01"
+    },
+    {
+      "id": "a2-verbs-past-tense-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "past",
+        "plural",
+        "gender"
+      ],
+      "prompt": "Kasia i jej mama ___ w Gdyni.",
+      "options": [
+        "byli",
+        "były",
+        "była",
+        "byłyśmy"
+      ],
+      "correct": 1,
+      "explanation": "Two women: the -ły form, były.",
+      "optionNotes": [
+        "Byli needs at least one man in the group.",
+        null,
+        "Była is singular.",
+        "Byłyśmy means \"we were\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-past-tense-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "past",
+        "isc"
+      ],
+      "prompt": "(a man speaking) Wczoraj ___ do sklepu i kupiłem chleb.",
+      "options": [
+        "poszedłem",
+        "poszłem",
+        "poszedł",
+        "poszłam"
+      ],
+      "correct": 0,
+      "explanation": "Pójść: a man says poszedłem; the e drops only in poszłam, poszła, poszli.",
+      "optionNotes": [
+        null,
+        "Not a word: a man says poszedłem.",
+        "Poszedł is \"he went\".",
+        "Poszłam is a woman's form."
+      ]
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "past",
+        "plural",
+        "miec",
+        "jesc"
+      ],
+      "context": "Tomek and Ania didn't have time and ate lunch at work.",
+      "text": "Tomek i Ania nie {{1}} czasu i {{2}} obiad w pracy.",
+      "gaps": [
+        {
+          "accepted": [
+            "mieli"
+          ],
+          "hint": "(mieć)"
+        },
+        {
+          "accepted": [
+            "jedli",
+            "zjedli"
+          ],
+          "hint": "(jeść)"
+        }
+      ],
+      "explanation": "A man and a woman: -li. Before -li the stems change: miał → mieli, jadł → jedli.",
+      "id": "a2-verbs-past-tense-1-04"
+    },
+    {
+      "type": "gap-fill",
+      "tags": [
+        "past",
+        "moc",
+        "gender"
+      ],
+      "context": "(a woman speaking) It was late and I couldn't sleep.",
+      "text": "Było późno i nie {{1}} spać.",
+      "gaps": [
+        {
+          "accepted": [
+            "mogłam"
+          ],
+          "hint": "(móc)"
+        }
+      ],
+      "explanation": "A woman says mogłam; ó appears only in mógł (he could).",
+      "id": "a2-verbs-past-tense-1-05"
+    },
+    {
+      "type": "find-error",
+      "tags": [
+        "past",
+        "plural",
+        "miec"
+      ],
+      "tokens": [
+        "Oni",
+        "miali",
+        "dużo",
+        "pracy."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "mieli"
+      ],
+      "explanation": "Before -li the e of mieć comes back: mieli.",
+      "id": "a2-verbs-past-tense-1-06"
+    },
+    {
+      "type": "find-error",
+      "tags": [
+        "past",
+        "isc",
+        "gender"
+      ],
+      "tokens": [
+        "Wczoraj",
+        "szłem",
+        "pieszo",
+        "do",
+        "pracy."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "szedłem",
+        "szłam",
+        "poszedłem",
+        "poszłam"
+      ],
+      "explanation": "A man says szedłem, a woman szłam; the form szłem does not exist.",
+      "id": "a2-verbs-past-tense-1-07"
+    },
+    {
+      "type": "short-answer",
+      "tags": [
+        "past",
+        "plural",
+        "chciec"
+      ],
+      "prompt": "Put it into the past. Oni chcą iść do parku. → Oni ___ iść do parku.",
+      "accepted": [
+        "chcieli"
+      ],
+      "explanation": "Oni takes -li, and the e of chcieć comes back: chcieli.",
+      "id": "a2-verbs-past-tense-1-08"
+    },
+    {
+      "type": "translate",
+      "tags": [
+        "past",
+        "plural",
+        "questions"
+      ],
+      "source": "Where were you yesterday? (to a group of friends, men and women)",
+      "accepted": [
+        "Gdzie byliście wczoraj?",
+        "Gdzie wczoraj byliście?",
+        "Gdzie wy byliście wczoraj?",
+        "Gdzie wy wczoraj byliście?"
+      ],
+      "explanation": "Wy and a group with a man: byliście.",
+      "id": "a2-verbs-past-tense-1-09"
+    },
+    {
+      "type": "match",
+      "tags": [
+        "past",
+        "plural",
+        "gender"
+      ],
+      "mode": "halves",
+      "prompt": "Match the beginnings with the endings.",
+      "pairs": [
+        [
+          "Ola i Ewa",
+          "mieszkały w Gdyni."
+        ],
+        [
+          "Paweł i Marek",
+          "jedli obiad w domu."
+        ],
+        [
+          "Wczoraj (ja, Kasia)",
+          "nie mogłam spać."
+        ],
+        [
+          "Mój brat",
+          "szedł do pracy pieszo."
+        ]
+      ],
+      "explanation": "Two women: -ły. Two men: -li. A woman about herself: -łam. One man: szedł.",
+      "id": "a2-verbs-past-tense-1-10"
+    }
+  ]
+}

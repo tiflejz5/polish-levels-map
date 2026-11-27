@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-vocabulary-travel-transport",
+  "topic": "a2-vocabulary-travel-transport",
+  "level": "A2",
+  "title": "Stop: travel",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-vocabulary-travel-transport-q1",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "I'm getting off at the next stop.",
+      "options": [
+        "Wychodzę z następnego przystanku.",
+        "Wysiadam na następnym przystanku.",
+        "Wsiadam na następnym przystanku.",
+        "Wysiadam do następnego przystanku."
+      ],
+      "correct": 1,
+      "explanation": "Getting off a vehicle is wysiadać.",
+      "optionNotes": [
+        "You leave a vehicle, not a stop: wysiadać z autobusu.",
+        null,
+        "Wsiadać is \"get on\".",
+        "Do means \"to\"; a stop is where you are: na przystanku."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-travel-transport-q2",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Pociąg do Krakowa odjeżdża z ___ drugiego.",
+      "options": [
+        "peronu",
+        "lotniska",
+        "recepcji",
+        "rozkładu"
+      ],
+      "correct": 0,
+      "explanation": "A train leaves from a platform: z peronu.",
+      "optionNotes": [
+        null,
+        "Lotnisko is an airport.",
+        "Recepcja is a hotel reception.",
+        "Rozkład jazdy is a timetable."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-travel-transport-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jadę ___ do Lublina. (I'm going to Lublin by train.)",
+      "options": [
+        "na pociągu",
+        "z pociągiem",
+        "pociąg",
+        "pociągiem"
+      ],
+      "correct": 3,
+      "explanation": "\"By train\" is the instrumental with no preposition: pociągiem.",
+      "optionNotes": [
+        "No preposition for \"by\".",
+        "Z pociągiem means \"together with a train\".",
+        "The nominative cannot say \"by\".",
+        null
+      ]
+    },
+    {
+      "id": "a2-vocabulary-travel-transport-q4",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Chcemy zarezerwować ___. (a double room)",
+      "options": [
+        "pokój jednoosobowy",
+        "bilet dwuosobowy",
+        "pokój dwuosobowy",
+        "pokój powrotny"
+      ],
+      "correct": 2,
+      "explanation": "A double room is pokój dwuosobowy.",
+      "optionNotes": [
+        "Jednoosobowy is a single room.",
+        "Bilet is a ticket, not a room.",
+        null,
+        "Powrotny is for a return ticket."
+      ]
+    }
+  ]
+}

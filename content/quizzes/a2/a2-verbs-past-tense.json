@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-past-tense",
+  "topic": "a2-verbs-past-tense",
+  "level": "A2",
+  "title": "Stop: past tense",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-past-tense-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Tomek i Ola ___ w kinie.",
+      "options": [
+        "były",
+        "byli",
+        "był",
+        "byliśmy"
+      ],
+      "correct": 1,
+      "explanation": "A group with at least one man takes -li: byli.",
+      "optionNotes": [
+        "-ły is for groups without men; Tomek is a man.",
+        null,
+        "Był is singular: \"he was\".",
+        "Byliśmy means \"we were\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-past-tense-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "(a man speaking) Wczoraj ___ do pracy pieszo.",
+      "options": [
+        "szłem",
+        "szedłem",
+        "szedł",
+        "szłam"
+      ],
+      "correct": 1,
+      "explanation": "The past of iść for a man is szedłem; the e drops only in szłam, szła, szli.",
+      "optionNotes": [
+        "Not a word: a man says szedłem.",
+        null,
+        "Szedł is \"he went\", not \"I went\".",
+        "Szłam is a woman's form."
+      ]
+    },
+    {
+      "id": "a2-verbs-past-tense-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ania i Kasia nie ___ czasu.",
+      "options": [
+        "miały",
+        "mieli",
+        "miali",
+        "miała"
+      ],
+      "correct": 0,
+      "explanation": "Two women: the -ły form, miały.",
+      "optionNotes": [
+        null,
+        "Mieli is for a group with a man.",
+        "Not a word: before -li the e comes back (mieli).",
+        "Miała is singular: \"she had\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-past-tense-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "(a woman speaking) Było gorąco i nie ___ spać.",
+      "options": [
+        "mógłam",
+        "mogłam",
+        "mogła",
+        "mogłem"
+      ],
+      "correct": 1,
+      "explanation": "Móc: ó appears only in mógł (he could). A woman says mogłam.",
+      "optionNotes": [
+        "Spelling: ó only in mógł.",
+        null,
+        "Mogła is \"she could\".",
+        "Mogłem is a man's form."
+      ]
+    }
+  ]
+}

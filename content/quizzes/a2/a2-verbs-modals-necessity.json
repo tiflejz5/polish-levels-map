@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-modals-necessity",
+  "topic": "a2-verbs-modals-necessity",
+  "level": "A2",
+  "title": "Stop: must, should, can",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-modals-necessity-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "You mustn't smoke here.",
+      "options": [
+        "Tu nie musisz palić.",
+        "Tu nie wolno palić.",
+        "Tu nie trzeba palić.",
+        "Tu nie warto palić."
+      ],
+      "correct": 1,
+      "explanation": "A ban is nie wolno. Nie musisz means \"you don't have to\".",
+      "optionNotes": [
+        "Nie musisz means \"you don't have to\", not \"you mustn't\".",
+        null,
+        "Nie trzeba means \"there's no need\".",
+        "Nie warto means \"it's not worth it\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-modals-necessity-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "You should rest. (to a woman, a friend)",
+      "options": [
+        "Powinien odpocząć.",
+        "Powinnaś odpocząć.",
+        "Powinieneś odpocząć.",
+        "Powinna odpocząć."
+      ],
+      "correct": 1,
+      "explanation": "Powinien agrees with the person: \"you\" to a woman is powinnaś.",
+      "optionNotes": [
+        "Powinien means \"he should\".",
+        null,
+        "Powinieneś is \"you should\" to a man.",
+        "Powinna alone means \"she should\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-modals-necessity-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ zobaczyć to muzeum, jest bardzo ciekawe. (It's worth)",
+      "options": [
+        "Warto",
+        "Wolno",
+        "Nie trzeba",
+        "Nie wolno"
+      ],
+      "correct": 0,
+      "explanation": "\"It's worth (doing)\" is warto + infinitive.",
+      "optionNotes": [
+        null,
+        "Wolno means \"one may\" (it's allowed).",
+        "Nie trzeba means \"there's no need\".",
+        "Nie wolno means \"you mustn't\"."
+      ]
+    },
+    {
+      "id": "a2-verbs-modals-necessity-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jutro ___ iść do lekarza. (I have to)",
+      "options": [
+        "trzeba",
+        "muszę",
+        "powinien",
+        "wolno"
+      ],
+      "correct": 1,
+      "explanation": "With a person (I) use musieć: muszę. Trzeba has no person.",
+      "optionNotes": [
+        "Trzeba has no person: it means \"one has to\".",
+        null,
+        "Powinien is \"he should\".",
+        "Wolno means \"one may\"."
+      ]
+    }
+  ]
+}

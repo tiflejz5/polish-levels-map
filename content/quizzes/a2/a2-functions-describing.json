@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-describing",
+  "topic": "a2-functions-describing",
+  "level": "A2",
+  "title": "Stop: describing",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-describing-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "What's your new neighbour like?",
+      "options": [
+        "Jak jest twój nowy sąsiad?",
+        "Jaki jest twój nowy sąsiad?",
+        "Jaka jest twój nowy sąsiad?",
+        "Co jest twój nowy sąsiad?"
+      ],
+      "correct": 1,
+      "explanation": "\"What … like?\" is Jaki …?, agreeing with the noun: jaki sąsiad.",
+      "optionNotes": [
+        "Jak asks \"how\"; a word-for-word copy of \"how is…\".",
+        null,
+        "Jaka is feminine; sąsiad is masculine.",
+        "Co asks \"what\" about things."
+      ]
+    },
+    {
+      "id": "a2-functions-describing-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "The flat is very bright.",
+      "options": [
+        "Mieszkanie jest bardzo jasno.",
+        "Mieszkanie jest bardzo jasny.",
+        "Mieszkanie jest bardzo jasne.",
+        "Mieszkanie ma bardzo jasne."
+      ],
+      "correct": 2,
+      "explanation": "A noun is described with an adjective, and it agrees: mieszkanie jasne.",
+      "optionNotes": [
+        "Jasno is an adverb; a noun needs an adjective.",
+        "Jasny is masculine; mieszkanie is neuter.",
+        null,
+        "Mieć needs an object; use jest + adjective."
+      ]
+    },
+    {
+      "id": "a2-functions-describing-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "This jacket is too expensive.",
+      "options": [
+        "Ta kurtka jest za droga.",
+        "Ta kurtka jest za dużo droga.",
+        "Ta kurtka jest też droga.",
+        "Ta kurtka jest za drogo."
+      ],
+      "correct": 0,
+      "explanation": "\"Too\" before an adjective is za: za droga.",
+      "optionNotes": [
+        null,
+        "Za dużo means \"too much\"; before an adjective use only za.",
+        "Też means \"also\".",
+        "Drogo is an adverb; kurtka needs the adjective droga."
+      ]
+    },
+    {
+      "id": "a2-functions-describing-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "She's a very nice person.",
+      "options": [
+        "To bardzo miło osoba.",
+        "To jest bardzo miły osoba.",
+        "To bardzo miła osoba.",
+        "To bardzo miłe osoba."
+      ],
+      "correct": 2,
+      "explanation": "To + noun phrase in the nominative; the adjective agrees with osoba (feminine): miła.",
+      "optionNotes": [
+        "Miło is an adverb; osoba needs an adjective.",
+        "Osoba is feminine: miła, not miły.",
+        null,
+        "Miłe is neuter or plural; osoba is feminine."
+      ]
+    }
+  ]
+}

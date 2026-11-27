@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-motion-verbs-basics",
+  "topic": "a2-verbs-motion-verbs-basics",
+  "level": "A2",
+  "title": "Stop: verbs of motion",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-motion-verbs-basics-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Codziennie ___ do pracy pieszo.",
+      "options": [
+        "idę",
+        "chodzę",
+        "jadę",
+        "jeżdżę"
+      ],
+      "correct": 1,
+      "explanation": "A habit on foot: chodzić. Codziennie is the signal word.",
+      "optionNotes": [
+        "Idę is for one trip now or planned.",
+        null,
+        "Jadę is by vehicle, one trip.",
+        "Jeżdżę is by vehicle; pieszo means on foot."
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Teraz ___ do sklepu, zaraz wracam. (on foot)",
+      "options": [
+        "chodzę",
+        "jeżdżę",
+        "latam",
+        "idę"
+      ],
+      "correct": 3,
+      "explanation": "One trip in one direction, right now: iść.",
+      "optionNotes": [
+        "Chodzę is for habits, not for one trip now.",
+        "Jeżdżę is by vehicle and for habits.",
+        "Latam is for flying, as a habit.",
+        null
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W soboty ___ do babci samochodem.",
+      "options": [
+        "jeżdżę",
+        "jadę",
+        "idę",
+        "lecę"
+      ],
+      "correct": 0,
+      "explanation": "A repeated trip by car: jeździć. W soboty (on Saturdays) shows a habit.",
+      "optionNotes": [
+        null,
+        "Jadę is for one trip, not for every Saturday.",
+        "Idę is on foot.",
+        "Lecę is for flying."
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W zeszłym roku ___ do Hiszpanii. (we, by plane)",
+      "options": [
+        "poszliśmy",
+        "polecieliśmy",
+        "latamy",
+        "polecimy"
+      ],
+      "correct": 1,
+      "explanation": "One finished trip by plane in the past: the perfective polecieć.",
+      "optionNotes": [
+        "Pójść is on foot.",
+        null,
+        "Latamy is present and means a habit.",
+        "Polecimy is the future."
+      ]
+    }
+  ]
+}

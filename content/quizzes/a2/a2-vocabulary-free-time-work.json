@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-vocabulary-free-time-work",
+  "topic": "a2-vocabulary-free-time-work",
+  "level": "A2",
+  "title": "Stop: free time and work",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-vocabulary-free-time-work-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W sobotę gram ___. (I play tennis on Saturday.)",
+      "options": [
+        "tenis",
+        "tenisa",
+        "w tenisa",
+        "na tenisie"
+      ],
+      "correct": 2,
+      "explanation": "Sports take grać w + accusative: w tenisa.",
+      "optionNotes": [
+        "Sports need w.",
+        "Sports need w before the noun: w tenisa.",
+        null,
+        "Na + locative is for instruments."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-free-time-work-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mój brat gra ___. (the guitar)",
+      "options": [
+        "w gitarę",
+        "na gitarze",
+        "gitarę",
+        "na gitarę"
+      ],
+      "correct": 1,
+      "explanation": "Instruments take grać na + locative: na gitarze.",
+      "optionNotes": [
+        "W + accusative is for games and sports.",
+        null,
+        "Grać needs na with an instrument.",
+        "After grać na use the locative."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-free-time-work-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wieczorem słucham ___. (music)",
+      "options": [
+        "muzykę",
+        "muzyki",
+        "muzyką",
+        "muzyka"
+      ],
+      "correct": 1,
+      "explanation": "Słuchać takes the genitive: słucham muzyki.",
+      "optionNotes": [
+        "The accusative is a typical mistake; słuchać takes the genitive.",
+        null,
+        "Instrumental, as in interesuję się muzyką.",
+        "Nominative."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-free-time-work-q4",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Dziadek ma 75 lat i już nie pracuje. Co miesiąc dostaje ___.",
+      "options": [
+        "pensję",
+        "emeryturę",
+        "urlop",
+        "spotkanie"
+      ],
+      "correct": 1,
+      "explanation": "A pension is emerytura.",
+      "optionNotes": [
+        "Pensja is a false friend: it means \"salary\".",
+        null,
+        "Urlop is time off from work.",
+        "Spotkanie is a meeting."
+      ]
+    }
+  ]
+}
