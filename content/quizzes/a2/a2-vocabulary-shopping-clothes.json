@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-vocabulary-shopping-clothes",
+  "topic": "a2-vocabulary-shopping-clothes",
+  "level": "A2",
+  "title": "Stop: shopping and clothes",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-vocabulary-shopping-clothes-q1",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Can I try on this jacket?",
+      "options": [
+        "Czy mogę próbować tę kurtkę?",
+        "Czy mogę przymierzyć tę kurtkę?",
+        "Czy mogę nosić tę kurtkę?",
+        "Czy mogę przymierzyć ta kurtka?"
+      ],
+      "correct": 1,
+      "explanation": "\"Try on\" clothes is przymierzyć, + accusative: tę kurtkę.",
+      "optionNotes": [
+        "Próbować means \"try, taste\", not \"try on\".",
+        null,
+        "Nosić means \"wear\".",
+        "The object needs the accusative: tę kurtkę."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-shopping-clothes-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Te spodnie ___ za długie.",
+      "options": [
+        "są",
+        "jest",
+        "ma",
+        "będzie"
+      ],
+      "correct": 0,
+      "explanation": "Spodnie is plural only, so the verb is plural: są.",
+      "optionNotes": [
+        null,
+        "Jest is singular; spodnie is a plural word.",
+        "Mieć does not describe here; use być.",
+        "Będzie is singular (and future)."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-shopping-clothes-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "What size do you wear? (formal, to a woman)",
+      "options": [
+        "Jaki rozmiar pani jest?",
+        "Jaki rozmiar pan nosi?",
+        "Jaki rozmiar pani nosi?",
+        "Jaka jest pani rozmiar?"
+      ],
+      "correct": 2,
+      "explanation": "Polish says \"which size do you wear\": Jaki rozmiar pani nosi?",
+      "optionNotes": [
+        "A copy of \"what size are you\"; Polish uses nosić.",
+        "Pan is for a man.",
+        null,
+        "Rozmiar is masculine, so jaki (Jaki jest pani rozmiar? is fine); jaka is feminine."
+      ]
+    },
+    {
+      "id": "a2-vocabulary-shopping-clothes-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mam nową ___ kurtkę. (black)",
+      "options": [
+        "czarny",
+        "czarna",
+        "czarne",
+        "czarną"
+      ],
+      "correct": 3,
+      "explanation": "Colours are adjectives and agree with the noun: kurtkę (accusative feminine) → czarną.",
+      "optionNotes": [
+        "Masculine.",
+        "Feminine nominative; the object needs the accusative.",
+        "Neuter or plural.",
+        null
+      ]
+    }
+  ]
+}

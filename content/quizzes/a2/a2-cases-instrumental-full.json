@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-instrumental-full",
+  "topic": "a2-cases-instrumental-full",
+  "level": "A2",
+  "title": "Stop: instrumental",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-instrumental-full-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jadę do pracy ___. (by bus)",
+      "options": [
+        "z autobusem",
+        "autobusem",
+        "na autobusie",
+        "w autobusie"
+      ],
+      "correct": 1,
+      "explanation": "How you travel: the vehicle in the instrumental, with no preposition.",
+      "optionNotes": [
+        "Z autobusem means \"together with a bus\".",
+        null,
+        "Na + locative says where something is, not how you travel.",
+        "W autobusie means \"inside the bus\" (where you are)."
+      ]
+    },
+    {
+      "id": "a2-cases-instrumental-full-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Idę do kina z ___. (my friends)",
+      "options": [
+        "moi przyjaciele",
+        "moich przyjaciół",
+        "moim przyjaciołom",
+        "moimi przyjaciółmi"
+      ],
+      "correct": 3,
+      "explanation": "Z meaning \"with\" takes the instrumental: moimi przyjaciółmi (irregular -mi).",
+      "optionNotes": [
+        "Nominative.",
+        "Genitive: z + genitive means \"from\".",
+        "Dative.",
+        null
+      ]
+    },
+    {
+      "id": "a2-cases-instrumental-full-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola interesuje się ___. (art)",
+      "options": [
+        "sztuką",
+        "sztuka",
+        "sztukę",
+        "o sztuce"
+      ],
+      "correct": 0,
+      "explanation": "Interesować się takes the instrumental: sztuka → sztuką.",
+      "optionNotes": [
+        null,
+        "Nominative.",
+        "Accusative.",
+        "A copy of \"interested in / about\"; no preposition here."
+      ]
+    },
+    {
+      "id": "a2-cases-instrumental-full-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kot śpi pod ___. (the table)",
+      "options": [
+        "stół",
+        "stole",
+        "stołem",
+        "stołu"
+      ],
+      "correct": 2,
+      "explanation": "Pod meaning \"under\" (where) takes the instrumental: stołem.",
+      "optionNotes": [
+        "Nominative (also the accusative, used for \"where to\").",
+        "Locative, as in na stole.",
+        null,
+        "Genitive."
+      ]
+    }
+  ]
+}

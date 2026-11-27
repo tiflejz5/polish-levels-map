@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-dative",
+  "topic": "a2-cases-dative",
+  "level": "A2",
+  "title": "Stop: dative",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-dative-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Daję ___ prezent. (I'm giving Mum a present.)",
+      "options": [
+        "mamę",
+        "mamie",
+        "do mamy",
+        "mama"
+      ],
+      "correct": 1,
+      "explanation": "The person who gets something takes the dative. Feminine -a → -e with softening: mamie.",
+      "optionNotes": [
+        "Accusative: that is for the present, the object.",
+        null,
+        "Do means \"to a place\"; for a person who receives something use the dative.",
+        "Nominative, the dictionary form."
+      ]
+    },
+    {
+      "id": "a2-cases-dative-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Często pomagamy ___. (our neighbour, a man)",
+      "options": [
+        "naszego sąsiada",
+        "naszemu sąsiadowi",
+        "nasz sąsiad",
+        "naszym sąsiadem"
+      ],
+      "correct": 1,
+      "explanation": "Pomagać takes the dative: adjective -emu, masculine noun -owi.",
+      "optionNotes": [
+        "Accusative, as after \"help\" in English; pomagać takes the dative.",
+        null,
+        "Nominative.",
+        "Instrumental."
+      ]
+    },
+    {
+      "id": "a2-cases-dative-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "I like this dress.",
+      "options": [
+        "Podobam się tę sukienkę.",
+        "Ta sukienka podoba mnie.",
+        "Podoba mi się ta sukienka.",
+        "Jestem podoba ta sukienka."
+      ],
+      "correct": 2,
+      "explanation": "With podobać się the thing is the subject and the person is in the dative: Podoba mi się ta sukienka.",
+      "optionNotes": [
+        "Podobam się means \"I appeal (to someone)\"; the dress must be the subject.",
+        "Podobać needs się, and the usual dative here is the short mi.",
+        null,
+        "Być is not used here."
+      ]
+    },
+    {
+      "id": "a2-cases-dative-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "I'm cold.",
+      "options": [
+        "Jestem zimno.",
+        "Mam zimno.",
+        "Jestem zimny.",
+        "Jest mi zimno."
+      ],
+      "correct": 3,
+      "explanation": "Feeling cold or hot: jest + dative + adverb, \"it is cold to me\".",
+      "optionNotes": [
+        "A word-for-word copy of \"I am cold\".",
+        "Not standard Polish; say jest mi zimno.",
+        "Jestem zimny describes a cold person or a cold body, not how you feel.",
+        null
+      ]
+    }
+  ]
+}

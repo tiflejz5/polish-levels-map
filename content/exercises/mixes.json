@@ -95,6 +95,20 @@
       ]
     },
     {
+      "id": "mix-a2-u3",
+      "title": "Unit review: Giving and going",
+      "description": "The dative, the instrumental and the locative in all their uses, and verbs of motion, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-cases-dative",
+        "a2-cases-instrumental-full",
+        "a2-cases-locative-full",
+        "a2-verbs-motion-verbs-basics"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",

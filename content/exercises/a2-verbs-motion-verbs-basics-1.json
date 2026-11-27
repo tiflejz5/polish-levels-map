@@ -1,0 +1,256 @@
+{
+  "version": 1,
+  "id": "a2-verbs-motion-verbs-basics-1",
+  "topic": "a2-verbs-motion-verbs-basics",
+  "level": "A2",
+  "title": "Verbs of motion: check yourself",
+  "intro": "10 tasks: one trip now (idę, jadę, lecę) or a habit (chodzę, jeżdżę, latam).",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-01",
+      "type": "paradigm",
+      "tags": [
+        "motion-verbs",
+        "jezdzic",
+        "conjugation"
+      ],
+      "prompt": "Give the present-tense forms of jeździć.",
+      "lemma": "jeździć",
+      "gloss": "go by vehicle (regularly), ride",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "jeżdżę"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "jeździsz"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "jeździ"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "jeździmy"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "jeździcie"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "jeżdżą"
+          ]
+        }
+      ],
+      "explanation": "Only ja and oni change the stem: ź → ż, dź → dż: jeżdżę, jeżdżą."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "motion-verbs",
+        "habit"
+      ],
+      "prompt": "Często ___ do teatru. (we go, on foot)",
+      "options": [
+        "idziemy",
+        "chodzimy",
+        "jeździmy",
+        "lecimy"
+      ],
+      "correct": 1,
+      "explanation": "Często shows a habit; on foot: chodzić.",
+      "optionNotes": [
+        "Idziemy is for one trip now or planned.",
+        null,
+        "Jeździmy is by vehicle.",
+        "Lecimy is for flying."
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "motion-verbs",
+        "now"
+      ],
+      "prompt": "Teraz ___ na dworzec, mam pociąg o piątej. (I'm going, by taxi)",
+      "options": [
+        "jeżdżę",
+        "jadę",
+        "chodzę",
+        "idę"
+      ],
+      "correct": 1,
+      "explanation": "One trip now by vehicle: jechać, jadę.",
+      "optionNotes": [
+        "Jeżdżę is for a habit.",
+        null,
+        "Chodzę is on foot and for a habit.",
+        "Idę is on foot."
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-04",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "motion-verbs",
+        "habit",
+        "flying"
+      ],
+      "prompt": "Mój brat często ___ do Londynu. (flies)",
+      "options": [
+        "leci",
+        "lata",
+        "jeździ",
+        "latam"
+      ],
+      "correct": 1,
+      "explanation": "Flying as a habit: latać, on lata.",
+      "optionNotes": [
+        "Leci is for one flight now or planned.",
+        null,
+        "Jeździ is \"goes by vehicle\", not \"flies\".",
+        "Latam is the ja form."
+      ]
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "motion-verbs",
+        "past"
+      ],
+      "context": "Yesterday I was walking home and suddenly it started to rain. (a woman speaking)",
+      "text": "Wczoraj {{1}} do domu i nagle zaczął padać deszcz.",
+      "gaps": [
+        {
+          "accepted": [
+            "szłam"
+          ],
+          "hint": "(iść, ja)"
+        }
+      ],
+      "explanation": "\"Was walking\", the background to an event: the past of iść. A woman says szłam (no e)."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-06",
+      "type": "gap-fill",
+      "tags": [
+        "motion-verbs",
+        "future",
+        "perfective"
+      ],
+      "context": "Next week we're going to Gdańsk.",
+      "text": "W przyszłym tygodniu {{1}} do Gdańska.",
+      "gaps": [
+        {
+          "accepted": [
+            "pojedziemy"
+          ],
+          "hint": "(pojechać, my)"
+        }
+      ],
+      "explanation": "Pojechać has a future meaning in the present-tense form: pojedziemy."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-07",
+      "type": "find-error",
+      "tags": [
+        "motion-verbs",
+        "general"
+      ],
+      "tokens": [
+        "Latem",
+        "lubimy",
+        "iść",
+        "po",
+        "górach."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "chodzić"
+      ],
+      "explanation": "Walking around (po + locative = around), with no single direction, takes chodzić: chodzić po górach."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-08",
+      "type": "find-error",
+      "tags": [
+        "motion-verbs",
+        "spelling"
+      ],
+      "tokens": [
+        "Moi",
+        "rodzice",
+        "jeżdzą",
+        "na",
+        "nartach."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "jeżdżą"
+      ],
+      "explanation": "Spelling: jeździć → jeżdżą (ż and dż)."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-09",
+      "type": "translate",
+      "tags": [
+        "motion-verbs",
+        "flying",
+        "habit"
+      ],
+      "source": "We often fly to Rome.",
+      "accepted": [
+        "Często latamy do Rzymu.",
+        "Latamy często do Rzymu.",
+        "My często latamy do Rzymu.",
+        "Do Rzymu często latamy."
+      ],
+      "explanation": "A habit of flying: latać, latamy."
+    },
+    {
+      "id": "a2-verbs-motion-verbs-basics-1-10",
+      "type": "translate",
+      "tags": [
+        "motion-verbs",
+        "perfective",
+        "past"
+      ],
+      "source": "Ania has gone to Warsaw. (by train)",
+      "accepted": [
+        "Ania pojechała do Warszawy.",
+        "Ania pojechała do Warszawy pociągiem.",
+        "Ania pojechała pociągiem do Warszawy.",
+        "Ania wyjechała do Warszawy.",
+        "Ania wyjechała do Warszawy pociągiem.",
+        "Ania wyjechała pociągiem do Warszawy."
+      ],
+      "explanation": "One finished trip by vehicle: the perfective pojechać."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-directions",
+  "topic": "a2-functions-directions",
+  "level": "A2",
+  "title": "Stop: directions",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-directions-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Excuse me, how do I get to the station? (on foot)",
+      "options": [
+        "Przepraszam, jak idę do dworca?",
+        "Przepraszam, gdzie dojść do dworca?",
+        "Przepraszam, jak dojść do dworca?",
+        "Przepraszam, jak dojść do dworzec?"
+      ],
+      "correct": 2,
+      "explanation": "The ready question is Jak dojść do + genitive: do dworca.",
+      "optionNotes": [
+        "A word-for-word copy of \"how do I go\"; Polish uses jak dojść.",
+        "Gdzie means \"where\"; the question needs jak (how).",
+        null,
+        "Do takes the genitive: dworca."
+      ]
+    },
+    {
+      "id": "a2-functions-directions-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Tell a stranger: \"Turn right at the traffic lights.\"",
+      "options": [
+        "Na światłach proszę skręcić w prawo.",
+        "Na światłach proszę skręca w prawo.",
+        "W światłach proszę skręcić w prawo.",
+        "Na światłach proszę skręcić do prawa."
+      ],
+      "correct": 0,
+      "explanation": "Proszę + infinitive is the polite instruction; \"at the lights\" is na światłach, \"right\" is w prawo.",
+      "optionNotes": [
+        null,
+        "After proszę use the infinitive, skręcić.",
+        "Lights take na: na światłach.",
+        "Directions are w prawo / w lewo."
+      ]
+    },
+    {
+      "id": "a2-functions-directions-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Poczta jest naprzeciwko ___. (the bank)",
+      "options": [
+        "bank",
+        "banku",
+        "bankiem",
+        "bankowi"
+      ],
+      "correct": 1,
+      "explanation": "Naprzeciwko (opposite) takes the genitive: banku.",
+      "optionNotes": [
+        "Nominative.",
+        null,
+        "Instrumental, used after przed, za, nad, pod.",
+        "Dative."
+      ]
+    },
+    {
+      "id": "a2-functions-directions-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "The car park is behind the church.",
+      "options": [
+        "Parking jest za kościół.",
+        "Parking jest za kościoła.",
+        "Parking jest obok kościołem.",
+        "Parking jest za kościołem."
+      ],
+      "correct": 3,
+      "explanation": "Za meaning \"behind\" (where) takes the instrumental: za kościołem.",
+      "optionNotes": [
+        "Za + accusative is for \"where to\".",
+        "Za does not take the genitive.",
+        "Obok means \"next to\" and takes the genitive.",
+        null
+      ]
+    }
+  ]
+}
