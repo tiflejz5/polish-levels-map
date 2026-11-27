@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-health",
+  "topic": "a2-functions-health",
+  "level": "A2",
+  "title": "Stop: health",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-health-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "I have a headache.",
+      "options": [
+        "Moja głowa boli.",
+        "Boli mnie głowa.",
+        "Boli mnie głowę.",
+        "Mam głowa boli."
+      ],
+      "correct": 1,
+      "explanation": "Polish says \"the head hurts me\": Boli mnie głowa.",
+      "optionNotes": [
+        "A word-for-word copy of English.",
+        null,
+        "Głowa is the subject, so it stays in the nominative.",
+        "Not a Polish pattern."
+      ]
+    },
+    {
+      "id": "a2-functions-health-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ mnie plecy.",
+      "options": [
+        "Boli",
+        "Bolą",
+        "Bolę",
+        "Bolały się"
+      ],
+      "correct": 1,
+      "explanation": "Plecy is plural, so the verb is plural: bolą.",
+      "optionNotes": [
+        "Boli is for one thing.",
+        null,
+        "Bolę is the ja form: \"I hurt\".",
+        "Boleć has no się."
+      ]
+    },
+    {
+      "id": "a2-functions-health-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "At the pharmacy: ask for something for a cough.",
+      "options": [
+        "Czy jest coś dla kaszlu?",
+        "Czy jest coś na kaszel?",
+        "Czy jest coś na kaszlu?",
+        "Czy jest coś od kaszel?"
+      ],
+      "correct": 1,
+      "explanation": "Medicine for an illness: na + accusative, coś na kaszel.",
+      "optionNotes": [
+        "A copy of English \"for\".",
+        null,
+        "Na here takes the accusative, kaszel.",
+        "Od does not fit here; use na."
+      ]
+    },
+    {
+      "id": "a2-functions-health-q4",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "The doctor asks: Od kiedy? You have had it for three days.",
+      "options": [
+        "Od trzech dni.",
+        "Od trzy dni.",
+        "Na trzy dni.",
+        "Za trzy dni."
+      ],
+      "correct": 0,
+      "explanation": "Od + genitive says since when: od trzech dni.",
+      "optionNotes": [
+        null,
+        "Od takes the genitive: trzech dni.",
+        "Na trzy dni is a plan for the future: \"for three days\".",
+        "Za trzy dni means \"in three days\", in the future."
+      ]
+    }
+  ]
+}

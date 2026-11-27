@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-tickets-bookings-problems",
+  "topic": "a2-functions-tickets-bookings-problems",
+  "level": "A2",
+  "title": "Stop: tickets and bookings",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-tickets-bookings-problems-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Book a table for two. (a woman speaking)",
+      "options": [
+        "Chciałabym zarezerwować stolik na dwie osoby.",
+        "Chciałbym zarezerwować stolik na dwie osoby.",
+        "Chciałabym zarezerwować stolik na dwa osoby.",
+        "Chciałabym zarezerwować stół dla dwa."
+      ],
+      "correct": 0,
+      "explanation": "A woman says chciałabym; \"for two people\" is na dwie osoby.",
+      "optionNotes": [
+        null,
+        "Chciałbym is what a man says.",
+        "Osoba is feminine: dwie osoby.",
+        "A restaurant table is stolik, and dla needs the genitive: dla dwóch osób."
+      ]
+    },
+    {
+      "id": "a2-functions-tickets-bookings-problems-q2",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "The heating in your hotel room doesn't work. What do you say?",
+      "options": [
+        "Ogrzewanie nie pracuje.",
+        "Nie działa ogrzewanie.",
+        "Ogrzewanie nie jest działać.",
+        "Nie ma ogrzewanie."
+      ],
+      "correct": 1,
+      "explanation": "For machines and devices \"work\" is działać: Nie działa ogrzewanie.",
+      "optionNotes": [
+        "Pracować is for people doing a job.",
+        null,
+        "Działać is the verb itself; no jest.",
+        "Nie ma takes the genitive, and it means there is none at all."
+      ]
+    },
+    {
+      "id": "a2-functions-tickets-bookings-problems-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Chciałbym zarezerwować pokój ___ trzy noce.",
+      "options": [
+        "dla",
+        "na",
+        "w",
+        "do"
+      ],
+      "correct": 1,
+      "explanation": "How long you book for: na + accusative, na trzy noce.",
+      "optionNotes": [
+        "A copy of English \"for\".",
+        null,
+        "W does not say how long.",
+        "Do means \"to, until\"."
+      ]
+    },
+    {
+      "id": "a2-functions-tickets-bookings-problems-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Poproszę bilet ulgowy do ___.",
+      "options": [
+        "Gdańsk",
+        "Gdańsku",
+        "Gdańska",
+        "Gdańskiem"
+      ],
+      "correct": 2,
+      "explanation": "Do takes the genitive: do Gdańska.",
+      "optionNotes": [
+        "Nominative.",
+        "Locative, used after w: w Gdańsku.",
+        null,
+        "Instrumental."
+      ]
+    }
+  ]
+}

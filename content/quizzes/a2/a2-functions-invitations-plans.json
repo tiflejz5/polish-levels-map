@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-functions-invitations-plans",
+  "topic": "a2-functions-invitations-plans",
+  "level": "A2",
+  "title": "Stop: invitations",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-functions-invitations-plans-q1",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "Suggest going to the cinema.",
+      "options": [
+        "Pozwól nam pójść do kina.",
+        "Może pójdziemy do kina?",
+        "Może pójdziemy do kino?",
+        "Może poszliśmy do kina?"
+      ],
+      "correct": 1,
+      "explanation": "Może + the my form of the perfective future makes a suggestion.",
+      "optionNotes": [
+        "Pozwolić means \"allow\"; it is not \"let's\".",
+        null,
+        "Do takes the genitive: do kina.",
+        "Past tense; a suggestion is about the future."
+      ]
+    },
+    {
+      "id": "a2-functions-invitations-plans-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Masz ochotę ___ kawę?",
+      "options": [
+        "dla",
+        "do",
+        "na",
+        "w"
+      ],
+      "correct": 2,
+      "explanation": "Ochota takes na + accusative: ochotę na kawę.",
+      "optionNotes": [
+        "A copy of English \"for\".",
+        "Do is for places: do kawiarni.",
+        null,
+        "W does not go with ochota."
+      ]
+    },
+    {
+      "id": "a2-functions-invitations-plans-q3",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "A friend invites you, but you are working. Decline politely.",
+      "options": [
+        "Nie.",
+        "Niestety nie mogę, bo pracuję.",
+        "Nie mogę, bo pracować.",
+        "Niestety nie mogę, bo pracuje."
+      ],
+      "correct": 1,
+      "explanation": "Decline with niestety and a short reason after bo.",
+      "optionNotes": [
+        "Correct but very cold; add a reason.",
+        null,
+        "After bo use a full verb form: pracuję.",
+        "Pracuje is \"he / she works\"; I work is pracuję."
+      ]
+    },
+    {
+      "id": "a2-functions-invitations-plans-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Gdzie ___ w piątek? (Where shall we meet on Friday?)",
+      "options": [
+        "spotkamy",
+        "się spotkamy",
+        "spotkamy nas",
+        "nas spotkamy"
+      ],
+      "correct": 1,
+      "explanation": "Meet up is spotkać się; się likes to stand early: Gdzie się spotkamy?",
+      "optionNotes": [
+        "Spotkać alone means \"run into\"; meeting up needs się.",
+        null,
+        "\"Each other\" is się, not nas.",
+        "\"Each other\" is się, not nas."
+      ]
+    }
+  ]
+}

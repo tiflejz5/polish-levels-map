@@ -125,6 +125,18 @@
       ]
     },
     {
+      "id": "mix-a2-u5",
+      "title": "Unit review: Getting things done",
+      "description": "Commands and polite requests side by side with must, should, can and mustn't: getting people to do things.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-verbs-imperative-basics",
+        "a2-verbs-modals-necessity"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",
