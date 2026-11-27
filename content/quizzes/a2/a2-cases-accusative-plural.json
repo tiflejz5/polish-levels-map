@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-accusative-plural",
+  "topic": "a2-cases-accusative-plural",
+  "level": "A2",
+  "title": "Stop: accusative plural",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-accusative-plural-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Lubię ___. (I like cats.)",
+      "options": [
+        "kotów",
+        "koty",
+        "kotami",
+        "kota"
+      ],
+      "correct": 1,
+      "explanation": "Animals in the plural: the accusative is the same as the nominative, koty.",
+      "optionNotes": [
+        "-ów is for men (studentów), not for animals.",
+        null,
+        "Kotami is the instrumental.",
+        "Kota is singular: \"a cat\"."
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Znam ___. (these students)",
+      "options": [
+        "te studenty",
+        "ci studenci",
+        "tych studenci",
+        "tych studentów"
+      ],
+      "correct": 3,
+      "explanation": "Men as objects take -ów, and \"these\" is tych.",
+      "optionNotes": [
+        "Studenty does not exist; for men use the masculine personal forms.",
+        "This is the nominative: the subject form.",
+        "The noun must change too: studentów.",
+        null
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W weekend odwiedzam ___.",
+      "options": [
+        "rodziców",
+        "rodzice",
+        "rodzicami",
+        "rodzicy"
+      ],
+      "correct": 0,
+      "explanation": "Rodzice is masculine personal, so the accusative is rodziców.",
+      "optionNotes": [
+        null,
+        "Rodzice is the nominative; the object form is rodziców.",
+        "Rodzicami is the instrumental.",
+        "Not a word: the ending is -ów."
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Czytam ___. (Polish books)",
+      "options": [
+        "polskich książek",
+        "polskie książki",
+        "polskich książki",
+        "polskie książek"
+      ],
+      "correct": 1,
+      "explanation": "Books are things: the accusative plural is the same as the nominative, polskie książki.",
+      "optionNotes": [
+        "This is the genitive plural (dużo polskich książek).",
+        null,
+        "The adjective -ich is only for men here.",
+        "Książek is the genitive plural."
+      ]
+    }
+  ]
+}

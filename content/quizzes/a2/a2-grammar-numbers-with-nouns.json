@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-grammar-numbers-with-nouns",
+  "topic": "a2-grammar-numbers-with-nouns",
+  "level": "A2",
+  "title": "Stop: numbers with nouns",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-grammar-numbers-with-nouns-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mam pięć ___. (cats)",
+      "options": [
+        "kotów",
+        "koty",
+        "kot",
+        "kota"
+      ],
+      "correct": 0,
+      "explanation": "From 5 on, the genitive plural: pięć kotów.",
+      "optionNotes": [
+        null,
+        "Koty is the form after 2, 3, 4.",
+        "Kot is the form after 1.",
+        "Kota is the singular accusative."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Poproszę ___ kawy.",
+      "options": [
+        "dwa",
+        "dwie",
+        "dwoje",
+        "dwóch"
+      ],
+      "correct": 1,
+      "explanation": "Kawa is feminine, so 2 is dwie.",
+      "optionNotes": [
+        "Dwa is for masculine (not men) and neuter nouns.",
+        null,
+        "Dwoje is for children (B1).",
+        "Dwóch is for men (B1)."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mój brat ma dwadzieścia dwa ___.",
+      "options": [
+        "lat",
+        "roki",
+        "lata",
+        "rok"
+      ],
+      "correct": 2,
+      "explanation": "22 ends in 2, so the 2–4 form: dwadzieścia dwa lata.",
+      "optionNotes": [
+        "Lat is the 5+ form.",
+        "Not a word: the plural of rok is lata.",
+        null,
+        "Rok is the form after 1."
+      ]
+    },
+    {
+      "id": "a2-grammar-numbers-with-nouns-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Dwa autobusy ___ do centrum.",
+      "options": [
+        "jedzie",
+        "jadą",
+        "jedziemy",
+        "jechało"
+      ],
+      "correct": 1,
+      "explanation": "After 2–4 the verb is plural: jadą.",
+      "optionNotes": [
+        "The singular verb is for 5+ (pięć autobusów jedzie).",
+        null,
+        "Jedziemy means \"we go\".",
+        "Jechało is the 5+ form in the past."
+      ]
+    }
+  ]
+}

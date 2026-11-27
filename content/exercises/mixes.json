@@ -81,6 +81,20 @@
       ]
     },
     {
+      "id": "mix-a2-u2",
+      "title": "Unit review: Plural and quantities",
+      "description": "The nominative, accusative and genitive plural and numbers with nouns, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-cases-nominative-plural",
+        "a2-cases-accusative-plural",
+        "a2-cases-genitive-plural-quantities",
+        "a2-grammar-numbers-with-nouns"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",

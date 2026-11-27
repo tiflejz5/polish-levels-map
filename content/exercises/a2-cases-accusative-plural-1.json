@@ -1,0 +1,254 @@
+{
+  "version": 1,
+  "id": "a2-cases-accusative-plural-1",
+  "topic": "a2-cases-accusative-plural",
+  "level": "A2",
+  "title": "Accusative plural: check yourself",
+  "intro": "10 tasks: plural objects; only men change (tych studentów, moich kolegów).",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-cases-accusative-plural-1-01",
+      "type": "paradigm",
+      "tags": [
+        "accusative-plural",
+        "masculine-personal",
+        "all-genders"
+      ],
+      "prompt": "Finish “Widzę …” with each phrase in the accusative plural.",
+      "lemma": "Widzę …",
+      "gloss": "I can see …",
+      "cells": [
+        {
+          "label": "nowi studenci",
+          "accepted": [
+            "nowych studentów"
+          ]
+        },
+        {
+          "label": "dobrzy lekarze",
+          "accepted": [
+            "dobrych lekarzy"
+          ]
+        },
+        {
+          "label": "małe koty",
+          "accepted": [
+            "małe koty"
+          ]
+        },
+        {
+          "label": "polscy aktorzy",
+          "accepted": [
+            "polskich aktorów"
+          ]
+        },
+        {
+          "label": "nowe książki",
+          "accepted": [
+            "nowe książki"
+          ]
+        },
+        {
+          "label": "moi koledzy",
+          "accepted": [
+            "moich kolegów"
+          ]
+        }
+      ],
+      "explanation": "Animals and things don't change. Men: -ych / -ich and -ów (-y after soft consonants: lekarzy)."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "accusative-plural",
+        "animals"
+      ],
+      "prompt": "Lubię ___. (dogs)",
+      "options": [
+        "psów",
+        "psa",
+        "psami",
+        "psy"
+      ],
+      "correct": 3,
+      "explanation": "Animals in the plural are like things: Lubię psy.",
+      "optionNotes": [
+        "-ów is for men, not for animals.",
+        "Psa is singular: \"a dog\".",
+        "Psami is the instrumental.",
+        null
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "accusative-plural",
+        "masculine-personal",
+        "family"
+      ],
+      "prompt": "Odwiedzamy ___. (our parents)",
+      "options": [
+        "nasze rodzice",
+        "naszych rodziców",
+        "naszych rodzice",
+        "nasi rodzice"
+      ],
+      "correct": 1,
+      "explanation": "Rodzice is masculine personal: naszych rodziców.",
+      "optionNotes": [
+        "Rodzice are people with a man: masculine personal forms.",
+        null,
+        "The noun must change too.",
+        "This is the nominative."
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "accusative-plural",
+        "masculine-personal"
+      ],
+      "context": "We have very nice neighbours.",
+      "text": "Mamy bardzo {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "miłych sąsiadów"
+          ],
+          "hint": "(mili sąsiedzi)"
+        }
+      ],
+      "explanation": "Neighbours are people: miłych sąsiadów."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "accusative-plural",
+        "things"
+      ],
+      "context": "I'm buying apples and tomatoes.",
+      "text": "Kupuję {{1}} i {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "jabłka"
+          ],
+          "hint": "(jabłko)"
+        },
+        {
+          "accepted": [
+            "pomidory"
+          ],
+          "hint": "(pomidor)"
+        }
+      ],
+      "explanation": "Things: the accusative plural is the same as the nominative plural, jabłka and pomidory."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-06",
+      "type": "find-error",
+      "tags": [
+        "accusative-plural",
+        "masculine-personal"
+      ],
+      "tokens": [
+        "Znam",
+        "te",
+        "studenty",
+        "z",
+        "Krakowa."
+      ],
+      "errorRange": [
+        1,
+        2
+      ],
+      "fixes": [
+        "tych studentów"
+      ],
+      "explanation": "Men as objects: tych studentów."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-07",
+      "type": "find-error",
+      "tags": [
+        "accusative-plural",
+        "animals"
+      ],
+      "tokens": [
+        "Lubię",
+        "psów",
+        "i",
+        "koty."
+      ],
+      "errorRange": [
+        1,
+        1
+      ],
+      "fixes": [
+        "psy"
+      ],
+      "explanation": "Animals in the plural: the accusative is the nominative, psy."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-08",
+      "type": "translate",
+      "tags": [
+        "accusative-plural",
+        "masculine-personal"
+      ],
+      "source": "Do you know my colleagues? (to a friend)",
+      "accepted": [
+        "Znasz moich kolegów?",
+        "Czy znasz moich kolegów?",
+        "Ty znasz moich kolegów?"
+      ],
+      "hint": "colleagues = koledzy (men or a mixed group)",
+      "explanation": "Kolega is a man: moich kolegów."
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-09",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "accusative-plural",
+        "dzieci"
+      ],
+      "prompt": "Pani Ewa uczy ___. (small children)",
+      "options": [
+        "małych dzieci",
+        "mali dzieci",
+        "małe dzieci",
+        "małymi dziećmi"
+      ],
+      "correct": 2,
+      "explanation": "Dzieci is not masculine personal, so the accusative is the nominative: małe dzieci.",
+      "optionNotes": [
+        "-ych is for men only.",
+        "Mali is for men, and dzieci is not masculine personal.",
+        null,
+        "This is the instrumental."
+      ]
+    },
+    {
+      "id": "a2-cases-accusative-plural-1-10",
+      "type": "reorder",
+      "tags": [
+        "accusative-plural",
+        "word-order"
+      ],
+      "context": "We visit our parents at the weekend.",
+      "answers": [
+        "W weekend odwiedzamy naszych rodziców.",
+        "Odwiedzamy naszych rodziców w weekend."
+      ],
+      "explanation": "Odwiedzać + accusative; rodzice → naszych rodziców."
+    }
+  ]
+}

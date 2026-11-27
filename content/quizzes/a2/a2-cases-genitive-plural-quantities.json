@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-cases-genitive-plural-quantities",
+  "topic": "a2-cases-genitive-plural-quantities",
+  "level": "A2",
+  "title": "Stop: genitive plural",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-cases-genitive-plural-quantities-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W centrum jest dużo ___. (restaurants)",
+      "options": [
+        "restauracje",
+        "restauracjów",
+        "restauracji",
+        "restauracja"
+      ],
+      "correct": 2,
+      "explanation": "After dużo the genitive plural; nouns in -ja take -i: restauracji.",
+      "optionNotes": [
+        "Restauracje is the nominative plural.",
+        "Feminine nouns don't take -ów.",
+        null,
+        "Restauracja is singular."
+      ]
+    },
+    {
+      "id": "a2-cases-genitive-plural-quantities-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Poczekam kilka ___.",
+      "options": [
+        "minut",
+        "minuty",
+        "minutów",
+        "minuta"
+      ],
+      "correct": 0,
+      "explanation": "After kilka the genitive plural; feminine nouns lose the -a: minut.",
+      "optionNotes": [
+        null,
+        "Minuty is the form after 2, 3, 4.",
+        "Feminine nouns don't take -ów.",
+        "Minuta is singular."
+      ]
+    },
+    {
+      "id": "a2-cases-genitive-plural-quantities-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Przepraszamy, nie ma już ___.",
+      "options": [
+        "bilety",
+        "biletów",
+        "biletami",
+        "bilet"
+      ],
+      "correct": 1,
+      "explanation": "Nie ma takes the genitive; in the plural: biletów.",
+      "optionNotes": [
+        "Bilety is the nominative.",
+        null,
+        "Biletami is the instrumental.",
+        "Bilet is the nominative singular."
+      ]
+    },
+    {
+      "id": "a2-cases-genitive-plural-quantities-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ile masz ___? (books)",
+      "options": [
+        "książki",
+        "książkach",
+        "książków",
+        "książek"
+      ],
+      "correct": 3,
+      "explanation": "After ile the genitive plural; książka → książek (an e is added).",
+      "optionNotes": [
+        "Książki is the nominative.",
+        "Książkach is the locative.",
+        "Feminine nouns don't take -ów.",
+        null
+      ]
+    }
+  ]
+}
