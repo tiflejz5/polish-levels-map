@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-grammar-pronouns-in-cases",
+  "topic": "a2-grammar-pronouns-in-cases",
+  "level": "A2",
+  "title": "Stop: pronouns in cases",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-grammar-pronouns-in-cases-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Lubisz Kasię? — Tak, lubię ___.",
+      "options": [
+        "ją",
+        "jej",
+        "nią",
+        "ona"
+      ],
+      "correct": 0,
+      "explanation": "Lubić takes the accusative; \"her\" is ją.",
+      "optionNotes": [
+        null,
+        "Jej is the genitive or dative, used after nie: Nie lubię jej.",
+        "Nią is the instrumental after a preposition: z nią.",
+        "Ona is the subject form."
+      ]
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To prezent dla ___. (him)",
+      "options": [
+        "go",
+        "jego",
+        "niego",
+        "nim"
+      ],
+      "correct": 2,
+      "explanation": "After a preposition he / him takes the n- form; dla + genitive: dla niego.",
+      "optionNotes": [
+        "Go is never used after a preposition.",
+        "Jego is the long form without a preposition (and also means \"his\").",
+        null,
+        "Nim is the instrumental or locative: z nim, o nim."
+      ]
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Idziesz z ___ do kina? (us)",
+      "options": [
+        "nas",
+        "nami",
+        "nam",
+        "my"
+      ],
+      "correct": 1,
+      "explanation": "Z meaning \"with\" takes the instrumental: z nami.",
+      "optionNotes": [
+        "Nas is the genitive, accusative or locative.",
+        null,
+        "Nam is the dative.",
+        "My is the subject form."
+      ]
+    },
+    {
+      "id": "a2-grammar-pronouns-in-cases-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ania ma urodziny. Kupiłem ___ kwiaty.",
+      "options": [
+        "ją",
+        "nią",
+        "jej",
+        "niej"
+      ],
+      "correct": 2,
+      "explanation": "The person who gets something is in the dative: jej (to her).",
+      "optionNotes": [
+        "Ją is the accusative (the object); the flowers are the object here.",
+        "Nią is the instrumental after a preposition.",
+        null,
+        "Niej is used only after a preposition."
+      ]
+    }
+  ]
+}

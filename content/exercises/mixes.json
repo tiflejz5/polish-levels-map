@@ -109,6 +109,22 @@
       ]
     },
     {
+      "id": "mix-a2-u4",
+      "title": "Unit review: Everyday grammar",
+      "description": "Pronouns in all cases, comparing, adverbs and double negation, verbs with się, must and should, and conjunctions, mixed.",
+      "level": "A2",
+      "count": 15,
+      "mode": "learn",
+      "topics": [
+        "a2-grammar-pronouns-in-cases",
+        "a2-grammar-comparison",
+        "a2-grammar-adverbs-frequency",
+        "a2-verbs-reflexive-sie",
+        "a2-verbs-modals-necessity",
+        "a2-grammar-conjunctions-basic"
+      ]
+    },
+    {
       "id": "mix-a1-cases",
       "title": "All five A1 cases",
       "description": "Nominative, instrumental, accusative, genitive and locative side by side: choose the ending each little word or verb asks for.",

@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "id": "a2-grammar-comparison-1",
+  "topic": "a2-grammar-comparison",
+  "level": "A2",
+  "title": "Comparing: check yourself",
+  "intro": "10 tasks: -szy, -ejszy, irregular forms, bardziej, naj- and adverbs.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-grammar-comparison-1-01",
+      "type": "paradigm",
+      "tags": [
+        "comparison",
+        "comparative"
+      ],
+      "prompt": "Give the \"-er\" form (masculine).",
+      "lemma": "adjective → -er",
+      "gloss": "new, expensive, pretty, big, small, bad",
+      "cells": [
+        {
+          "label": "nowy",
+          "accepted": [
+            "nowszy"
+          ]
+        },
+        {
+          "label": "drogi",
+          "accepted": [
+            "droższy"
+          ]
+        },
+        {
+          "label": "ładny",
+          "accepted": [
+            "ładniejszy"
+          ]
+        },
+        {
+          "label": "duży",
+          "accepted": [
+            "większy"
+          ]
+        },
+        {
+          "label": "mały",
+          "accepted": [
+            "mniejszy"
+          ]
+        },
+        {
+          "label": "zły",
+          "accepted": [
+            "gorszy"
+          ]
+        }
+      ],
+      "explanation": "-szy after one consonant (nowszy; g → ż: droższy), -ejszy after two (ładniejszy); duży, mały, zły are irregular."
+    },
+    {
+      "id": "a2-grammar-comparison-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "comparison",
+        "irregular"
+      ],
+      "prompt": "Kraków jest ___ od Warszawy. (smaller)",
+      "options": [
+        "mniejszy",
+        "mały",
+        "bardziej mały",
+        "mniej"
+      ],
+      "correct": 0,
+      "explanation": "Mały is irregular: mniejszy.",
+      "optionNotes": [
+        null,
+        "Mały means \"small\", not \"smaller\".",
+        "Mały has its own form, no bardziej.",
+        "Mniej is the adverb \"less\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-comparison-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "comparison",
+        "bardziej"
+      ],
+      "prompt": "Ta książka jest ___ niż film. (more interesting)",
+      "options": [
+        "interesująca",
+        "bardziej interesująca",
+        "interesującejsza",
+        "najbardziej interesująca"
+      ],
+      "correct": 1,
+      "explanation": "Long words take bardziej: bardziej interesująca.",
+      "optionNotes": [
+        "The basic form, not \"more\".",
+        null,
+        "Long words do not take -ejsza.",
+        "Najbardziej means \"the most\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-comparison-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "comparison",
+        "adverbs"
+      ],
+      "context": "Tomek runs faster than Paweł.",
+      "text": "Tomek biega {{1}} niż Paweł.",
+      "gaps": [
+        {
+          "accepted": [
+            "szybciej"
+          ],
+          "hint": "(szybko)"
+        }
+      ],
+      "explanation": "Comparing actions: the adverb szybko → szybciej."
+    },
+    {
+      "id": "a2-grammar-comparison-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "comparison",
+        "agreement"
+      ],
+      "context": "These shoes are more expensive, but nicer.",
+      "text": "Te buty są {{1}}, ale {{2}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "droższe"
+          ],
+          "hint": "(drogi)"
+        },
+        {
+          "accepted": [
+            "ładniejsze"
+          ],
+          "hint": "(ładny)"
+        }
+      ],
+      "explanation": "Comparatives agree with the noun: buty (plural, not men) → droższe, ładniejsze."
+    },
+    {
+      "id": "a2-grammar-comparison-1-06",
+      "type": "find-error",
+      "tags": [
+        "comparison",
+        "superlative",
+        "irregular"
+      ],
+      "tokens": [
+        "To",
+        "jest",
+        "najbardziej",
+        "dobra",
+        "kawiarnia",
+        "w",
+        "mieście."
+      ],
+      "errorRange": [
+        2,
+        3
+      ],
+      "fixes": [
+        "najlepsza"
+      ],
+      "explanation": "\"The best\" has its own form: najlepsza."
+    },
+    {
+      "id": "a2-grammar-comparison-1-07",
+      "type": "find-error",
+      "tags": [
+        "comparison",
+        "masculine-personal"
+      ],
+      "tokens": [
+        "Moi",
+        "bracia",
+        "są",
+        "starszy",
+        "ode",
+        "mnie."
+      ],
+      "errorRange": [
+        3,
+        3
+      ],
+      "fixes": [
+        "starsi"
+      ],
+      "explanation": "For men in the plural the comparative ends in -si: starsi."
+    },
+    {
+      "id": "a2-grammar-comparison-1-08",
+      "type": "translate",
+      "tags": [
+        "comparison",
+        "irregular"
+      ],
+      "source": "This room is bigger.",
+      "accepted": [
+        "Ten pokój jest większy."
+      ],
+      "explanation": "Duży is irregular: większy."
+    },
+    {
+      "id": "a2-grammar-comparison-1-09",
+      "type": "translate",
+      "tags": [
+        "comparison",
+        "adverbs",
+        "superlative"
+      ],
+      "source": "Who cooks best?",
+      "accepted": [
+        "Kto najlepiej gotuje?",
+        "Kto gotuje najlepiej?"
+      ],
+      "explanation": "Best at an action: the adverb najlepiej."
+    },
+    {
+      "id": "a2-grammar-comparison-1-10",
+      "type": "match",
+      "tags": [
+        "comparison",
+        "adverbs",
+        "irregular"
+      ],
+      "mode": "halves",
+      "prompt": "Match each adverb with its \"more\" form.",
+      "pairs": [
+        [
+          "dobrze →",
+          "lepiej"
+        ],
+        [
+          "źle →",
+          "gorzej"
+        ],
+        [
+          "dużo →",
+          "więcej"
+        ],
+        [
+          "mało →",
+          "mniej"
+        ]
+      ],
+      "explanation": "These four adverbs are irregular."
+    }
+  ]
+}

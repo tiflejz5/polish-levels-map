@@ -1,0 +1,253 @@
+{
+  "version": 1,
+  "id": "a2-verbs-reflexive-sie-1",
+  "topic": "a2-verbs-reflexive-sie",
+  "level": "A2",
+  "title": "Verbs with się: check yourself",
+  "intro": "10 tasks: forms with się, where się goes, and verbs that change meaning without it.",
+  "passage": null,
+  "items": [
+    {
+      "id": "a2-verbs-reflexive-sie-1-01",
+      "type": "paradigm",
+      "tags": [
+        "sie",
+        "conjugation"
+      ],
+      "prompt": "Give the present-tense forms of myć się.",
+      "lemma": "myć się",
+      "gloss": "wash (yourself)",
+      "cells": [
+        {
+          "label": "ja",
+          "accepted": [
+            "myję się"
+          ]
+        },
+        {
+          "label": "ty",
+          "accepted": [
+            "myjesz się"
+          ]
+        },
+        {
+          "label": "on / ona",
+          "accepted": [
+            "myje się"
+          ]
+        },
+        {
+          "label": "my",
+          "accepted": [
+            "myjemy się"
+          ]
+        },
+        {
+          "label": "wy",
+          "accepted": [
+            "myjecie się"
+          ]
+        },
+        {
+          "label": "oni / one",
+          "accepted": [
+            "myją się"
+          ]
+        }
+      ],
+      "explanation": "Się stays the same for every person."
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-02",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "sie",
+        "meaning-change"
+      ],
+      "prompt": "Pani Ewa ___ dzieci angielskiego. (teaches)",
+      "options": [
+        "uczy",
+        "uczy się",
+        "uczą",
+        "uczy sobie"
+      ],
+      "correct": 0,
+      "explanation": "\"Teach\" is uczyć without się; uczyć się means \"learn\".",
+      "optionNotes": [
+        null,
+        "Uczy się means \"is learning\".",
+        "Uczą is the oni form.",
+        "Sobie is not used here."
+      ]
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-03",
+      "type": "multiple-choice",
+      "kind": "form",
+      "tags": [
+        "sie",
+        "each-other"
+      ],
+      "prompt": "Spotykam ___ z Anią w piątek.",
+      "options": [
+        "się",
+        "ją",
+        "sobie",
+        "mnie"
+      ],
+      "correct": 0,
+      "explanation": "Meeting up with someone: spotykać się z + instrumental.",
+      "optionNotes": [
+        null,
+        "Spotykam ją means \"I run into her\"; with z Anią the verb needs się.",
+        "Sobie is not used here.",
+        "\"Myself\" is się for every person."
+      ]
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-04",
+      "type": "gap-fill",
+      "tags": [
+        "sie",
+        "feelings"
+      ],
+      "context": "How are you feeling? (to a friend)",
+      "text": "Jak się {{1}}?",
+      "gaps": [
+        {
+          "accepted": [
+            "czujesz"
+          ],
+          "hint": "(czuć się)"
+        }
+      ],
+      "explanation": "Czuć się (feel): czuję się, czujesz się…"
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-05",
+      "type": "gap-fill",
+      "tags": [
+        "sie",
+        "past"
+      ],
+      "context": "Sorry, we're late. (a man and a woman speaking)",
+      "text": "Przepraszamy, {{1}} się.",
+      "gaps": [
+        {
+          "accepted": [
+            "spóźniliśmy"
+          ],
+          "hint": "(spóźnić się)"
+        }
+      ],
+      "explanation": "Past of spóźnić się for a group with a man: spóźniliśmy się."
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-06",
+      "type": "find-error",
+      "tags": [
+        "sie",
+        "word-order"
+      ],
+      "tokens": [
+        "Się",
+        "uczę",
+        "polskiego",
+        "od",
+        "roku."
+      ],
+      "errorRange": [
+        0,
+        1
+      ],
+      "fixes": [
+        "Uczę się"
+      ],
+      "explanation": "Się never starts a sentence: Uczę się polskiego."
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-07",
+      "type": "find-error",
+      "tags": [
+        "sie",
+        "genitive"
+      ],
+      "tokens": [
+        "Mój",
+        "kot",
+        "boi",
+        "się",
+        "woda."
+      ],
+      "errorRange": [
+        4,
+        4
+      ],
+      "fixes": [
+        "wody"
+      ],
+      "explanation": "Bać się takes the genitive: wody."
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-08",
+      "type": "translate",
+      "tags": [
+        "sie",
+        "each-other"
+      ],
+      "source": "We know each other from work.",
+      "accepted": [
+        "Znamy się z pracy.",
+        "My znamy się z pracy."
+      ],
+      "explanation": "\"Each other\" is się: znamy się."
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-09",
+      "type": "translate",
+      "tags": [
+        "sie",
+        "word-order"
+      ],
+      "source": "Why are you laughing? (to a friend)",
+      "accepted": [
+        "Dlaczego się śmiejesz?",
+        "Czemu się śmiejesz?",
+        "Dlaczego śmiejesz się?",
+        "Czemu śmiejesz się?",
+        "Z czego się śmiejesz?"
+      ],
+      "hint": "laugh = śmiać się",
+      "explanation": "Śmiać się always has się; it likes to stand early: Dlaczego się śmiejesz?"
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-1-10",
+      "type": "match",
+      "tags": [
+        "sie"
+      ],
+      "mode": "halves",
+      "prompt": "Match the beginnings with the endings.",
+      "pairs": [
+        [
+          "Nazywam się",
+          "Marta."
+        ],
+        [
+          "Uczę się",
+          "polskiego."
+        ],
+        [
+          "Boję się",
+          "psów."
+        ],
+        [
+          "Spotykamy się",
+          "przed kinem."
+        ]
+      ],
+      "explanation": "Nazywać się + name; uczyć się and bać się + genitive; spotykać się + place."
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-grammar-comparison",
+  "topic": "a2-grammar-comparison",
+  "level": "A2",
+  "title": "Stop: comparing",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-grammar-comparison-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ten hotel jest ___ niż tamten. (cheaper)",
+      "options": [
+        "bardziej tani",
+        "tańszy",
+        "taniej",
+        "najtańszy"
+      ],
+      "correct": 1,
+      "explanation": "Short adjectives take -szy: tani → tańszy.",
+      "optionNotes": [
+        "Bardziej is for long adjectives; tani has its own form.",
+        null,
+        "Taniej is the adverb (it's cheaper to…).",
+        "Najtańszy means \"the cheapest\"."
+      ]
+    },
+    {
+      "id": "a2-grammar-comparison-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "To ___ pizza w mieście! (the best)",
+      "options": [
+        "najlepsza",
+        "najbardziej dobra",
+        "lepsza",
+        "najlepiej"
+      ],
+      "correct": 0,
+      "explanation": "Dobry is irregular: lepszy, najlepszy; feminine najlepsza.",
+      "optionNotes": [
+        null,
+        "A word-for-word copy of \"most good\"; dobry has its own form.",
+        "Lepsza means \"better\".",
+        "Najlepiej is the adverb (best, as in \"cooks best\")."
+      ]
+    },
+    {
+      "id": "a2-grammar-comparison-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola mówi po polsku ___ niż ja. (better)",
+      "options": [
+        "lepsza",
+        "lepszy",
+        "lepiej",
+        "dobrzej"
+      ],
+      "correct": 2,
+      "explanation": "Comparing actions needs the adverb: dobrze → lepiej.",
+      "optionNotes": [
+        "An adjective; mówić needs an adverb.",
+        "An adjective; mówić needs an adverb.",
+        null,
+        "Not a word: dobrze is irregular."
+      ]
+    },
+    {
+      "id": "a2-grammar-comparison-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mój brat jest starszy niż ___.",
+      "options": [
+        "mnie",
+        "ja",
+        "mi",
+        "mną"
+      ],
+      "correct": 1,
+      "explanation": "After niż the nominative: niż ja. (With od: ode mnie.)",
+      "optionNotes": [
+        "In careful Polish niż takes the nominative (niż ja); mnie goes with od: ode mnie.",
+        null,
+        "Dative.",
+        "Instrumental."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "id": "a2-verbs-reflexive-sie",
+  "topic": "a2-verbs-reflexive-sie",
+  "level": "A2",
+  "title": "Stop: verbs with się",
+  "passScore": 3,
+  "items": [
+    {
+      "id": "a2-verbs-reflexive-sie-q1",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "I'm learning Polish.",
+      "options": [
+        "Uczę polski.",
+        "Uczę się polskiego.",
+        "Uczę się polski.",
+        "Się uczę polskiego."
+      ],
+      "correct": 1,
+      "explanation": "\"Learn\" is uczyć się + genitive: polskiego.",
+      "optionNotes": [
+        "Uczyć without się means \"teach\".",
+        null,
+        "Uczyć się takes the genitive: polskiego.",
+        "Się never starts a sentence."
+      ]
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-q2",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Jak ___ nazywasz?",
+      "options": [
+        "się",
+        "sobie",
+        "cię",
+        "ty"
+      ],
+      "correct": 0,
+      "explanation": "Nazywać się always has się, the same for every person.",
+      "optionNotes": [
+        null,
+        "Sobie is the dative \"to yourself\".",
+        "Cię is \"you\" as an object; the verb needs się.",
+        "Ty is the subject \"you\", not part of the verb."
+      ]
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-q3",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wczoraj ___ w kawiarni. (we met)",
+      "options": [
+        "spotkaliśmy",
+        "spotkaliśmy się",
+        "spotykaliśmy się",
+        "spotkaliśmy nas"
+      ],
+      "correct": 1,
+      "explanation": "Meeting each other is spotkać się; one meeting in the past takes the perfective.",
+      "optionNotes": [
+        "Without się it means \"we ran into (someone)\" and needs an object.",
+        null,
+        "The imperfective means \"we used to meet\" or \"we were meeting\".",
+        "\"Each other\" is się, not nas."
+      ]
+    },
+    {
+      "id": "a2-verbs-reflexive-sie-q4",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Mój syn boi się ___. (dogs)",
+      "options": [
+        "psy",
+        "psów",
+        "psami",
+        "psach"
+      ],
+      "correct": 1,
+      "explanation": "Bać się takes the genitive: psów.",
+      "optionNotes": [
+        "Nominative or accusative; bać się takes the genitive.",
+        null,
+        "Instrumental.",
+        "Locative."
+      ]
+    }
+  ]
+}
