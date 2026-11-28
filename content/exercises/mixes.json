@@ -166,6 +166,41 @@
         "a1-verbs-going-isc-jechac",
         "a1-verbs-past-tense-basics"
       ]
+    },
+    {
+      "id": "mix-a2-cases",
+      "title": "A2 cases and plurals",
+      "description": "The plural in the nominative, accusative and genitive, numbers with nouns, the dative, the instrumental and locative in all their uses, and pronouns in every case, side by side.",
+      "level": "A2",
+      "count": 20,
+      "mode": "learn",
+      "topics": [
+        "a2-cases-nominative-plural",
+        "a2-cases-accusative-plural",
+        "a2-cases-genitive-plural-quantities",
+        "a2-grammar-numbers-with-nouns",
+        "a2-cases-dative",
+        "a2-cases-instrumental-full",
+        "a2-cases-locative-full",
+        "a2-grammar-pronouns-in-cases"
+      ]
+    },
+    {
+      "id": "mix-a2-verbs",
+      "title": "A2 verbs in one go",
+      "description": "The full past, aspect pairs and the two futures, verbs of motion, verbs with się, must and should, and commands, mixed.",
+      "level": "A2",
+      "count": 20,
+      "mode": "learn",
+      "topics": [
+        "a2-verbs-past-tense",
+        "a2-verbs-aspect-introduction",
+        "a2-verbs-future-tense",
+        "a2-verbs-motion-verbs-basics",
+        "a2-verbs-reflexive-sie",
+        "a2-verbs-modals-necessity",
+        "a2-verbs-imperative-basics"
+      ]
     }
   ]
 }

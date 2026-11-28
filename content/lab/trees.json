@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Pick the case (stage 6); w or na? and iść or jechać? (level extras A1). Imperfective or perfective? comes with A2 extras; chodzić / jeździć and the prefixed verbs extend the going tree from A2 on.",
+  "note": "Pick the case (stage 6, extended in A2 extras); w or na? (A1 extras); the going tree with chodzić / jeździć and pójść / pojechać and Imperfective or perfective? (A2 extras). B1 adds the prefixed verbs of motion to the going tree.",
   "trees": [
     {
       "id": "pick-case",
@@ -26,7 +26,7 @@
           "question": "Which preposition is it?",
           "options": [
             {
-              "label": "do, od, bez, dla, u, obok, koło",
+              "label": "do, od, bez, dla, u, obok, koło, naprzeciwko, blisko, niedaleko",
               "result": [
                 "genitive"
               ],
@@ -49,11 +49,11 @@
               "next": "w"
             },
             {
-              "label": "przez, or za meaning in … time (za tydzień)",
+              "label": "przez, or za meaning in … time or for (za tydzień, dziękuję za pomoc)",
               "result": [
                 "accusative"
               ],
-              "why": "przez and za meaning in … time take the accusative. (za meaning behind takes the instrumental: za domem.)",
+              "why": "przez and za meaning in … time or for take the accusative: Wracam za tydzień. Dziękuję za pomoc. (za meaning behind takes the instrumental: za domem.)",
               "example": {
                 "pl": "Wracam za tydzień.",
                 "en": "I'm coming back in a week."
@@ -71,11 +71,11 @@
               }
             },
             {
-              "label": "przed, pod, nad, między (in front of, under, above, between)",
+              "label": "przed, za (behind), pod, nad, między (in front of, behind, under, above, between)",
               "result": [
                 "instrumental"
               ],
-              "why": "When they say where something is, these prepositions take the instrumental. (Going under or in front of something takes the accusative: Kot wchodzi pod stół.)",
+              "why": "When they say where something is, these prepositions take the instrumental: przed domem, za kościołem, pod łóżkiem, nad morzem. Going there takes the accusative: Jedziemy nad morze, Kot wchodzi pod stół.",
               "example": {
                 "pl": "Czekam przed domem.",
                 "en": "I'm waiting in front of the house."
@@ -249,6 +249,17 @@
               }
             },
             {
+              "label": "It goes with pomagać, dziękować, podobać się, pasować or jest … zimno (the person who is helped, thanked, likes it, is suited or feels it)",
+              "result": [
+                "dative"
+              ],
+              "why": "These verbs and phrases take the person in the dative: Pomagam bratu. Dziękuję panu. Podoba mi się. Pasuje ci. Jest mi zimno.",
+              "example": {
+                "pl": "Ten film bardzo mi się podoba.",
+                "en": "I really like this film."
+              }
+            },
+            {
               "label": "It is a tool or a means of transport (With what? By what?)",
               "result": [
                 "instrumental"
@@ -277,11 +288,11 @@
           "help": "A few verbs take another case for their object. Check them first.",
           "options": [
             {
-              "label": "szukać, słuchać, potrzebować, używać, bać się",
+              "label": "szukać, słuchać, potrzebować, używać, bać się, uczyć się",
               "result": [
                 "genitive"
               ],
-              "why": "These verbs take the genitive, also in a positive sentence.",
+              "why": "These verbs take the genitive, also in a positive sentence: Szukam klucza. Uczę się polskiego.",
               "example": {
                 "pl": "Szukam klucza.",
                 "en": "I'm looking for the key."
@@ -296,6 +307,17 @@
               "example": {
                 "pl": "Pomagam bratu.",
                 "en": "I'm helping my brother."
+              }
+            },
+            {
+              "label": "interesować się (be interested in)",
+              "result": [
+                "instrumental"
+              ],
+              "why": "interesować się takes the instrumental: Interesuję się sportem.",
+              "example": {
+                "pl": "Ola interesuje się historią.",
+                "en": "Ola is interested in history."
               }
             },
             {
@@ -459,86 +481,357 @@
     },
     {
       "id": "go",
-      "title": "iść or jechać?",
-      "intro": "English \"go\" is two verbs in Polish. Answer one question about the trip.",
+      "title": "Which verb of going?",
+      "intro": "English \"go\" (and \"fly\") is nine verbs in Polish at A2: iść, jechać, lecieć for one trip, chodzić, jeździć, latać for a habit, and pójść, pojechać, polecieć for one finished trip. Answer two or three questions. (Verbs like przyjść and wyjść come at B1.)",
       "start": "start",
       "nodes": {
         "start": {
-          "question": "How are you travelling?",
+          "question": "Is it one trip, or something regular?",
           "options": [
             {
-              "label": "On foot",
-              "answer": {
-                "title": "iść",
-                "text": "On foot: iść (idę, idziesz, idą).",
-                "examples": [
-                  {
-                    "pl": "Idę do sklepu.",
-                    "en": "I'm going to the shop."
-                  },
-                  {
-                    "pl": "Idziemy na kawę.",
-                    "en": "We're going for a coffee."
-                  }
-                ]
-              }
+              "label": "One trip, in one direction",
+              "next": "when"
             },
             {
-              "label": "By car, bus, tram, train or bike",
-              "answer": {
-                "title": "jechać",
-                "text": "With a vehicle: jechać (jadę, jedziesz, jadą). The vehicle is in the instrumental, with no preposition (a bike: rowerem or na rowerze).",
-                "examples": [
-                  {
-                    "pl": "Jadę autobusem do centrum.",
-                    "en": "I'm taking the bus to the centre."
-                  },
-                  {
-                    "pl": "Jedziemy pociągiem.",
-                    "en": "We're going by train."
-                  }
-                ]
-              }
-            },
-            {
-              "label": "The sentence doesn't say how",
-              "next": "where"
+              "label": "A habit or a repeated trip (codziennie, często, w soboty), or moving in general (walking, cycling, flying as an activity)",
+              "next": "habit"
             }
           ]
         },
-        "where": {
-          "question": "Where are you going?",
+        "when": {
+          "question": "How does the sentence look at the trip?",
           "options": [
             {
-              "label": "Somewhere in town: work, school, the shop, the cinema",
+              "label": "Now or planned (Teraz idę…, Jutro lecę…), or \"was going\" in the past while something else happened",
+              "next": "one"
+            },
+            {
+              "label": "As one whole trip that happened or will happen: went, has gone, will go",
+              "next": "done"
+            }
+          ]
+        },
+        "one": {
+          "question": "How are you travelling?",
+          "options": [
+            {
+              "label": "On foot, or to an everyday place in town when the sentence names no vehicle",
               "answer": {
                 "title": "iść",
-                "text": "In town iść is usual for everyday places such as work, school or the cinema.",
+                "text": "One trip on foot: iść (idę, idziesz, idą). Past \"was going\": szedłem / szłam.",
                 "examples": [
                   {
-                    "pl": "Idę do pracy.",
-                    "en": "I'm going to work."
+                    "pl": "Teraz idę do sklepu, zaraz wracam.",
+                    "en": "I'm going to the shop now, I'll be right back."
                   },
                   {
-                    "pl": "Dzieci idą do szkoły.",
-                    "en": "The children are going to school."
+                    "pl": "Kiedy szedłem do domu, zaczął padać deszcz.",
+                    "en": "While I was walking home, it started to rain."
                   }
                 ]
               }
             },
             {
-              "label": "To another town or another country",
+              "label": "By car, bus, tram, train or bike (also to work or school), or to another town",
               "answer": {
                 "title": "jechać",
-                "text": "Another town means a vehicle, so jechać.",
+                "text": "One trip with a vehicle: jechać (jadę, jedziesz, jadą). The vehicle is in the instrumental: autobusem, pociągiem.",
                 "examples": [
                   {
-                    "pl": "Jutro jadę do Warszawy.",
-                    "en": "Tomorrow I'm going to Warsaw."
+                    "pl": "Jutro jadę do Gdańska.",
+                    "en": "I'm going to Gdańsk tomorrow."
                   },
                   {
-                    "pl": "W lipcu jedziemy do Anglii.",
-                    "en": "In July we're going to England."
+                    "pl": "Kiedy jechałam do pracy, zadzwoniła mama.",
+                    "en": "While I was on my way to work, Mum called."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "By plane",
+              "answer": {
+                "title": "lecieć",
+                "text": "One flight: lecieć (lecę, lecisz, lecą).",
+                "examples": [
+                  {
+                    "pl": "Jutro lecę do Londynu.",
+                    "en": "I'm flying to London tomorrow."
+                  },
+                  {
+                    "pl": "Samolot leci do Rzymu.",
+                    "en": "The plane is flying to Rome."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "habit": {
+          "question": "How do you travel?",
+          "options": [
+            {
+              "label": "On foot, or to everyday places in town when the sentence names no vehicle",
+              "answer": {
+                "title": "chodzić",
+                "text": "A habit on foot, or walking in general: chodzić (chodzę, chodzisz, chodzą). Also \"can walk\": Nasz syn już chodzi.",
+                "examples": [
+                  {
+                    "pl": "W soboty chodzę na basen.",
+                    "en": "On Saturdays I go swimming."
+                  },
+                  {
+                    "pl": "W niedziele lubimy chodzić po parku.",
+                    "en": "On Sundays we like walking around the park."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "By vehicle or bike (also to work or school), or to other towns",
+              "answer": {
+                "title": "jeździć",
+                "text": "A habit with a vehicle, or riding in general: jeździć (jeżdżę, jeździsz, jeżdżą). Watch the spelling: jeżdżę.",
+                "examples": [
+                  {
+                    "pl": "Codziennie jeżdżę do pracy rowerem.",
+                    "en": "I cycle to work every day."
+                  },
+                  {
+                    "pl": "Lubię jeździć na rowerze.",
+                    "en": "I like cycling."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "By plane, or flying in general",
+              "answer": {
+                "title": "latać",
+                "text": "Flying as a habit or an activity: latać (latam, latasz, latają).",
+                "examples": [
+                  {
+                    "pl": "Moja siostra często lata do Londynu.",
+                    "en": "My sister often flies to London."
+                  },
+                  {
+                    "pl": "Nie lubię latać samolotem.",
+                    "en": "I don't like flying."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "done": {
+          "question": "How did or will you travel?",
+          "options": [
+            {
+              "label": "On foot, or to an everyday place in town when no vehicle is named",
+              "answer": {
+                "title": "pójść",
+                "text": "One finished trip on foot: pójść. Past poszedł / poszła, future pójdę. For a plan both work: Jutro idę / pójdę. A past trip there and back: Wczoraj byłem w kinie.",
+                "examples": [
+                  {
+                    "pl": "Paweł poszedł do domu.",
+                    "en": "Paweł went home."
+                  },
+                  {
+                    "pl": "Jutro pójdę do lekarza.",
+                    "en": "I'll go to the doctor's tomorrow."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "By vehicle (also to work or school), or to another town or country",
+              "answer": {
+                "title": "pojechać",
+                "text": "One finished trip with a vehicle: pojechać. Past pojechał / pojechała, future pojadę. For a plan both work: Jutro jadę / pojadę.",
+                "examples": [
+                  {
+                    "pl": "W zeszłym roku pojechaliśmy do Włoch.",
+                    "en": "Last year we went to Italy."
+                  },
+                  {
+                    "pl": "W sierpniu pojedziemy do Gdańska.",
+                    "en": "In August we'll go to Gdańsk."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "By plane",
+              "answer": {
+                "title": "polecieć",
+                "text": "One finished flight: polecieć. Past poleciał / poleciała, future polecę.",
+                "examples": [
+                  {
+                    "pl": "Ania poleciała do Londynu.",
+                    "en": "Ania has flown to London."
+                  },
+                  {
+                    "pl": "W sobotę polecimy do Paryża.",
+                    "en": "On Saturday we'll fly to Paris."
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "aspect",
+      "title": "Imperfective or perfective?",
+      "intro": "Most verbs come in pairs: robić / zrobić, kupować / kupić. Answer the questions about your sentence to choose the verb of the pair. (być, mieć, znać, wiedzieć have no perfective partner.)",
+      "start": "start",
+      "nodes": {
+        "start": {
+          "question": "When is the action?",
+          "options": [
+            {
+              "label": "Now, at the moment of speaking, or as a present habit",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "Only imperfective verbs have a present tense. A perfective verb in a present form means the future: zrobię = I'll do.",
+                "examples": [
+                  {
+                    "pl": "Teraz robię obiad.",
+                    "en": "I'm making lunch now."
+                  },
+                  {
+                    "pl": "Codziennie czytam gazetę.",
+                    "en": "I read the paper every day."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "In the past or in the future",
+              "next": "kind"
+            },
+            {
+              "label": "It is a command or a request",
+              "next": "command"
+            }
+          ]
+        },
+        "kind": {
+          "question": "What does the sentence say about the action?",
+          "options": [
+            {
+              "label": "One finished action with a result (już, w końcu), or one event in a chain of events",
+              "answer": {
+                "title": "Perfective (zrobić)",
+                "text": "One result, or one step after another: perfective. Past napisałam; future napiszę, with no będę.",
+                "examples": [
+                  {
+                    "pl": "W końcu napisałam ten e-mail.",
+                    "en": "I finally wrote that email."
+                  },
+                  {
+                    "pl": "Wstałem, zjadłem śniadanie i poszedłem do pracy.",
+                    "en": "I got up, ate breakfast and went to work."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "A habit or a repeated action (codziennie, często, zawsze, zwykle)",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "Repeated actions take the imperfective. Future: będę + infinitive.",
+                "examples": [
+                  {
+                    "pl": "Codziennie kupowałam chleb.",
+                    "en": "I bought bread every day."
+                  },
+                  {
+                    "pl": "Od poniedziałku będę biegać codziennie.",
+                    "en": "From Monday I'm going to run every day."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "How long, the process (\"was doing\", \"will be doing\": cały dzień, długo), or just the activity with no result in view (Co robiłeś wczoraj? — Oglądałem telewizję.)",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "Duration and process take the imperfective. Never będę + a perfective verb.",
+                "examples": [
+                  {
+                    "pl": "Cały dzień gotowałem.",
+                    "en": "I cooked all day."
+                  },
+                  {
+                    "pl": "Jutro będę pracować w domu.",
+                    "en": "Tomorrow I'll be working at home."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "The background while something else happened",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "The background is imperfective; the event that cuts in is perfective.",
+                "examples": [
+                  {
+                    "pl": "Kiedy czytałam, zadzwonił telefon.",
+                    "en": "While I was reading, the phone rang."
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "command": {
+          "question": "What kind of command is it?",
+          "options": [
+            {
+              "label": "Do it once (a request with a result)",
+              "answer": {
+                "title": "Perfective (zrobić)",
+                "text": "One request, one result: usually the perfective imperative.",
+                "examples": [
+                  {
+                    "pl": "Zamknij okno, proszę.",
+                    "en": "Close the window, please."
+                  },
+                  {
+                    "pl": "Zadzwoń do mnie jutro.",
+                    "en": "Call me tomorrow."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Do it regularly, or keep doing it",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "Something regular or ongoing: the imperfective imperative.",
+                "examples": [
+                  {
+                    "pl": "Czytaj codziennie po polsku.",
+                    "en": "Read in Polish every day."
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Don't do it",
+              "answer": {
+                "title": "Imperfective (robić)",
+                "text": "\"Don't\" almost always takes the imperfective, and the object goes into the genitive.",
+                "examples": [
+                  {
+                    "pl": "Nie rób tego!",
+                    "en": "Don't do that!"
+                  },
+                  {
+                    "pl": "Nie otwieraj okna.",
+                    "en": "Don't open the window."
                   }
                 ]
               }

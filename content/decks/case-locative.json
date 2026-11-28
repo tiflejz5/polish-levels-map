@@ -2,7 +2,7 @@
   "version": 1,
   "id": "case-locative",
   "title": "Locative in sentences",
-  "description": "Put the place in brackets into the locative after w or na. A1: singular.",
+  "description": "Put the phrase in brackets into the locative: after w or na (where?) at A1; A2 adds o (about), po (after), przy, months and the plural.",
   "level": "A1-A2",
   "cards": [
     {
@@ -373,6 +373,126 @@
       "tags": [
         "locative",
         "na"
+      ]
+    },
+    {
+      "id": "case-locative-031",
+      "type": "cloze",
+      "text": "Rozmawiamy o {{pracy}} (praca).",
+      "hint": "work",
+      "en": "We're talking about work.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "about"
+      ]
+    },
+    {
+      "id": "case-locative-032",
+      "type": "cloze",
+      "text": "Po {{obiedzie}} (obiad) idę na spacer.",
+      "hint": "lunch",
+      "en": "After lunch I'm going for a walk.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "after"
+      ]
+    },
+    {
+      "id": "case-locative-033",
+      "type": "cloze",
+      "text": "W {{maju}} (maj) jadę do Rzymu.",
+      "hint": "May",
+      "en": "In May I'm going to Rome.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "time"
+      ]
+    },
+    {
+      "id": "case-locative-034",
+      "type": "cloze",
+      "text": "W {{sklepach}} (sklep) są wyprzedaże.",
+      "hint": "the shops",
+      "en": "There are sales in the shops.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-locative-035",
+      "type": "cloze",
+      "text": "W {{górach}} (góry) jest teraz zimno.",
+      "hint": "the mountains",
+      "en": "It's cold in the mountains now.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-locative-036",
+      "type": "cloze",
+      "text": "To książka o {{kotach}} (kot).",
+      "hint": "cats",
+      "en": "It's a book about cats.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-locative-037",
+      "type": "cloze",
+      "text": "W {{przyszłym tygodniu}} (przyszły tydzień) mam egzamin.",
+      "hint": "next week",
+      "en": "I have an exam next week.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "time"
+      ]
+    },
+    {
+      "id": "case-locative-038",
+      "type": "cloze",
+      "text": "Siedzimy przy {{stole}} (stół).",
+      "hint": "the table",
+      "en": "We're sitting at the table.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "przy"
+      ]
+    },
+    {
+      "id": "case-locative-039",
+      "type": "cloze",
+      "text": "W {{małych miastach}} (małe miasto) jest spokojnie.",
+      "hint": "small towns",
+      "en": "It's quiet in small towns.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-locative-040",
+      "type": "cloze",
+      "text": "Często myślę o {{moich dzieciach}} (moje dziecko).",
+      "hint": "my children",
+      "en": "I often think about my children.",
+      "level": "A2",
+      "tags": [
+        "locative",
+        "plural"
       ]
     }
   ]

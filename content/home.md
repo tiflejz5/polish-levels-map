@@ -13,7 +13,7 @@ A free map of Polish from the first words to fluency, in six levels from A1 to C
 | Level | Land | Goal | Status |
 | --- | --- | --- | --- |
 | A1 | Meadow | Introduce yourself and handle the simplest everyday situations when people speak slowly and clearly. | Available |
-| A2 | Forest | Get by in everyday situations: travel, shopping, plans, and simple stories about the past. | Coming soon |
+| A2 | Forest | Get by in everyday situations: travel, shopping, plans, and simple stories about the past. | Available |
 | B1 | Hills | Speak in connected sentences about experiences, plans and opinions, and cope with most situations while travelling. | Coming soon |
 | B2 | Lake | Talk fluently and in detail with native speakers, argue a point and understand the main ideas of complex texts. | Coming soon |
 | C1 | Mountains | Express yourself flexibly and precisely in social, academic and professional settings. | Coming soon |

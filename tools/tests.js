@@ -2670,11 +2670,12 @@ console.log("\nSyllabus: the only list of levels, units, categories and topics (
     });
     test("syllabus: level status from levels.json; stats and countDone use topic ids, soon levels do not count", function () {
       assert.strictEqual(SY.isAvailable("A1"), true);
+      assert.strictEqual(SY.isAvailable("A2"), true);
       assert.strictEqual(SY.isAvailable("B1"), false);
-      assert.deepStrictEqual(SY.availableLevelIds(), ["A1"]);
-      const a2 = SY.topics("A2")[0].id;
+      assert.deepStrictEqual(SY.availableLevelIds(), ["A1", "A2"]);
+      const b1 = SY.topics("B1")[0].id;
       const progress = { "a1-cases-accusative": true, "a1-verbs-byc": true, junk: true };
-      progress[a2] = true;
+      progress[b1] = true;
       assert.deepStrictEqual(SY.stats(progress, "A1"), { done: 2, total: 25, percent: 8 });
       assert.strictEqual(SY.countDone(progress), 2);
       assert.deepStrictEqual(SY.stats({}, "C2").done, 0);

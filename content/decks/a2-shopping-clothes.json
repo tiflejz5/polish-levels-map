@@ -1,0 +1,465 @@
+{
+  "version": 1,
+  "id": "a2-shopping-clothes",
+  "title": "Shopping and clothes",
+  "description": "Clothes, colours, sizes and the phrases you need in a clothes shop.",
+  "level": "A2",
+  "cards": [
+    {
+      "id": "a2-shopping-clothes-001",
+      "type": "typed",
+      "front": "jacket",
+      "accepted": [
+        "kurtka"
+      ],
+      "back": "kurtka (f)",
+      "example": "Ta kurtka jest za mała.",
+      "exampleEn": "This jacket is too small.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-002",
+      "type": "typed",
+      "front": "coat",
+      "accepted": [
+        "płaszcz"
+      ],
+      "back": "płaszcz (m)",
+      "example": "Zimą noszę ciepły płaszcz.",
+      "exampleEn": "In winter I wear a warm coat.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-003",
+      "type": "typed",
+      "front": "jumper, sweater",
+      "accepted": [
+        "sweter"
+      ],
+      "back": "sweter (m)",
+      "example": "Mam nowy sweter.",
+      "exampleEn": "I have a new jumper.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-004",
+      "type": "typed",
+      "front": "shirt (with buttons and a collar)",
+      "accepted": [
+        "koszula"
+      ],
+      "back": "koszula (f)",
+      "example": "Mój mąż nosi białe koszule.",
+      "exampleEn": "My husband wears white shirts.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-005",
+      "type": "typed",
+      "front": "T-shirt",
+      "accepted": [
+        "koszulka",
+        "T-shirt",
+        "podkoszulek"
+      ],
+      "back": "koszulka (f)",
+      "example": "Kupiłam trzy koszulki.",
+      "exampleEn": "I bought three T-shirts.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-006",
+      "type": "typed",
+      "front": "trousers",
+      "accepted": [
+        "spodnie"
+      ],
+      "back": "spodnie (plural)",
+      "note": "Plural only: spodnie są.",
+      "example": "Te spodnie są za długie.",
+      "exampleEn": "These trousers are too long.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-007",
+      "type": "typed",
+      "front": "skirt",
+      "accepted": [
+        "spódnica"
+      ],
+      "back": "spódnica (f)",
+      "example": "Ta spódnica jest bardzo ładna.",
+      "exampleEn": "This skirt is very nice.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-008",
+      "type": "typed",
+      "front": "dress",
+      "accepted": [
+        "sukienka",
+        "suknia"
+      ],
+      "back": "sukienka (f)",
+      "example": "Ola ma nową sukienkę.",
+      "exampleEn": "Ola has a new dress.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-009",
+      "type": "typed",
+      "front": "shoes",
+      "accepted": [
+        "buty",
+        "obuwie"
+      ],
+      "back": "buty (plural; one shoe: but (m))",
+      "example": "Ile kosztują te buty?",
+      "exampleEn": "How much are these shoes?",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-010",
+      "type": "typed",
+      "front": "socks",
+      "accepted": [
+        "skarpetki",
+        "skarpety"
+      ],
+      "back": "skarpetki (plural)",
+      "example": "Kupiłem nowe skarpetki.",
+      "exampleEn": "I bought new socks.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-011",
+      "type": "typed",
+      "front": "scarf",
+      "accepted": [
+        "szalik",
+        "szal"
+      ],
+      "back": "szalik (m)",
+      "example": "Weź szalik, jest zimno.",
+      "exampleEn": "Take a scarf, it's cold.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-012",
+      "type": "typed",
+      "front": "gloves",
+      "accepted": [
+        "rękawiczki",
+        "rękawice"
+      ],
+      "back": "rękawiczki (plural)",
+      "example": "Zimą noszę rękawiczki.",
+      "exampleEn": "In winter I wear gloves.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-013",
+      "type": "typed",
+      "front": "size",
+      "accepted": [
+        "rozmiar"
+      ],
+      "back": "rozmiar (m)",
+      "example": "Jaki rozmiar pan nosi?",
+      "exampleEn": "What size do you wear? (to a man)",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-014",
+      "type": "typed",
+      "front": "fitting room",
+      "accepted": [
+        "przymierzalnia"
+      ],
+      "back": "przymierzalnia (f)",
+      "example": "Gdzie jest przymierzalnia?",
+      "exampleEn": "Where's the fitting room?",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-015",
+      "type": "typed",
+      "front": "receipt",
+      "accepted": [
+        "paragon"
+      ],
+      "back": "paragon (m)",
+      "example": "Mam paragon.",
+      "exampleEn": "I have the receipt.",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-016",
+      "type": "typed",
+      "front": "sale (lower prices)",
+      "accepted": [
+        "wyprzedaż"
+      ],
+      "back": "wyprzedaż (f)",
+      "example": "W styczniu są duże wyprzedaże.",
+      "exampleEn": "There are big sales in January.",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-017",
+      "type": "typed",
+      "front": "navy blue",
+      "accepted": [
+        "granatowy"
+      ],
+      "back": "granatowy, granatowa, granatowe",
+      "example": "Mam granatowy płaszcz.",
+      "exampleEn": "I have a navy blue coat.",
+      "level": "A2",
+      "tags": [
+        "colours"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-018",
+      "type": "typed",
+      "front": "grey",
+      "accepted": [
+        "szary"
+      ],
+      "back": "szary, szara, szare",
+      "example": "Szary sweter jest tańszy.",
+      "exampleEn": "The grey jumper is cheaper.",
+      "level": "A2",
+      "tags": [
+        "colours"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-019",
+      "type": "typed",
+      "front": "to try on",
+      "accepted": [
+        "przymierzać",
+        "przymierzyć"
+      ],
+      "back": "przymierzać / przymierzyć",
+      "note": "Not próbować (try, taste).",
+      "example": "Czy mogę przymierzyć tę kurtkę?",
+      "exampleEn": "Can I try on this jacket?",
+      "level": "A2",
+      "tags": [
+        "verbs"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-020",
+      "type": "typed",
+      "front": "to exchange (in a shop)",
+      "accepted": [
+        "wymieniać",
+        "wymienić"
+      ],
+      "back": "wymieniać / wymienić",
+      "example": "Chcę wymienić te buty.",
+      "exampleEn": "I want to exchange these shoes.",
+      "level": "A2",
+      "tags": [
+        "verbs"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-021",
+      "type": "cloze",
+      "text": "Te spodnie {{są}} za długie.",
+      "hint": "are",
+      "en": "These trousers are too long.",
+      "note": "Spodnie is plural, so the verb is plural.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-022",
+      "type": "cloze",
+      "text": "Ten kolor bardzo ci {{pasuje}}.",
+      "hint": "suits",
+      "en": "This colour really suits you.",
+      "level": "A2",
+      "tags": [
+        "verbs"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-023",
+      "type": "cloze",
+      "text": "Czy jest {{większy}} rozmiar?",
+      "hint": "bigger",
+      "en": "Is there a bigger size?",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-024",
+      "type": "cloze",
+      "text": "Kurtka jest ładna, ale {{za|zbyt}} droga.",
+      "hint": "too",
+      "en": "The jacket is nice but too expensive.",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-025",
+      "type": "cloze",
+      "text": "{{Noszę}} rozmiar M.",
+      "hint": "I wear",
+      "en": "I wear size M.",
+      "level": "A2",
+      "tags": [
+        "verbs"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-026",
+      "type": "cloze",
+      "text": "Mam czarną kurtkę i {{czarne}} buty.",
+      "hint": "black",
+      "en": "I have a black jacket and black shoes.",
+      "note": "Colours agree with the noun: buty is plural.",
+      "level": "A2",
+      "tags": [
+        "colours"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-027",
+      "type": "cloze",
+      "text": "Ta czarna kurtka czy ta czerwona? — Wezmę tę {{czerwoną}}.",
+      "hint": "red (one)",
+      "en": "The black jacket or the red one? — I'll take the red one.",
+      "level": "A2",
+      "tags": [
+        "colours"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-028",
+      "type": "cloze",
+      "text": "Czy mogę to {{oddać|zwrócić}}? Mam paragon.",
+      "hint": "return",
+      "en": "Can I return this? I have the receipt.",
+      "level": "A2",
+      "tags": [
+        "verbs"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-029",
+      "type": "cloze",
+      "text": "Czy ten sweter pasuje do {{spódnicy}} (spódnica)?",
+      "hint": "the skirt",
+      "en": "Does this jumper go with the skirt?",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-030",
+      "type": "cloze",
+      "text": "Zimą noszę {{czapkę}} (czapka) i rękawiczki.",
+      "hint": "a hat",
+      "en": "In winter I wear a hat and gloves.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-031",
+      "type": "cloze",
+      "text": "Mój brat nosi {{garnitur}} do pracy.",
+      "hint": "a suit",
+      "en": "My brother wears a suit to work.",
+      "level": "A2",
+      "tags": [
+        "clothes"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-032",
+      "type": "cloze",
+      "text": "Lubię {{zielony}} kolor.",
+      "hint": "green",
+      "en": "I like the colour green.",
+      "level": "A2",
+      "tags": [
+        "colours"
+      ]
+    },
+    {
+      "id": "a2-shopping-clothes-033",
+      "type": "cloze",
+      "text": "Gdzie jest {{kasa}}?",
+      "hint": "the till, checkout",
+      "en": "Where's the till?",
+      "level": "A2",
+      "tags": [
+        "in-the-shop"
+      ]
+    }
+  ]
+}

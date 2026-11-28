@@ -1,0 +1,569 @@
+{
+  "version": 1,
+  "id": "aspect-pairs",
+  "title": "Aspect pairs",
+  "description": "Type the perfective partner, then choose the right verb of the pair in a sentence. A2 part: 40 of 60 cards; B1 adds the rest.",
+  "level": "A2-B1",
+  "cards": [
+    {
+      "id": "aspect-pairs-001",
+      "type": "typed",
+      "front": "robić (do, make) → the perfective partner",
+      "accepted": [
+        "zrobić"
+      ],
+      "back": "robić / zrobić",
+      "example": "Zrobię to jutro.",
+      "exampleEn": "I'll do it tomorrow.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-002",
+      "type": "typed",
+      "front": "pisać (write) → the perfective partner",
+      "accepted": [
+        "napisać"
+      ],
+      "back": "pisać / napisać",
+      "example": "Napisałam e-mail.",
+      "exampleEn": "I've written the email.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-003",
+      "type": "typed",
+      "front": "czytać (read) → the perfective partner",
+      "accepted": [
+        "przeczytać"
+      ],
+      "back": "czytać / przeczytać",
+      "example": "Przeczytałeś już tę książkę?",
+      "exampleEn": "Have you finished the book yet?",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-004",
+      "type": "typed",
+      "front": "pić (drink) → the perfective partner",
+      "accepted": [
+        "wypić"
+      ],
+      "back": "pić / wypić",
+      "example": "Wypiłem całą kawę.",
+      "exampleEn": "I drank all the coffee.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-005",
+      "type": "typed",
+      "front": "jeść (eat) → the perfective partner",
+      "accepted": [
+        "zjeść"
+      ],
+      "back": "jeść / zjeść",
+      "example": "Zjem obiad i pojadę do pracy.",
+      "exampleEn": "I'll have lunch and go to work.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-006",
+      "type": "typed",
+      "front": "gotować (cook) → the perfective partner",
+      "accepted": [
+        "ugotować"
+      ],
+      "back": "gotować / ugotować",
+      "example": "Ugotowałam zupę.",
+      "exampleEn": "I've cooked some soup.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-007",
+      "type": "typed",
+      "front": "płacić (pay) → the perfective partner",
+      "accepted": [
+        "zapłacić"
+      ],
+      "back": "płacić / zapłacić",
+      "example": "Pan Adam zapłacił kartą.",
+      "exampleEn": "Mr Adam paid by card.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-008",
+      "type": "typed",
+      "front": "kupować (buy) → the perfective partner",
+      "accepted": [
+        "kupić"
+      ],
+      "back": "kupować / kupić",
+      "example": "Kupiłam nowy telefon.",
+      "exampleEn": "I've bought a new phone.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-009",
+      "type": "typed",
+      "front": "wstawać (get up) → the perfective partner",
+      "accepted": [
+        "wstać"
+      ],
+      "back": "wstawać / wstać",
+      "example": "Wstałem o siódmej.",
+      "exampleEn": "I got up at seven.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-010",
+      "type": "typed",
+      "front": "wracać (come back) → the perfective partner",
+      "accepted": [
+        "wrócić"
+      ],
+      "back": "wracać / wrócić",
+      "example": "Ola wróciła do domu.",
+      "exampleEn": "Ola came back home.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-011",
+      "type": "typed",
+      "front": "zamykać (close) → the perfective partner",
+      "accepted": [
+        "zamknąć"
+      ],
+      "back": "zamykać / zamknąć",
+      "example": "Zamknij okno, proszę.",
+      "exampleEn": "Close the window, please.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-012",
+      "type": "typed",
+      "front": "mówić (say, tell) → the perfective partner",
+      "accepted": [
+        "powiedzieć"
+      ],
+      "back": "mówić / powiedzieć",
+      "example": "Kasia powiedziała, że jest zmęczona.",
+      "exampleEn": "Kasia said she was tired.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-013",
+      "type": "typed",
+      "front": "brać (take) → the perfective partner",
+      "accepted": [
+        "wziąć"
+      ],
+      "back": "brać / wziąć",
+      "example": "Wzięłam parasol.",
+      "exampleEn": "I took an umbrella.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-014",
+      "type": "typed",
+      "front": "oglądać (watch) → the perfective partner",
+      "accepted": [
+        "obejrzeć"
+      ],
+      "back": "oglądać / obejrzeć",
+      "example": "Obejrzeliśmy dobry film.",
+      "exampleEn": "We watched a good film.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-015",
+      "type": "typed",
+      "front": "dzwonić (call, ring) → the perfective partner",
+      "accepted": [
+        "zadzwonić"
+      ],
+      "back": "dzwonić / zadzwonić",
+      "example": "Zadzwonię jutro.",
+      "exampleEn": "I'll call tomorrow.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-016",
+      "type": "typed",
+      "front": "rezerwować (book) → the perfective partner",
+      "accepted": [
+        "zarezerwować"
+      ],
+      "back": "rezerwować / zarezerwować",
+      "example": "Zarezerwowałam pokój.",
+      "exampleEn": "I've booked a room.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-017",
+      "type": "typed",
+      "front": "dawać (give) → the perfective partner",
+      "accepted": [
+        "dać"
+      ],
+      "back": "dawać / dać",
+      "example": "Dałem mamie kwiaty.",
+      "exampleEn": "I gave Mum flowers.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-018",
+      "type": "typed",
+      "front": "pomagać (help) → the perfective partner",
+      "accepted": [
+        "pomóc"
+      ],
+      "back": "pomagać / pomóc",
+      "example": "Pomóż mi, proszę.",
+      "exampleEn": "Help me, please.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-019",
+      "type": "typed",
+      "front": "zwiedzać (visit (a place), see the sights) → the perfective partner",
+      "accepted": [
+        "zwiedzić"
+      ],
+      "back": "zwiedzać / zwiedzić",
+      "example": "Zwiedziliśmy Gdańsk.",
+      "exampleEn": "We went sightseeing in Gdańsk.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-020",
+      "type": "typed",
+      "front": "przymierzać (try on) → the perfective partner",
+      "accepted": [
+        "przymierzyć"
+      ],
+      "back": "przymierzać / przymierzyć",
+      "example": "Czy mogę przymierzyć tę kurtkę?",
+      "exampleEn": "Can I try on this jacket?",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "pairs"
+      ]
+    },
+    {
+      "id": "aspect-pairs-021",
+      "type": "cloze",
+      "text": "Wczoraj w końcu {{napisałam}} (pisać / napisać) ten e-mail.",
+      "hint": "I (a woman) finally wrote (and finished)",
+      "en": "Yesterday I finally wrote that email.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-022",
+      "type": "cloze",
+      "text": "Codziennie {{piłem}} (pić / wypić) kawę.",
+      "hint": "I (a man) drank, every day",
+      "en": "I drank coffee every day.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-023",
+      "type": "cloze",
+      "text": "Kiedy {{czytałam}} (czytać / przeczytać), zadzwonił telefon.",
+      "hint": "I (a woman) was reading",
+      "en": "While I was reading, the phone rang.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-024",
+      "type": "cloze",
+      "text": "{{Zjem}} (jeść / zjeść) obiad i pojadę do pracy.",
+      "hint": "I'll eat (and finish)",
+      "en": "I'll have lunch and go to work.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-025",
+      "type": "cloze",
+      "text": "Jutro cały dzień {{będę gotować|będę gotował|będę gotowała}} (gotować / ugotować).",
+      "hint": "I'll be cooking (all day)",
+      "en": "Tomorrow I'll be cooking all day.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-026",
+      "type": "cloze",
+      "text": "Pan Adam {{zapłacił}} (płacić / zapłacić) kartą.",
+      "hint": "paid (once)",
+      "en": "Mr Adam paid by card.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-027",
+      "type": "cloze",
+      "text": "Kiedy byłam mała, często {{kupowałam}} (kupować / kupić) lody.",
+      "hint": "I (a woman) used to buy (often)",
+      "en": "When I was little, I often bought ice cream.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-028",
+      "type": "cloze",
+      "text": "Wstałem, {{zjadłem}} (jeść / zjeść) śniadanie i poszedłem do pracy.",
+      "hint": "I (a man) ate (one event in a chain)",
+      "en": "I got up, ate breakfast and went to work.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-029",
+      "type": "cloze",
+      "text": "Teraz {{robię}} (robić / zrobić) obiad.",
+      "hint": "I'm making (now)",
+      "en": "I'm making lunch now.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-030",
+      "type": "cloze",
+      "text": "{{Zadzwonię}} (dzwonić / zadzwonić) jutro.",
+      "hint": "I'll call (once)",
+      "en": "I'll call tomorrow.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-031",
+      "type": "cloze",
+      "text": "Kasia {{powiedziała}} (mówić / powiedzieć), że jest zmęczona.",
+      "hint": "said (once)",
+      "en": "Kasia said she was tired.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-032",
+      "type": "cloze",
+      "text": "Długo {{czekaliśmy|czekałyśmy}} (czekać / poczekać) na autobus.",
+      "hint": "we waited (a long time)",
+      "en": "We waited a long time for the bus.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-033",
+      "type": "cloze",
+      "text": "Przeczytałeś już tę książkę? — Jeszcze nie, wciąż {{czytam}} (czytać / przeczytać).",
+      "hint": "I'm (still) reading",
+      "en": "Have you finished the book yet? — Not yet, I'm still reading.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-034",
+      "type": "cloze",
+      "text": "Wczoraj wieczorem {{oglądaliśmy|oglądałyśmy}} (oglądać / obejrzeć) telewizję.",
+      "hint": "we were watching",
+      "en": "Last night we were watching TV.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-035",
+      "type": "cloze",
+      "text": "Zimno mi. Czy możesz {{zamknąć}} (zamykać / zamknąć) okno?",
+      "hint": "close (once)",
+      "en": "I'm cold. Can you close the window?",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-036",
+      "type": "cloze",
+      "text": "Codziennie {{wracam}} (wracać / wrócić) do domu o szóstej.",
+      "hint": "I come back (every day)",
+      "en": "I come home at six every day.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-037",
+      "type": "cloze",
+      "text": "Ola zrobiła zakupy i {{wróciła}} (wracać / wrócić) do domu.",
+      "hint": "came back (one event in a chain)",
+      "en": "Ola did the shopping and came back home.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-038",
+      "type": "cloze",
+      "text": "Nie {{otwieraj}} (otwierać / otworzyć) okna!",
+      "hint": "don't open (to one person)",
+      "en": "Don't open the window!",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-039",
+      "type": "cloze",
+      "text": "Jutro {{kupię}} (kupować / kupić) bilety.",
+      "hint": "I'll buy (once)",
+      "en": "I'll buy the tickets tomorrow.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    },
+    {
+      "id": "aspect-pairs-040",
+      "type": "cloze",
+      "text": "Cały dzień {{pisałem}} (pisać / napisać) raport.",
+      "hint": "I (a man) was writing (all day)",
+      "en": "I was writing a report all day.",
+      "level": "A2",
+      "tags": [
+        "aspect",
+        "choice"
+      ]
+    }
+  ]
+}

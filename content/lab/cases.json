@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "note": "Level extras A1: the five cases taught at A1 (nominative, genitive, accusative, instrumental, locative). Dative comes with A2 extras, vocative with B1 (spec 08 §4).",
+  "note": "Level extras A1 wrote the five A1 cases; A2 extras added the dative card and the A2 uses (plural, about / after, interests, where with przed, za, nad, pod). The vocative comes with B1 (spec 08 §4).",
   "cases": [
     {
       "id": "nominative",
@@ -29,6 +29,11 @@
           "label": "Name after nazywać się",
           "pl": "Nazywam się Tomek.",
           "en": "My name is Tomek."
+        },
+        {
+          "label": "Plural: men vs everyone and everything else",
+          "pl": "Moi koledzy są mili, a te książki są nowe.",
+          "en": "My colleagues are nice, and these books are new."
         }
       ],
       "triggers": {
@@ -66,7 +71,8 @@
       },
       "traps": [
         "After być a noun goes into the instrumental: Jestem studentem, not Jestem student. With to jest the noun stays in the nominative: To jest student.",
-        "Masculine personal plurals change the last consonant: student → studenci, Polak → Polacy. Not studenty, Polaki."
+        "Masculine personal plurals change the last consonant: student → studenci, Polak → Polacy. Not studenty, Polaki.",
+        "A group with at least one man takes the masculine personal forms: Ania i Tomek są zmęczeni. Animals and children do not: Psy są głodne, Dzieci są małe."
       ],
       "contrasts": [
         {
@@ -113,6 +119,16 @@
           "label": "After do, z, bez, dla, u",
           "pl": "Idę do sklepu.",
           "en": "I'm going to the shop."
+        },
+        {
+          "label": "Plural after dużo, kilka, ile? and 5+",
+          "pl": "Na koncercie było dużo ludzi.",
+          "en": "There were a lot of people at the concert."
+        },
+        {
+          "label": "Next to, opposite, near",
+          "pl": "Poczta jest obok banku.",
+          "en": "The post office is next to the bank."
         }
       ],
       "triggers": {
@@ -124,14 +140,18 @@
           "dla",
           "u",
           "obok",
-          "koło"
+          "koło",
+          "naprzeciwko",
+          "blisko",
+          "niedaleko"
         ],
         "verbs": [
           "szukać",
           "słuchać",
           "używać",
           "bać się",
-          "potrzebować"
+          "potrzebować",
+          "uczyć się (Uczę się polskiego)"
         ],
         "other": [
           "nie ma",
@@ -139,7 +159,9 @@
           "dużo",
           "mało",
           "kilka",
-          "pięć i więcej"
+          "pięć i więcej",
+          "ile?",
+          "nie wolno, nie można + object"
         ]
       },
       "endings": {
@@ -167,7 +189,9 @@
       "traps": [
         "English does not change the object after not, so learners keep the accusative: Nie mam czas ✗ → Nie mam czasu ✓.",
         "Masculine people and animals that end in a consonant always take -a (brata, kota). For things it is -a or -u, and you learn them in pairs (dom – domu, chleb – chleba).",
-        "After nie only an object that would be in the accusative changes. The subject stays in the nominative (Kawa nie jest droga), and other cases stay too (Nie pomagam mamie)."
+        "After nie only an object that would be in the accusative changes. The subject stays in the nominative (Kawa nie jest droga), and other cases stay too (Nie pomagam mamie).",
+        "After dużo, kilka, ile? and 5+ the noun is genitive plural and the verb is singular: Było dużo ludzi, not Były dużo ludzie.",
+        "Feminine and neuter nouns usually lose their last vowel, often with an e added: minuta → minut, piwo → piw, książka → książek. Not książków."
       ],
       "contrasts": [
         {
@@ -193,6 +217,112 @@
       ],
       "setTags": [
         "genitive"
+      ]
+    },
+    {
+      "id": "dative",
+      "name": "Celownik",
+      "nameEn": "Dative",
+      "questions": "komu? czemu?",
+      "level": "A2",
+      "summary": "The person who receives something, after pomagać and dziękować, and the person in podoba mi się and jest mi zimno.",
+      "uses": [
+        {
+          "label": "The person who receives",
+          "pl": "Daję mamie prezent.",
+          "en": "I'm giving Mum a present."
+        },
+        {
+          "label": "After pomagać and dziękować",
+          "pl": "Pomagam bratu.",
+          "en": "I help my brother."
+        },
+        {
+          "label": "podobać się: the person who likes it",
+          "pl": "Ten film mi się podoba.",
+          "en": "I like this film."
+        },
+        {
+          "label": "How someone feels: jest + dative",
+          "pl": "Jest mi zimno.",
+          "en": "I'm cold."
+        },
+        {
+          "label": "pasować: it suits someone",
+          "pl": "Ten kolor ci pasuje.",
+          "en": "This colour suits you."
+        }
+      ],
+      "triggers": {
+        "prepositions": [],
+        "verbs": [
+          "dawać / dać",
+          "kupować / kupić (komuś)",
+          "pokazywać / pokazać",
+          "mówić / powiedzieć (komuś)",
+          "pomagać / pomóc",
+          "dziękować / podziękować",
+          "podobać się",
+          "pasować (komuś)"
+        ],
+        "other": [
+          "jest mi zimno / ciepło / smutno",
+          "Kiedy ci pasuje?"
+        ]
+      },
+      "endings": {
+        "singular": {
+          "masculine": "-owi (Tomkowi, lekarzowi); -u on a short list: bratu, panu, ojcu, kotu, psu",
+          "masculine in -a": "like feminine: tacie, koledze",
+          "feminine": "-e with a softened consonant (mamie, siostrze, córce); -i / -y after soft consonants (Ani, babci, pracy)",
+          "neuter": "-u (dziecku)"
+        },
+        "plural": {
+          "masculine personal": "-om",
+          "other": "-om"
+        },
+        "adjective": {
+          "singular": {
+            "masculine": "-emu",
+            "feminine": "-ej",
+            "neuter": "-emu"
+          },
+          "plural": {
+            "masculine personal": "-ym / -im",
+            "other": "-ym / -im"
+          }
+        }
+      },
+      "traps": [
+        "English says \"to Mum\"; Polish has no preposition here: Daję prezent do mamy ✗ → Daję mamie prezent ✓. do means \"to a place\".",
+        "pomagać and dziękować take the dative, not the accusative: Pomagam brata ✗ → Pomagam bratu ✓, Dziękuję pana ✗ → Dziękuję panu ✓.",
+        "With podobać się the thing you like is the subject and you are in the dative: Ja podobam ten film ✗ → Ten film mi się podoba ✓.",
+        "How you feel is jest + dative + an adverb: Jestem zimny ✗ → Jest mi zimno ✓."
+      ],
+      "contrasts": [
+        {
+          "with": "accusative",
+          "rule": "The thing you give or buy is the accusative; the person who gets it is the dative.",
+          "examples": [
+            "Kupiłam książkę.",
+            "Kupiłam bratu książkę."
+          ]
+        },
+        {
+          "with": "locative",
+          "rule": "Feminine nouns look the same in the dative and the locative: only the question differs (komu? / o kim?).",
+          "examples": [
+            "Daję mamie kwiaty.",
+            "Rozmawiamy o mamie."
+          ]
+        }
+      ],
+      "topicIds": [
+        "a2-cases-dative",
+        "a2-grammar-pronouns-in-cases"
+      ],
+      "setTags": [
+        "dative"
       ]
     },
     {
@@ -222,6 +352,26 @@
           "label": "Days of the week",
           "pl": "w sobotę",
           "en": "on Saturday"
+        },
+        {
+          "label": "Plural objects: men take -ów / -y / -i, the rest = nominative",
+          "pl": "Znam tych studentów. Lubię koty.",
+          "en": "I know these students. I like cats."
+        },
+        {
+          "label": "How long, and for what: na",
+          "pl": "Chciałabym pokój na trzy noce.",
+          "en": "I'd like a room for three nights. (a woman speaking)"
+        },
+        {
+          "label": "Games and sports: grać w",
+          "pl": "W sobotę gram w tenisa.",
+          "en": "On Saturday I'm playing tennis."
+        },
+        {
+          "label": "The person something hurts",
+          "pl": "Boli mnie głowa.",
+          "en": "I have a headache."
         }
       ],
       "triggers": {
@@ -230,7 +380,9 @@
           "w (days: w sobotę)",
           "przez",
           "za (in … time)",
-          "o (prosić o, pytać o)"
+          "o (prosić o, pytać o)",
+          "na (how long, what for: na trzy noce, coś na kaszel, ochota na)",
+          "w (games: grać w tenisa)"
         ],
         "verbs": [
           "mieć",
@@ -242,7 +394,8 @@
           "jeść",
           "kupować",
           "kochać",
-          "odwiedzać"
+          "odwiedzać",
+          "boleć (Boli mnie głowa)"
         ],
         "other": []
       },
@@ -274,7 +427,8 @@
         "English marks the object only by its place in the sentence. Polish needs the ending: Lubię kawę, not Lubię kawa.",
         "Masculine people and animals take -a, like the genitive: Mam brata, Mam psa. Things do not change: Mam dom.",
         "After nie the object switches to the genitive: Mam czas. → Nie mam czasu.",
-        "Going into a building or a town takes do + genitive, not w + accusative: Idę do szkoły, not Idę w szkołę."
+        "Going into a building or a town takes do + genitive, not w + accusative: Idę do szkoły, not Idę w szkołę.",
+        "In the plural only men change: Znam te studenty ✗ → Znam tych studentów ✓. Animals are like things: Lubię psy, not Lubię psów."
       ],
       "contrasts": [
         {
@@ -337,14 +491,41 @@
           "label": "Paying",
           "pl": "Czy mogę zapłacić kartą?",
           "en": "Can I pay by card?"
+        },
+        {
+          "label": "Together with people, in the plural",
+          "pl": "Mieszkam z rodzicami.",
+          "en": "I live with my parents."
+        },
+        {
+          "label": "Interests: interesować się",
+          "pl": "Interesuję się historią.",
+          "en": "I'm interested in history."
+        },
+        {
+          "label": "Where: przed, za, nad, pod, między",
+          "pl": "Kot śpi pod łóżkiem.",
+          "en": "The cat is sleeping under the bed."
+        },
+        {
+          "label": "Jobs in the plural, after być",
+          "pl": "Moi rodzice są nauczycielami.",
+          "en": "My parents are teachers."
         }
       ],
       "triggers": {
         "prepositions": [
-          "z (with)"
+          "z (with)",
+          "przed",
+          "za (behind)",
+          "nad",
+          "pod",
+          "między"
         ],
         "verbs": [
-          "być + noun (a job, a nationality, a role)"
+          "być + noun (a job, a nationality, a role)",
+          "interesować się",
+          "spotykać się z"
         ],
         "other": [
           "transport: autobusem, pociągiem, samochodem",
@@ -377,7 +558,9 @@
         "English uses the same form in \"I am a student\" and \"the student is here\". Polish needs the instrumental after być: Jestem student ✗ → Jestem studentem ✓.",
         "An adjective alone after być stays in the nominative: Jestem zmęczony, not Jestem zmęczonym. A first name in an introduction stays in the nominative too: Jestem Tomek.",
         "After to jest the noun stays in the nominative: To jest student. But: On jest studentem.",
-        "\"By bus\" has no preposition: Jadę z autobusem ✗ → Jadę autobusem ✓. z autobusem means \"together with a bus\"."
+        "\"By bus\" has no preposition: Jadę z autobusem ✗ → Jadę autobusem ✓. z autobusem means \"together with a bus\".",
+        "\"Interested in\" is one verb with się, not a copy of English: Jestem zainteresowany w historii ✗ → Interesuję się historią ✓.",
+        "The plural ending is -ami for almost every noun: z kolegami, z koleżankami. Learn the few in -mi: z ludźmi, z dziećmi, z przyjaciółmi."
       ],
       "contrasts": [
         {
@@ -437,19 +620,43 @@
           "label": "At home",
           "pl": "Wieczorem jestem w domu.",
           "en": "In the evening I'm at home."
+        },
+        {
+          "label": "About: o",
+          "pl": "Rozmawiamy o nowym filmie.",
+          "en": "We're talking about the new film."
+        },
+        {
+          "label": "After: po",
+          "pl": "Po pracy idę na siłownię.",
+          "en": "After work I'm going to the gym."
+        },
+        {
+          "label": "Months, this / next / last …",
+          "pl": "W przyszłym tygodniu mam egzamin.",
+          "en": "I have an exam next week."
+        },
+        {
+          "label": "Plural: -ach for every gender",
+          "pl": "W małych miastach jest spokojnie.",
+          "en": "It's quiet in small towns."
         }
       ],
       "triggers": {
         "prepositions": [
           "w (where)",
           "na (where)",
-          "o (about: mówić o pracy, A2)",
-          "po, przy (A2)"
+          "o (about)",
+          "po (after; around: po parku)",
+          "przy (at, by)"
         ],
         "verbs": [
           "mieszkać w / na",
           "być w / na",
-          "pracować w / na"
+          "pracować w / na",
+          "rozmawiać o, mówić o, myśleć o, pamiętać o",
+          "grać na (instruments)",
+          "jeździć na (rowerze, nartach)"
         ],
         "other": [
           "Gdzie? (where?)"
@@ -482,7 +689,9 @@
         "Before -e the consonant softens: k → c (w Polsce), g → dz (w Pradze), t → ci (na poczcie), d → dzi (w ogrodzie), r → rz (w biurze), ł → l (w szkole).",
         "dom takes -u: w domu, not w domie.",
         "Some places take na, not w: na poczcie, na dworcu, na przystanku, na rynku, na lotnisku, na uniwersytecie.",
-        "The locative says where you are, not where you go: Idę w sklepie ✗ → Idę do sklepu ✓."
+        "The locative says where you are, not where you go: Idę w sklepie ✗ → Idę do sklepu ✓.",
+        "\"About\" after rozmawiać, mówić, myśleć takes the locative: Rozmawiamy o pracę ✗ → Rozmawiamy o pracy ✓. (o + accusative is for asking: pytać o drogę.)",
+        "The locative plural is -ach, the instrumental plural -ami: w sklepach, but z kolegami."
       ],
       "contrasts": [
         {

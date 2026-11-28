@@ -1,0 +1,249 @@
+{
+  "version": 1,
+  "id": "numbers-nouns",
+  "title": "Numbers with nouns",
+  "description": "Put the noun in brackets into the form the number needs: 1, 2–4 or 5 and more. A2 part: 20 of 30 cards; B1 adds counting people (dwóch studentów).",
+  "level": "A2-B1",
+  "cards": [
+    {
+      "id": "numbers-nouns-001",
+      "type": "cloze",
+      "text": "Mam dwa {{koty}} (kot).",
+      "hint": "cats",
+      "en": "I have two cats.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-002",
+      "type": "cloze",
+      "text": "Mam pięć {{kotów}} (kot).",
+      "hint": "cats",
+      "en": "I have five cats.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-003",
+      "type": "cloze",
+      "text": "Poproszę dwie {{kawy}} (kawa).",
+      "hint": "coffees",
+      "en": "Two coffees, please.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-004",
+      "type": "cloze",
+      "text": "{{Dwie}} (dwa) dziewczyny czekają na przystanku.",
+      "hint": "two",
+      "en": "Two girls are waiting at the stop.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-005",
+      "type": "cloze",
+      "text": "Mieszkanie ma trzy {{pokoje}} (pokój).",
+      "hint": "rooms",
+      "en": "The flat has three rooms.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-006",
+      "type": "cloze",
+      "text": "W grupie jest dwanaście {{osób}} (osoba).",
+      "hint": "people",
+      "en": "There are twelve people in the group.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-007",
+      "type": "cloze",
+      "text": "Mój syn ma cztery {{lata}} (rok).",
+      "hint": "years (old)",
+      "en": "My son is four.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-008",
+      "type": "cloze",
+      "text": "Ola ma dwadzieścia pięć {{lat}} (rok).",
+      "hint": "years (old)",
+      "en": "Ola is twenty-five.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-009",
+      "type": "cloze",
+      "text": "Poproszę pięć {{bułek}} (bułka).",
+      "hint": "rolls",
+      "en": "Five rolls, please.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-010",
+      "type": "cloze",
+      "text": "Czekam już dwadzieścia trzy {{minuty}} (minuta)!",
+      "hint": "minutes",
+      "en": "I've been waiting for twenty-three minutes!",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-011",
+      "type": "cloze",
+      "text": "Bilet kosztuje trzydzieści pięć {{złotych}} (złoty).",
+      "hint": "złoty",
+      "en": "The ticket costs thirty-five złoty.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-012",
+      "type": "cloze",
+      "text": "To kosztuje dwa {{złote}} (złoty).",
+      "hint": "złoty",
+      "en": "It costs two złoty.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-013",
+      "type": "cloze",
+      "text": "Kupiłam sześć {{jajek|jaj}} (jajko).",
+      "hint": "eggs",
+      "en": "I bought six eggs.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-014",
+      "type": "cloze",
+      "text": "W sali było trzydzieści {{krzeseł}} (krzesło).",
+      "hint": "chairs",
+      "en": "There were thirty chairs in the room.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-015",
+      "type": "cloze",
+      "text": "Mam trzy {{siostry}} (siostra).",
+      "hint": "sisters",
+      "en": "I have three sisters.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-016",
+      "type": "cloze",
+      "text": "Poproszę dwa {{piwa}} (piwo).",
+      "hint": "beers",
+      "en": "Two beers, please.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    },
+    {
+      "id": "numbers-nouns-017",
+      "type": "cloze",
+      "text": "Pięć autobusów {{jedzie}} (jechać) do centrum.",
+      "hint": "go",
+      "en": "Five buses go to the centre.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "verb"
+      ]
+    },
+    {
+      "id": "numbers-nouns-018",
+      "type": "cloze",
+      "text": "Dwa autobusy {{jadą}} (jechać) do centrum.",
+      "hint": "go",
+      "en": "Two buses go to the centre.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "verb"
+      ]
+    },
+    {
+      "id": "numbers-nouns-019",
+      "type": "cloze",
+      "text": "Pociąg ma dwadzieścia {{minut}} (minuta) spóźnienia.",
+      "hint": "minutes",
+      "en": "The train is twenty minutes late.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "5-plus"
+      ]
+    },
+    {
+      "id": "numbers-nouns-020",
+      "type": "cloze",
+      "text": "Kuba ma dwadzieścia dwa {{lata}} (rok).",
+      "hint": "years (old)",
+      "en": "Kuba is twenty-two.",
+      "level": "A2",
+      "tags": [
+        "numbers",
+        "2-4"
+      ]
+    }
+  ]
+}
