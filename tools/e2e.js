@@ -196,14 +196,14 @@ async function main() {
   });
 
   console.log("\nTrail generated from the syllabus (E9)");
-  await test("trail: A1 has 25 stops + 5 checkpoints; five soon lands dimmed; one current stop; sheet opens and closes", async function () {
+  await test("trail: A1 and A2 have 53 stops + 10 checkpoints; four soon lands dimmed; one current stop; sheet opens and closes", async function () {
     const s = await session(1280, 900, true);
     await visit(s.page, "#/trail", 1500);
     ok(await s.page.locator(".sz-level").count() === 6, "lands");
-    ok(await s.page.locator(".sz-level.is-soon").count() === 5, "soon lands");
+    ok(await s.page.locator(".sz-level.is-soon").count() === 4, "soon lands");
     ok(/Coming soon/.test(await s.page.innerText(".sz-level.is-soon")), "\"Coming soon\"");
-    ok(await s.page.locator(".sz-node").count() === 30, "nodes: " + await s.page.locator(".sz-node").count());
-    ok(await s.page.locator(".sz-node.is-review").count() === 5, "checkpoints");
+    ok(await s.page.locator(".sz-node").count() === 63, "nodes (A1 25 + 5, A2 28 + 5): " + await s.page.locator(".sz-node").count());
+    ok(await s.page.locator(".sz-node.is-review").count() === 10, "checkpoints");
     ok(await s.page.locator(".sz-node.is-current").count() === 1, "one current stop");
     ok((await s.page.locator(".sz-node.is-current").getAttribute("data-stop")) === "a1-grammar-alphabet-pronunciation", "first topic is current");
     await s.page.focus(".sz-node.is-current button");
@@ -240,12 +240,12 @@ async function main() {
     ok(st.version === 1 && st.stops["a1-cases-accusative"] && st.stops["a1-cases-accusative"].best === 4, "saved in plm.trail.<id>");
     await s.ctx.close();
   });
-  await test("Today for a new profile: A1 is \"here\", the other lands are soon, map progress counts A1 only", async function () {
+  await test("Today for a new profile: A1 is \"here\", the four lands after A2 are soon, map progress counts A1 and A2", async function () {
     const s = await session(1280, 900, true);
     await visit(s.page, "#/today", 1500);
     ok(await s.page.locator(".trail-station.is-current.lvl-A1").count() === 1, "current station");
-    ok(await s.page.locator(".trail-station.is-soon").count() === 5, "soon stations");
-    ok(await s.page.locator(".map-seg").count() === 1, "map segments: " + await s.page.locator(".map-seg").count());
+    ok(await s.page.locator(".trail-station.is-soon").count() === 4, "soon stations");
+    ok(await s.page.locator(".map-seg").count() === 2, "map segments: " + await s.page.locator(".map-seg").count());
     await s.ctx.close();
   });
 
@@ -666,9 +666,9 @@ async function main() {
     await s.page.waitForTimeout(1200); // the result card animates in (GSAP autoAlpha)
     const res = await viewText(s.page);
     ok(/Estimated level: [ABC][12]/.test(res) && /is coming soon/.test(res), "result: " + res.slice(res.indexOf("Estimated"), res.indexOf("Estimated") + 200));
-    await s.page.click("a:has-text('Start the trail at A1')");
+    await s.page.click("a:has-text('Start the trail at A2')"); // C1 is soon: the highest available level
     await s.page.waitForTimeout(600);
-    ok(/Starting point: A1 · Meadow \(from the placement test\)/.test(await viewText(s.page)), "trail: starting point");
+    ok(/Starting point: A2 · Forest \(from the placement test\)/.test(await viewText(s.page)), "trail: starting point");
     await visit(s.page, "#/trail/a1-cases-accusative");
     await s.page.click("button:has-text('Quiz (4 questions)')");
     await s.page.waitForTimeout(400);
@@ -829,8 +829,8 @@ async function main() {
       ok((await viewText(s.page)).length > 80, r + ": empty view");
       ok(!(await s.page.$(".lab-skeleton")), r + ": still loading");
     }
-    await visit(s.page, "#/lab/dative", 700);
-    ok(/Dative card is being written/.test(await viewText(s.page)), "card not written yet");
+    await visit(s.page, "#/lab/vocative", 700);
+    ok(/Vocative card is being written/.test(await viewText(s.page)), "card not written yet");
     await visit(s.page, "#/lab/forms/model/nope", 700);
     ok(/no such model phrase/.test(await viewText(s.page)), "unknown model");
     ok(!s.page.errs.length, "JS errors: " + s.page.errs[0]);
@@ -841,7 +841,7 @@ async function main() {
     await visit(s.page, "#/lab", 800);
     const names = await s.page.$$eval(".lab-case-grid .lab-tile-name", function (n) { return n.map(function (x) { return x.textContent.trim(); }); });
     ok(names.join(",") === "Nominative,Genitive,Dative,Accusative,Instrumental,Locative,Vocative", "order: " + names.join(","));
-    ok((await s.page.$$("a.lab-tile")).length === 5, "the five written cards (the A1 cases) are links");
+    ok((await s.page.$$("a.lab-tile")).length === 6, "the six written cards (the A1 and A2 cases) are links");
     await s.page.focus("a.lab-tile[data-case=nominative]");
     await s.page.keyboard.press("ArrowRight");
     ok(await s.page.evaluate(function () { return document.activeElement.dataset.case; }) === "genitive", "ArrowRight");

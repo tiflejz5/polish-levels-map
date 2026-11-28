@@ -53,5 +53,10 @@
     "file": "tools/e2e.js",
     "contains": "\"elm.json\"",
     "reason": "stage 5 e2e: data of the original app (english-levels-map) on the same origin, which must stay untouched and be refused on import"
+  },
+  {
+    "file": "tools/e2e.js",
+    "contains": "być (to be) and to jest / to są",
+    "reason": "e2e checks the rendered title of a Polish topic page (a1-verbs-byc); the title is content, not UI text"
   }
 ]
