@@ -1,0 +1,284 @@
+{
+  "version": 1,
+  "id": "motion-verbs",
+  "title": "Verbs of motion",
+  "description": "Choose between one trip (iść, jechać, lecieć), a habit (chodzić, jeździć, latać) and one finished trip (pójść, pojechać, polecieć). A2 part: 25 of 40 cards; B1 and B2 add the prefixed verbs.",
+  "level": "A2-B2",
+  "cards": [
+    {
+      "id": "motion-verbs-001",
+      "type": "cloze",
+      "text": "Dokąd {{idziesz}} (iść / chodzić)? — Do sklepu.",
+      "hint": "are you going (now, one person)",
+      "en": "Where are you going? — To the shop.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-002",
+      "type": "cloze",
+      "text": "Często {{chodzimy}} (iść / chodzić) do kina.",
+      "hint": "we go (often)",
+      "en": "We often go to the cinema.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-003",
+      "type": "cloze",
+      "text": "Pan Adam {{jeździ}} (jechać / jeździć) do pracy tramwajem.",
+      "hint": "goes (every day)",
+      "en": "Mr Adam goes to work by tram.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-004",
+      "type": "cloze",
+      "text": "Jutro {{lecę}} (lecieć / latać) do Londynu.",
+      "hint": "I'm flying (tomorrow)",
+      "en": "I'm flying to London tomorrow.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-005",
+      "type": "cloze",
+      "text": "Nie lubię {{latać}} (lecieć / latać) samolotem.",
+      "hint": "flying (in general)",
+      "en": "I don't like flying.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-006",
+      "type": "cloze",
+      "text": "Teraz {{jadę}} (jechać / jeździć) do pracy.",
+      "hint": "I'm driving (now)",
+      "en": "I'm driving to work now.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-007",
+      "type": "cloze",
+      "text": "W soboty {{chodzę}} (iść / chodzić) na basen.",
+      "hint": "I go (on Saturdays)",
+      "en": "On Saturdays I go swimming.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-008",
+      "type": "cloze",
+      "text": "Nasz syn już {{chodzi}} (iść / chodzić).",
+      "hint": "can walk",
+      "en": "Our son can already walk.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-009",
+      "type": "cloze",
+      "text": "Lubię {{jeździć}} (jechać / jeździć) na rowerze.",
+      "hint": "riding (in general)",
+      "en": "I like cycling.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-010",
+      "type": "cloze",
+      "text": "W zeszłym roku {{pojechaliśmy|pojechałyśmy}} (pójść / pojechać) na wakacje do Włoch.",
+      "hint": "we went (once, by car or train)",
+      "en": "Last year we went on holiday to Italy.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-011",
+      "type": "cloze",
+      "text": "Ania {{pojechała}} (pójść / pojechać) pociągiem do Gdańska.",
+      "hint": "has gone (by train)",
+      "en": "Ania has gone to Gdańsk by train.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-012",
+      "type": "cloze",
+      "text": "Paweł {{poszedł}} (pójść / pojechać) do domu pieszo.",
+      "hint": "went (on foot)",
+      "en": "Paweł went home on foot.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-013",
+      "type": "cloze",
+      "text": "Jutro {{pójdę|idę}} (iść / pójść) do lekarza.",
+      "hint": "I'll go (on foot)",
+      "en": "I'll go to the doctor's tomorrow.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-014",
+      "type": "cloze",
+      "text": "Kiedy {{jechałam}} (jechać / jeździć) do pracy, zadzwoniła mama.",
+      "hint": "I (a woman) was driving",
+      "en": "While I was driving to work, Mum called.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-015",
+      "type": "cloze",
+      "text": "Kiedy {{szedłem}} (iść / chodzić) do domu, zaczął padać deszcz.",
+      "hint": "I (a man) was walking",
+      "en": "While I was walking home, it started to rain.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-016",
+      "type": "cloze",
+      "text": "Dzieci codziennie {{chodzą}} (iść / chodzić) do szkoły pieszo.",
+      "hint": "go (every day)",
+      "en": "The children walk to school every day.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-017",
+      "type": "cloze",
+      "text": "Codziennie {{jeżdżę}} (jechać / jeździć) do pracy rowerem.",
+      "hint": "I ride (every day)",
+      "en": "I cycle to work every day.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-018",
+      "type": "cloze",
+      "text": "W niedziele lubimy {{chodzić}} (iść / chodzić) po parku.",
+      "hint": "walking around",
+      "en": "On Sundays we like walking around the park.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-019",
+      "type": "cloze",
+      "text": "Samolot {{leci}} (lecieć / latać) do Rzymu.",
+      "hint": "is flying (now)",
+      "en": "The plane is flying to Rome.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-020",
+      "type": "cloze",
+      "text": "Moja siostra często {{lata}} (lecieć / latać) do Londynu.",
+      "hint": "flies (often)",
+      "en": "My sister often flies to London.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-021",
+      "type": "cloze",
+      "text": "W sobotę {{polecimy|lecimy}} (lecieć / polecieć) do Paryża.",
+      "hint": "we'll fly",
+      "en": "On Saturday we'll fly to Paris.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-022",
+      "type": "cloze",
+      "text": "Wczoraj {{jechaliśmy|jechałyśmy}} (jechać / jeździć) do Krakowa pięć godzin.",
+      "hint": "we were driving (for five hours)",
+      "en": "Yesterday it took us five hours to drive to Kraków.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-023",
+      "type": "cloze",
+      "text": "Dokąd {{jedziecie}} (jechać / jeździć) w tym roku na wakacje?",
+      "hint": "are you going (this year, several people)",
+      "en": "Where are you going on holiday this year?",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-024",
+      "type": "cloze",
+      "text": "Zwykle {{jeździmy}} (jechać / jeździć) nad morze.",
+      "hint": "we go (usually)",
+      "en": "We usually go to the seaside.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    },
+    {
+      "id": "motion-verbs-025",
+      "type": "cloze",
+      "text": "Teraz {{idę}} (iść / chodzić) do sklepu, zaraz wracam.",
+      "hint": "I'm going (now)",
+      "en": "I'm going to the shop now, I'll be right back.",
+      "level": "A2",
+      "tags": [
+        "motion"
+      ]
+    }
+  ]
+}

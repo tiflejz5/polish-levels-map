@@ -2,7 +2,7 @@
   "version": 1,
   "id": "case-instrumental",
   "title": "Instrumental in sentences",
-  "description": "Put the phrase in brackets into the instrumental: a job or nationality after być, z meaning \"with\", and \"by bus\", \"by card\". A1: singular.",
+  "description": "Put the phrase in brackets into the instrumental: a job after być, z meaning \"with\", transport and paying (A1); A2 adds the plural, interesować się and przed, za, nad, pod.",
   "level": "A1-A2",
   "cards": [
     {
@@ -371,6 +371,126 @@
       "tags": [
         "instrumental",
         "with"
+      ]
+    },
+    {
+      "id": "case-instrumental-031",
+      "type": "cloze",
+      "text": "W sobotę idę do kina z {{przyjaciółmi}} (przyjaciel).",
+      "hint": "friends",
+      "en": "On Saturday I'm going to the cinema with friends.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-instrumental-032",
+      "type": "cloze",
+      "text": "Mieszkam z {{rodzicami}} (rodzice).",
+      "hint": "my parents",
+      "en": "I live with my parents.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-instrumental-033",
+      "type": "cloze",
+      "text": "Ola interesuje się {{historią}} (historia).",
+      "hint": "history",
+      "en": "Ola is interested in history.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "interests"
+      ]
+    },
+    {
+      "id": "case-instrumental-034",
+      "type": "cloze",
+      "text": "Moi rodzice są {{nauczycielami}} (nauczyciel).",
+      "hint": "teachers",
+      "en": "My parents are teachers.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-instrumental-035",
+      "type": "cloze",
+      "text": "Kot śpi pod {{łóżkiem}} (łóżko).",
+      "hint": "the bed",
+      "en": "The cat is sleeping under the bed.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "place"
+      ]
+    },
+    {
+      "id": "case-instrumental-036",
+      "type": "cloze",
+      "text": "Ania czeka przed {{kinem}} (kino).",
+      "hint": "the cinema",
+      "en": "Ania is waiting in front of the cinema.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "place"
+      ]
+    },
+    {
+      "id": "case-instrumental-037",
+      "type": "cloze",
+      "text": "Parking jest za {{kościołem}} (kościół).",
+      "hint": "the church",
+      "en": "The car park is behind the church.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "place"
+      ]
+    },
+    {
+      "id": "case-instrumental-038",
+      "type": "cloze",
+      "text": "Piszę {{długopisem}} (długopis).",
+      "hint": "with a pen",
+      "en": "I'm writing with a pen.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "tool"
+      ]
+    },
+    {
+      "id": "case-instrumental-039",
+      "type": "cloze",
+      "text": "Spotykam się z {{koleżankami}} (koleżanka).",
+      "hint": "friends (women)",
+      "en": "I'm meeting my friends.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-instrumental-040",
+      "type": "cloze",
+      "text": "Lubię pracować z {{dziećmi}} (dzieci).",
+      "hint": "children",
+      "en": "I like working with children.",
+      "level": "A2",
+      "tags": [
+        "instrumental",
+        "plural"
       ]
     }
   ]

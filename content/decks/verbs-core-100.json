@@ -2,7 +2,7 @@
   "version": 1,
   "id": "verbs-core-100",
   "title": "Core verbs",
-  "description": "The most common verbs: type the infinitive, then use it in the present. A1 part: 60 of 100 cards; A2 adds the rest. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
+  "description": "The most common verbs: type the infinitive, then use it in the present. 100 cards: 60 from A1, 40 from A2. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
   "level": "A1-A2",
   "cards": [
     {
@@ -800,6 +800,545 @@
       "hint": "do I pay (owe)",
       "en": "How much do I owe?",
       "level": "A1",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-061",
+      "type": "typed",
+      "front": "to come back, return",
+      "accepted": [
+        "wracać",
+        "wrócić"
+      ],
+      "back": "wracać / wrócić: wracam, wracasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-062",
+      "type": "cloze",
+      "text": "O której {{wracasz}} (wracać) do domu?",
+      "hint": "do you come back (one person)",
+      "en": "What time do you come home?",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-063",
+      "type": "typed",
+      "front": "to get up",
+      "accepted": [
+        "wstawać",
+        "wstać"
+      ],
+      "back": "wstawać / wstać: wstaję, wstajesz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-064",
+      "type": "cloze",
+      "text": "Codziennie {{wstaję}} (wstawać) o szóstej.",
+      "hint": "I get up",
+      "en": "I get up at six every day.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-065",
+      "type": "typed",
+      "front": "to take",
+      "accepted": [
+        "brać",
+        "wziąć"
+      ],
+      "back": "brać / wziąć: biorę, bierzesz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-066",
+      "type": "cloze",
+      "text": "Zawsze {{biorę}} (brać) parasol.",
+      "hint": "I take",
+      "en": "I always take an umbrella.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-067",
+      "type": "typed",
+      "front": "to give",
+      "accepted": [
+        "dawać",
+        "dać"
+      ],
+      "back": "dawać / dać: daję, dajesz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-068",
+      "type": "cloze",
+      "text": "Co {{dajesz}} (dawać) mamie na urodziny?",
+      "hint": "are you giving (one person)",
+      "en": "What are you giving Mum for her birthday?",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-069",
+      "type": "typed",
+      "front": "to help",
+      "accepted": [
+        "pomagać",
+        "pomóc"
+      ],
+      "back": "pomagać / pomóc: pomagam, pomagasz (+ dative)",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-070",
+      "type": "cloze",
+      "text": "Często {{pomagamy}} (pomagać) sąsiadom.",
+      "hint": "we help",
+      "en": "We often help our neighbours.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-071",
+      "type": "typed",
+      "front": "to thank",
+      "accepted": [
+        "dziękować",
+        "podziękować"
+      ],
+      "back": "dziękować / podziękować: dziękuję, dziękujesz (+ dative)",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-072",
+      "type": "cloze",
+      "text": "{{Dziękujemy}} (dziękować) za pomoc!",
+      "hint": "we thank (you)",
+      "en": "Thank you for your help! (we)",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-073",
+      "type": "typed",
+      "front": "to learn, study (a subject)",
+      "accepted": [
+        "uczyć się",
+        "nauczyć się",
+        "studiować"
+      ],
+      "back": "uczyć się / nauczyć się: uczę się, uczysz się",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-074",
+      "type": "cloze",
+      "text": "Od roku {{uczę się}} (uczyć się) polskiego.",
+      "hint": "I've been learning",
+      "en": "I've been learning Polish for a year.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-075",
+      "type": "typed",
+      "front": "to meet (up)",
+      "accepted": [
+        "spotykać się",
+        "spotkać się"
+      ],
+      "back": "spotykać się / spotkać się: spotykam się, spotykasz się",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-076",
+      "type": "cloze",
+      "text": "Gdzie się {{spotykamy}} (spotykać się)?",
+      "hint": "are we meeting",
+      "en": "Where are we meeting?",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-077",
+      "type": "typed",
+      "front": "to go (on foot, regularly), walk",
+      "accepted": [
+        "chodzić",
+        "spacerować"
+      ],
+      "back": "chodzić: chodzę, chodzisz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-078",
+      "type": "cloze",
+      "text": "W soboty {{chodzę}} (chodzić) na basen.",
+      "hint": "I go (regularly)",
+      "en": "On Saturdays I go swimming.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-079",
+      "type": "typed",
+      "front": "to go (by vehicle, regularly), ride",
+      "accepted": [
+        "jeździć"
+      ],
+      "back": "jeździć: jeżdżę, jeździsz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-080",
+      "type": "cloze",
+      "text": "Pan Adam {{jeździ}} (jeździć) do pracy tramwajem.",
+      "hint": "goes (every day)",
+      "en": "Mr Adam goes to work by tram.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-081",
+      "type": "typed",
+      "front": "to close",
+      "accepted": [
+        "zamykać",
+        "zamknąć"
+      ],
+      "back": "zamykać / zamknąć: zamykam, zamykasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-082",
+      "type": "cloze",
+      "text": "Zawsze {{zamykam}} (zamykać) okno na noc.",
+      "hint": "I close",
+      "en": "I always close the window at night.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-083",
+      "type": "typed",
+      "front": "to open",
+      "accepted": [
+        "otwierać",
+        "otworzyć"
+      ],
+      "back": "otwierać / otworzyć: otwieram, otwierasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-084",
+      "type": "cloze",
+      "text": "Często {{otwieracie}} (otwierać) okno w nocy?",
+      "hint": "do you open (several people)",
+      "en": "Do you often open the window at night?",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-085",
+      "type": "typed",
+      "front": "to call, ring",
+      "accepted": [
+        "dzwonić",
+        "zadzwonić"
+      ],
+      "back": "dzwonić / zadzwonić: dzwonię, dzwonisz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-086",
+      "type": "cloze",
+      "text": "Mama {{dzwoni}} (dzwonić) do mnie codziennie.",
+      "hint": "calls",
+      "en": "Mum calls me every day.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-087",
+      "type": "typed",
+      "front": "to wear (regularly)",
+      "accepted": [
+        "nosić"
+      ],
+      "back": "nosić: noszę, nosisz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-088",
+      "type": "cloze",
+      "text": "Zimą {{noszę}} (nosić) czapkę.",
+      "hint": "I wear",
+      "en": "In winter I wear a hat.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-089",
+      "type": "typed",
+      "front": "to run, jog",
+      "accepted": [
+        "biegać",
+        "biec"
+      ],
+      "back": "biegać: biegam, biegasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-090",
+      "type": "cloze",
+      "text": "Ola {{biega}} (biegać) codziennie rano.",
+      "hint": "runs",
+      "en": "Ola runs every morning.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-091",
+      "type": "typed",
+      "front": "to rest, relax",
+      "accepted": [
+        "odpoczywać",
+        "odpocząć",
+        "relaksować się"
+      ],
+      "back": "odpoczywać / odpocząć: odpoczywam, odpoczywasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-092",
+      "type": "cloze",
+      "text": "W weekend {{odpoczywamy}} (odpoczywać) w domu.",
+      "hint": "we relax",
+      "en": "At the weekend we relax at home.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-093",
+      "type": "typed",
+      "front": "to talk",
+      "accepted": [
+        "rozmawiać",
+        "porozmawiać"
+      ],
+      "back": "rozmawiać / porozmawiać: rozmawiam, rozmawiasz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-094",
+      "type": "cloze",
+      "text": "O czym {{rozmawiacie}} (rozmawiać)?",
+      "hint": "are you talking (several people)",
+      "en": "What are you talking about?",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-095",
+      "type": "typed",
+      "front": "to think",
+      "accepted": [
+        "myśleć",
+        "pomyśleć",
+        "sądzić"
+      ],
+      "back": "myśleć / pomyśleć: myślę, myślisz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-096",
+      "type": "cloze",
+      "text": "{{Myślę}} (myśleć), że masz rację.",
+      "hint": "I think",
+      "en": "I think you're right.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-097",
+      "type": "typed",
+      "front": "to sleep",
+      "accepted": [
+        "spać"
+      ],
+      "back": "spać: śpię, śpisz",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-098",
+      "type": "cloze",
+      "text": "Cicho, dziecko {{śpi}} (spać).",
+      "hint": "is sleeping",
+      "en": "Quiet, the baby's sleeping.",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "present"
+      ]
+    },
+    {
+      "id": "verbs-core-100-099",
+      "type": "typed",
+      "front": "to be afraid",
+      "accepted": [
+        "bać się"
+      ],
+      "back": "bać się: boję się, boisz się (+ genitive)",
+      "level": "A2",
+      "tags": [
+        "verbs",
+        "infinitive"
+      ]
+    },
+    {
+      "id": "verbs-core-100-100",
+      "type": "cloze",
+      "text": "Mój syn {{boi się}} (bać się) psów.",
+      "hint": "is afraid (of)",
+      "en": "My son is afraid of dogs.",
+      "level": "A2",
       "tags": [
         "verbs",
         "present"

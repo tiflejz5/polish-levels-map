@@ -36,42 +36,114 @@
     {
       "id": "case-accusative",
       "title": "Accusative in sentences",
-      "description": "Put the phrase in brackets into the accusative. A1: singular.",
+      "description": "Put the phrase in brackets into the accusative. A1: singular; A2 adds the plural and masculine personal forms.",
       "level": "A1-A2",
       "file": "case-accusative.json",
-      "count": 30
+      "count": 40
     },
     {
       "id": "case-genitive",
       "title": "Genitive in sentences",
-      "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular.",
+      "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular; A2 adds the plural after quantity words.",
       "level": "A1-A2",
       "file": "case-genitive.json",
-      "count": 30
+      "count": 40
     },
     {
       "id": "case-locative",
       "title": "Locative in sentences",
-      "description": "Put the place in brackets into the locative after w or na. A1: singular.",
+      "description": "Put the phrase in brackets into the locative: after w or na (where?) at A1; A2 adds o (about), po (after), przy, months and the plural.",
       "level": "A1-A2",
       "file": "case-locative.json",
-      "count": 30
+      "count": 40
     },
     {
       "id": "case-instrumental",
       "title": "Instrumental in sentences",
-      "description": "Put the phrase in brackets into the instrumental: a job or nationality after być, z meaning \"with\", and \"by bus\", \"by card\". A1: singular.",
+      "description": "Put the phrase in brackets into the instrumental: a job after być, z meaning \"with\", transport and paying (A1); A2 adds the plural, interesować się and przed, za, nad, pod.",
       "level": "A1-A2",
       "file": "case-instrumental.json",
-      "count": 30
+      "count": 40
     },
     {
       "id": "verbs-core-100",
       "title": "Core verbs",
-      "description": "The most common verbs: type the infinitive, then use it in the present. A1 part: 60 of 100 cards; A2 adds the rest. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
+      "description": "The most common verbs: type the infinitive, then use it in the present. 100 cards: 60 from A1, 40 from A2. The cards ask for the everyday (imperfective) verb; its partner for a finished action is also accepted.",
       "level": "A1-A2",
       "file": "verbs-core-100.json",
-      "count": 60
+      "count": 100
+    },
+    {
+      "id": "a2-travel-transport",
+      "title": "Travel and transport",
+      "description": "Stations, tickets, planes, luggage and hotels, with the verbs for getting on, off and changing.",
+      "level": "A2",
+      "file": "a2-travel-transport.json",
+      "count": 33
+    },
+    {
+      "id": "a2-shopping-clothes",
+      "title": "Shopping and clothes",
+      "description": "Clothes, colours, sizes and the phrases you need in a clothes shop.",
+      "level": "A2",
+      "file": "a2-shopping-clothes.json",
+      "count": 33
+    },
+    {
+      "id": "a2-health-body-weather",
+      "title": "Body, health and weather",
+      "description": "Parts of the body, feeling ill, feelings and the weather.",
+      "level": "A2",
+      "file": "a2-health-body-weather.json",
+      "count": 33
+    },
+    {
+      "id": "a2-free-time-work",
+      "title": "Free time and work",
+      "description": "Sports, hobbies, playing games and instruments, and everyday words for work.",
+      "level": "A2",
+      "file": "a2-free-time-work.json",
+      "count": 33
+    },
+    {
+      "id": "case-dative",
+      "title": "Dative in sentences",
+      "description": "Put the phrase in brackets into the dative: the person who gets something, after pomagać and dziękować, and the \"me\" in podoba mi się and jest mi zimno.",
+      "level": "A1-A2",
+      "file": "case-dative.json",
+      "count": 30
+    },
+    {
+      "id": "aspect-pairs",
+      "title": "Aspect pairs",
+      "description": "Type the perfective partner, then choose the right verb of the pair in a sentence. A2 part: 40 of 60 cards; B1 adds the rest.",
+      "level": "A2-B1",
+      "file": "aspect-pairs.json",
+      "count": 40
+    },
+    {
+      "id": "prepositions-cases",
+      "title": "Prepositions and cases",
+      "description": "Type the preposition and the noun in brackets as one phrase, with the right case: do + sklep → do sklepu. A2 part: 30 of 40 cards; B1 adds \"where to\" against \"where\" in full.",
+      "level": "A2-B1",
+      "file": "prepositions-cases.json",
+      "count": 30
+    },
+    {
+      "id": "numbers-nouns",
+      "title": "Numbers with nouns",
+      "description": "Put the noun in brackets into the form the number needs: 1, 2–4 or 5 and more. A2 part: 20 of 30 cards; B1 adds counting people (dwóch studentów).",
+      "level": "A2-B1",
+      "file": "numbers-nouns.json",
+      "count": 20
+    },
+    {
+      "id": "motion-verbs",
+      "title": "Verbs of motion",
+      "description": "Choose between one trip (iść, jechać, lecieć), a habit (chodzić, jeździć, latać) and one finished trip (pójść, pojechać, polecieć). A2 part: 25 of 40 cards; B1 and B2 add the prefixed verbs.",
+      "level": "A2-B2",
+      "file": "motion-verbs.json",
+      "count": 25
     }
   ]
 }

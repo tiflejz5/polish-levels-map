@@ -2,7 +2,7 @@
   "version": 1,
   "id": "case-genitive",
   "title": "Genitive in sentences",
-  "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular.",
+  "description": "Put the phrase in brackets into the genitive: after nie, nie ma, do, z (from), od, bez, dla, u, dużo, and for \"of\". A1: singular; A2 adds the plural after quantity words.",
   "level": "A1-A2",
   "cards": [
     {
@@ -368,6 +368,126 @@
       "tags": [
         "genitive",
         "possession"
+      ]
+    },
+    {
+      "id": "case-genitive-031",
+      "type": "cloze",
+      "text": "Na koncercie było dużo {{ludzi}} (ludzie).",
+      "hint": "people",
+      "en": "There were a lot of people at the concert.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-032",
+      "type": "cloze",
+      "text": "Poczekaj kilka {{minut}} (minuta).",
+      "hint": "minutes",
+      "en": "Wait a few minutes.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-033",
+      "type": "cloze",
+      "text": "Nie ma już {{biletów}} (bilet).",
+      "hint": "tickets",
+      "en": "There are no tickets left.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-034",
+      "type": "cloze",
+      "text": "Poproszę kilogram {{pomidorów}} (pomidor).",
+      "hint": "tomatoes",
+      "en": "A kilo of tomatoes, please.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-035",
+      "type": "cloze",
+      "text": "Mam dużo {{książek}} (książka).",
+      "hint": "books",
+      "en": "I have a lot of books.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-036",
+      "type": "cloze",
+      "text": "W tym mieście jest mało {{parków}} (park).",
+      "hint": "parks",
+      "en": "There are few parks in this town.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-037",
+      "type": "cloze",
+      "text": "Ile {{osób}} (osoba) będzie na kolacji?",
+      "hint": "people (persons)",
+      "en": "How many people will be at dinner?",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-038",
+      "type": "cloze",
+      "text": "Nie mamy {{pieniędzy}} (pieniądze) na wakacje.",
+      "hint": "money",
+      "en": "We have no money for a holiday.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-039",
+      "type": "cloze",
+      "text": "Poproszę dziesięć {{jajek|jaj}} (jajko).",
+      "hint": "eggs",
+      "en": "Ten eggs, please.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-genitive-040",
+      "type": "cloze",
+      "text": "Mam kilka {{pytań}} (pytanie).",
+      "hint": "questions",
+      "en": "I have a few questions.",
+      "level": "A2",
+      "tags": [
+        "genitive",
+        "plural"
       ]
     }
   ]

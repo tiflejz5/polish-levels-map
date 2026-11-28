@@ -2,7 +2,7 @@
   "version": 1,
   "id": "case-accusative",
   "title": "Accusative in sentences",
-  "description": "Put the phrase in brackets into the accusative. A1: singular.",
+  "description": "Put the phrase in brackets into the accusative. A1: singular; A2 adds the plural and masculine personal forms.",
   "level": "A1-A2",
   "cards": [
     {
@@ -373,6 +373,128 @@
       "tags": [
         "accusative",
         "masculine-inanimate"
+      ]
+    },
+    {
+      "id": "case-accusative-031",
+      "type": "cloze",
+      "text": "Lubię {{koty}} (kot), ale wolę psy.",
+      "hint": "cats",
+      "en": "I like cats, but I prefer dogs.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-accusative-032",
+      "type": "cloze",
+      "text": "Znam {{tych studentów}} (ten student).",
+      "hint": "these students",
+      "en": "I know these students.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
+      ]
+    },
+    {
+      "id": "case-accusative-033",
+      "type": "cloze",
+      "text": "W weekend odwiedzam {{rodziców|moich rodziców|swoich rodziców}} (rodzice).",
+      "hint": "my parents",
+      "en": "At the weekend I visit my parents.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
+      ]
+    },
+    {
+      "id": "case-accusative-034",
+      "type": "cloze",
+      "text": "Mamy {{bardzo miłych sąsiadów}} (bardzo miły sąsiad).",
+      "hint": "very nice neighbours",
+      "en": "We have very nice neighbours.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
+      ]
+    },
+    {
+      "id": "case-accusative-035",
+      "type": "cloze",
+      "text": "Kupuję {{jabłka}} (jabłko) i pomidory.",
+      "hint": "apples",
+      "en": "I'm buying apples and tomatoes.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-accusative-036",
+      "type": "cloze",
+      "text": "Czy pan zna {{moich kolegów}} (mój kolega)?",
+      "hint": "my colleagues",
+      "en": "Do you know my colleagues?",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
+      ]
+    },
+    {
+      "id": "case-accusative-037",
+      "type": "cloze",
+      "text": "Kupiłam {{nowe okulary}} (nowe okulary).",
+      "hint": "new glasses",
+      "en": "I've bought new glasses.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "plural"
+      ],
+      "note": "For things, the accusative plural is the same as the nominative plural."
+    },
+    {
+      "id": "case-accusative-038",
+      "type": "cloze",
+      "text": "Pani Ewa uczy {{małe dzieci}} (małe dziecko).",
+      "hint": "small children",
+      "en": "Mrs Ewa teaches small children.",
+      "note": "dzieci is not masculine personal.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "plural"
+      ]
+    },
+    {
+      "id": "case-accusative-039",
+      "type": "cloze",
+      "text": "W teatrze widzieliśmy {{znanych aktorów}} (znany aktor).",
+      "hint": "famous actors",
+      "en": "At the theatre we saw famous actors.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
+      ]
+    },
+    {
+      "id": "case-accusative-040",
+      "type": "cloze",
+      "text": "Często odwiedzam {{moich braci|swoich braci}} (mój brat).",
+      "hint": "my brothers",
+      "en": "I often visit my brothers.",
+      "level": "A2",
+      "tags": [
+        "accusative",
+        "masculine-personal"
       ]
     }
   ]
