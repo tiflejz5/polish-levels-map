@@ -11,9 +11,10 @@ Ported from english-levels-map (Polish UI, teaches English); the two projects ar
 | Level | Status | Topics | Pages | Quizzes | Sets (items) | Extras |
 | --- | --- | --- | --- | --- | --- | --- |
 | A1 | available | 25 | 25 | 25 (100 items) | 18 (180) + 7 mixes | summary, cheat sheet, final test (30 items) |
-| A2–C2 | coming soon | 108 | — | — | — | — |
+| A2 | available | 28 | 28 | 28 (112 items) | 18 (180) + 7 mixes | summary, cheat sheet, final test (30 items) |
+| B1–C2 | coming soon | 80 | — | — | — | — |
 
-Across levels: placement test 60 questions (10 per level); 9 flashcard decks with 312 cards (4 A1 vocabulary decks, case-accusative, case-genitive, case-locative, case-instrumental, verbs-core-100 with its A1 part); Case Lab with 5 case cards (the A1 cases), 14 model phrases, 3 decision trees and the aspect strip.
+Across levels: placement test 60 questions (10 per level); 18 flashcard decks with 669 cards (4 A1 and 4 A2 vocabulary decks; case-accusative, case-genitive, case-locative, case-instrumental with singular and plural cards, case-dative; verbs-core-100 complete; the A2 parts of aspect-pairs, prepositions-cases, numbers-nouns and motion-verbs); Case Lab with 6 case cards (all but the vocative), 14 model phrases, 4 decision trees and the aspect strip.
 
 ## Run
 
