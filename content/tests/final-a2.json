@@ -1,0 +1,593 @@
+{
+  "version": 1,
+  "id": "final-a2",
+  "level": "A2",
+  "kind": "level-test",
+  "title": "A2 final test",
+  "intro": "Thirty questions from the whole of A2; each attempt draws 20. You need 80% to pass. You see the explanations at the end.",
+  "draw": 20,
+  "passPercent": 80,
+  "defaultMode": "exam",
+  "items": [
+    {
+      "id": "final-a2-01",
+      "topic": "a2-verbs-past-tense",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wczoraj Marek i Ola ___ w teatrze.",
+      "options": [
+        "byli",
+        "były",
+        "był",
+        "byliśmy"
+      ],
+      "correct": 0,
+      "explanation": "A group with at least one man takes the -li form: Marek i Ola byli.",
+      "optionNotes": [
+        null,
+        "-ły is for groups without men: Ola i Kasia były.",
+        "Był is one man; the subject here is two people.",
+        "Byliśmy means \"we were\"; the subject is Marek and Ola, so \"they\"."
+      ]
+    },
+    {
+      "id": "final-a2-02",
+      "topic": "a2-verbs-past-tense",
+      "type": "find-error",
+      "tokens": [
+        "Kasia",
+        "nie",
+        "mógła",
+        "przyjść,",
+        "bo",
+        "była",
+        "chora."
+      ],
+      "errorRange": [
+        2,
+        2
+      ],
+      "fixes": [
+        "mogła"
+      ],
+      "explanation": "Móc has ó only in mógł (he could). Every other past form has o: mogła, mogłem, mogli."
+    },
+    {
+      "id": "final-a2-03",
+      "topic": "a2-verbs-aspect-introduction",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Wczoraj w końcu ___ ten raport. (A man speaking: I finally finished writing it.)",
+      "options": [
+        "pisałem",
+        "piszę",
+        "napisałem",
+        "będę pisać"
+      ],
+      "correct": 2,
+      "explanation": "One finished action with a result takes the perfective, and w końcu (finally) signals it: napisałem.",
+      "optionNotes": [
+        "Pisałem is the imperfective: it says you were writing, not that the report is done.",
+        "Piszę is the present; wczoraj needs the past.",
+        null,
+        "Będę pisać is the future; wczoraj needs the past."
+      ]
+    },
+    {
+      "id": "final-a2-04",
+      "topic": "a2-verbs-aspect-introduction",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kiedy byłam mała, codziennie ___ z babcią. (When I was little, I cooked with my grandma every day.)",
+      "options": [
+        "ugotowałam",
+        "gotuję",
+        "ugotuję",
+        "gotowałam"
+      ],
+      "correct": 3,
+      "explanation": "A repeated action in the past takes the imperfective, and codziennie (every day) signals it: gotowałam.",
+      "optionNotes": [
+        "Ugotowałam is the perfective: one finished meal, not a habit.",
+        "Gotuję is the present; the story is in the past.",
+        "Ugotuję is the perfective future: \"I will cook\".",
+        null
+      ]
+    },
+    {
+      "id": "final-a2-05",
+      "topic": "a2-verbs-future-tense",
+      "type": "short-answer",
+      "prompt": "Wieczorem ___ do ciebie e-mail. (napisać, I)",
+      "accepted": [
+        "napiszę"
+      ],
+      "explanation": "Napisać is perfective, so its present-looking form means the future, with no będę: napiszę."
+    },
+    {
+      "id": "final-a2-06",
+      "topic": "a2-verbs-motion-verbs-basics",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Od roku ___ do pracy rowerem. (a habit)",
+      "options": [
+        "jadę",
+        "jeżdżę",
+        "pojadę",
+        "jechałem"
+      ],
+      "correct": 1,
+      "explanation": "A regular trip by vehicle takes jeździć: jeżdżę. Jechać is for one trip in one direction.",
+      "optionNotes": [
+        "Jadę is one trip now, not a habit.",
+        null,
+        "Pojadę is one trip in the future.",
+        "Jechałem is the past of one trip (\"I was riding\"); od roku describes a habit that goes on now."
+      ]
+    },
+    {
+      "id": "final-a2-07",
+      "topic": "a2-verbs-reflexive-sie",
+      "type": "reorder",
+      "context": "I'm afraid of dogs.",
+      "answers": [
+        "Boję się psów.",
+        "Psów się boję."
+      ],
+      "explanation": "Bać się always has się and takes the genitive: psów. Się never starts the sentence."
+    },
+    {
+      "id": "final-a2-08",
+      "topic": "a2-verbs-modals-necessity",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "A sign in a museum says that taking photos is not allowed. Which sentence says this?",
+      "options": [
+        "Nie musisz robić zdjęć.",
+        "Warto robić zdjęcia.",
+        "Trzeba robić zdjęcia.",
+        "Nie wolno robić zdjęć."
+      ],
+      "correct": 3,
+      "explanation": "Nie wolno means \"you mustn't\": a ban. Because of nie, the object takes the genitive: zdjęć (compare Wolno robić zdjęcia).",
+      "optionNotes": [
+        "Nie musisz means \"you don't have to\", not \"you mustn't\".",
+        "Warto means \"it's worth it\": the opposite of a ban.",
+        "Trzeba means \"you have to\".",
+        null
+      ]
+    },
+    {
+      "id": "final-a2-09",
+      "topic": "a2-verbs-imperative-basics",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "At the reception desk you politely ask a man you don't know to wait a moment. You say:",
+      "options": [
+        "Poczekaj chwilę!",
+        "Proszę poczekaj chwilę.",
+        "Proszę chwilę poczekać.",
+        "Poczekasz chwilę."
+      ],
+      "correct": 2,
+      "explanation": "To a stranger use proszę + infinitive: Proszę chwilę poczekać.",
+      "optionNotes": [
+        "Poczekaj is the ty command: for friends, family and children.",
+        "After proszę to a stranger use the infinitive, not the ty form.",
+        null,
+        "Poczekasz is the future (\"you'll wait\"), not a polite request, and it uses ty, which is too familiar for a stranger."
+      ]
+    },
+    {
+      "id": "final-a2-10",
+      "topic": "a2-cases-nominative-plural",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ania i Paweł są bardzo ___.",
+      "options": [
+        "miłe",
+        "mili",
+        "miła",
+        "miły"
+      ],
+      "correct": 1,
+      "explanation": "A group with a man takes the masculine personal plural, and ł changes to l: mili.",
+      "optionNotes": [
+        "Miłe is for groups without men: Ania i Ola są miłe.",
+        null,
+        "Miła is one woman.",
+        "Miły is one man; są needs a plural."
+      ]
+    },
+    {
+      "id": "final-a2-11",
+      "topic": "a2-cases-accusative-plural",
+      "type": "gap-fill",
+      "context": "At the weekend I visit my parents.",
+      "text": "W weekend odwiedzam {{1}}.",
+      "gaps": [
+        {
+          "accepted": [
+            "moich rodziców",
+            "swoich rodziców"
+          ],
+          "hint": "(moi rodzice)"
+        }
+      ],
+      "explanation": "Rodzice is masculine personal, so the accusative plural takes -ów, and \"my\" takes moich: moich rodziców."
+    },
+    {
+      "id": "final-a2-12",
+      "topic": "a2-cases-genitive-plural-quantities",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Na koncercie było dużo ___.",
+      "options": [
+        "ludzie",
+        "ludźmi",
+        "osoby",
+        "ludzi"
+      ],
+      "correct": 3,
+      "explanation": "After dużo the noun takes the genitive plural; ludzie is irregular: ludzi.",
+      "optionNotes": [
+        "Ludzie is the nominative plural; dużo needs the genitive.",
+        "Ludźmi is the instrumental: z ludźmi.",
+        "Osoby is the nominative plural; the genitive would be osób.",
+        null
+      ]
+    },
+    {
+      "id": "final-a2-13",
+      "topic": "a2-cases-dative",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Kupiłam ___ nowy telefon. (I bought my brother a new phone.)",
+      "options": [
+        "bratu",
+        "brata",
+        "bratem",
+        "do brata"
+      ],
+      "correct": 0,
+      "explanation": "The person who gets something takes the dative; brat is on the short list with -u: bratu.",
+      "optionNotes": [
+        null,
+        "Brata is the accusative or genitive; the receiver needs the dative.",
+        "Bratem is the instrumental: z bratem (with my brother).",
+        "Do means \"to a place\"; the receiver takes the dative with no preposition."
+      ]
+    },
+    {
+      "id": "final-a2-14",
+      "topic": "a2-cases-instrumental-full",
+      "type": "transformation",
+      "source": "Moi rodzice uczą w szkole. To nauczyciele.",
+      "keyword": "są",
+      "before": "Moi rodzice",
+      "after": ".",
+      "answers": [
+        "są nauczycielami",
+        "są nauczycielami w szkole",
+        "są z zawodu nauczycielami",
+        "są nauczycielami z zawodu"
+      ],
+      "explanation": "A job after a form of być takes the instrumental, in the plural too: -ami. Nauczyciele → nauczycielami."
+    },
+    {
+      "id": "final-a2-15",
+      "topic": "a2-cases-locative-full",
+      "type": "short-answer",
+      "prompt": "Po ___ idę na siłownię. (praca)",
+      "accepted": [
+        "pracy"
+      ],
+      "explanation": "Po meaning \"after\" takes the locative; praca ends in -ca, so the locative is -y: po pracy."
+    },
+    {
+      "id": "final-a2-16",
+      "topic": "a2-grammar-numbers-with-nouns",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ola ma dwadzieścia dwa ___.",
+      "options": [
+        "lat",
+        "roku",
+        "lata",
+        "rok"
+      ],
+      "correct": 2,
+      "explanation": "From 22 on the last digit decides: 2, 3, 4 take the 2–4 form, lata.",
+      "optionNotes": [
+        "Lat is the 5+ form: dwadzieścia pięć lat.",
+        "Roku is the genitive singular, not used for counting years.",
+        null,
+        "Rok is the form after jeden (one)."
+      ]
+    },
+    {
+      "id": "final-a2-17",
+      "topic": "a2-grammar-pronouns-in-cases",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Znasz Tomka? — Tak, znam ___ dobrze.",
+      "options": [
+        "go",
+        "on",
+        "niego",
+        "mu"
+      ],
+      "correct": 0,
+      "explanation": "The object needs the accusative; with no stress and no preposition use the short form go.",
+      "optionNotes": [
+        null,
+        "On is the nominative, the subject form.",
+        "Niego is used after a preposition: dla niego, do niego.",
+        "Mu is the dative (to him); znać takes the accusative."
+      ]
+    },
+    {
+      "id": "final-a2-18",
+      "topic": "a2-grammar-comparison",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Pociąg jest ___ niż autobus.",
+      "options": [
+        "bardziej szybki",
+        "szybciej",
+        "najszybszy",
+        "szybszy"
+      ],
+      "correct": 3,
+      "explanation": "A short adjective takes -szy for \"-er\": szybki → szybszy. Niż means \"than\".",
+      "optionNotes": [
+        "Bardziej is for long adjectives; szybki has its own form, so bardziej szybki is not the normal way to say it.",
+        "Szybciej is the adverb (faster, of an action); after jest describing the train you need the adjective.",
+        "Najszybszy means \"the fastest\"; niż compares two things.",
+        null
+      ]
+    },
+    {
+      "id": "final-a2-19",
+      "topic": "a2-grammar-adverbs-frequency",
+      "type": "translate",
+      "source": "Nobody called.",
+      "hint": "nikt … nie + verb",
+      "accepted": [
+        "Nikt nie dzwonił.",
+        "Nikt nie zadzwonił.",
+        "Nikt do mnie nie dzwonił.",
+        "Nikt do mnie nie zadzwonił.",
+        "Nikt nie dzwonił do mnie.",
+        "Nikt nie telefonował."
+      ],
+      "explanation": "Every negative word needs nie before the verb: Nikt nie dzwonił. Nikt is masculine, so the verb ends in -ł."
+    },
+    {
+      "id": "final-a2-20",
+      "topic": "a2-grammar-conjunctions-basic",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "Ja piję kawę, ___ Ola pije herbatę.",
+      "options": [
+        "i",
+        "a",
+        "albo",
+        "czy"
+      ],
+      "correct": 1,
+      "explanation": "A contrast between two people takes a, with a comma before it.",
+      "optionNotes": [
+        "I adds similar things and takes no comma; a contrast needs a.",
+        null,
+        "Albo means \"or\" (a choice); here both people drink something.",
+        "Czy is \"or\" in a question."
+      ]
+    },
+    {
+      "id": "final-a2-21",
+      "topic": "a2-functions-weekend-vacation",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "A friend asks how your weekend was. It was great. You say:",
+      "options": [
+        "Miałem dobry czas.",
+        "Byłem dobrze.",
+        "Było super!",
+        "Jestem super."
+      ],
+      "correct": 2,
+      "explanation": "Polish says \"it was great\" with było and no subject: Było super!",
+      "optionNotes": [
+        "Miałem dobry czas is a word-for-word copy of \"I had a good time\"; Polish does not say it.",
+        "Byłem dobrze is not Polish: with a person as the subject, być takes an adjective (Byłem zadowolony). The adverb goes with impersonal było: Było dobrze, Było super.",
+        null,
+        "Jestem super is the present and means \"I'm great\", not that the weekend was."
+      ]
+    },
+    {
+      "id": "final-a2-22",
+      "topic": "a2-functions-describing",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "___ jest twój nowy sąsiad? — Bardzo miły.",
+      "options": [
+        "Jak",
+        "Co",
+        "Jaka",
+        "Jaki"
+      ],
+      "correct": 3,
+      "explanation": "\"What … like?\" is jaki, and it agrees with the noun: sąsiad is masculine, so jaki.",
+      "optionNotes": [
+        "Jak asks \"how\"; for \"what is he like\" use jaki.",
+        "Co asks \"what\" (a thing), not what someone is like.",
+        "Jaka is the feminine form: Jaka jest twoja nowa sąsiadka?",
+        null
+      ]
+    },
+    {
+      "id": "final-a2-23",
+      "topic": "a2-functions-directions",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "A woman you don't know asks you the way. Tell her to go straight on.",
+      "options": [
+        "Proszę iść prosto.",
+        "Proszę idzie prosto.",
+        "Idziesz prosto.",
+        "Proszę idź prosto."
+      ],
+      "correct": 0,
+      "explanation": "Directions to a stranger: proszę + infinitive, Proszę iść prosto.",
+      "optionNotes": [
+        null,
+        "After proszę use the infinitive, not the present form idzie.",
+        "Idziesz prosto is a statement (\"you're going straight\") and uses ty.",
+        "Idź is the ty command, for friends; to a stranger use proszę + infinitive."
+      ]
+    },
+    {
+      "id": "final-a2-24",
+      "topic": "a2-functions-invitations-plans",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "A friend invites you to the cinema on Saturday, but you're working. Which answer is polite?",
+      "options": [
+        "Nie.",
+        "Niestety nie mogę, bo pracuję.",
+        "Nie chcę kina.",
+        "Nie mam ochoty dla kina."
+      ],
+      "correct": 1,
+      "explanation": "Decline with niestety and a short reason after bo; a bare nie sounds cold.",
+      "optionNotes": [
+        "A bare nie sounds cold; add a reason.",
+        null,
+        "Nie chcę kina is not natural Polish, and it sounds rude.",
+        "Ochota takes na + accusative (ochotę na kino), and saying you don't feel like it is not a polite reason."
+      ]
+    },
+    {
+      "id": "final-a2-25",
+      "topic": "a2-functions-tickets-bookings-problems",
+      "type": "short-answer",
+      "prompt": "W pokoju nie ___ ogrzewanie. (The heating in my room doesn't work.)",
+      "accepted": [
+        "działa",
+        "chodzi"
+      ],
+      "explanation": "For machines and devices \"work\" is działać, not pracować: Nie działa ogrzewanie. In everyday speech you will also hear nie chodzi."
+    },
+    {
+      "id": "final-a2-26",
+      "topic": "a2-functions-health",
+      "type": "multiple-choice",
+      "kind": "function",
+      "prompt": "You have a headache. You tell the doctor:",
+      "options": [
+        "Moja głowa boli.",
+        "Bolą mnie głowa.",
+        "Boli mnie głowa.",
+        "Boli mnie głowę."
+      ],
+      "correct": 2,
+      "explanation": "Polish says \"the head hurts me\": the head is the subject, the person is in the accusative: Boli mnie głowa.",
+      "optionNotes": [
+        "A word-for-word copy of English: grammatical, but Polish doesn't say it. Polish puts the person in the accusative: boli mnie.",
+        "Bolą is plural; głowa is one thing, so boli.",
+        null,
+        "Głowa is the subject, so it stays in the nominative."
+      ]
+    },
+    {
+      "id": "final-a2-27",
+      "topic": "a2-vocabulary-travel-transport",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Na następnym przystanku ___. (I'm getting off at the next stop.)",
+      "options": [
+        "wysiadam",
+        "wsiadam",
+        "przesiadam się",
+        "odjeżdżam"
+      ],
+      "correct": 0,
+      "explanation": "Getting off a bus or train is wysiadać / wysiąść: wysiadam.",
+      "optionNotes": [
+        null,
+        "Wsiadam means \"I'm getting on\".",
+        "Przesiadam się means \"I'm changing\" to another bus or train.",
+        "Odjeżdżam means \"I'm leaving, driving off\"."
+      ]
+    },
+    {
+      "id": "final-a2-28",
+      "topic": "a2-vocabulary-shopping-clothes",
+      "type": "match",
+      "mode": "translation",
+      "prompt": "Match the English words with their Polish equivalents.",
+      "pairs": [
+        [
+          "trousers",
+          "spodnie"
+        ],
+        [
+          "coat",
+          "płaszcz"
+        ],
+        [
+          "fitting room",
+          "przymierzalnia"
+        ],
+        [
+          "receipt",
+          "paragon"
+        ]
+      ],
+      "explanation": "Trousers = spodnie (plural only), coat = płaszcz, fitting room = przymierzalnia, receipt = paragon."
+    },
+    {
+      "id": "final-a2-29",
+      "topic": "a2-vocabulary-health-body-weather",
+      "type": "multiple-choice",
+      "kind": "meaning",
+      "prompt": "Jaka jest dziś pogoda? — ___ deszcz.",
+      "options": [
+        "Jest",
+        "Pada",
+        "Ma",
+        "Robi"
+      ],
+      "correct": 1,
+      "explanation": "Rain and snow \"fall\" in Polish: Pada deszcz (it's raining).",
+      "optionNotes": [
+        "Jest deszcz is a word-for-word guess; Polish says the rain falls: pada.",
+        null,
+        "Mieć does not describe the weather.",
+        "Robić does not describe the weather."
+      ]
+    },
+    {
+      "id": "final-a2-30",
+      "topic": "a2-vocabulary-free-time-work",
+      "type": "multiple-choice",
+      "kind": "form",
+      "prompt": "W sobotę gram z synem ___ piłkę.",
+      "options": [
+        "na",
+        "do",
+        "z",
+        "w"
+      ],
+      "correct": 3,
+      "explanation": "Games and sports take grać w + accusative: gram w piłkę.",
+      "optionNotes": [
+        "Grać na is for instruments: gram na gitarze.",
+        "Do means \"to a place\"; it is not used with grać.",
+        "Z means \"with\": z synem is already in the sentence.",
+        null
+      ]
+    }
+  ]
+}
